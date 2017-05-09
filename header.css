@@ -1,0 +1,36 @@
+
+
+.bandeau{
+	display: flex;
+	background-color: rgb(66,133,244);
+	margin: 0rem;
+	padding: 0rem;
+}
+.bandeau * {
+	padding: 1px;
+}
+a{
+	color: black;
+}
+.dropdown{
+	border: none;
+}
+
+a:hover{
+	color: rgb(200,200,200);
+}
+.menu_liste{
+	color: black;
+	background-color: rgba(5,5,5,0.9);
+	border-style: ridge;
+}
+
+.menu_liste li a{
+	color: black;
+}
+.element_bandeau:nth-child(3){
+	flex: 1;
+	text-align: center;
+}
+
+
