@@ -1,0 +1,19 @@
+body{
+	margin: 0rem,
+	padding: 0rem;
+}
+#form_recherche{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	margin-top: 15%;
+}
+#barre_de_recherche{
+	background-color: #ececec;
+	text-align: center;
+	margin: 0.5rem;
+	padding: 0.5rem;
+}
+#barre_de_recherche *{
+	margin: 0.5rem;
+}
