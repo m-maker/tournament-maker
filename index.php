@@ -5,7 +5,7 @@
 	</head>
 
 	<body>
-		<h1>Tournament-maker</h1>
+		<h1>Tournoi Maker</h1>
 	</body>
 
 </html>
