@@ -42,7 +42,7 @@
 	
 	<div class="dropdown element_bandeau ">
 	<div class="retour_bandeau">
-		<button class="btn btn-succes">
+		<button class="btn btn-success">
 		Créer un tournois
 		</button>
 	</div>

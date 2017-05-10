@@ -2,7 +2,7 @@
 
 .bandeau{
 	display: flex;
-	background-color: rgb(66,133,244);
+	background-color: rgba(0,0,0,0.5);
 	margin: 0rem;
 	padding: 0rem;
 }
@@ -10,7 +10,7 @@
 	padding: 1px;
 }
 a{
-	color: black;
+	color: white;
 }
 .dropdown{
 	border: none;
@@ -20,13 +20,12 @@ a:hover{
 	color: rgb(200,200,200);
 }
 .menu_liste{
-	color: black;
-	background-color: rgba(5,5,5,0.9);
+	color: white;
 	border-style: ridge;
 }
 
 .menu_liste li a{
-	color: black;
+	color: white;
 }
 .element_bandeau:nth-child(3){
 	flex: 1;
