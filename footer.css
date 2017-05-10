@@ -1,0 +1,14 @@
+#footer{
+	height: 4rem;
+	position: fixed;
+	top: calc(100% - 4rem);
+	background-color: rgba(0,0,0,0.5);
+	width: 100%;
+	margin: 0rem;
+	padding: 0rem;
+	text-align: center;
+}
+#footer *{
+	margin: 1rem;
+}
+

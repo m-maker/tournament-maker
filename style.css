@@ -1,6 +1,7 @@
 body{
-	margin: 0rem,
+	margin: 0rem;
 	padding: 0rem;
+	background-color: rgb(66,133,244);
 }
 #form_recherche{
 	display: flex;
@@ -9,11 +10,15 @@ body{
 	margin-top: 15%;
 }
 #barre_de_recherche{
-	background-color: #ececec;
+	background-color: rgba(0,0,0,0.5);
 	text-align: center;
 	margin: 0.5rem;
 	padding: 0.5rem;
+	color: white;
 }
 #barre_de_recherche *{
 	margin: 0.5rem;
+}
+#input_barre_recherche{
+	color: rgb(66,133,244);
 }
