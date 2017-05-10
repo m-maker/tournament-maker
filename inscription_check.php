@@ -17,38 +17,32 @@ if (isset($_POST["submit"])){
 	// Initialisation & sécurisation des données utilisateur
 	$pseudo = htmlspecialchars(trim($_POST["pseudo"]));
 	$pass = htmlspecialchars(trim($_POST["pass"]));
-	$confirm_pass = htmlspecialchars(trim($_POST["confirm_pass"]));
 	$mail = htmlspecialchars(trim($_POST["mail"]));
 	$tel = htmlspecialchars(trim($_POST["tel"]));
 	$orga = htmlspecialchars(trim($_POST["orga"]));
 
-	if (!empty($pseudo) && !empty($pass) && !empty($confirm_pass) && !empty($mail) && !empty($tel)){
+	if (!empty($pseudo) && !empty($pass) && !empty($orga) && !empty($mail) && !empty($tel)){
 
 		$format_telephone = "#^[0-9]{13}$#";
 		if (!(preg_match($format_telephone, $tel))){
-			if (filter_var($mail, FILTER_VALIDATE_EMAIL)){
-				if ($pass === $confirm_pass){			
-					if (!pseudo_existe($db, $pseudo)){
+			if (filter_var($mail, FILTER_VALIDATE_EMAIL)){	
+				if (!pseudo_existe($db, $pseudo)){
 
-						$pass = md5($pass);
-						$req = $db->prepare("INSERT INTO membres (membre_pseudo, membre_pass, membre_tel, membre_mail, membre_orga, membre_date_inscription) VALUES (:pseudo, :pass, :tel, :mail, :orga, NOW())");
-						$req->bindParam(":pseudo", $pseudo, PDO::PARAM_STR);
-						$req->bindParam(":pass", $pass, PDO::PARAM_STR);
-						$req->bindParam(":tel", $tel, PDO::PARAM_STR);
-						$req->bindParam(":mail", $mail, PDO::PARAM_STR);
-						$req->bindParam(":orga", $orga, PDO::PARAM_INT);
-						$req->execute();
+					$pass = md5($pass);
+					$req = $db->prepare("INSERT INTO membres (membre_pseudo, membre_pass, membre_tel, membre_mail, membre_orga, membre_date_inscription) VALUES (:pseudo, :pass, :tel, :mail, :orga, NOW())");
+					$req->bindParam(":pseudo", $pseudo, PDO::PARAM_STR);
+					$req->bindParam(":pass", $pass, PDO::PARAM_STR);
+					$req->bindParam(":tel", $tel, PDO::PARAM_STR);
+					$req->bindParam(":mail", $mail, PDO::PARAM_STR);
+					$req->bindParam(":orga", $orga, PDO::PARAM_INT);
+					$req->execute();
 
-						$_SESSION["id"] = $pseudo;
-						header("Location: index.php");
+					$_SESSION["id"] = $pseudo;
+					header("Location: index.php");
 
-					}else{
-						// ERREUR PSEUDO EXISTE DEJA
-						echo "err_pseudo";
-					}
 				}else{
-					// ERREUR MDP CORRESPONDENT PAS
-					echo "err_pass";
+					// ERREUR PSEUDO EXISTE DEJA
+					echo "err_pseudo";
 				}
 			}else{
 				// ERREUR FORMAT MAIL
