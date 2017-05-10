@@ -22,3 +22,17 @@ body{
 #input_barre_recherche{
 	color: rgb(66,133,244);
 }
+.center {
+	text-align: center;
+}
+.btn-grand {
+	width: 40%;
+	margin: 0;
+}
+.space-top {
+	margin-top: 3%;
+}
+.form-grand {
+	width: 80%;
+	margin: auto;
+}

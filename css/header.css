@@ -25,7 +25,7 @@ a:hover{
 }
 
 .menu_liste li a{
-	color: white;
+	color: black;
 }
 .element_bandeau:nth-child(3){
 	flex: 1;
