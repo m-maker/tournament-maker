@@ -1,5 +1,7 @@
 <?php 
 
+session_start();
+
 function connexionBdd(){
 	$hote = "localhost";
 	$db = "tournoi_soccer";
