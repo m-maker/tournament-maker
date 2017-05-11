@@ -18,10 +18,10 @@
 		<!-- CONTENU DE LA PAGE -->
 
 		<!-- BARRE DE RECHERCHE -->
-		<form id="form_recherche" action="liste_tournois" method="post">
+		<form id="form_recherche" action="liste_tournois" method="get">
 	  		<div id="barre_de_recherche">
 	  			<span> Les tournois à coté de chez toi </span>
-	    		<input id="input_barre_recherche" type="text" placeholder="Département: 33, 75, 13...">
+	    		<input id="input_barre_recherche" type="text" placeholder="Département: 33, 75, 13..." name="dpt">
 	  			<button class="btn btn-success btn-xs" type="submit" class="btn btn-default">Go!</button>
 	  		</div>
 		</form>

@@ -1,12 +1,39 @@
-.header{
-	width: 100%
+.conteneur-tournoi {
+	background: #f5f5f5;
+	border-bottom: 1px solid black;
+	margin: 1%;
+	border-radius: 10px;
 }
-.logo_tournoi{
-	width: 30%;
+.body_tournoi h2 {
+	font-size: 25px;
+	margin-top: 0;
 }
-.body_tournoi{
-	display: flex;
+.logo_tournoi {
+	vertical-align: bottom;
 }
-.corps_tournoi{
-	flex: 1;
+.logo_tournoi img {
+	height: 60px;
+}
+.header-tournoi {
+	background: #2F4F4F;
+	border: 1px dotted black;
+	margin-bottom: 1%;
+	padding: 0.5% 0;
+	color: white;
+	text-align: center;
+	font-size: 25px;
+}
+.titre-liste-tournoi {
+	background: #FFFAF0;
+	padding: 1%;
+	font-size: 35px;
+	text-align: center;
+	letter-spacing: 1px;
+	margin: 2% 0;
+	font-family: 'Titillium Web', sans-serif;
+}
+.conteneur-tournoi a {
+	color: black;
+}
+.conteneur-tournoi a:hover {
 }
