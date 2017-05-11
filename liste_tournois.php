@@ -58,7 +58,7 @@
 					$duree = format_heure_minute($un_tournoi['event_nb_heure_jeu']);
 					?>
 					<div class="conteneur-tournoi">
-						<a href="feuille_de_tournois.php">
+						<a href="feuille_de_tournois.php?tournoi=<?php echo $un_tournoi["event_id"]; ?>">
 							<div class="row">
 								<div class="header-tournoi col-sm-12">
 									<?php echo $un_tournoi['event_titre']; ?>
