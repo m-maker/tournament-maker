@@ -9,14 +9,14 @@
 .bandeau * {
 	padding: 1px;
 }
-a{
+.dropdown a{
 	color: white;
 }
 .dropdown{
 	border: none;
 }
 
-a:hover{
+.dropdown a:hover{
 	color: rgb(200,200,200);
 }
 .menu_liste{

@@ -28,6 +28,7 @@
 						<p><span class="glyphicon glyphicon-calendar"> Durée</span><?php echo $un_tournois['event_nb_heure_jeu']; ?></p>
 						<p><span class="glyphicon glyphicon-user"> Nombre d'équipes</span><?php echo $un_tournois['event_nb_equipe']; ?></p>
 					</div>
+				</div>
 			</div>
 		<?php
 	}
