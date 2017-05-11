@@ -52,5 +52,13 @@
 				<?php
 			}
 		}
+
+		if(!isset($_SESSION['id'])){
+			?>
+				<div>
+					<a href="connexion.php" class="btn btn-success">Connexion</a>
+				</div>
+			<?php
+		}
 	?>
 </div>
