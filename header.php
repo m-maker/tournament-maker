@@ -16,8 +16,8 @@
 
 	<div class="dropdown element_bandeau ">
 	<div class="retour_bandeau">
-		<a href="#" class="cercle">
-			<span class="glyphicon glyphicon-chevron-left encercle"></span>
+		<a href="index.php">
+			<span class="glyphicon glyphicon-home"></span>
 		</a>
 	</div>
 	</div>
@@ -28,7 +28,7 @@
 
 	<?php 
 		if (isset($_SESSION['id'])){
-			if (!empty($_SESSION)){
+			if (!empty($_SESSION['id'])){
 				?>
 					<div class="dropdown element_bandeau ">
 						<a>
@@ -38,13 +38,19 @@
 				<?php
 			}
 		}
+
+		if (isset($_SESSION['id'])){
+			if($_SESSION['membre_orga'] == 1){
+				?>
+				<div class="dropdown element_bandeau ">
+					<div>
+						<button class="btn btn-success">
+						Créer un tournois
+						</button>
+					</div>
+				</div>
+				<?php
+			}
+		}
 	?>
-	
-	<div class="dropdown element_bandeau ">
-	<div class="retour_bandeau">
-		<button class="btn btn-success">
-		Créer un tournois
-		</button>
-	</div>
-	</div>
 </div>
