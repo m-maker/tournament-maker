@@ -44,9 +44,7 @@
 				?>
 				<div class="dropdown element_bandeau ">
 					<div>
-						<button class="btn btn-success">
-						Créer un tournois
-						</button>
+						<a href="organiser_tournoi.php" class="btn btn-success">Créer un tournois</a>
 					</div>
 				</div>
 				<?php

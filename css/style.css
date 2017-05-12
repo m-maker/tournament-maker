@@ -36,3 +36,6 @@ body{
 	width: 70%;
 	margin: auto;
 }
+.ligne{
+	display: flex;
+}

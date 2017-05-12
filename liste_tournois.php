@@ -4,7 +4,7 @@
 	$liste_tournois = liste_tournois($dpt);
 
 	if(isset($_SESSION['id'])){
-		$user = $db->prepare('SELECT * FROM membres WHERE id = :membre_id');
+		$user = $db->prepare('SELECT * FROM membres WHERE membre_id = :id');
 		$user->execute(array(
 			'id' => $_SESSION['id']
 		));
