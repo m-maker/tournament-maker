@@ -62,8 +62,8 @@
 						    		<input id="radio_equipe" type="radio" name="tarification" value="equipe">
 						    		<label for="radio_joueur">Prix par joueur</label>
 						    		<input id="radio_joueur" type="radio" name="tarification" value="equipe">
-						    		<div id="tarif_euro" class="ligne"> 
-							    		<select class="form-control" name="tarif_euro">
+						    		<div id="tarif" class="ligne"> 
+							    		<select class="form-control" name="tarif">
 							    			<?php
 							     				for ($i=0; $i < 60; $i=$i+0.5) { 
 							    					?>
