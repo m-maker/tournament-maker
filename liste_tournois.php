@@ -4,9 +4,9 @@
 	$liste_tournois = liste_tournois($dpt);
 
 	if(isset($_SESSION['id'])){
-		$user = $db->prepare('SELECT * FROM membres WHERE id = :membre_id');
+		$user = $db->prepare('SELECT * FROM membres WHERE membre_id = :membre_id');
 		$user->execute(array(
-			'id' => $_SESSION['id']
+			'membre_id' => $_SESSION['id']
 		));
 	}
 
@@ -35,6 +35,7 @@
 	<head>
 		<?php include ('head.php'); ?>
 		<link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/liste_tournois.css">
 		<title>Tournois de foot en salle</title>
 	</head>
 
