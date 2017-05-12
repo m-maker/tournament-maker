@@ -1,5 +1,15 @@
 <?php
 	include "conf.php";
+	$dpt = $_GET['dpt'];
+	$liste_tournois = liste_tournois($dpt);
+
+	if(isset($_SESSION['id'])){
+		$user = $db->prepare('SELECT * FROM membres WHERE membre_id = :membre_id');
+		$user->execute(array(
+			'membre_id' => $_SESSION['id']
+		));
+	}
+
 	function liste_tournois($dpt){
 		$db = connexionBdd();
 		$req_dpt = $db->prepare("SELECT dpt_id FROM departements WHERE dpt_code = :code");
@@ -25,23 +35,19 @@
 	<head>
 		<?php include ('head.php'); ?>
 		<link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
-		<link rel="stylesheet" href="css/liste_tournois.css">
+		<link rel="stylesheet" type="text/css" href="css/liste_tournois.css">
+
 		<title>Tournois de foot en salle</title>
 	</head>
 
 	<body>
 
 		<!-- HEADER -->
-		<?php 
-			$dpt = htmlspecialchars(trim($_GET["dpt"]));
-			$liste_tournois = liste_tournois($dpt);
-			include('header.php'); 
-		?>
+		<?php include('header.php'); ?>
 
 		<div class="titre-liste-tournoi">
 			Les tournois dans le <?php echo $dpt; ?>
 		</div>
-
 		<div class="container-fluid">
 
 			<?php
@@ -86,5 +92,6 @@
 		?>
 
 		</div>
+		<?php include('footer.php'); ?>
 	</body>
 <html>
