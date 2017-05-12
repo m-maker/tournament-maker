@@ -1,5 +1,15 @@
 <?php
 	include "conf.php";
+	$dpt = $_GET['dpt'];
+	$liste_tournois = liste_tournois($dpt);
+
+	if(isset($_SESSION['id'])){
+		$user = $db->prepare('SELECT * FROM membres WHERE id = :membre_id');
+		$user->execute(array(
+			'id' => $_SESSION['id']
+		));
+	}
+
 	function liste_tournois($dpt){
 		$db = connexionBdd();
 		$req_dpt = $db->prepare("SELECT dpt_id FROM departements WHERE dpt_code = :code");
@@ -31,16 +41,11 @@
 	<body>
 
 		<!-- HEADER -->
-		<?php 
-			$dpt = htmlspecialchars(trim($_GET["dpt"]));
-			$liste_tournois = liste_tournois($dpt);
-			include('header.php'); 
-		?>
+		<?php include('header.php'); ?>
 
 		<div class="titre-liste-tournoi">
 			Les tournois dans le <?php echo $dpt; ?>
 		</div>
-
 		<div class="container-fluid">
 
 			<?php
@@ -85,5 +90,6 @@
 		?>
 
 		</div>
+		<?php include('footer.php'); ?>
 	</body>
 <html>
