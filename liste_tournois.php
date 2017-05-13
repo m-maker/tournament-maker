@@ -36,6 +36,7 @@
 		<?php include ('head.php'); ?>
 		<link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="css/liste_tournois.css">
+
 		<title>Tournois de foot en salle</title>
 	</head>
 

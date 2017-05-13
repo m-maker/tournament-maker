@@ -1,5 +1,8 @@
 <?php include ('conf.php');
 
+if (!isset($_SESSION["id"]))
+	header("Location: connexion.php");
+
 function recupObjetTournoiByID($id){
 	$db = connexionBdd();
 	$req_tournoi = $db->prepare("SELECT * FROM tournois WHERE event_id = :id");
@@ -20,6 +23,22 @@ function recupEquipesCompletes($id_tournoi, $nb_joueur_min){
 			$equipes_completes[] = $equipes;
 	}
 	return $equipes_completes;
+}
+
+function recupEquipeJoueur($id_joueur, $id_tournoi){
+	$db = connexionBdd();
+	$req_equipe = $db->prepare("SELECT * FROM equipes INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id");
+	$req_equipe->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
+	$req_equipe->execute();
+	while ($equipe = $req_equipe->fetch()){
+		$req = $db->prepare("SELECT * FROM membres INNER JOIN equipe_membres WHERE em_team_id = :id_team");
+		$req->bindValue(":id_team", $equipe["team_id"], PDO::PARAM_INT);
+		$req->execute();
+		while ($membres = $req->fetch()) {
+			if ($membres["membre_id"] == $id_joueur)
+				return $equipe;
+		}
+	}
 }
 
 function recupEquipesIncompletes($id_tournoi, $nb_joueur_min){
@@ -66,15 +85,18 @@ function recupererJoueurs($id_equipe){
 	<?php include ('header.php'); ?>
 
 	<?php 
+
 		$id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
 		$leTournoi = recupObjetTournoiByID($id_tournoi);
 		if ($leTournoi->event_prive == 1 && !isset($_POST["mdp"]) || $leTournoi->event_prive == 1 && isset($_POST["mdp"]) && $_POST["mdp"] != $leTournoi->event_pass ){ ?>
-				Ce tournoi est privé
+				<div class="mdp">
+				Ce tournoi est privé !
 				<div class="form-mdp">
 					<form method="post">
-						<input type="text" placeholder="mot de passe du tournoi" name="mdp" />
+						<input type="text" placeholder="Saisissez le mot de passe du tournoi" name="mdp" />
 						<input type="submit" value="Confirmer" />
 					</form>
+				</div>
 				</div>
 	<?php   
 		}else{	
@@ -97,7 +119,37 @@ function recupererJoueurs($id_equipe){
 		    		</div>
 
 		    		<div id="mon_equipe" class="tab-pane fade">
-		    			rthr
+		    			<div class="row">
+		    				<!-- Mon equipe et ses membres -->
+			    			<?php 
+	    						$mon_equipe = recupEquipeJoueur($_SESSION["id"], $id_tournoi);
+	    						if (empty($mon_equipe)){ ?>
+	    							<h2 class="err-titre">Vous n'avez pas encore d'équipe</h2>
+	    					    <?php }else{ ?>
+		    						<h2 class="err-titre"><?php echo $mon_equipe["team_nom"]; ?></h2>
+		    						<div class="col-md-6">
+		    							<?php 
+		    								$joueurs = recupererJoueurs($mon_equipe["team_id"]);
+		    								foreach ($joueurs as $unJoueur) { 
+		    									if ($unJoueur["em_membre_paye"] == 1) { $paye = "Payé"; } else { $paye="Non Payé"; }?>
+		    									<div class="unJoueur" id="mon-equipe-cont">
+		    										<?php echo $unJoueur["membre_pseudo"]; ?><br />
+		    										<?php echo $unJoueur["statut_nom"]; ?>
+		    										<span class="statut"><?php echo $paye; ?></span>	
+		    									</div>
+		    								<?php } ?>
+		    						</div>
+
+				    				<div class="col-md-1">  </div>
+
+				    				<div class="col-md-5" id="mur-equipe-cont">
+				    					<div class="titre-mur-equipe">
+				    						<p>Les messages de votre équipe</p>
+				    					</div>
+				    					<h4>Personne n'a posté de message pour le moment.</h4>
+				    				</div>
+				    			<?php } ?>
+		    			</div>
 		    		</div>
 
 		    		<div id="equipes" class="tab-pane fade">
