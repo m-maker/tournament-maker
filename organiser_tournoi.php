@@ -31,7 +31,7 @@
 						        	<br/>
 						        	<input type="text" class="form-control" id="input_event_adresse" name="event_adresse" placeholder="Adresse du tournoi">
 						        	<div class="ligne">
-							        	<input type="text" class="form-control" id="input_event_code_postal" name="input_event_code_postal" placeholder="Code Postal">
+							        	<input type="text" class="form-control" id="input_event_code_postal" name="event_code_postal" placeholder="Code Postal">
 							        	<input type="text" class="form-control" id="input_event_ville" name="event_ville" placeholder="Ville">
 							        </div>
 						    	</div>
@@ -39,11 +39,11 @@
 						    	<div class="form-group center">
 						    		<p>Horaires</p>
 
-							    	<input type="text" class="form-control" id="input_event_date" name="input_event_date" placeholder="Date: Samedi 24 Juin">
+							    	<input type="text" class="form-control" id="input_event_date" name="event_date" placeholder="Date: Samedi 24 Juin">
 						    		<div class="ligne">
-							    		<input type="text" class="form-control" id="input_event_nb_heure_jeu" name="input_event_nb_heure_jeu" placeholder="Nombre d'heure de jeu">
-							    		<input type="text" class="form-control" id="input_event_heure_debut" name="input_event_heure_debut" placeholder="Heure de début de l'événement">
-							    		<input type="text" class="form-control" id="input_event_heure_fin" name="input_event_heure_fin" placeholder="Heure de fin de l'événement">
+							    		<input type="text" class="form-control" id="input_event_nb_heure_jeu" name="event_nb_heure_jeu" placeholder="Nombre d'heure de jeu">
+							    		<input type="text" class="form-control" id="input_event_heure_debut" name="event_heure_debut" placeholder="Heure de début de l'événement">
+							    		<input type="text" class="form-control" id="input_event_heure_fin" name="event_heure_fin" placeholder="Heure de fin de l'événement">
 							    	</div>
 						    	</div>
 
@@ -61,7 +61,7 @@
 						    		<label for="radio_equipe">Prix par équipe</label>
 						    		<input id="radio_equipe" type="radio" name="tarification" value="equipe">
 						    		<label for="radio_joueur">Prix par joueur</label>
-						    		<input id="radio_joueur" type="radio" name="tarification" value="equipe">
+						    		<input id="radio_joueur" type="radio" name="tarification" value="joueur">
 						    		<div id="tarif" class="ligne"> 
 							    		<select class="form-control" name="tarif">
 							    			<?php
@@ -78,9 +78,9 @@
 							    	<div>
 							    		<br/>
 								    	<p>Tournois-soccer.fr permet de gérer les encaissements des joueurs directement depuis la plateforme. Souhaitez-vous en profiter?</p>
-							    		<input id="paiement_ok" type="radio" name="paiement" value="paiement_ok">
+							    		<input id="paiement_ok" type="radio" name="paiement" value="1">
 							    		<label for="paiement_ok">Oui, ça m'enlève une grosse épine du pied</label>
-							    		<input id="paiement_refus" type="radio" name="paiement" value="paiement_refus">
+							    		<input id="paiement_refus" type="radio" name="paiement" value="0">
 							    		<label for="paiement_refus">Non merci, j'ai beaucoup de courage!</label>
 						    		</div>
 						    		<div>
@@ -97,9 +97,9 @@
 
 						    	<div class="form-group center">
 						    		<p>Inscription</p>
-							    	<input id="match_public" type="radio" name="match" value="paiement_ok">
+							    	<input id="match_public" type="radio" name="restriction" value="public">
 							    	<label for="match_public">Match publique</label>
-							   		<input id="match_prive" type="radio" name="paiement" value="paiement_refus">
+							   		<input id="match_prive" type="radio" name="public" value="private">
 							   		<label for="match_prive">Match privé (avec mot de passe)</label>
 							   		<br/>
 							   		<input type="text" class="form-control" id="input_event_pass" name="event_pass" placeholder="Mot de passe. ex:******">
