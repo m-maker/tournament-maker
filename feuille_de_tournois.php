@@ -5,7 +5,7 @@ if (!isset($_SESSION["id"]))
 
 function recupObjetTournoiByID($id){
 	$db = connexionBdd();
-	$req_tournoi = $db->prepare("SELECT * FROM tournois WHERE event_id = :id");
+	$req_tournoi = $db->prepare("SELECT * FROM tournois INNER JOIN lieux ON event_lieu = lieu_id WHERE event_id = :id");
 	$req_tournoi->bindValue(":id", $id, PDO::PARAM_INT);
 	$req_tournoi->execute();
 	return $req_tournoi->fetch(PDO::FETCH_OBJ);
@@ -39,6 +39,14 @@ function recupEquipeJoueur($id_joueur, $id_tournoi){
 				return $equipe;
 		}
 	}
+}
+
+function recupMessagesMur($id_tournoi){
+	$db = connexionBdd();
+	$req = $db->prepare("SELECT * FROM messages_mur INNER JOIN membres ON mur_membre_id = membre_id WHERE mur_tournoi_id = :id ORDER BY mur_date DESC");
+	$req->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
+	$req->execute();
+	return $req->fetchAll();
 }
 
 function recupEquipesIncompletes($id_tournoi, $nb_joueur_min){
@@ -84,50 +92,111 @@ function recupererJoueurs($id_equipe){
 	<body>
 	<?php include ('header.php'); ?>
 
+	<div class="container-fluid">
+	
 	<?php 
 
 		$id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
 		$leTournoi = recupObjetTournoiByID($id_tournoi);
 		if ($leTournoi->event_prive == 1 && !isset($_POST["mdp"]) || $leTournoi->event_prive == 1 && isset($_POST["mdp"]) && $_POST["mdp"] != $leTournoi->event_pass ){ ?>
-				<div class="mdp">
-				Ce tournoi est privé !
+			<div class="mdp">
+				<h3>Ce tournoi est privé !</h3>
 				<div class="form-mdp">
 					<form method="post">
-						<input type="text" placeholder="Saisissez le mot de passe du tournoi" name="mdp" />
+						<input type="text" placeholder="Saisir le mot de passe" name="mdp" />
 						<input type="submit" value="Confirmer" />
 					</form>
 				</div>
-				</div>
+			</div>
 	<?php   
 		}else{	
-			if (isset($_POST["mdp"]) && $_POST["mdp"] === $leTournoi->event_pass){
-				echo "<div class='titre-liste-tournoi'> Bienvenue dans ce tournoi privé </div>";
-			} ?>
+			echo "<div class='titre-liste-tournoi'> Bienvenue dans le tournoi : " . $leTournoi->event_titre . "</div>";
+			$heure_debut = format_heure_minute($leTournoi->event_heure_debut);
+			$heure_fin = format_heure_minute($leTournoi->event_heure_fin);
+			$duree = format_heure_minute($leTournoi->event_nb_heure_jeu);
+	 	?>
 
-		<div class="container-fluid">
+			<div class="conteneur-tournoi" style="border-radius:0;width: 100%;margin:0;padding: 1%;">
+				<div class="row">
+
+					<div class="col-lg-4 center">
+						<div class="logo_tournoi">
+							 <img class="img-responsive img-circle" height="50" src='img/logo-tournois/<?php echo $leTournoi->event_img;?>' alt="Tournoi">
+						</div>
+					</div>
+					<div class="col-lg-5">
+						<h2><?php echo $leTournoi->event_date;?></h2>
+						<p><?php echo $heure_debut.' - '.$heure_fin; ?></p>
+						<h2><?php echo $leTournoi->lieu_nom;?></h2>
+					</div>
+					<div class="col-lg-3">
+						<p><span class="glyphicon glyphicon-euro"></span> Prix : <?php echo $leTournoi->event_tarif; ?></span></p>
+						<p><span class="glyphicon glyphicon-calendar"></span> Durée : <?php echo $duree; ?></p>
+						<p><span class="glyphicon glyphicon-user"></span> Nombre d'équipes : <?php echo $leTournoi->event_nb_equipes; ?></p>
+					</div>
+
+				</div>
+			</div>
+
 			<div class="row" id="menu_match">
-		    	<div id="btn-mur" class="item-li col-md-4"><a class=" it" data-toggle="tab" href="#Mur">Mur</a></div>
+		    	<div id="btn-mur" class="item-li col-md-4"><a class="it" data-toggle="tab" href="#mur">Mur</a></div>
 		    	<div id="btn-equipe" class="item-li col-md-4 "><a class="it" data-toggle="tab" href="#mon_equipe">Mon équipe</a></div>
-		    	<div id="btn-mon-equipe" class="item-li col-md-4" ><a class=" it" data-toggle="tab" href="#equipes">Équipes</a></div>
+		    	<div id="btn-mon-equipe" class="item-li col-md-4" ><a class="it" data-toggle="tab" href="#equipes">Équipes</a></div>
 		  	</div>
 
-		  	<div id="body_match">
+		  	<div id="body_match" class="espace-bot">
 				<div id="contenu_body_match" class="tab-content">
 
-		    		<div id="Mur" class="tab-pane fade in active">
-		    			rthr
+		    		<div id="mur" class="tab-pane fade">
+		    			<form method="post" action="post_msg.php?id=<?php echo $leTournoi->event_id; ?>">
+		    				<textarea class="form-control" placeholder="Votre message..." name="message" rows="3"></textarea>
+		    				<button class="btn btn-success btn-grand" name="submit">Poster mon message</button>
+		    			</form>
+		    			<?php $messages = recupMessagesMur($leTournoi->event_id);
+		    			foreach ($messages as $unMessage) { ?>
+			    			<div class="message-cont espace-top">
+			    				<?php echo $unMessage["mur_contenu"]; 
+			    				if ($unMessage["membre_id"] == $_SESSION["id"]) { echo '<span class="delete-msg"><a href="delete_msg.php?id=' . $unMessage["mur_id"] . '&tournoi=' . $leTournoi->event_id . '">X</a></span>'; } ?>
+			    				<div class="sign">
+			    					Par <span><?php echo $unMessage["membre_pseudo"]; ?></span> le <span><?php echo $unMessage["mur_date"]; ?></span>
+			    				</div>
+			    			</div>
+			    		<?php } ?>
 		    		</div>
 
+					<!-- MON EQUIPE ET SES MEMBRES -->
 		    		<div id="mon_equipe" class="tab-pane fade">
-		    			<div class="row">
-		    				<!-- Mon equipe et ses membres -->
+		    				
 			    			<?php 
 	    						$mon_equipe = recupEquipeJoueur($_SESSION["id"], $id_tournoi);
 	    						if (empty($mon_equipe)){ ?>
 	    							<h2 class="err-titre">Vous n'avez pas encore d'équipe</h2>
 	    					    <?php }else{ ?>
+	    					    <div class="row">
 		    						<h2 class="err-titre"><?php echo $mon_equipe["team_nom"]; ?></h2>
-		    						<div class="col-md-6">
+		    							<div class="col-md-12 param-team center">
+			    							<h3 class="clic-param espace-bot">Paramètres de l'equipe: </h3>
+			    							<div>
+			    								<form id="form-param-team" method="post" action="param_team.php?id=<?php echo $mon_equipe['team_id']; ?>&tournoi=<?php echo $leTournoi->event_id; ?>">
+			    									<input style="width: 50%; margin: auto;" class="form-control" type="text" placeholder="Nom de l'equipe" name="nom-team" value="<?php echo $mon_equipe['team_nom']; ?>"><br />
+				    								Etat de l'équipe :
+					    							<label class="etat-team espace-left" id="prv">
+					    								Privé
+					    								<input type="radio" name="etat-team" value="1" <?php if ($mon_equipe["team_prive"] == 1){ echo 'checked'; } ?> />
+					    							</label>
+					    							<label class="etat-team" id="pub">
+					    								Public
+					    								<input type="radio" name="etat-team" value="0" <?php if ($mon_equipe["team_prive"] == 0){ echo 'checked'; } ?> />
+					    							</label>
+					    							<input <?php if ($mon_equipe["team_prive"] == 0){ echo 'style="display: none;"'; }else{ echo 'value="'.$mon_equipe["team_pass"].'"'; } ?> id="mdp-team" class="espace-left" type="text" name="pass-team" placeholder="mot de passe de l'equipe"><br />
+					    							<input type="submit" style="width: 50%;" name="submit" class="espace-top espace-bot btn btn-success" value="Enregistrer">
+				    							</form>
+			    							</div>
+		    								Invite tes amis en leur transmettant ce lien : <input style="text-align: center; width: 50%;" type="text" readonly value="<?php echo $param->url_site; ?>invite.php?code_team=<?php echo $mon_equipe["team_code"]; ?>">
+		    							</div>
+		    						</div>
+		    						<div class="row">
+		    							<div class="col-md-6">
 		    							<?php 
 		    								$joueurs = recupererJoueurs($mon_equipe["team_id"]);
 		    								foreach ($joueurs as $unJoueur) { 
@@ -138,18 +207,19 @@ function recupererJoueurs($id_equipe){
 		    										<span class="statut"><?php echo $paye; ?></span>	
 		    									</div>
 		    								<?php } ?>
-		    						</div>
+		    							</div>
 
-				    				<div class="col-md-1">  </div>
+					    				<div class="col-md-1">  </div>
 
-				    				<div class="col-md-5" id="mur-equipe-cont">
-				    					<div class="titre-mur-equipe">
-				    						<p>Les messages de votre équipe</p>
-				    					</div>
-				    					<h4>Personne n'a posté de message pour le moment.</h4>
+					    				<div class="col-md-5" id="mur-equipe-cont">
+					    					<div class="titre-mur-equipe">
+					    						<p>Les messages de votre équipe</p>
+					    					</div>
+					    					<h4>Personne n'a posté de message pour le moment.</h4>
+					    				</div>
 				    				</div>
 				    			<?php } ?>
-		    			</div>
+		    			
 		    		</div>
 
 		    		<div id="equipes" class="tab-pane fade">
@@ -261,7 +331,19 @@ function recupererJoueurs($id_equipe){
 
 		    			<hr>
 		    			<?php if(empty($mon_equipe)){ ?>
-		    				<a href="creer_equipe.php?"><button class="add-team btn btn-success">Créer mon équipe</button></a>
+		    				<button class="add-team btn btn-success" value="<?php echo $leTournoi->event_id; ?>">Créer mon équipe</button>
+		    				<form class="espace-top form-equipe" method="post" action="creer_equipe.php?tournoi=<?php echo $leTournoi->event_id; ?>">
+		    					<fieldset>
+							    	<div class="form-group">
+							        	<div class="col-md-8">
+							        		<input type="text" class="form-control" id="inputPseudo" name="nom" placeholder="Nom de l'équipe">
+							        	</div>
+							        	<div class="col-md-4">
+							    			<button type="submit" name="submit" class="btn btn-primary btn-grand">Ajouter</button>
+							    		</div>        	
+								    </div>
+							    </fieldset>
+		    				</form>
 		    			<?php } ?>
 
 		    		</div>
@@ -296,6 +378,32 @@ function recupererJoueurs($id_equipe){
 	    	$(".item-li, .item-act").click(function() {
 	    		$(".item-li").removeClass("item-act");
 	    		$(this).addClass("item-act");
+	    	});
+
+	    	$(".etat-team").click(function() {
+	    		var id = $(this).attr("id");
+	    		var input_pass = $("#mdp-team");
+	    		if (id == "pub"){
+	    			input_pass.val("");
+	    			input_pass.hide();
+	    		}else
+	    			input_pass.show();
+	    	});
+
+	    	$(".add-team").click(function() { 
+	    		var form_a_afficher = $(".form-equipe");
+	    		if (form_a_afficher.css("display") == "none")
+	    			form_a_afficher.show();
+	    		else
+	    			form_a_afficher.hide();
+	    	});
+
+	    	$(".clic-param").click(function() {
+	    		var form = $("#mon_equipe #form-param-team");
+	    		if (form.css("display") == "none")
+	    			form.show();
+	    		else
+	    			form.hide();
 	    	});
 
 	    </script>

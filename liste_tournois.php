@@ -23,11 +23,6 @@
 		$liste = $req_liste_tournois->fetchAll();
 		return $liste;
 	}
-
-	function format_heure_minute($heure){
-		$hr = new DateTime($heure);
-		return $hr->format("H:i").' h';
-	}
 ?>
 
 <html>

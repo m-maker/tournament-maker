@@ -2,6 +2,16 @@
 
 session_start();
 
+global $db;
+global $param;
+
+function getParams(){
+	$db = connexionBdd();
+	$req = $db->query("SELECT * FROM parametres;");
+	$req->execute();
+	return $req->fetch(PDO::FETCH_OBJ);
+}
+
 function connexionBdd(){
 	$hote = "localhost";
 	$db = "tournoi_soccer";
@@ -23,7 +33,22 @@ function recupStatutJoueur($id_joueur, $id_equipe){
 	return $req->fetchColumn();
 }
 
-global $db;
+function chaineRandom($car) {
+	$string = "";
+	$chaine = "abcdefghijklmnpqrstuvwxyABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+	srand((double)microtime()*1000000);
+	for($i=0; $i<$car; $i++) {
+		$string .= $chaine[rand()%strlen($chaine)];
+	}
+	return $string;
+}
+
+function format_heure_minute($heure){
+	$hr = new DateTime($heure);
+	return $hr->format("H:i").' h';
+}
+
 $db = connexionBdd();
+$param = getParams();
 
 ?>

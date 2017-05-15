@@ -39,3 +39,12 @@ body{
 	width: 70%;
 	margin: auto;
 }
+.espace-top {
+	margin-top: 2%;
+}
+.espace-bot {
+	margin-bottom: 2%;
+}
+.espace-left {
+	margin-left: 2%;
+}

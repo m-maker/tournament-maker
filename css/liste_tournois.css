@@ -4,7 +4,7 @@
 	margin: 1%;
 	border-radius: 10px;
 }
-.body_tournoi h2 {
+.conteneur-tournoi h2 {
 	font-size: 25px;
 	margin-top: 0;
 }
@@ -29,7 +29,8 @@
 	font-size: 35px;
 	text-align: center;
 	letter-spacing: 1px;
-	margin: 0 0 2%;
+	margin: 0;
+	border-bottom: 1px dotted black;
 	font-family: 'Titillium Web', sans-serif;
 }
 .conteneur-tournoi a {
