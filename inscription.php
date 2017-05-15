@@ -50,11 +50,11 @@
 
 						    	<div class="form-group center">
 					          		<label style="margin-right: 2%;">
-					            		<input type="radio" name="orga" id="optionsRadios1" value="0" checked="">
+					            		<input type="radio" name="orga" id="orga" value="0" checked="">
 					            		Joueur
 					          		</label>
 					          		<label>
-					            		<input type="radio" name="orga" id="optionsRadios2" value="1">
+					            		<input type="radio" name="orga" id="orga" value="1">
 					            		Organisateur
 					          		</label>	
 							    </div>
