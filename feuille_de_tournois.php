@@ -31,11 +31,11 @@ function recupEquipeJoueur($id_joueur, $id_tournoi){
 	$req_equipe->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
 	$req_equipe->execute();
 	while ($equipe = $req_equipe->fetch()){
-		$req = $db->prepare("SELECT * FROM membres INNER JOIN equipe_membres WHERE em_team_id = :id_team");
+		$req = $db->prepare("SELECT * FROM equipe_membres WHERE em_team_id = :id_team");
 		$req->bindValue(":id_team", $equipe["team_id"], PDO::PARAM_INT);
 		$req->execute();
 		while ($membres = $req->fetch()) {
-			if ($membres["membre_id"] == $id_joueur)
+			if ($membres["em_membre_id"] == $id_joueur)
 				return $equipe;
 		}
 	}
@@ -153,76 +153,116 @@ function recupererJoueurs($id_equipe){
 		    		</div>
 
 		    		<div id="equipes" class="tab-pane fade">
-		    			<div class="row categories-equipes">
-							<h2>Equipes completes :</h2>
-							<?php 
+		    			<div class="categories-equipes">
 
+		    				<div class="row">
+								<div class="col-md-12">
+									<h2>Equipes completes :</h2>
+								</div>
+							</div>
+
+							<?php 
 							$equipes_completes = recupEquipesCompletes($id_tournoi, $leTournoi->event_joueurs_min); 
 							if (!empty($equipes_completes)){
 								foreach ($equipes_completes as $uneEquipe) { ?>
-			    				<div class="row equipe-cont" id="<?php echo $uneEquipe["team_id"]; ?>">
-			    					<div class="col-md-6"><h1><?php echo $uneEquipe["team_nom"]; ?></h1></div>
-			    					<div class="col-md-4"><h1><?php echo compter_membres($uneEquipe["team_id"]); ?> Joueurs</h1></div>
-			    					<div class="col-md-2"><button class="btn btn-success">Rejoindre</button> </div>
-			    				</div>
+			    				<div class="equipe-cont" id="<?php echo $uneEquipe["team_id"]; ?>">
+			    					<div class="row">
+			    						<div class="col-md-6"><h1><?php echo $uneEquipe["team_nom"]; ?></h1></div>
+			    						<div class="col-md-4"><h1><?php echo compter_membres($uneEquipe["team_id"]); ?> Joueurs</h1></div>
+			    						<?php if (recupStatutJoueur($_SESSION["id"], $uneEquipe["team_id"]) == 1){ ?>
+			    							<div class="col-md-2"><button style="width: 100%;" mod="suppr" id="<?php echo $uneEquipe['team_id']; ?>" class="btn btn-danger">Supprimer</button></div>
+			    						<?php }else{
+			    							if ($mon_equipe["team_id"] == $uneEquipe["team_id"]){ ?>
+			    								<div class="col-md-2"><button style="width: 100%;" mod="leave" id="<?php echo $uneEquipe['team_id']; ?>" class="btn btn-danger">Quitter</button></div>
+			    							<?php }elseif (empty($mon_equipe) && compter_membres($uneEquipe["team_id"]) <= $leTournoi->event_joueurs_max){ ?>
+			    								<div class="col-md-2"><button style="width: 100%;" mod="rej" id="<?php echo $uneEquipe['team_id']; ?>" class="btn btn-success">Rejoindre</button></div>
+			    						<?php }
+			    						} ?>
+			    					</div>
+			    				
 			   					<?php 
 			   						$joueurs_equipe = recupererJoueurs($uneEquipe["team_id"]);
-			   						$i = 1;
+			   						$i = 2;
 			   					?> 
-			   						<div class="row equipe-joueurs" style="display: none;" id="e-<?php echo $uneEquipe["team_id"]; ?>">
+			   						<div class="equipe-joueurs">
+			   							<div class="row" style="display: none; margin: auto;" id="e-<?php echo $uneEquipe["team_id"]; ?>">
 			   					<?php
-			   						foreach ($joueurs_equipe as $unJoueur) { 
+			   						foreach ($joueurs_equipe as $unJoueur) {
 			   							if ($unJoueur["em_membre_paye"] == 1) { $paye = "Payé"; } else { $paye="Non Payé"; } ?>
 		    								<div class="col-md-6">
 		    									<?php echo $unJoueur["membre_pseudo"]; ?><br />
 		    									<?php echo $unJoueur["statut_nom"]; ?>
 		    									<span class="statut"><?php echo $paye; ?></span>
 		    								</div>
-			   					<?php } ?>
-			   						</div> 
+
+			   						<?php } ?>
+			   							</div>
+			   						</div>
+			   					</div>
 			   				<?php
 								}
 			    			}else{
-			    				echo "<h3>Il n'y a aucune équipe complète pour l'instant</h3>";
-			    			} ?>
+			    				echo "<h3>Il n'y a aucune équipe incomplète pour l'instant</h3>";
+			    			} ?>	
 		    				
 		    			</div>
 
-		    			<div class="row categories-equipes">
-							<h2>Equipes incompletes :</h2>
-							<?php 
+		    			<div class="categories-equipes">
+		    				<div class="row">
+								<div class="col-md-12">
+									<h2>Equipes incompletes :</h2>
+								</div>
+							</div>
 
-							$equipes_completes = recupEquipesIncompletes($id_tournoi, $leTournoi->event_joueurs_min); 
-							if (!empty($equipes_completes)){
-								foreach ($equipes_completes as $uneEquipe) { ?>
-			    				<div class="row equipe-cont" id="<?php echo $uneEquipe["team_id"]; ?>">
-			    					<div class="col-md-6"><h1><?php echo $uneEquipe["team_nom"]; ?></h1></div>
-			    					<div class="col-md-4"><h1><?php echo compter_membres($uneEquipe["team_id"]); ?> Joueurs</h1></div>
-			    					<div class="col-md-2"><button class="btn btn-success">Rejoindre</button> </div>
-			    				</div>
+							<?php 
+							$equipes_incompletes = recupEquipesIncompletes($id_tournoi, $leTournoi->event_joueurs_min); 
+							if (!empty($equipes_incompletes)){
+								foreach ($equipes_incompletes as $uneEquipe) { ?>
+			    				<div class="equipe-cont" id="<?php echo $uneEquipe["team_id"]; ?>">
+			    					<div class="row">
+			    						<div class="col-md-6"><h1><?php echo $uneEquipe["team_nom"]; ?></h1></div>
+			    						<div class="col-md-4"><h1><?php echo compter_membres($uneEquipe["team_id"]); ?> Joueurs</h1></div>
+			    						<?php if (recupStatutJoueur($_SESSION["id"], $uneEquipe["team_id"]) == 1){ ?>
+			    							<div class="col-md-2"><button style="width: 100%;" mod="suppr" id="<?php echo $uneEquipe['team_id']; ?>" class="btn btn-danger">Supprimer</button></div>
+			    						<?php }else{
+			    							if ($mon_equipe["team_id"] == $uneEquipe["team_id"]){ ?>
+			    								<div class="col-md-2"><button style="width: 100%;" mod="leave" id="<?php echo $uneEquipe['team_id']; ?>" class="btn btn-danger">Quitter</button></div>
+			    							<?php }elseif (empty($mon_equipe) && compter_membres($uneEquipe["team_id"]) <= $leTournoi->event_joueurs_max){ ?>
+			    								<div class="col-md-2"><button style="width: 100%;" mod="rej" id="<?php echo $uneEquipe['team_id']; ?>" class="btn btn-success">Rejoindre</button></div>
+			    						<?php }
+			    						} ?>
+			    					</div>
+			    				
 			   					<?php 
 			   						$joueurs_equipe = recupererJoueurs($uneEquipe["team_id"]);
-			   						$i = 1;
+			   						$i = 2;
 			   					?> 
-			   						<div class="row equipe-joueurs" style="display: none;" id="e-<?php echo $uneEquipe["team_id"]; ?>">
+			   						<div class="equipe-joueurs">
+			   							<div class="row" style="display: none; margin: auto;" id="e-<?php echo $uneEquipe["team_id"]; ?>">
 			   					<?php
-			   						foreach ($joueurs_equipe as $unJoueur) { 
+			   						foreach ($joueurs_equipe as $unJoueur) {
 			   							if ($unJoueur["em_membre_paye"] == 1) { $paye = "Payé"; } else { $paye="Non Payé"; } ?>
 		    								<div class="col-md-6">
 		    									<?php echo $unJoueur["membre_pseudo"]; ?><br />
 		    									<?php echo $unJoueur["statut_nom"]; ?>
 		    									<span class="statut"><?php echo $paye; ?></span>
 		    								</div>
-			   					<?php } ?>
-			   						</div> 
+
+			   						<?php } ?>
+			   							</div>
+			   						</div>
+			   					</div>
 			   				<?php
 								}
 			    			}else{
 			    				echo "<h3>Il n'y a aucune équipe incomplète pour l'instant</h3>";
 			    			} ?>			
 		    			</div>
+
 		    			<hr>
-		    			<button class="add-team btn btn-success">Créer mon équipe</button>
+		    			<?php if(empty($mon_equipe)){ ?>
+		    				<a href="creer_equipe.php?"><button class="add-team btn btn-success">Créer mon équipe</button></a>
+		    			<?php } ?>
 
 		    		</div>
 
@@ -235,6 +275,7 @@ function recupererJoueurs($id_equipe){
 
 	    <script type="text/javascript">
 	    	$(".equipe-cont").click(function() {
+	    		//$(".equipe-joueurs .row").hide().removeClass("act");
 	    		var id = $(this).attr("id");
 	    		var cont_joueur = $("#e-" + id);
 	    		if (cont_joueur.css("display") == "none"){
@@ -244,6 +285,12 @@ function recupererJoueurs($id_equipe){
 	    			$(this).removeClass("act");
 	    			cont_joueur.hide();
 	    		}
+	    	});
+
+	    	$(".equipe-cont button").click(function(){
+	    		var id = $(this).attr("id");
+	    		var mod = $(this).attr("mod");
+	    		document.location.replace("action_team.php?mod=" + mod + "&id=" + id);
 	    	});
 
 	    	$(".item-li, .item-act").click(function() {

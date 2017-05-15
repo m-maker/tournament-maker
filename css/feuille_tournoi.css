@@ -30,10 +30,18 @@
 .categories-equipes h2 {
 	margin-top: 1%;
 	padding: 1%;
-	background: #4169E1;
+	background: #B0C4DE;
 	border-radius: 5px;
-	color: white;
+	color: black;
 	text-align: center;
+}
+.categories-equipes {
+	width: 100%;
+	background: #B0C4DE;
+	border: 1px solid black;
+	margin-bottom: 2%;
+	border-radius: 5px;
+	padding: 1%;
 }
 .equipe-cont {
 	background: white;
@@ -48,8 +56,8 @@
 	width: 100%;
 }
 #equipes, #mon_equipe { 
-	width: 80%;
-	margin: auto;
+	width: 90%;
+	margin: 1% auto 0;
 }
 .equipe-joueurs .col-md-6 {
 	padding: 1%;
@@ -71,8 +79,8 @@ h3 {
 }
 .err-titre {
 	text-align: center;
-	background: dimgray;
-	color: white;
+	background: #B0C4DE;
+	color: black;
 	padding: 1%;
 }
 #mon-equipe-cont, #mur-equipe-cont {
@@ -91,5 +99,5 @@ h3 {
 	border-bottom: 1px solid black;
 }
 .unJoueur {
-	padding: 1%;
+	padding: 2%;
 }

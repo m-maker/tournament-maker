@@ -20,8 +20,9 @@ if (isset($_POST["submit"])){
 	$mail = htmlspecialchars(trim($_POST["mail"]));
 	$tel = htmlspecialchars(trim($_POST["tel"]));
 	$orga = htmlspecialchars(trim($_POST["orga"]));
+	var_dump($_POST);
 
-	if (!empty($pseudo) && !empty($pass) && !empty($orga) && !empty($mail) && !empty($tel)){
+	if (!empty($pseudo) && !empty($pass) && !empty($mail) && !empty($tel)){
 
 		$format_telephone = "#^[0-9]{13}$#";
 		if (!(preg_match($format_telephone, $tel))){
