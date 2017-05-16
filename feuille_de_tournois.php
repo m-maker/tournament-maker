@@ -25,22 +25,6 @@ function recupEquipesCompletes($id_tournoi, $nb_joueur_min){
 	return $equipes_completes;
 }
 
-function recupEquipeJoueur($id_joueur, $id_tournoi){
-	$db = connexionBdd();
-	$req_equipe = $db->prepare("SELECT * FROM equipes INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id");
-	$req_equipe->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
-	$req_equipe->execute();
-	while ($equipe = $req_equipe->fetch()){
-		$req = $db->prepare("SELECT * FROM equipe_membres WHERE em_team_id = :id_team");
-		$req->bindValue(":id_team", $equipe["team_id"], PDO::PARAM_INT);
-		$req->execute();
-		while ($membres = $req->fetch()) {
-			if ($membres["em_membre_id"] == $id_joueur)
-				return $equipe;
-		}
-	}
-}
-
 function recupMessagesMur($id_tournoi){
 	$db = connexionBdd();
 	$req = $db->prepare("SELECT * FROM messages_mur INNER JOIN membres ON mur_membre_id = membre_id WHERE mur_tournoi_id = :id ORDER BY mur_date DESC");
@@ -79,6 +63,14 @@ function recupererJoueurs($id_equipe){
 	return $req_joueurs->fetchAll();
 }
 
+function recupMessagesEquipe($id_equipe){
+	$db = connexionBdd();
+	$req = $db->prepare("SELECT * FROM mur_equipes INNER JOIN membres ON me_membre_id = membre_id WHERE me_equipe_id = :id_equipe ORDER BY me_date DESC;");
+	$req->bindValue(":id_equipe", $id_equipe, PDO::PARAM_INT);
+	$req->execute();
+	return $req->fetchAll();
+}
+
 ?>
 
 <html>
@@ -86,6 +78,7 @@ function recupererJoueurs($id_equipe){
 		<?php include ('head.php'); ?>
 		<link rel="stylesheet" type="text/css" href="css/liste_tournois.css">
 		<link rel="stylesheet" type="text/css" href="css/feuille_tournoi.css">
+		<link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
 		<title>Tournoi</title>
 	</head>
 
@@ -93,7 +86,7 @@ function recupererJoueurs($id_equipe){
 	<?php include ('header.php'); ?>
 
 	<div class="container-fluid">
-	
+
 	<?php 
 
 		$id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
@@ -147,7 +140,7 @@ function recupererJoueurs($id_equipe){
 		  	<div id="body_match" class="espace-bot">
 				<div id="contenu_body_match" class="tab-content">
 
-		    		<div id="mur" class="tab-pane fade">
+		    		<div id="mur" class="tab-pane fade espace-top">
 		    			<form method="post" action="post_msg.php?id=<?php echo $leTournoi->event_id; ?>">
 		    				<textarea class="form-control" placeholder="Votre message..." name="message" rows="3"></textarea>
 		    				<button class="btn btn-success btn-grand" name="submit">Poster mon message</button>
@@ -156,7 +149,7 @@ function recupererJoueurs($id_equipe){
 		    			foreach ($messages as $unMessage) { ?>
 			    			<div class="message-cont espace-top">
 			    				<?php echo $unMessage["mur_contenu"]; 
-			    				if ($unMessage["membre_id"] == $_SESSION["id"]) { echo '<span class="delete-msg"><a href="delete_msg.php?id=' . $unMessage["mur_id"] . '&tournoi=' . $leTournoi->event_id . '">X</a></span>'; } ?>
+			    				if ($unMessage["membre_id"] == $_SESSION["id"]) { echo '<span class="delete-msg"><a href="delete_msg.php?type=0&id=' . $unMessage["mur_id"] . '&tournoi=' . $leTournoi->event_id . '">X</a></span>'; } ?>
 			    				<div class="sign">
 			    					Par <span><?php echo $unMessage["membre_pseudo"]; ?></span> le <span><?php echo $unMessage["mur_date"]; ?></span>
 			    				</div>
@@ -172,53 +165,78 @@ function recupererJoueurs($id_equipe){
 	    						if (empty($mon_equipe)){ ?>
 	    							<h2 class="err-titre">Vous n'avez pas encore d'équipe</h2>
 	    					    <?php }else{ ?>
+
+	    					    <!-- Affichage des paramètres pour le capitaine de l'equipe -->
+		    					<?php if (recupStatutJoueur($_SESSION["id"], $mon_equipe["team_id"]) == 1){ ?> 
 	    					    <div class="row">
 		    						<h2 class="err-titre"><?php echo $mon_equipe["team_nom"]; ?></h2>
-		    							<div class="col-md-12 param-team center">
-			    							<h3 class="clic-param espace-bot">Paramètres de l'equipe: </h3>
-			    							<div>
-			    								<form id="form-param-team" method="post" action="param_team.php?id=<?php echo $mon_equipe['team_id']; ?>&tournoi=<?php echo $leTournoi->event_id; ?>">
-			    									<input style="width: 50%; margin: auto;" class="form-control" type="text" placeholder="Nom de l'equipe" name="nom-team" value="<?php echo $mon_equipe['team_nom']; ?>"><br />
-				    								Etat de l'équipe :
-					    							<label class="etat-team espace-left" id="prv">
-					    								Privé
-					    								<input type="radio" name="etat-team" value="1" <?php if ($mon_equipe["team_prive"] == 1){ echo 'checked'; } ?> />
-					    							</label>
-					    							<label class="etat-team" id="pub">
-					    								Public
-					    								<input type="radio" name="etat-team" value="0" <?php if ($mon_equipe["team_prive"] == 0){ echo 'checked'; } ?> />
-					    							</label>
-					    							<input <?php if ($mon_equipe["team_prive"] == 0){ echo 'style="display: none;"'; }else{ echo 'value="'.$mon_equipe["team_pass"].'"'; } ?> id="mdp-team" class="espace-left" type="text" name="pass-team" placeholder="mot de passe de l'equipe"><br />
-					    							<input type="submit" style="width: 50%;" name="submit" class="espace-top espace-bot btn btn-success" value="Enregistrer">
-				    							</form>
-			    							</div>
-		    								Invite tes amis en leur transmettant ce lien : <input style="text-align: center; width: 50%;" type="text" readonly value="<?php echo $param->url_site; ?>invite.php?code_team=<?php echo $mon_equipe["team_code"]; ?>">
+	    							<div class="col-md-12 param-team center">
+		    							<h3 class="clic-param espace-bot">Paramètres de l'equipe: </h3>
+		    							<div>
+		    								<form id="form-param-team" method="post" action="param_team.php?id=<?php echo $mon_equipe['team_id']; ?>&tournoi=<?php echo $leTournoi->event_id; ?>">
+		    									<input style="width: 50%; margin: auto;" class="form-control" type="text" placeholder="Nom de l'equipe" name="nom-team" value="<?php echo $mon_equipe['team_nom']; ?>"><br />
+			    								Etat de l'équipe :
+				    							<label class="etat-team espace-left" id="prv">
+				    								Privé
+				    								<input type="radio" name="etat-team" value="1" <?php if ($mon_equipe["team_prive"] == 1){ echo 'checked'; } ?> />
+				    							</label>
+				    							<label class="etat-team" id="pub">
+				    								Public
+				    								<input type="radio" name="etat-team" value="0" <?php if ($mon_equipe["team_prive"] == 0){ echo 'checked'; } ?> />
+				    							</label>
+				    							<input <?php if ($mon_equipe["team_prive"] == 0){ echo 'style="display: none;"'; }else{ echo 'value="'.$mon_equipe["team_pass"].'"'; } ?> id="mdp-team" class="espace-left" type="text" name="pass-team" placeholder="mot de passe de l'equipe"><br />
+				    							<input type="submit" name="submit" class="espace-top btn btn-success moit" value="Enregistrer">
+			    							</form>
+			    							<button class="btn btn-danger moit espace-bot suppr-team" mod="suppr" id="<?php echo $mon_equipe['team_id']; ?>">Supprimer l'équipe</button>
 		    							</div>
-		    						</div>
-		    						<div class="row">
-		    							<div class="col-md-6">
-		    							<?php 
-		    								$joueurs = recupererJoueurs($mon_equipe["team_id"]);
-		    								foreach ($joueurs as $unJoueur) { 
-		    									if ($unJoueur["em_membre_paye"] == 1) { $paye = "Payé"; } else { $paye="Non Payé"; }?>
-		    									<div class="unJoueur" id="mon-equipe-cont">
-		    										<?php echo $unJoueur["membre_pseudo"]; ?><br />
-		    										<?php echo $unJoueur["statut_nom"]; ?>
-		    										<span class="statut"><?php echo $paye; ?></span>	
-		    									</div>
-		    								<?php } ?>
-		    							</div>
+	    								Invite tes amis en leur transmettant ce lien : <input style="text-align: center; width: 50%;" type="text" readonly value="<?php echo $param->url_site; ?>invite.php?code_team=<?php echo $mon_equipe["team_code"]; ?>">
+	    							</div>
+	    						</div>
+	    						<?php } ?>
 
-					    				<div class="col-md-1">  </div>
+	    						<div class="row">
+	    							<div class="col-md-5">
+	    							<?php 
+	    								$joueurs = recupererJoueurs($mon_equipe["team_id"]);
+	    								foreach ($joueurs as $unJoueur) { 
+	    									if ($unJoueur["em_membre_paye"] == 1) { $paye = "<span class='vert'><span class='glyphicon glyphicon-ok'></span> Payé</span>"; } else { $paye="<span class='rouge'><span class='glyphicon glyphicon-remove'></span> Non Payé</span>"; }?>
+	    									<div class="unJoueur" id="mon-equipe-cont">
+	    										<span class="bold"><?php echo $unJoueur["membre_pseudo"]; ?></span><br />
+	    										<?php echo $unJoueur["statut_nom"]; ?>
+	    										<span class="statut"><?php echo $paye; ?></span>	
+	    									</div>
+	    								<?php } ?>
+	    							</div>
 
-					    				<div class="col-md-5" id="mur-equipe-cont">
-					    					<div class="titre-mur-equipe">
-					    						<p>Les messages de votre équipe</p>
-					    					</div>
-					    					<h4>Personne n'a posté de message pour le moment.</h4>
-					    				</div>
+
+				    				<div class="col-md-7" id="mur-equipe-cont">
+				    					<div class="titre-mur-equipe">
+				    						<p>Les messages de votre équipe</p>
+				    					</div>
+
+				    					<form method="post" action="post_msg_team.php?id=<?php echo $leTournoi->event_id; ?>">
+				    						<textarea class="form-control" name="message" placeholder="Entrez votre message..."></textarea>
+				    						<button class="btn btn-success btn-grand">Poster mon message</button>
+				    					</form>
+
+				    					<?php $messages_equipe = recupMessagesEquipe($mon_equipe["team_id"]);
+				    					if (!empty($messages_equipe)){ 
+				    						foreach ($messages_equipe as $unMessage) { ?>
+						    					<div class="msg-cont espace-bot">
+						    						<?php if ($unMessage["membre_id"] == $_SESSION["id"]) { echo '<span class="delete-msg"><a href="delete_msg.php?type=1&id=' . $unMessage["me_id"] . '&tournoi=' . $leTournoi->event_id . '">X</a></span>'; }
+						    						echo $unMessage["me_contenu"]; ?>
+						    						<div class="sign-msg">
+						    							Par <span><?php echo $unMessage["membre_pseudo"]; ?></span> le <span><?php echo $unMessage["me_date"]; ?></span>
+						    						</div>
+						    					</div>
+					    				<?php } 
+					    				}else{ ?>
+				    						<h4 class="center">Personne n'a posté de message pour le moment.</h4>
+				    					<?php } ?>
+
 				    				</div>
-				    			<?php } ?>
+			    				</div>
+			    			<?php } ?>
 		    			
 		    		</div>
 
@@ -369,10 +387,11 @@ function recupererJoueurs($id_equipe){
 	    		}
 	    	});
 
-	    	$(".equipe-cont button").click(function(){
+	    	$(".equipe-cont button, .suppr-team").click(function(){
 	    		var id = $(this).attr("id");
 	    		var mod = $(this).attr("mod");
-	    		document.location.replace("action_team.php?mod=" + mod + "&id=" + id);
+	    		if (mod != "suppr" || mod == "suppr" && confirm("Etes vous sur de vouloir supprimer votre équipe du tournoi ? Cette action sera définitive !" ))
+	    			document.location.replace("action_team.php?mod=" + mod + "&id=" + id);
 	    	});
 
 	    	$(".item-li, .item-act").click(function() {

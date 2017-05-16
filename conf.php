@@ -48,6 +48,22 @@ function format_heure_minute($heure){
 	return $hr->format("H:i").' h';
 }
 
+function recupEquipeJoueur($id_joueur, $id_tournoi){
+	$db = connexionBdd();
+	$req_equipe = $db->prepare("SELECT * FROM equipes INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id");
+	$req_equipe->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
+	$req_equipe->execute();
+	while ($equipe = $req_equipe->fetch()){
+		$req = $db->prepare("SELECT * FROM equipe_membres WHERE em_team_id = :id_team");
+		$req->bindValue(":id_team", $equipe["team_id"], PDO::PARAM_INT);
+		$req->execute();
+		while ($membres = $req->fetch()) {
+			if ($membres["em_membre_id"] == $id_joueur)
+				return $equipe;
+		}
+	}
+}
+
 $db = connexionBdd();
 $param = getParams();
 

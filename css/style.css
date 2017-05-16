@@ -48,3 +48,15 @@ body{
 .espace-left {
 	margin-left: 2%;
 }
+.moit {
+	width: 50%;
+}
+.vert {
+	color: green;
+}
+.rouge {
+	color:red;
+}
+.bold {
+	font-weight: bold;
+}
