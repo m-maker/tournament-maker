@@ -11,6 +11,7 @@ body{
     justify-content: center;
     align-items: center;
 	margin-top: 15%;
+	margin-bottom: 25%;
 }
 #barre_de_recherche{
 	background-color: rgba(0,0,0,0.5);
@@ -60,9 +61,15 @@ body{
 .rouge {
 	color:red;
 }
+.white {
+	color: white;
+}
 .bold {
 	font-weight: bold;
 }
 .padding {
 	padding: 1%;
+}
+.visible {
+	display: block;
 }
