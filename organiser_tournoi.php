@@ -99,7 +99,7 @@
 						    		<p>Inscription</p>
 							    	<input id="match_public" type="radio" name="restriction" value="public">
 							    	<label for="match_public">Match publique</label>
-							   		<input id="match_prive" type="radio" name="public" value="private">
+							   		<input id="match_prive" type="radio" name="restriction" value="private">
 							   		<label for="match_prive">Match privé (avec mot de passe)</label>
 							   		<br/>
 							   		<input type="text" class="form-control" id="input_event_pass" name="event_pass" placeholder="Mot de passe. ex:******">
