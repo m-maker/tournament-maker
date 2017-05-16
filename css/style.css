@@ -32,6 +32,9 @@ body{
 	width: 100%;
 	margin: 0;
 }
+.btn-mid {
+	width: 50%;
+}
 .space-top {
 	margin-top: 3%;
 }
@@ -59,4 +62,7 @@ body{
 }
 .bold {
 	font-weight: bold;
+}
+.padding {
+	padding: 1%;
 }

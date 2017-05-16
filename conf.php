@@ -64,6 +64,22 @@ function recupEquipeJoueur($id_joueur, $id_tournoi){
 	}
 }
 
+function liste_tournois_orga($id_orga){
+	$db = connexionBdd();
+	$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE event_orga = :orga');
+	$req_liste_tournois->bindValue(":orga", $id_orga, PDO::PARAM_INT);
+	$req_liste_tournois->execute();
+	return $req_liste_tournois->fetchAll();
+}
+
+function recupObjetTournoiByID($id){
+	$db = connexionBdd();
+	$req_tournoi = $db->prepare("SELECT * FROM tournois INNER JOIN lieux ON event_lieu = lieu_id WHERE event_id = :id");
+	$req_tournoi->bindValue(":id", $id, PDO::PARAM_INT);
+	$req_tournoi->execute();
+	return $req_tournoi->fetch(PDO::FETCH_OBJ);
+}
+
 $db = connexionBdd();
 $param = getParams();
 

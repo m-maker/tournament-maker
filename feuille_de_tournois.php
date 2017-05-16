@@ -3,14 +3,6 @@
 if (!isset($_SESSION["id"]))
 	header("Location: connexion.php");
 
-function recupObjetTournoiByID($id){
-	$db = connexionBdd();
-	$req_tournoi = $db->prepare("SELECT * FROM tournois INNER JOIN lieux ON event_lieu = lieu_id WHERE event_id = :id");
-	$req_tournoi->bindValue(":id", $id, PDO::PARAM_INT);
-	$req_tournoi->execute();
-	return $req_tournoi->fetch(PDO::FETCH_OBJ);
-}
-
 function recupEquipesCompletes($id_tournoi, $nb_joueur_min){
 	$db = connexionBdd();
 	$req_equipes = $db->prepare("SELECT * FROM equipes INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id");
@@ -290,7 +282,7 @@ function recupMessagesEquipe($id_equipe){
 			   				<?php
 								}
 			    			}else{
-			    				echo "<h3>Il n'y a aucune équipe incomplète pour l'instant</h3>";
+			    				echo "<h3>Il n'y a aucune équipe complète pour l'instant</h3>";
 			    			} ?>	
 		    				
 		    			</div>

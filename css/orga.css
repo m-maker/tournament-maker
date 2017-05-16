@@ -1,0 +1,46 @@
+.menu-orga {
+	color: white;
+	cursor: pointer;
+}
+.show {
+	padding: 1%;
+	background: dimgray;
+}
+.show:hover, .act {
+	background: #778899;
+}
+.cont {
+	color: white;
+	display: none; 
+	padding: 1%;
+}
+.mid-cont {
+	background: #f5f5f5;
+	padding: 2%;
+	color: black;
+}
+.mid-cont h2 {
+	margin-top: 0;
+	font-weight: bold;
+	background: #B0C4DE;
+	padding: 1%;
+}
+.tournoi-cont {
+	border-radius: 5px;
+	background: #D3D3D3;
+	margin-top: 1%;
+	border: 1px solid black;
+}
+.infos-tournoi {
+	cursor: pointer;
+	padding: 1%;
+}
+.mod-tournoi {
+	border-radius: 5px;
+	background: #A9A9A9;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	display: none;
+	border-top: 1px solid black;
+	margin: 0;
+}
