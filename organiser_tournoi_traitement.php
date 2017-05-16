@@ -26,7 +26,7 @@
 	$req_organiser_tournoi->execute(array(
 		'event_titre' => $_POST['event_titre'],
 		'lieu' => $lieu_id,
-		'event_date' => $_POST[':event_date'],
+		'event_date' => $_POST['event_date'],
 		'event_nb_heure_jeu' => $_POST['event_nb_heure_jeu'],
 		'event_heure_debut' => $_POST['event_heure_debut'],
 		'event_heure_fin' => $_POST['event_heure_fin'],
@@ -47,5 +47,5 @@
 			));
 	$id_tournoi = $req_organiser_tournoi->fetch();
 
-	header('location: feuille_de_tournois.php?tournoi='.$id_tournoi['event_id'].'');
+	//header('location: feuille_de_tournois.php?tournoi='.$id_tournoi['event_id'].'');
 ?>
