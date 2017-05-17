@@ -252,7 +252,7 @@ function recupMessagesEquipe($id_equipe){
 			   							<div class="row" style="display: none; margin: auto;" id="e-<?php echo $uneEquipe["team_id"]; ?>">
 			   					<?php
 			   						foreach ($joueurs_equipe as $unJoueur) {
-			   							if ($unJoueur["em_membre_paye"] == 1) { $paye = "Payé"; } else { $paye="Non Payé"; } ?>
+			   							if ($unJoueur["em_membre_paye"] == 1) { $paye = "<span class='vert'><span class='glyphicon glyphicon-ok'></span> Payé</span>"; } else { $paye="<span class='rouge'><span class='glyphicon glyphicon-remove'></span> Non Payé</span>"; }?>
 		    								<div class="col-md-6">
 		    									<?php echo $unJoueur["membre_pseudo"]; ?><br />
 		    									<?php echo $unJoueur["statut_nom"]; ?>
@@ -305,7 +305,7 @@ function recupMessagesEquipe($id_equipe){
 			   							<div class="row" style="display: none; margin: auto;" id="e-<?php echo $uneEquipe["team_id"]; ?>">
 			   					<?php
 			   						foreach ($joueurs_equipe as $unJoueur) {
-			   							if ($unJoueur["em_membre_paye"] == 1) { $paye = "Payé"; } else { $paye="Non Payé"; } ?>
+			   							if ($unJoueur["em_membre_paye"] == 1) { $paye = "<span class='vert'><span class='glyphicon glyphicon-ok'></span> Payé</span>"; } else { $paye="<span class='rouge'><span class='glyphicon glyphicon-remove'></span> Non Payé</span>"; }?>
 		    								<div class="col-md-6">
 		    									<?php echo $unJoueur["membre_pseudo"]; ?><br />
 		    									<?php echo $unJoueur["statut_nom"]; ?>

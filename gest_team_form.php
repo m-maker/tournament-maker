@@ -48,14 +48,14 @@ if (isset($_GET["id"])){
 					Etat de l'équipe : 
 					<label class="espace-left espace-top espace-bot">
 						Privé
-						<input type="radio" name="etat" id="prv" class="etat-team" value="1" <?php if ($upd && $equipe["team_prive"] == 1){ echo 'checked'; } ?>>
+						<input type="radio" name="etat-team" id="prv" class="etat-team" value="1" <?php if ($upd && $equipe["team_prive"] == 1){ echo 'checked'; } ?>>
 					</label>
 					<label class="espace-left">
 						Public
-						<input type="radio" name="etat" id="pub" class="etat-team" value="0" <?php if ($upd && $equipe["team_prive"] == 0 || !$upd){ echo 'checked'; } ?>>
+						<input type="radio" name="etat-team" id="pub" class="etat-team" value="0" <?php if ($upd && $equipe["team_prive"] == 0 || !$upd){ echo 'checked'; } ?>>
 					</label>
-					<input type="text" name="nom" class="form-control" <?php ?> id="mdp-team" <?php if ($upd && $equipe["team_prive"] == 0 || !$upd) { echo 'style="display:none;"'; } ?> placeholder="Mot de passe de l'équipe" <?php if ($upd){ echo 'value="'.$equipe["team_pass"].'"'; } ?>>
-					<button type="submit" class="btn btn-success btn-grand" style="margin-top: 4%;"><?php if ($upd){ echo 'Modifier'; }else{ echo 'Créer'; } ?> l'équipe</button>
+					<input type="text" name="mdp-team" class="form-control" <?php ?> id="mdp-team" <?php if ($upd && $equipe["team_prive"] == 0 || !$upd) { echo 'style="display:none;"'; } ?> placeholder="Mot de passe de l'équipe" <?php if ($upd){ echo 'value="'.$equipe["team_pass"].'"'; } ?>>
+					<button type="submit" name="submit" class="btn <?php if($upd){echo'btn-primary';}else{echo'btn-success';} ?> btn-grand" style="margin-top: 4%;"><?php if ($upd){ echo 'Modifier'; }else{ echo 'Créer'; } ?> l'équipe</button>
 				</form>
 			</div>
 		</div>

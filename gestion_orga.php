@@ -57,10 +57,26 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 											<div class="col-md-2"></div>
 										</div>
 										<div class="row mod-tournoi" id="m-<?php echo $unTournoi["event_id"]; ?>">
-											<div class="col-md-3"><a target="_blank" href="feuille_de_tournois.php?tournoi=<?php echo $unTournoi['event_id']; ?>"><button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-zoom-in"></span> Voir</button></a></div>
-											<div class="col-md-3"><a href="modifier_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>"><button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-edit"></span> Modifier</button></a></div>
-											<div class="col-md-3"><a href="gestion_equipes.php?tournoi=<?php echo $unTournoi['event_id']; ?>"><button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-cog"></span> Gerer les equipes</button></a></div>
-											<div class="col-md-3"><button class="btn btn-danger btn-grand"><span class="glyphicon glyphicon-trash"></span> Supprimer</button></div>
+											<div class="col-md-3">
+												<a target="_blank" href="feuille_de_tournois.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
+													<button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-zoom-in"></span> Voir</button>
+												</a>
+											</div>
+											<div class="col-md-3">
+												<a href="modifier_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>">
+													<button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-edit"></span> Modifier</button>
+												</a>
+											</div>
+											<div class="col-md-3">
+												<a href="gestion_equipes.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
+													<button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-cog"></span> Gerer les equipes</button>
+												</a>
+											</div>
+											<div class="col-md-3">
+												<a href="suppr_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>">
+													<button class="btn btn-danger btn-grand"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
+												</a>
+											</div>
 										</div>
 									</div>
 						<?php } 
