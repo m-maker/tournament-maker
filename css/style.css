@@ -51,7 +51,18 @@ body{
 .espace-left {
 	margin-left: 2%;
 }
-.moit {
+.ligne{
+	display: flex;
+}
+.espacer{
+	justify-content: space-around;
+}
+.placeholder{
+	color: black;
+}
+hr{
+	border-color: black;
+}.moit {
 	width: 50%;
 }
 .vert {
