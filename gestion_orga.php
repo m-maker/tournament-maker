@@ -27,9 +27,9 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 		<div class="container-fluid">
 
 			<div class="row menu-orga">
-				<div class="col-md-4 center show act" id="show-info">Mes Informations</div>
-				<div class="col-md-4 center show tournois" id="show-tournois">Mes tournois</div>
-				<div class="col-md-4 center show profil" id="show-profil">Mes matchs</div>
+				<div class="col-md-4 center show" id="show-info">Mes Informations</div>
+				<div class="col-md-4 center show act" id="show-tournois"><span class="glyphicon glyphicon-list"></span> Mes tournois</div>
+				<div class="col-md-4 center show profil disabled" id="show-profil">Mes matchs</div>
 			</div>
 
 			<div class="cont" id="infos">
@@ -40,26 +40,43 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 				</div>
 			</div>
 
-			<div class="cont" id="tournois">
+			<div class="cont visible" id="tournois">
 				<div class="row">
 					<div class="col-md-12 mid-cont">
 
-						<h2 class="center">Mes tournois</h2>
+						<h2 class="center"><span class="glyphicon glyphicon-list"></span> Mes tournois</h2>
 
 						<?php if (!empty($liste_tournois)){
 								foreach ($liste_tournois as $unTournoi) { ?>
 									<div class="tournoi-cont">
 										<div class="row infos-tournoi" id="<?php echo $unTournoi["event_id"]; ?>">
-											<div class="col-md-2"><img src="<?php echo $unTournoi["event_img"]; ?>" width=""></div>
+											<div class="col-md-1"><img class="img-responsive img-circle" src="img/logo-tournois/<?php echo $unTournoi["event_img"]; ?>" width=""></div>
 											<div class="col-md-4"><?php echo $unTournoi["event_titre"] ?></div>
 											<div class="col-md-3"><?php echo $unTournoi["event_date"]; ?></div>
-											<div class="col-md-3">0 Inscrits</div>
+											<div class="col-md-2"><?php echo compte_equipes($unTournoi['event_id']); ?> Equipes</div>
+											<div class="col-md-2"><?php echo compte_joueurs_tournoi($unTournoi['event_id']); ?> Inscrits</div>
 										</div>
 										<div class="row mod-tournoi" id="m-<?php echo $unTournoi["event_id"]; ?>">
-											<div class="col-md-3"><a target="_blank" href="feuille_de_tournois.php?tournoi=<?php echo $unTournoi['event_id']; ?>"><button class="btn btn-primary btn-grand">Voir</button></a></div>
-											<div class="col-md-3"><a href="modifier_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>"><button class="btn btn-primary btn-grand">Modifier</button></a></div>
-											<div class="col-md-3"><button class="btn btn-primary btn-grand">Gerer les equipes</button></div>
-											<div class="col-md-3"><button class="btn btn-danger btn-grand">Supprimer</button></div>
+											<div class="col-md-3">
+												<a target="_blank" href="feuille_de_tournois.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
+													<button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-zoom-in"></span> Voir</button>
+												</a>
+											</div>
+											<div class="col-md-3">
+												<a href="modifier_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>">
+													<button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-edit"></span> Modifier</button>
+												</a>
+											</div>
+											<div class="col-md-3">
+												<a href="gestion_equipes.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
+													<button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-cog"></span> Gerer les equipes</button>
+												</a>
+											</div>
+											<div class="col-md-3">
+												<a href="suppr_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>">
+													<button class="btn btn-danger btn-grand"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
+												</a>
+											</div>
 										</div>
 									</div>
 						<?php } 
@@ -68,7 +85,7 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 							<?php } ?>
 
 							<div class="center espace-top">
-								<a href="organiser_tournoi.php"><button class="btn btn-success btn-mid">Ajouter un tournoi</button></a>
+								<a href="organiser_tournoi.php"><button class="btn btn-success btn-mid"><span class="glyphicon glyphicon-play-circle"></span> Ajouter un tournoi</button></a>
 							</div>
 
 					</div>

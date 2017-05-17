@@ -4,13 +4,14 @@ body{
 	background-color: rgb(66,133,244);
 	background-image: url('../img/fond.jpg');
 	background-repeat: no-repeat;
-	background-size :cover;
+	background-size : 100% 100%;
 }
 #form_recherche{
 	display: flex;
     justify-content: center;
     align-items: center;
 	margin-top: 15%;
+	margin-bottom: 25%;
 }
 #barre_de_recherche{
 	background-color: rgba(0,0,0,0.5);
@@ -51,6 +52,12 @@ body{
 .espace-left {
 	margin-left: 2%;
 }
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
 .ligne{
 	display: flex;
 }
@@ -62,8 +69,6 @@ body{
 }
 hr{
 	border-color: black;
-}.moit {
-	width: 50%;
 }
 .vert {
 	color: green;
@@ -71,9 +76,53 @@ hr{
 .rouge {
 	color:red;
 }
+.white {
+	color: white;
+}
 .bold {
 	font-weight: bold;
 }
+.underline {
+	text-decoration: underline;
+}
 .padding {
 	padding: 1%;
+}
+.visible {
+	display: block;
+}
+.titre {
+	background: #B0C4DE;
+	width: 100%;
+	margin: 0;
+	padding: 2%;
+	border-bottom: 1px solid black;
+}
+.left a {
+	color: black;
+}
+.left a:hover{
+	text-decoration: none;
+	color: grey;
+}
+form .left a:hover{
+	text-decoration: none;
+	color: white;
+}
+.form-invite {
+	width: 70%;
+	margin: auto;
+	padding: 5% 0 10%;
+}
+.cont-info {
+	background: white;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 2%;
+	margin-bottom: 2%;
+	font-size: 22px;
+}
+a:hover {
+	color: white;
+	text-decoration: none;
 }

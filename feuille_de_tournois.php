@@ -3,20 +3,6 @@
 if (!isset($_SESSION["id"]))
 	header("Location: connexion.php");
 
-function recupEquipesCompletes($id_tournoi, $nb_joueur_min){
-	$db = connexionBdd();
-	$req_equipes = $db->prepare("SELECT * FROM equipes INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id");
-	$req_equipes->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
-	$req_equipes->execute();
-	$equipes_completes = array();
-	while ($equipes = $req_equipes->fetch()) {
-		$compte_membres = compter_membres($equipes["team_id"]);
-		if ($compte_membres >= $nb_joueur_min)
-			$equipes_completes[] = $equipes;
-	}
-	return $equipes_completes;
-}
-
 function recupMessagesMur($id_tournoi){
 	$db = connexionBdd();
 	$req = $db->prepare("SELECT * FROM messages_mur INNER JOIN membres ON mur_membre_id = membre_id WHERE mur_tournoi_id = :id ORDER BY mur_date DESC");
@@ -39,20 +25,18 @@ function recupEquipesIncompletes($id_tournoi, $nb_joueur_min){
 	return $equipes_incompletes;
 }
 
-function compter_membres($id_equipe) {
+function recupEquipesCompletes($id_tournoi, $nb_joueur_min){
 	$db = connexionBdd();
-	$req_nb_membres = $db->prepare("SELECT COUNT(em_id) FROM equipe_membres WHERE em_team_id = :id_team");
-	$req_nb_membres->bindValue(":id_team", $id_equipe, PDO::PARAM_INT);
-	$req_nb_membres->execute();
-	return $req_nb_membres->fetchColumn();
-}
-
-function recupererJoueurs($id_equipe){
-	$db = connexionBdd();
-	$req_joueurs = $db->prepare("SELECT * FROM membres INNER JOIN equipe_membres ON membre_id = em_membre_id INNER JOIN statuts_joueurs ON em_statut_joueur = statut_id WHERE em_team_id = :id_team");
-	$req_joueurs->bindValue(":id_team", $id_equipe, PDO::PARAM_INT);
-	$req_joueurs->execute();
-	return $req_joueurs->fetchAll();
+	$req_equipes = $db->prepare("SELECT * FROM equipes INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id");
+	$req_equipes->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
+	$req_equipes->execute();
+	$equipes_completes = array();
+	while ($equipes = $req_equipes->fetch()) {
+		$compte_membres = compter_membres($equipes["team_id"]);
+		if ($compte_membres >= $nb_joueur_min)
+			$equipes_completes[] = $equipes;
+	}
+	return $equipes_completes;
 }
 
 function recupMessagesEquipe($id_equipe){
@@ -232,7 +216,7 @@ function recupMessagesEquipe($id_equipe){
 		    			
 		    		</div>
 
-		    		<div id="equipes" class="tab-pane fade">
+		    		<div id="equipes" class="tab-pane visible">
 		    			<div class="categories-equipes">
 
 		    				<div class="row">
@@ -268,7 +252,7 @@ function recupMessagesEquipe($id_equipe){
 			   							<div class="row" style="display: none; margin: auto;" id="e-<?php echo $uneEquipe["team_id"]; ?>">
 			   					<?php
 			   						foreach ($joueurs_equipe as $unJoueur) {
-			   							if ($unJoueur["em_membre_paye"] == 1) { $paye = "Payé"; } else { $paye="Non Payé"; } ?>
+			   							if ($unJoueur["em_membre_paye"] == 1) { $paye = "<span class='vert'><span class='glyphicon glyphicon-ok'></span> Payé</span>"; } else { $paye="<span class='rouge'><span class='glyphicon glyphicon-remove'></span> Non Payé</span>"; }?>
 		    								<div class="col-md-6">
 		    									<?php echo $unJoueur["membre_pseudo"]; ?><br />
 		    									<?php echo $unJoueur["statut_nom"]; ?>
@@ -321,7 +305,7 @@ function recupMessagesEquipe($id_equipe){
 			   							<div class="row" style="display: none; margin: auto;" id="e-<?php echo $uneEquipe["team_id"]; ?>">
 			   					<?php
 			   						foreach ($joueurs_equipe as $unJoueur) {
-			   							if ($unJoueur["em_membre_paye"] == 1) { $paye = "Payé"; } else { $paye="Non Payé"; } ?>
+			   							if ($unJoueur["em_membre_paye"] == 1) { $paye = "<span class='vert'><span class='glyphicon glyphicon-ok'></span> Payé</span>"; } else { $paye="<span class='rouge'><span class='glyphicon glyphicon-remove'></span> Non Payé</span>"; }?>
 		    								<div class="col-md-6">
 		    									<?php echo $unJoueur["membre_pseudo"]; ?><br />
 		    									<?php echo $unJoueur["statut_nom"]; ?>
@@ -366,6 +350,11 @@ function recupMessagesEquipe($id_equipe){
 	    ?>
 
 	    <script type="text/javascript">
+
+	    	/*$(document).ready(function() { 
+	    		$("#equipes").show();
+	    	}); */
+
 	    	$(".equipe-cont").click(function() {
 	    		//$(".equipe-joueurs .row").hide().removeClass("act");
 	    		var id = $(this).attr("id");

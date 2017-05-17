@@ -8,7 +8,7 @@
 		<ul class="dropdown-menu menu_liste" aria-labelledby="dropdownMenu2">
 			<li><a href="mes_matchs.php">Mes matchs</a></li>
 		    <li><a href="#">Paramètres</a></li>
-		    <li><a href="#">Mes collègues</a></li>
+		    <li><a href="gestion_orga.php">Gerer mes tournois</a></li>
 		    <li><a href="deconnexion.php">Déconnexion</a></li>
 		</ul>
 	</div>
