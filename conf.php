@@ -163,6 +163,39 @@ function recupJoueurByID($id_joueur, $id_team){
 	return $req->fetch();
 }
 
+function compte_equipes($id_tournoi) {
+	$db = connexionBdd();
+	$req = $db->prepare("SELECT COUNT(et_id) FROM equipes_tournois WHERE et_event_id = :id_tournoi");
+	$req->bindValue(":id_tournoi", $id_tournoi, PDO::PARAM_INT);
+	$req->execute();
+	return $req->fetchColumn();
+}
+
+function compte_joueurs_tournoi($id_tournoi){
+	$db = connexionBdd();
+	$req = $db->prepare("SELECT COUNT(em_id) FROM equipe_membres INNER JOIN equipes ON em_team_id = team_id INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id_tournoi;");
+	$req->bindValue(":id_tournoi", $id_tournoi, PDO::PARAM_INT);
+	$req->execute();
+	return $req->fetchColumn();
+}
+
+// Renvoie les invitations à jouer
+function recupInvitationsEquipes($membre_id){
+	$db = connexionBdd();
+	$req = $db->prepare("SELECT * FROM tournois INNER JOIN equipes_tournois ON event_id = et_event_id INNER JOIN equipes ON et_equipe = team_id INNER JOIN equipe_membres on team_id = em_team_id WHERE em_statut_joueur = 2 AND em_membre_id = :id_membre");
+	$req->bindValue(":id_membre", $membre_id, PDO::PARAM_INT);
+	$req->execute();
+	return $req->fetchAll();
+}
+
+function recupEquipeByCode($code){
+	$db = connexionBdd();
+	$req = $db->prepare("SELECT * FROM equipes WHERE team_code = :code;");
+	$req->bindValue(":code", $code, PDO::PARAM_STR);
+	$req->execute();
+	return $req->fetch();
+}
+
 $db = connexionBdd();
 $param = getParams();
 

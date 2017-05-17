@@ -4,7 +4,7 @@ body{
 	background-color: rgb(66,133,244);
 	background-image: url('../img/fond.jpg');
 	background-repeat: no-repeat;
-	background-size :cover;
+	background-size : 100% 100%;
 }
 #form_recherche{
 	display: flex;
@@ -52,6 +52,12 @@ body{
 .espace-left {
 	margin-left: 2%;
 }
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
 .moit {
 	width: 50%;
 }
@@ -82,4 +88,32 @@ body{
 	margin: 0;
 	padding: 2%;
 	border-bottom: 1px solid black;
+}
+.left a {
+	color: black;
+}
+.left a:hover{
+	text-decoration: none;
+	color: grey;
+}
+form .left a:hover{
+	text-decoration: none;
+	color: white;
+}
+.form-invite {
+	width: 70%;
+	margin: auto;
+	padding: 5% 0 10%;
+}
+.cont-info {
+	background: white;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 2%;
+	margin-bottom: 2%;
+	font-size: 22px;
+}
+a:hover {
+	color: white;
+	text-decoration: none;
 }

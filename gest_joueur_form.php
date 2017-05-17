@@ -46,7 +46,14 @@ if (isset($_GET["id"])){
 			<div class="form-cont center">
 			<?php if (!$upd) { ?>
 				<form method="post" action="gest_joueur_traitement.php?tournoi=<?php echo $id_tournoi; ?>&team=<?php echo $id_team; ?>">
-					<legend>Ajouter un joueur à l'equipe <?php echo $equipe['team_nom']; ?> : </legend>
+					<legend>
+						<span class="left">
+							<a href="gestion_equipes.php?tournoi=<?php echo $id_tournoi; ?>"> 
+								< 
+							</a>
+						</span> 
+						Ajouter un joueur à l'equipe <?php echo $equipe['team_nom']; ?> :
+					</legend>
 					<input type="text" class="form-control espace-top" name="mail" placeholder="Adresse mail du joueur (valide)" <?php if ($upd){ echo 'value="'.$equipe["team_nom"].'"'; } ?>>
 					Paiement de la place : 
 					<label class="espace-left espace-top espace-bot">
@@ -60,11 +67,16 @@ if (isset($_GET["id"])){
 					<br />
 					<p class="underline bold">Veillez à rentrer une adresse mail valide à laquelle l'invité aura acces.<br />
 					Un mail lui sera envoyé pour confirmer sa présence au tournoi dans cette équipe.</p>
-					<button type="submit" name="submit" class="btn btn-success btn-grand" style="margin-top: 4%;">Ajouter le joueur</button>
+					<button type="submit" name="submit" class="btn btn-success btn-grand" style="margin-top: 4%;"><span class="glyphicon glyphicon-ok-sign"></span> Ajouter le joueur</button>
 				</form>
 			<?php }else{ ?>
 				<form method="post" action="gest_joueur_traitement.php?tournoi=<?php echo $id_tournoi; ?>&team=<?php echo $id_team; ?>&id=<?php echo $joueur['membre_id']; ?>">
 					<legend>
+						<span class="left">
+							<a href="gestion_equipes.php?tournoi=<?php echo $id_tournoi; ?>"> 
+								< 
+							</a>
+						</span> 
 						Modifier les caractéristiques de <span class="bold"><?php echo $joueur["membre_pseudo"]; ?></span> dans l'équipe <span class="bold"><?php echo $equipe['team_nom']; ?></span>
 					</legend>
 					<select name="statut" class="form-control" placeholder="Statut du joueur">
@@ -81,7 +93,7 @@ if (isset($_GET["id"])){
 						Non Payé
 						<input type="radio" name="paye" id="np" class="paye" value="0" <?php if ($joueur['em_membre_paye'] == 0){echo 'checked';} ?> >
 					</label>
-					<button type="submit" name="submit" class="btn btn-primary btn-grand" style="margin-top: 3%;">Modifier</button>
+					<button type="submit" name="submit" class="btn btn-primary btn-grand" style="margin-top: 3%;"><span class="glyphicon glyphicon-ok-sign"></span> Modifier</button>
 				</form>
 			<?php } ?>
 			</div>

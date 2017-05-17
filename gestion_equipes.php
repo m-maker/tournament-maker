@@ -41,20 +41,20 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 		?>
 
 		<!-- CONTENU DE LA PAGE -->
-		<div class="container-fluid">
-		<h2 class="titre center">Gerer les équipes</h2>
+		<div class="container" style="margin: 2% auto;background: rgba(61,86,110,0.5); border-right: 1px solid grey; border-left: 1px solid grey; width: 80%; padding:1%;">
+		<h2 class="titre center"><span class="left"><a href="gestion_orga.php"> < </a></span> Gerer les équipes</h2>
 			<div class="conteneur-tournoi" style="border-radius:0;width: 100%;margin:0;padding: 1%;">
 				<div class="row">
 
-					<div class="col-lg-4 center">
+					<div class="col-lg-4 center" style="padding: 1% 2% 0;">
 						<div class="logo_tournoi">
 							 <img class="img-responsive img-circle" height="50" src='img/logo-tournois/<?php echo $leTournoi->event_img;?>' alt="Tournoi">
 						</div>
 					</div>
 					<div class="col-lg-5">
-						<h2><?php echo $leTournoi->event_date;?></h2>
-						<p><?php echo $heure_debut.' - '.$heure_fin; ?></p>
-						<h2><?php echo $leTournoi->lieu_nom;?></h2>
+						<p><span class="glyphicon glyphicon-calendar"></span> <?php echo $leTournoi->event_date;?></p>
+						<p><span class="glyphicon glyphicon-time"></span> <?php echo $heure_debut.' - '.$heure_fin; ?></p>
+						<p><span class="glyphicon glyphicon-home"></span> <?php echo $leTournoi->lieu_nom;?></p>
 					</div>
 					<div class="col-lg-3">
 						<p><span class="glyphicon glyphicon-euro"></span> Prix : <?php echo $leTournoi->event_tarif; ?></span></p>
@@ -66,7 +66,7 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 			</div>
 
 			<!-- Affichage des équipes -->
-			<div class="cont-equipe espace-top espace-bot">
+			<div class="cont-equipe espace-top">
 				<?php 
 				$equipes_tournoi = recupEquipesTournoi($id_tournoi);
 				if (!empty($equipes_tournoi)){
@@ -126,7 +126,9 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 					<div class="equipe-cont"><h2 style="margin: 0;" class="center">Il n'y a pas d'equipes pour ce tournoi pour l'instant</h2></div>
 				<?php } ?>
 
-				<a href="gest_team_form.php?tournoi=<?php echo $leTournoi->event_id; ?>"><button class="btn btn-success btn-grand espace-top"><span class="glyphicon glyphicon-plus-sign"></span> Créer une nouvelle equipe</button></a>
+				<a href="gest_team_form.php?tournoi=<?php echo $leTournoi->event_id; ?>">
+					<button class="btn btn-success btn-grand espace-top"><span class="glyphicon glyphicon-play-circle"></span> Créer une nouvelle equipe</button>
+				</a>
 			</div>
 
 		</div>
