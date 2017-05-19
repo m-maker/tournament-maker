@@ -41,7 +41,7 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 		?>
 
 		<!-- CONTENU DE LA PAGE -->
-		<div class="container" style="margin: 2% auto;background: rgba(61,86,110,0.5); border-right: 1px solid grey; border-left: 1px solid grey; width: 80%; padding:1%;">
+		<div class="container" id="container">
 		<h2 class="titre center"><span class="left"><a href="gestion_orga.php"> < </a></span> Gerer les équipes</h2>
 			<div class="conteneur-tournoi" style="border-radius:0;width: 100%;margin:0;padding: 1%;">
 				<div class="row">

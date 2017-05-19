@@ -1,10 +1,12 @@
 <?php 
 
-//include '../conf.php';
+include '../conf.php';
 include 'connect_api.php';
 
 if (isset($_POST)){
-	
+
+
+
 	$nom = htmlspecialchars(trim($_POST["nom"]));
 	$prenom = htmlspecialchars(trim($_POST["prenom"]));
 	$mail = htmlspecialchars(trim($_POST["mail"]));
@@ -13,9 +15,9 @@ if (isset($_POST)){
 	$annee = htmlspecialchars(trim($_POST["annee"]));
 	$nation = htmlspecialchars(trim($_POST["nat"]));
 	$devise = htmlspecialchars(trim($_POST["devise"]));
-	//$adresse = htmlspecialchars(trim($_POST["adresse"]));
-	//$ville = htmlspecialchars(trim($_POST["ville"]));
-	//$cp = htmlspecialchars(trim($_POST["cp"]));
+	/*$adresse = htmlspecialchars(trim($_POST["adresse"]));
+	$ville = htmlspecialchars(trim($_POST["ville"]));
+	$cp = htmlspecialchars(trim($_POST["cp"]));*/
 	$residence= htmlspecialchars(trim($_POST["residence"]));
 
 	$date_naissance = new DateTime($jour."-".$mois."-".$annee);
@@ -29,6 +31,7 @@ if (isset($_POST)){
 
 		if ($diff_age > 6570){
 
+		    // Ajout d'un utilisateur Mango
 			$User = new MangoPay\UserNatural();
 			$User->Email = $mail;
 			$User->FirstName = $prenom;
@@ -37,24 +40,24 @@ if (isset($_POST)){
 			$User->Nationality = $nation;
 			$User->CountryOfResidence = $residence;
 			$userAdded = $mangoPayApi->Users->Create($User);
-			$_SESSION['utilisateur_mango'] = $userAdded;
+
 			$Wallet = new \MangoPay\Wallet();
 			$Wallet->Owners = array($userAdded->Id);
 			$Wallet->Description = "Porte-monnaie de base";
 			$Wallet->Currency = $devise;
-			$wallt = $mangoPayApi->Wallets->Create($Wallet);
-			/*$User = new MangoPay\UserNatural();
-			$User->Email = $mail;
-			$User->FirstName = $prenom;
-			$User->LastName = $nom;
-			$User->Birthday = $jour.$mois.$annee;
-			$User->CreationDate = date("d-m-Y H:i:s");
-			$User->Nationality = "FR";
-			var_dump($User);
-			$userAdd = $mangoPayApi->Users->Create($User);
-*/
-			var_dump($userAdded);
-			var_dump($wallt);
+			$walletAdded = $mangoPayApi->Wallets->Create($Wallet);
+
+            $_SESSION['utilisateur_mango'] = serialize($userAdded);
+			$_SESSION["wallet_mango"] = serialize($walletAdded);
+
+			$req = $db->prepare("INSERT INTO infos_mango (im_mango_id, im_membre_id, im_wallet_id) VALUES (:id_user, :id_membre, :id_wallet);");
+			$req->bindValue(":id_user", $userAdded->Id, PDO::PARAM_INT);
+			$req->bindValue(":id_membre", $_SESSION['id'], PDO::PARAM_INT);
+			$req->bindValue(':id_wallet', $walletAdded->Id, PDO::PARAM_INT);
+			$req->execute();
+
+			header("Location: cartes.php");
+
 		}
 
 	}

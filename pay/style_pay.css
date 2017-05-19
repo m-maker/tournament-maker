@@ -1,0 +1,13 @@
+.form-mango {
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2%;
+    margin-top: 4%;
+}
+.align-select {
+    width:33%;
+    display: inline-block;
+}
+.group-frm {
+    width: 95%; margin: 1% auto;
+}

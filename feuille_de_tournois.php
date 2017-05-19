@@ -61,7 +61,7 @@ function recupMessagesEquipe($id_equipe){
 	<body>
 	<?php include ('header.php'); ?>
 
-	<div class="container-fluid">
+	<div class="container" id="container">
 
 	<?php 
 
@@ -135,17 +135,20 @@ function recupMessagesEquipe($id_equipe){
 
 					<!-- MON EQUIPE ET SES MEMBRES -->
 		    		<div id="mon_equipe" class="tab-pane fade">
-		    				
+
+                        <a href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>">
+                            <button class="btn btn-primary btn-grand">Payer (<?php echo $leTournoi->event_tarif + 1; ?> €)</button>
+                        </a>
+
 			    			<?php 
 	    						$mon_equipe = recupEquipeJoueur($_SESSION["id"], $id_tournoi);
 	    						if (empty($mon_equipe)){ ?>
-	    							<h2 class="err-titre">Vous n'avez pas encore d'équipe</h2>
+	    							<h2 class="err-titre" style="font-weight: normal;">Vous n'avez pas encore d'équipe</h2>
 	    					    <?php }else{ ?>
-
 	    					    <!-- Affichage des paramètres pour le capitaine de l'equipe -->
 		    					<?php if (recupStatutJoueur($_SESSION["id"], $mon_equipe["team_id"]) == 1){ ?> 
-	    					    <div class="row">
-		    						<h2 class="err-titre"><?php echo $mon_equipe["team_nom"]; ?></h2>
+	    					    <div class="row" style="padding: 1%;">
+		    						<h2 class="err-titre" style="font-weight: normal;"><?php echo $mon_equipe["team_nom"]; ?></h2>
 	    							<div class="col-md-12 param-team center">
 		    							<h3 class="clic-param espace-bot">Paramètres de l'equipe: </h3>
 		    							<div>
@@ -171,7 +174,7 @@ function recupMessagesEquipe($id_equipe){
 	    						<?php } ?>
 
 	    						<div class="row">
-	    							<div class="col-md-5">
+	    							<div class="col-md-5" style="padding-left:0;">
 	    							<?php 
 	    								$joueurs = recupererJoueurs($mon_equipe["team_id"]);
 	    								foreach ($joueurs as $unJoueur) { 
@@ -323,8 +326,8 @@ function recupMessagesEquipe($id_equipe){
 			    			} ?>			
 		    			</div>
 
-		    			<hr>
 		    			<?php if(empty($mon_equipe)){ ?>
+                            <hr>
 		    				<button class="add-team btn btn-success" value="<?php echo $leTournoi->event_id; ?>">Créer mon équipe</button>
 		    				<form class="espace-top form-equipe" method="post" action="creer_equipe.php?tournoi=<?php echo $leTournoi->event_id; ?>">
 		    					<fieldset>

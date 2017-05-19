@@ -63,7 +63,7 @@
 	width: 100%;
 }
 #equipes, #mon_equipe, #Mur { 
-	width: 90%;
+	width: 100%;
 	margin: 1% auto 0;
 }
 .equipe-joueurs .col-md-6 {
@@ -86,7 +86,7 @@ h3 {
 }
 .err-titre {
 	text-align: center;
-	background: #4682B4;
+	background: #778899;
 	border-radius: 5px;
 	border: 1px solid white;
 	font-family: 'Baloo', cursive;
