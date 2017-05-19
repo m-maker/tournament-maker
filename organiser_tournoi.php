@@ -23,7 +23,7 @@
 
 				<div class="panel panel-primary">
 				  	<div class="panel-heading">
-				    	<h3 class="panel-title">Organiser</h3>
+				    	<h3 class="panel-title">Créer un nouveau tournoi</h3>
 				  	</div>
 				  	<div class="panel-body">
 
@@ -54,7 +54,7 @@
 							      			<p> Date du tournoi </p>
 							  		  		<div class="form-group has-feedback">
     											<label class="control-label">Date</label>
-   												<input class="form-control" type="text" name="event_date" id="datepicker">
+   												<input readonly class="form-control" type="text" name="event_date" id="datepicker">
     											<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
 											</div>
 										</div>
@@ -148,7 +148,7 @@
 						    	  			</select>
 						     	  		</div>
 						     	  		<div>
-						    	  			<p>Nombre de joueurs max</p>
+						    	  			<p>Nombre de joueurs min.</p>
 						    	  			<select class="form-control" id="input_event_joueurs_min" name="event_joueurs_min">
 						    	  				<?php
 						    	  					for ($i=0; $i<8; $i++) { 
@@ -160,7 +160,7 @@
 						    	  			</select>
 						     	  		</div>
 						     	  		<div>
-						    	  			<p>Nombre de joueurs max</p>
+						    	  			<p>Nombre de joueurs max.</p>
 						    	  			<select class="form-control" id="input_event_joueurs_max" name="event_joueurs_max">
 						    	  				<?php
 						    	  					for ($i=5; $i<10; $i++) { 

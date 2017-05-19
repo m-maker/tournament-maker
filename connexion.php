@@ -22,11 +22,7 @@
 	    <div class="row space-top">
 			<div class="form-grand">
 
-				<div class="panel panel-primary">
-				  	<div class="panel-heading">
-				    	<h3 class="panel-title">Acceder a la zone membre</h3>
-				  	</div>
-				  	<div class="panel-body">
+                <div class="form-simple" style="margin-bottom: 15%;">
 
 						<form class="form-horizontal form-grand" method="post" action="connexion_check.php">
 				  			<fieldset>
@@ -42,13 +38,12 @@
 						    	</div>
 
 						    	<div class="form-group center">
-				    				<button type="submit" name="submit" class="btn btn-primary btn-grand">Se connecter</button>	        	
+				    				<button type="submit" name="submit" class="btn btn-success btn-grand">Se connecter</button>
 					    		</div>
 
 				    		</fieldset>
 				    	</form>
 
-				    </div>
 				</div>
 
 		  	</div>

@@ -8,11 +8,11 @@ body{
 }
 #container {
 	margin: 2% auto;
-	background: rgba(61, 86, 110, 0.5);
+	background: rgba(0,0,0,0.5);
 	border-right: 1px solid grey;
 	border-left: 1px solid grey;
 	width: 80%;
-	padding: 2%;
+	padding: 1%;
 }
 .bandeau{
 	padding-top: 13px;
@@ -32,6 +32,12 @@ body{
     align-items: center;
 	margin-top: 15%;
 	margin-bottom: 25%;
+}
+.form-simple {
+	color: white;
+	background: rgba(0, 0, 0, 0.5);
+	padding: 2%;
+	margin: 4% 0 10%;
 }
 #barre_de_recherche{
 	background-color: rgba(0,0,0,0.5);

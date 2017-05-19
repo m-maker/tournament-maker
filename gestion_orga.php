@@ -24,7 +24,7 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 		<?php include('header.php'); ?>
 
 		<!-- CONTENU DE LA PAGE -->
-		<div class="container-fluid">
+		<div class="container" id="container" style="padding-top: 0;">
 
 			<div class="row menu-orga">
 				<div class="col-md-4 center show" id="show-info">Mes Informations</div>

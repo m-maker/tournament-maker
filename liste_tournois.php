@@ -44,7 +44,7 @@
 			Les tournois dans le <?php echo $dpt; ?>
 		</div>
 
-		<div class="container-fluid">
+		<div class="container" id="container">
 			<?php
 			//var_dump($liste_tournois);
 			if ($liste_tournois != NULL){

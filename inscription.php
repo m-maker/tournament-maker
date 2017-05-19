@@ -21,11 +21,7 @@
 	    <div class="row space-top">
 			<div class="form-grand">
 
-				<div class="panel panel-primary">
-				  	<div class="panel-heading">
-				    	<h3 class="panel-title">S'inscrire sur la plateforme</h3>
-				  	</div>
-				  	<div class="panel-body">
+				<div class="form-simple">
 
 						<form class="form-horizontal form-grand" method="post" action="inscription_check.php">
 						  	<fieldset>
@@ -60,16 +56,14 @@
 							    </div>
 
 						    	<div class="form-group center">
-						    		<button type="submit" name="submit" class="btn btn-primary btn-grand">S'inscrire</button>
-							        <button type="reset" class="btn btn-default btn-grand">Annuler</button>			        	
+						    		<button type="submit" name="submit" class="btn btn-success btn-grand">S'inscrire</button>
 							    </div>
 
 						    </fieldset>
 						</form>
 
-
-					</div>
 				</div>
+
 			</div>
 		</div>
 
