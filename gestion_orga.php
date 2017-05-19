@@ -27,9 +27,8 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 		<div class="container" id="container" style="padding-top: 0;">
 
 			<div class="row menu-orga">
-				<div class="col-md-4 center show" id="show-info">Mes Informations</div>
-				<div class="col-md-4 center show act" id="show-tournois"><span class="glyphicon glyphicon-list"></span> Mes tournois</div>
-				<div class="col-md-4 center show profil disabled" id="show-profil">Mes matchs</div>
+				<div class="col-md-6 center show act" id="show-tournois"><span class="glyphicon glyphicon-list"></span> Mes tournois</div>
+				<div class="col-md-6 center show" id="show-matchs">Mes matchs</div>
 			</div>
 
 			<div class="cont" id="infos">
@@ -92,7 +91,7 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 				</div>
 			</div>
 
-			<div class="cont" id="infos">
+			<div class="cont" id="matchs">
 				
 			</div>
 
@@ -101,17 +100,9 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 		<!-- FOOTER -->
 		<?php include('footer.php') ?>
 
+        <script src="js/scripts/menu_tournois_matchs.js" type="text/javascript"></script>
+
 		<script type="text/javascript">
-			$(".show").click(function() {
-				$(".show").removeClass("act");
-				$(this).addClass("act");
-				$(".cont").hide();
-				var id = $(this).attr("id");
-				if (id == "show-info")
-					$("#infos").show();
-				else if (id == "show-tournois")
-					$("#tournois").show();
-			});
 
 			$(".infos-tournoi").click(function() {
 	    		//$(".equipe-joueurs .row").hide().removeClass("act");

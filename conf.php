@@ -196,6 +196,8 @@ function recupEquipeByCode($code){
 	return $req->fetch();
 }
 
+
+
 $db = connexionBdd();
 $param = getParams();
 

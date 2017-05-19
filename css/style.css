@@ -9,10 +9,20 @@ body{
 #container {
 	margin: 2% auto;
 	background: rgba(0,0,0,0.5);
-	border-right: 1px solid grey;
-	border-left: 1px solid grey;
+	border: 1px solid grey;
 	width: 80%;
 	padding: 1%;
+}
+.menu-orga {
+	color: white;
+	cursor: pointer;
+}
+.show {
+	padding: 1%;
+	background: dimgray;
+}
+.show:hover, .act {
+	background: #778899;
 }
 .bandeau{
 	padding-top: 13px;

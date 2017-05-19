@@ -94,14 +94,14 @@ function recupMessagesEquipe($id_equipe){
 						</div>
 					</div>
 					<div class="col-lg-5">
-						<h2><?php echo $leTournoi->event_date;?></h2>
-						<p><?php echo $heure_debut.' - '.$heure_fin; ?></p>
-						<h2><?php echo $leTournoi->lieu_nom;?></h2>
+                        <p><span class="glyphicon glyphicon-calendar"></span> Le : <span class="bold"><?php echo $leTournoi->event_date;?></span></p>
+                        <p><span class="glyphicon glyphicon-time"></span> De : <span class="bold"><?php echo $heure_debut.'</span> à <span class="bold">'.$heure_fin; ?></span></p>
+                        <p><span class="glyphicon glyphicon-home"></span> Complexe : <span class="bold"><?php echo $leTournoi->lieu_nom;?></span></p>
 					</div>
 					<div class="col-lg-3">
-						<p><span class="glyphicon glyphicon-euro"></span> Prix : <?php echo $leTournoi->event_tarif; ?></span></p>
-						<p><span class="glyphicon glyphicon-calendar"></span> Durée : <?php echo $duree; ?></p>
-						<p><span class="glyphicon glyphicon-user"></span> Nombre d'équipes : <?php echo $leTournoi->event_nb_equipes; ?></p>
+                        <p><span class="glyphicon glyphicon-euro"></span> Prix : <span class="bold"><?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></span></p>
+                        <p><span class="glyphicon glyphicon-calendar"></span> Durée : <span class="bold"><?php echo $duree; ?></span></p>
+                        <p><span class="glyphicon glyphicon-user"></span> Nombre d'équipes : <span class="bold"><?php echo $leTournoi->event_nb_equipes; ?></span></p>
 					</div>
 
 				</div>
