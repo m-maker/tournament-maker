@@ -1,17 +1,17 @@
 <div class="bandeau">
 
 	<div class="dropdown element_bandeau ">
-	<div class="cercle">
+		<div>
 		<a href="#" data-toggle="dropdown" >
-		  <span class="glyphicon glyphicon-menu-hamburger encercle"></span>
+		  <span class="glyphicon glyphicon-menu-hamburger"></span>
 		</a>
+		</div>
 		<ul class="dropdown-menu menu_liste" aria-labelledby="dropdownMenu2">
 			<li><a href="mes_matchs.php">Mes matchs</a></li>
 		    <li><a href="#">Paramètres</a></li>
 		    <li><a href="#">Mes collègues</a></li>
 		    <li><a href="deconnexion.php">Déconnexion</a></li>
 		</ul>
-	</div>
 	</div>
 
 	<div class="dropdown element_bandeau ">
@@ -32,7 +32,7 @@
 				?>
 					<div class="dropdown element_bandeau ">
 						<a>
-							<span href="#" class="glyphicon glyphicon-bell encercle"></span>
+							<span href="#" class="glyphicon glyphicon-bell"></span>
 						</a>
 					</div>
 				<?php
