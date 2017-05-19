@@ -5,9 +5,9 @@
 	
 	<head>
 		<?php include('head.php'); ?>
-		<link rel="stylesheet" type="text/css" href="css/organiser_tournoi.css">
 		<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
 		<link rel="stylesheet" href="css/jquery_perso.css">
+		<link rel="stylesheet" type="text/css" href="css/organiser_tournoi.css">
 
 		<title>Organiser un tournoi</title>
   		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -31,9 +31,8 @@
 				  			<fieldset>
 
 				    			<legend class="center">Organiser un tournoi</legend>
-
 				    			<hr>
-				    			<div class="form-group center">
+				    			<div class="form-group form-group-sm center">
 				    				<p>Coordonnées</p>
 						        	<input type="text" class="form-control" id="input_event_titre" name="event_titre" placeholder="Nom du tournoi">
 						        	<br/>
@@ -46,91 +45,94 @@
 						    	</div>
 
 						    	<hr>
-						    	<div class="form-group center">
-						    		<p>Horaires</p>
-						    		<div class="ligne espacer">
-						    			<div id="debut_tounoi" class="ligne">
-						    				<div>
-						    					<input class="form-control" type="text" name="event_date" id="datepicker">
-						    				</div>
-						    				<div>
-						    					<p>Heure du début</p>
-						    					<div class="ligne">
-								    				<div>
-									      				<p>Heure</p>
-										    			<select class="form-control" id="input_heure_debut" name="heure_debut">
-										    				<?php
-										    					for ($i=0; $i<25 ; $i++) { 
-										    						
-										    						if ($i<10){
-										    							$heure = '0'.$i;
-										    						}
-										    						else {
-										    							$heure = $i;
-										    						}
-
-										    						?>
-										    							<option value='<?php echo $heure; ?>'>
-										    								<?php echo $heure.'H'; ?>
-										    							</option>
-										    						<?php
-										    					}
-										    				?>
-										    			</select>
-										    		</div>
-										    		<div>
-										    			<p>Minutes</p>
-									    					<select class="form-control" id="input_minute_debut" name="minute_debut">
-											    				<option value="00">00 min</option>
-											    				<option value="15">15 min</option>	
-											    				<option value="30">30 min</option>	
-											    				<option value="45">45 min</option>	
-									    					</select>
-									    			</div>
-									    		</div>
-								    		</div>
-								    	</div>
-
-						    			<div id="fin_tounoi" class="ligne">
-						    				<div>
-						    					<p>Heure de fin</p>
-						    					<div class="ligne">
-							    					<div>
-							    						<p>Heure</p>
-										    			<select class="form-control" id="input_heure_fin" name="heure_fin">
-											    			<?php
-											    			for ($i=0; $i<25 ; $i++) { 
+						    	<div class="form-group form-group-sm center">
+						    		<div class="center">
+						    			<p>Horaires</p>
+						    		</div>
+							    	<div class="ligne espacer">
+							    		<div>
+							      			<p> Date du tournoi </p>
+							  		  		<div class="form-group has-feedback">
+    											<label class="control-label">Date</label>
+   												<input class="form-control" type="text" name="event_date" id="datepicker">
+    											<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+											</div>
+										</div>
+							    		<div class="sous-section">
+							    			<p>Heure du début</p>
+							    			<div class="ligne">
+									    		<div>
+    												<label class="control-label">Heures</label>
+									    			<select class="form-control" id="input_heure_debut" name="heure_debut">
+									    				<?php
+									    					for ($i=0; $i<25 ; $i++) { 			    						
 											    				if ($i<10){
 											    					$heure = '0'.$i;
 											    				}
-											    				else {
-											    					$heure = $i;
-											    				}
-											    					?>
-										    						<option value='<?php echo $heure; ?>'>
-										    							<?php echo $heure; ?>
-										    						</option>
-										    					<?php
-										    				}
-										    				?>
-										    			</select>
-									    			</div>
-										    		<div>
-										    			<p>Minutes</p>
-										    			<select class="form-control" id="input_minute_fin" name="minute_fin">
-										    				<option value="00">00 min</option>
-										    				<option value="15">15 min</option>	
-										    				<option value="30">30 min</option>	
-										    				<option value="45">45 min</option>	
-										    			</select>
-								    				</div>
-								    			</div>
+										 						else {
+										   							$heure = $i;
+										    					}
+											    				?>
+											    					<option value='<?php echo $heure; ?>'>
+																		<?php echo $heure.'H'; ?>
+									    							</option>
+									    						<?php
+									    					}
+									    				?>
+									    			</select>
+									    		</div>
+									    		<div>
+    												<label class="control-label">Minutes</label>
+													<select class="form-control" id="input_minute_debut" name="minute_debut">
+											    			<option value="00">00 min</option>
+											   				<option value="15">15 min</option>	
+											   				<option value="30">30 min</option>	
+											   				<option value="45">45 min</option>	
+									    			</select>
+									   			</div>
+									   		</div>
+										</div>
+										<div id="fin_tounoi">
+					    					<div>
+							    				<p>Heure de fin</p>
 							    			</div>
-						    			</div>
-						    		</div>
-							    </div>
+							   				<div class="ligne">
+								    			<div>
+    												<label class="control-label">Heures</label>								
+    													<select class="form-control" id="input_heure_fin" name="heure_fin">
+										    			<?php
+										    			for ($i=0; $i<25 ; $i++) { 
+										    				if ($i<10){
+																$heure = '0'.$i;
+										    				}
+										    				else {
+										    					$heure = $i;
+										    				}
+									    					?>
+									    						<option value='<?php echo $heure; ?>'>
+									    							<?php echo $heure; ?>
+									    						</option>
+									    					<?php
+									    				}
+									    				?>
+									    			</select>
+									   			</div>
+									    		<div>
+    												<label class="control-label">Minutes</label>
+									    			<select class="form-control" id="input_minute_fin" name="minute_fin">
+									    				<option value="00">00 min</option>
+									    				<option value="15">15 min</option>	
+									    				<option value="30">30 min</option>	
+									    				<option value="45">45 min</option>	
+									    			</select>
+								   				</div>
+								   			</div>
+							 			</div>
+					    			</div>
+							   	</div>
 							    <hr>
-						    	<div class="form-group center">
+
+						    	<div class="form-group form-group-sm center">
 						    	  	<p>Participants</p>
 						    	  	<div class="ligne espacer">
 							   	  		<div>
@@ -174,10 +176,10 @@
 
 						    	
 						    	<hr>
-						    	<div class="form-group center">
+						    	<div class="form-group form-group-sm center">
 						    		<p>Paiement</p>
 						    		<label for="radio_equipe">Prix par équipe</label>
-						    		<input id="radio_equipe" type="radio" name="event_tarification_equipe" value="1">
+						    		<input id="radio_equipe" type="radio" name="event_tarification_equipe" value="1" checked="checked">
 						    		<label for="radio_joueur">Prix par joueur</label>
 						    		<input id="radio_joueur" type="radio" name="event_tarification_equipe" value="0">
 						    		<div id="tarif" class="ligne"> 
@@ -196,7 +198,7 @@
 							    	<div>
 							    		<br/>
 								    	<p>Tournois-soccer.fr permet de gérer les encaissements des joueurs directement depuis la plateforme. Souhaitez-vous en profiter?</p>
-							    		<input id="paiement_ok" type="radio" name="paiement" value="1">
+							    		<input id="paiement_ok" type="radio" name="paiement" value="1" checked="checked">
 							    		<label for="paiement_ok">Oui, ça m'enlève une grosse épine du pied</label>
 							    		<input id="paiement_refus" type="radio" name="paiement" value="0">
 							    		<label for="paiement_refus">Non merci, j'ai beaucoup de courage!</label>
@@ -208,16 +210,16 @@
 						    	</div>
 						    	
 						    	<hr>
-						    	<div class="form-group center">
+						    	<div class="form-group form-group-sm center">
 						    		<p>Descriptif</p>
 						    		<input class="form-control" type="textarea" name="event_descriptif" placeholder="Match organisé par ADN-five, tous niveaux acceptés et super ambiance">
 						    		<!-- LOGO -->
 						    	</div>
 
 						    	<hr>
-						    	<div class="form-group center">
+						    	<div class="form-group form-group-sm center">
 						    		<p>Inscription</p>
-							    	<input id="match_public" type="radio" name="restriction" value="0">
+							    	<input id="match_public" type="radio" name="restriction" value="0" checked="checked">
 							    	<label for="match_public">Match publique</label>
 							   		<input id="match_prive" type="radio" name="restriction" value="1">
 							   		<label for="match_prive">Match privé (avec mot de passe)</label>
@@ -225,7 +227,7 @@
 							   		<input type="text" class="form-control" id="input_event_pass" name="event_pass" placeholder="Mot de passe. ex:******">
 						    	</div>
 
-						    	<div class="form-group center">
+						    	<div class="form-group form-group-sm center">
 				    				<button type="submit" name="submit" class="btn btn-primary btn-grand">Se connecter</button>	        	
 					    		</div>
 				    		</fieldset>

@@ -6,6 +6,18 @@ body{
 	background-repeat: no-repeat;
 	background-size : 100% 100%;
 }
+.bandeau{
+	padding-top: 13px;
+	padding-left: 10px;
+	padding-right: 10px;
+	display: flex;
+	height: 60px;
+}
+.bandeau .glyphicon{
+	font-size: 26px;
+	margin-right: 3px;
+	margin-left: 3px;
+}
 #form_recherche{
 	display: flex;
     justify-content: center;
