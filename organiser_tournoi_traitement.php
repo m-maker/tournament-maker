@@ -55,8 +55,8 @@
 		$rib_id = NULL;
 	}
 	var_dump($rib_id);
-	$heure_debut = $_POST['heure_debut'].':'.$_POST['minute_debut'].':00';
-	$heure_fin = $_POST['heure_debut'].':'.$_POST['minute_fin'].':00';
+	$heure_debut = $_POST['heure_debut'].':'.$_POST['minute_debut'];
+	$heure_fin = $_POST['heure_fin'].':'.$_POST['minute_fin'];
 	echo '<br/> heure de début -> '.$heure_debut;
 	echo '<br/> heure de fin -> '.$heure_fin;
 	$req_organiser_tournoi = $db->prepare('INSERT INTO tournois(event_titre, event_nb_equipes, event_joueurs_max, event_joueurs_min, event_tarif, event_lieu, event_date, event_heure_debut, event_heure_fin, event_prive, event_pass, event_paiement, event_rib_id, event_tarification_equipe, event_orga, event_descriptif) 
@@ -80,27 +80,13 @@
 		':event_descriptif' => $_POST['event_descriptif']
 		));
 
-	$req_organiser_tournoi2 = $db->prepare('INSERT INTO tournois(event_titre, event_nb_equipes, event_joueurs_max, event_joueurs_min, event_tarif, event_lieu, event_date, event_heure_debut, event_heure_fin, event_pass, event_paiement, event_rib_id, event_tarification_equipe, event_orga, event_descriptif) 
-			VALUES (:event_titre, :event_nb_equipes, :event_joueurs_max, :event_joueurs_min, :tarif, :event_lieu, :event_date, :event_heure_debut, :event_heure_fin, :event_pass, :event_paiement, :event_rib_id, :event_tarification_equipe, :event_orga, :event_descriptif)'); 
-	$req_organiser_tournoi2->execute(array(
-		':event_titre' => $_POST['event_titre'],
-		':event_nb_equipes' => $_POST['event_nb_equipes'],
-		':event_joueurs_max' => $_POST['event_joueurs_max'],
-		':event_joueurs_min' => $_POST['event_joueurs_min'],
-		':tarif' => $_POST['tarif'],
-		':event_lieu' => $lieu_id,
-		':event_date' => $_POST['event_date'],
-		':event_heure_debut' => $heure_debut,
-		':event_heure_fin' => $heure_fin,
-		':event_pass' => $_POST['event_pass'],
-		':event_paiement' => $_POST['paiement'],
-		':event_rib_id' => $rib_id,
-		':event_tarification_equipe' => $_POST['event_tarification_equipe'],
-		':event_orga' => $_SESSION['id'],
-		':event_descriptif' => $_POST['event_descriptif']
+	$req_event_id = $db->prepare('SELECT MAX(event_id) FROM tournois WHERE event_orga = :event_orga');
+	$req_event_id->execute(array(
+		'event_orga' => $_SESSION['id']
 		));
+	$res_event_id = $req_event_id->fetch();
+	$event_id = $res_event_id[0];
+	var_dump($res_event_id);
+	header('location: feuille_de_tournois.php?tournoi='.$event_id);
 
-	$id_tournoi = $req_organiser_tournoi->fetch();
-
-	//header('location: feuille_de_tournois.php?tournoi='.$id_tournoi['event_id'].'');
 ?>

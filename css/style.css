@@ -8,11 +8,23 @@ body{
 }
 #container {
 	margin: 2% auto;
-	background: rgba(61,86,110,0.5);
+	background: rgba(61, 86, 110, 0.5);
 	border-right: 1px solid grey;
 	border-left: 1px solid grey;
 	width: 80%;
 	padding: 2%;
+}
+.bandeau{
+	padding-top: 13px;
+	padding-left: 10px;
+	padding-right: 10px;
+	display: flex;
+	height: 60px;
+}
+.bandeau .glyphicon{
+	font-size: 26px;
+	margin-right: 3px;
+	margin-left: 3px;
 }
 #form_recherche{
 	display: flex;
