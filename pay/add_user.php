@@ -5,8 +5,6 @@ include 'connect_api.php';
 
 if (isset($_POST)){
 
-
-
 	$nom = htmlspecialchars(trim($_POST["nom"]));
 	$prenom = htmlspecialchars(trim($_POST["prenom"]));
 	$mail = htmlspecialchars(trim($_POST["mail"]));

@@ -1,1 +1,1 @@
-
+<?php exit(); ?>O:29:"MangoPay\Libraries\OAuthToken":5:{s:11:"create_time";i:1495209983;s:12:"access_token";s:32:"dbb137a8227a415482925631243f4769";s:10:"token_type";s:6:"bearer";s:10:"expires_in";i:1199;s:17:"autentication_key";s:32:"a6565114b5eb13af887ac63b770fe00f";}

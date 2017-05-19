@@ -66,12 +66,12 @@ try {
 
     // Création d'un nouvel objet transfert
     $Transfer = new \MangoPay\Transfer();
-    $Transfer->Tag = "Transfert vers lolo";
+    $Transfer->Tag = "Transfert vers le complexe";
     $Transfer->AuthorId = $User->Id;
     $Transfer->CreditedUserId = "25802911";
     $Transfer->DebitedFunds = new \MangoPay\Money();
     $Transfer->DebitedFunds->Currency = "EUR";
-    $Transfer->DebitedFunds->Amount = $_SESSION["montant"];
+    $Transfer->DebitedFunds->Amount = $_SESSION["montant"] - 100;
     $Transfer->Fees = new \MangoPay\Money();
     $Transfer->Fees->Currency = "EUR";
     $Transfer->Fees->Amount = 0;

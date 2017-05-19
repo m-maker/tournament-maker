@@ -23,6 +23,8 @@
 		'lieu_nom' => $_POST['event_lieu_nom']
 		));
 
+
+
 	$req_lieu_id = $db->prepare('SELECT MAX(lieu_id) FROM lieux WHERE lieu_adresse_l1 = :lieu_adresse_l1');
 	$req_lieu_id->execute(array(
 			'lieu_adresse_l1' => $_POST['event_adresse']
@@ -79,6 +81,8 @@
 		':event_orga' => $_SESSION['id'],
 		':event_descriptif' => $_POST['event_descriptif']
 		));
+
+
 
 	$req_event_id = $db->prepare('SELECT MAX(event_id) FROM tournois WHERE event_orga = :event_orga');
 	$req_event_id->execute(array(
