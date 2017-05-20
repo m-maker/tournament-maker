@@ -63,7 +63,10 @@
 }
 #equipes, #mon_equipe, #Mur { 
 	width: 100%;
-	margin: 1% auto 0;
+	margin: 3% auto 0;
+}
+#mur {
+	width: 75%;
 }
 .equipe-joueurs .col-md-6 {
 	padding: 1%;
@@ -85,7 +88,7 @@ h3 {
 }
 .err-titre {
 	text-align: center;
-	background: dimgray;
+
 	border-radius: 5px;
 	border: 1px solid white;
 	font-family: 'Baloo', cursive;
@@ -95,7 +98,7 @@ h3 {
 	font-weight: normal;
 }
 #mon-equipe-cont, #mur-equipe-cont {
-	background: #D3D3D3;
+	background: #f5f5f5;
 	margin-bottom: 1%;
 	border-radius: 5px;
 	border: 1px solid black;
@@ -123,7 +126,7 @@ h3 {
 }
 .param-team {
 	background: #f5f5f5;
-	margin: 0 0;
+	margin-bottom: 1%;
 	padding: 1%;
 	border-radius: 5px;
 }

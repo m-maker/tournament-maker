@@ -21,7 +21,7 @@ body{
 	padding: 1%;
 	background: dimgray;
 }
-.show:hover, .act {
+.show:hover, .act, .acti {
 	background: #778899;
 }
 .bandeau{

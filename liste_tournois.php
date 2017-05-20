@@ -23,25 +23,6 @@
 		$liste = $req_liste_tournois->fetchAll();
 		return $liste;
 	}
-
-	function afficherInfosTournoi($) {
-	    echo '<div class="row">
-            <div class="logo_tournoi col-lg-2">
-                <img class="img-responsive img-circle" height="50" src="img/logo-tournois/ ' . echo $un_tournoi['event_img']; . '" alt="Tournoi">
-            </div>
-            <div class="col-lg-3">
-                <p><span class="glyphicon glyphicon-calendar"></span> <span class="bold"><?ph echo $un_tournoi[\'event_date\'];?></span></p>
-                <p><span class="glyphicon glyphicon-time"></span> <span class="bold"><?php echo $heure_debut.\' - \'.$heure_fin; ?></span></p>
-                <p><span class="glyphicon glyphicon-home"></span> Complexe : <span class="bold"><?php echo $un_tournoi[\'lieu_nom\'];?></span></p>
-            </div>
-            <div class="col-lg-3">
-                <p><span class="glyphicon glyphicon-euro"></span> Prix : <span class="bold"><?php echo $un_tournoi[\'event_tarif\'] + $param->comission; ?> €</span></p>
-                <p><span class="glyphicon glyphicon-calendar"></span> Durée : <span class="bold"><?php echo $duree; ?></span></p>
-                <p><span class="glyphicon glyphicon-user"></span> Nombre d\'équipes : <span class="bold"><?php echo $un_tournoi[\'event_nb_equipes\']; ?></span></p>
-            </div>
-        </div>';
-    }
-
 ?>
 
 <html>
@@ -85,7 +66,21 @@
                             <div class="header-tournoi col-sm-12">
 									<?php echo $un_tournoi['event_titre']; ?>
 								</div>
-
+                            <div class="row">
+                                <div class="logo_tournoi col-lg-2">
+                                    <img class="img-responsive img-circle" height="50" src="img/logo-tournois/<?php echo $un_tournoi['event_img']; ?>" alt="Tournoi">
+                                </div>
+                                <div class="col-lg-3">
+                                    <p><span class="glyphicon glyphicon-calendar"></span> <span class="bold"><?php echo $un_tournoi['event_date'];?></span></p>
+                                    <p><span class="glyphicon glyphicon-time"></span> <span class="bold"><?php echo $heure_debut.' - '.$heure_fin; ?></span></p>
+                                    <p><span class="glyphicon glyphicon-home"></span> Complexe : <span class="bold"><?php echo $un_tournoi['lieu_nom'];?></span></p>
+                                </div>
+                                <div class="col-lg-3">
+                                    <p><span class="glyphicon glyphicon-euro"></span> Prix : <span class="bold"><?php echo $un_tournoi['event_tarif'] + $param->comission; ?> €</span></p>
+                                    <p><span class="glyphicon glyphicon-calendar"></span> Durée : <span class="bold"><?php echo $duree; ?></span></p>
+                                    <p><span class="glyphicon glyphicon-user"></span> Nombre d'équipes : <span class="bold"><?php echo $un_tournoi['event_nb_equipes']; ?></span></p>
+                                </div>
+                            </div>
 						</a>
 					</div>
 					<?php
