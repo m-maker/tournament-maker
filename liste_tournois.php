@@ -44,11 +44,11 @@
 			Les tournois dans le <?php echo $dpt; ?>
 		</div>
 
-		<div class="container" id="container" style="padding-top: 0;">
+		<div class="container" id="container" style="padding-top: 0; margin: 4.5% auto;">
 
             <div class="row menu-orga espace-bot">
-                <div class="col-md-6 center show act" id="show-tournois"><span class="glyphicon glyphicon-list"></span> Les tournois</div>
-                <div class="col-md-6 center show" id="show-matchs">Les matchs</div>
+                <div class="col-md-6 center show act" id="show-tournois"><span class="glyphicon glyphicon-list-alt"></span> Les tournois</div>
+                <div class="col-md-6 center show" id="show-matchs"><span class="glyphicon glyphicon-list"></span> Les matchs</div>
             </div>
 
             <div class="cont" id="tournois">
@@ -90,8 +90,8 @@
 
             </div>
 
-            <div class="cont" id="matchs" style="display: none;">
-                lol
+            <div class="cont white" id="matchs" style="display: none;">
+                <h2 class="center espace-bot espace-top">Cette fonctionnalité n'est pas encore disponible</h2>
             </div>
 
 		</div>

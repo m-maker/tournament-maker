@@ -11,7 +11,7 @@ if (!isset($_SESSION['id']))
 	<head>
 		<?php include('head.php'); ?>
 		<title>Administrer mes tournois</title>
-		<link rel="stylesheet" type="text/css" href="css/orga.css">
+		<link rel="stylesheet" type="text/css" href="organisateur/css/orga.css">
 	</head>
 
 	<body>

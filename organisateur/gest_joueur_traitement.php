@@ -1,9 +1,9 @@
-<?php 
+<?php
 
-include 'conf.php';
+include '../conf.php';
 
 if (!isset($_SESSION["id"]))
-	header("Location: connexion.php");
+	header("Location: ../connexion.php");
 
 $upd = false;
 if (isset($_GET["tournoi"]) && isset($_GET["team"])){
@@ -15,9 +15,9 @@ if (isset($_GET["tournoi"]) && isset($_GET["team"])){
 	$req->execute();
 	$id_orga = $req->fetchColumn();
 	if ($_SESSION["id"] != $id_orga)
-		header("Location: index.php");
+		header("Location: ../index.php");
 }else{
-	header("Location: index.php");
+	header("Location: ./index.php");
 }
 
 if (isset($_GET['id'])){

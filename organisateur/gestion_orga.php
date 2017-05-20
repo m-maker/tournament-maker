@@ -1,13 +1,14 @@
-<?php 
+<?php
 
-include('conf.php'); 
+include '../conf.php';
+
 //if ($_SESSION["orga"] != 1)
 	//header("Location: index.php");
 if (!isset($_SESSION["id"]))
-	header("Location: connexion.php");
+	header("Location: ../connexion.php");
 
 $liste_tournois = liste_tournois_orga($_SESSION["id"]);
-//var_dump($liste_tournois);
+
 ?>
 
 <html>
@@ -21,14 +22,14 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 	<body>
 
 		<!-- HEADER -->
-		<?php include('header.php'); ?>
+		<?php include('../header.php'); ?>
 
 		<!-- CONTENU DE LA PAGE -->
 		<div class="container" id="container" style="padding-top: 0;">
 
 			<div class="row menu-orga">
-				<div class="col-md-6 center show act" id="show-tournois"><span class="glyphicon glyphicon-list"></span> Mes tournois</div>
-				<div class="col-md-6 center show" id="show-matchs">Mes matchs</div>
+				<div class="col-md-6 center show act" id="show-tournois"><span class="glyphicon glyphicon-list-alt"></span> Mes tournois</div>
+				<div class="col-md-6 center show" id="show-matchs"><span class="glyphicon glyphicon-list"></span> Mes matchs</div>
 			</div>
 
 			<div class="cont" id="infos">
@@ -49,7 +50,7 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 								foreach ($liste_tournois as $unTournoi) { ?>
 									<div class="tournoi-cont">
 										<div class="row infos-tournoi" id="<?php echo $unTournoi["event_id"]; ?>">
-											<div class="col-md-1"><img class="img-responsive img-circle" src="img/logo-tournois/<?php echo $unTournoi["event_img"]; ?>" width=""></div>
+											<div class="col-md-1"><img class="img-responsive img-circle" src="../img/logo-tournois/<?php echo $unTournoi["event_img"]; ?>" width=""></div>
 											<div class="col-md-4"><?php echo $unTournoi["event_titre"] ?></div>
 											<div class="col-md-3"><?php echo $unTournoi["event_date"]; ?></div>
 											<div class="col-md-2"><?php echo compte_equipes($unTournoi['event_id']); ?> Equipes</div>
@@ -57,7 +58,7 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 										</div>
 										<div class="row mod-tournoi" id="m-<?php echo $unTournoi["event_id"]; ?>">
 											<div class="col-md-3">
-												<a target="_blank" href="feuille_de_tournois.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
+												<a target="_blank" href="../feuille_de_tournois.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
 													<button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-zoom-in"></span> Voir</button>
 												</a>
 											</div>
@@ -98,9 +99,9 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 		</div>
 
 		<!-- FOOTER -->
-		<?php include('footer.php') ?>
+		<?php include('../footer.php') ?>
 
-        <script src="js/scripts/menu_tournois_matchs.js" type="text/javascript"></script>
+        <script src="../js/scripts/menu_tournois_matchs.js" type="text/javascript"></script>
 
 		<script type="text/javascript">
 

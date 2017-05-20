@@ -1,18 +1,18 @@
 <?php
-	include('conf.php');
+    include '../conf.php';
 ?>	
 <html>
 	
 	<head>
 		<?php include('head.php'); ?>
 		<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-		<link rel="stylesheet" href="css/jquery_perso.css">
-		<link rel="stylesheet" type="text/css" href="css/organiser_tournoi.css">
+		<link rel="stylesheet" href="../css/jquery_perso.css">
+		<link rel="stylesheet" type="text/css" href="../css/organiser_tournoi.css">
 
 		<title>Organiser un tournoi</title>
   		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  		<script type="text/javascript" src="js/datepicker.js"></script>
+  		<script type="text/javascript" src="../js/datepicker.js"></script>
 
 	</head>
 
@@ -36,6 +36,7 @@
 				    				<p>Coordonnées</p>
 						        	<input type="text" class="form-control" id="input_event_titre" name="event_titre" placeholder="Nom du tournoi">
 						        	<br/>
+                                    <?php ?>
 						        	<input type="text" class="form-control" id="input_event_lieu_nom" name="event_lieu_nom" placeholder="Nom du lieu qui accueil le tournoi">
 						        	<input type="text" class="form-control" id="input_event_adresse" name="event_adresse" placeholder="Adresse du tournoi">
 						        	<div class="ligne">
@@ -46,9 +47,9 @@
 
 						    	<hr>
 						    	<div class="form-group form-group-sm center">
-						    		<div class="center">
+						    		<!--<div class="center">
 						    			<p>Horaires</p>
-						    		</div>
+						    		</div>-->
 							    	<div class="ligne espacer">
 							    		<div>
 							      			<p> Date du tournoi </p>
@@ -133,7 +134,7 @@
 							    <hr>
 
 						    	<div class="form-group form-group-sm center">
-						    	  	<p>Participants</p>
+						    	  	<!--<p>Participants</p>-->
 						    	  	<div class="ligne espacer">
 							   	  		<div>
 							   	  			<p>Nombre d'équipes</p>
@@ -212,7 +213,7 @@
 						    	<hr>
 						    	<div class="form-group form-group-sm center">
 						    		<p>Descriptif</p>
-						    		<input class="form-control" type="textarea" name="event_descriptif" placeholder="Match organisé par ADN-five, tous niveaux acceptés et super ambiance">
+                                    <textarea class="form-control" name="event_descriptif" rows="3" placeholder="Match organisé par ADN-five, tous niveaux acceptés et super ambiance"></textarea>
 						    		<!-- LOGO -->
 						    	</div>
 

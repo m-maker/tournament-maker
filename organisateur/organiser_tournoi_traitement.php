@@ -1,5 +1,5 @@
 <?php
-	include('conf.php');
+	include '../conf.php';
 
 	$dpt = htmlspecialchars(trim($_POST['event_code_postal']));
 	$cp = htmlspecialchars(trim($_POST['event_code_postal']));
@@ -113,6 +113,6 @@
 	$res_event_id = $req_event_id->fetch();
 	$event_id = $res_event_id[0];
 	var_dump($res_event_id);
-	header('location: feuille_de_tournois.php?tournoi='.$event_id);
+	header('location: ../feuille_de_tournois.php?tournoi='.$event_id);
 
 ?>

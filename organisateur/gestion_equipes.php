@@ -1,9 +1,9 @@
-<?php 
+<?php
 
-include('conf.php'); 
+include('conf.php');
 
 if (!isset($_SESSION["id"]))
-	header("Location: connexion.php");
+	header("Location: ../connexion.php");
 
 if (isset($_GET["tournoi"])){
 	$id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
@@ -12,9 +12,9 @@ if (isset($_GET["tournoi"])){
 	$req->execute();
 	$id_orga = $req->fetchColumn();
 	if ($_SESSION["id"] != $id_orga)
-		header("Location: index.php");
+        header("Location: ../index.php");
 }else{
-	header("Location: index.php");
+    header("Location: ../index.php");
 }
 $leTournoi = recupObjetTournoiByID($id_tournoi);
 
@@ -25,7 +25,7 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 	<head>
 		<?php include('head.php'); ?>
 		<title><?php echo $leTournoi->event_titre; ?> - Gerer les equipes</title>
-		<link rel="stylesheet" type="text/css" href="css/liste_tournois.css">
+		<link rel="stylesheet" type="text/css" href="../css/liste_tournois.css">
 		<link rel="stylesheet" type="text/css" href="css/gest_team.css">
 		<link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
 	</head>
@@ -34,7 +34,7 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 
 		<!-- HEADER -->
 		<?php
-			include('header.php'); 
+			include('../header.php');
 			$heure_debut = format_heure_minute($leTournoi->event_heure_debut);
 			$heure_fin = format_heure_minute($leTournoi->event_heure_fin);
 			$duree = format_heure_minute($leTournoi->event_nb_heure_jeu);

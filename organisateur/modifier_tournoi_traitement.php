@@ -1,5 +1,6 @@
 <?php
-	include('conf.php');
+
+include '../conf.php';
 
 	//extraction du département
 	$dpt_code = substr($_POST['event_code_postal'], 0, 2);

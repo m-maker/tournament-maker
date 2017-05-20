@@ -196,7 +196,24 @@ function recupEquipeByCode($code){
 	return $req->fetch();
 }
 
+function liste_tournois_membres($id_membre){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT * FROM tournois INNER JOIN equipes_tournois ON event_id = et_event_id INNER JOIN equipes ON et_equipe = team_id INNER JOIN equipe_membres ON team_id = em_team_id WHERE em_membre_id = :id");
+    $req->bindValue(':id', $id_membre, PDO::PARAM_INT);
+    $req->execute();
+    $liste_tournois = [];
+    while ($tournois = $req->fetch()){
+        $req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE event_id = :id');
+        $req_liste_tournois->bindValue(":id", $tournois['event_id'], PDO::PARAM_INT);
+        $req_liste_tournois->execute();
+        $liste_tournois[] = $req_liste_tournois->fetch();
+    }
+    return $liste_tournois;
+}
 
+function liste_lieux(){
+    
+}
 
 $db = connexionBdd();
 $param = getParams();

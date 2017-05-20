@@ -1,5 +1,5 @@
 <?php
-	include('conf.php');
+    include '../conf.php';
 ?>	
 <html>
 	
@@ -21,7 +21,7 @@
 		echo $_SESSION['id'];
 		echo $tournoiObjet->event_titre;
 		if ($_SESSION['id'] != $tournoiObjet->event_orga){
-			//header('location: index.php');
+		    header('location: ../index.php');
 		}
 		else{
 	?>

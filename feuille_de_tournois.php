@@ -99,7 +99,7 @@ function recupMessagesEquipe($id_equipe){
                         <p><span class="glyphicon glyphicon-home"></span> Complexe : <span class="bold"><?php echo $leTournoi->lieu_nom;?></span></p>
 					</div>
 					<div class="col-lg-3">
-                        <p><span class="glyphicon glyphicon-euro"></span> Prix :  <?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></span></p>
+                        <p><span class="glyphicon glyphicon-euro"></span> Prix :  <span class="bold"><?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></span></p>
                         <p><span class="glyphicon glyphicon-calendar"></span> Durée : <span class="bold"><?php echo $duree; ?></span></p>
                         <p><span class="glyphicon glyphicon-user"></span> Nombre d'équipes : <span class="bold"><?php echo $leTournoi->event_nb_equipes; ?></span></p>
 					</div>
@@ -118,8 +118,8 @@ function recupMessagesEquipe($id_equipe){
 
 		    		<div id="mur" style="display: none;" class="cont espace-top">
 		    			<form method="post" action="post_msg.php?id=<?php echo $leTournoi->event_id; ?>">
-		    				<textarea class="form-control" placeholder="Votre message..." name="message" rows="3"></textarea>
-		    				<button class="btn btn-primary btn-grand" name="submit">Poster mon message</button>
+		    				<textarea class="form-control" placeholder="Votre message..." name="message" rows="3" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;"></textarea>
+		    				<button class="btn btn-success btn-grand" style="border-top-left-radius: 0; border-top-right-radius: 0;" name="submit">Poster mon message</button>
 		    			</form>
 		    			<?php $messages = recupMessagesMur($leTournoi->event_id);
 		    			foreach ($messages as $unMessage) { ?>
@@ -153,7 +153,7 @@ function recupMessagesEquipe($id_equipe){
                                     <!-- Affichage des paramètres pour le capitaine de l'equipe -->
                                     <?php if (recupStatutJoueur($_SESSION["id"], $mon_equipe["team_id"]) == 1){ ?>
                                                 <div class="param-team center">
-                                                    <h3 class="clic-param espace-bot">Paramètres de l'equipe: </h3>
+                                                    <h3 class="clic-param espace-bot">Paramètres de l'equipe <span class="glyphicon glyphicon-menu-down right"></span></h3>
                                                     <div>
                                                         <form id="form-param-team" method="post" action="param_team.php?id=<?php echo $mon_equipe['team_id']; ?>&tournoi=<?php echo $leTournoi->event_id; ?>">
                                                             <input style=" margin: auto;" class="form-control" type="text" placeholder="Nom de l'equipe" name="nom-team" value="<?php echo $mon_equipe['team_nom']; ?>"><br />
@@ -335,7 +335,7 @@ function recupMessagesEquipe($id_equipe){
 							        		<input type="text" class="form-control" id="inputPseudo" name="nom" placeholder="Nom de l'équipe">
 							        	</div>
 							        	<div class="col-md-4">
-							    			<button type="submit" name="submit" class="btn btn-primary btn-grand">Ajouter</button>
+							    			<button type="submit" name="submit" class="btn btn-primary btn-grand" >Ajouter</button>
 							    		</div>        	
 								    </div>
 							    </fieldset>
