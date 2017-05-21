@@ -212,7 +212,7 @@ function liste_tournois_membres($id_membre){
 }
 
 function liste_lieux(){
-    
+
 }
 
 $db = connexionBdd();

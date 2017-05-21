@@ -1,6 +1,6 @@
 <?php
 
-include('conf.php');
+include('../conf.php');
 
 if (!isset($_SESSION["id"]))
 	header("Location: ../connexion.php");
@@ -34,33 +34,50 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 
 		<!-- HEADER -->
 		<?php
-			include('../header.php');
+			include('header.php');
 			$heure_debut = format_heure_minute($leTournoi->event_heure_debut);
 			$heure_fin = format_heure_minute($leTournoi->event_heure_fin);
-			$duree = format_heure_minute($leTournoi->event_nb_heure_jeu);
+            $glyph = "glyphicon-eye-open";$prive="Public";
+            $glyph = "glyphicon-eye-open";$prive="Public";$color='vert';
+            if ($leTournoi->event_prive == 1){$color='rouge';$glyph = "glyphicon-eye-close";$prive="Privé";}
+            $pay = "<span class='rouge'>Refusé</span>";
+            if ($leTournoi->event_paiement == 1){$pay="<span class='vert'>Accepté</span>";}
+            $desc = $leTournoi->event_descriptif;
+            if ($leTournoi->event_descriptif == NULL || empty($leTournoi->event_descriptif))
+                $desc = 'Pas de description.';
 		?>
 
 		<!-- CONTENU DE LA PAGE -->
 		<div class="container" id="container">
-		<h2 class="titre center"><span class="left"><a href="gestion_orga.php"> < </a></span> Gerer les équipes</h2>
+		<h2 class="titre center"><span class="left"><a href="index.php"> < </a></span> Gerer les équipes</h2>
 			<div class="conteneur-tournoi" style="border-radius:0;width: 100%;margin:0;padding: 1%;">
 				<div class="row">
 
-					<div class="col-lg-4 center" style="padding: 1% 2% 0;">
-						<div class="logo_tournoi">
-							 <img class="img-responsive img-circle" height="50" src='img/logo-tournois/<?php echo $leTournoi->event_img;?>' alt="Tournoi">
-						</div>
-					</div>
-					<div class="col-lg-5">
-						<p><span class="glyphicon glyphicon-calendar"></span> <?php echo $leTournoi->event_date;?></p>
-						<p><span class="glyphicon glyphicon-time"></span> <?php echo $heure_debut.' - '.$heure_fin; ?></p>
-						<p><span class="glyphicon glyphicon-home"></span> <?php echo $leTournoi->lieu_nom;?></p>
-					</div>
-					<div class="col-lg-3">
-						<p><span class="glyphicon glyphicon-euro"></span> Prix : <?php echo $leTournoi->event_tarif; ?></span></p>
-						<p><span class="glyphicon glyphicon-calendar"></span> Durée : <?php echo $duree; ?></p>
-						<p><span class="glyphicon glyphicon-user"></span> Nombre d'équipes : <?php echo $leTournoi->event_nb_equipes; ?></p>
-					</div>
+                    <div class="logo_tournoi col-lg-2">
+                        <img class="img-responsive img-circle" height="50" src="../img/logo-tournois/<?php echo $leTournoi->event_img; ?>" alt="Tournoi">
+                    </div>
+                    <div class="col-lg-3">
+                        <p><span class="glyphicon glyphicon-home"></span> Nom du complexe : <span class="bold"><?php echo $leTournoi->lieu_nom;?></span></p>
+                        <p><span class="glyphicon glyphicon-euro"></span> Paiement en ligne : <span class="bold"> <?php echo $pay; ?></span></p>
+                        <p><span class="glyphicon glyphicon-user"></span><span class="bold"> <?php echo compte_equipes($leTournoi->event_id) . ' / ' . $leTournoi->event_nb_equipes; ?></span> équipes inscrites</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p><span class="glyphicon glyphicon-calendar"></span> <span class="bold"><?php echo $leTournoi->event_date;?></span></p>
+                        <p><span class="glyphicon glyphicon-time"></span> <span class="bold"><?php echo $heure_debut.' - '.$heure_fin; ?></span></p>
+                        <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p>
+                    </div>
+                    <div class="col-lg-3">
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        <?php
+                        if (strlen($desc) > 120) {
+                            echo substr($desc, 0, 120)  . '...';
+                        }else{
+                            echo $desc;
+                        } ?>
+                    </div>
+                    <div class="col-lg-2">
+                        <h1><span class="bold"><?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></h1>
+                    </div>
 
 				</div>
 			</div>
@@ -134,7 +151,7 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 		</div>
 
 		<!-- FOOTER -->
-		<?php include('footer.php') ?>
+		<?php include('../footer.php') ?>
 
 		<script type="text/javascript">
 			$(".info-team").click(function() {
@@ -142,10 +159,10 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 	    		var id = $(this).attr("id");
 	    		var cont_joueur = $("#e-" + id);
 	    		if (cont_joueur.css("display") == "none"){
-	    			$(this).addClass("act");
+	    			$(this).addClass("active");
 	    			cont_joueur.show();
 	    		} else {
-	    			$(this).removeClass("act");
+	    			$(this).removeClass("active");
 	    			cont_joueur.hide();
 	    		}
 	    	});

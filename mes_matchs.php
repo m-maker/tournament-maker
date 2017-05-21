@@ -28,18 +28,21 @@ $liste_tournois = liste_tournois_membres($_SESSION["id"]);
 <!-- HEADER -->
 <?php include('header.php'); ?>
 
+<div class="titre-liste-tournoi">
+    Les tournois auxquels je participe
+</div>
+
 <!-- CONTENU DE LA PAGE -->
-<!-- Zone de connexion -->
-<div class="row space-top">
+<div class="row espace-top espace-bot">
     <div class="container white" id="container" style="padding-top:0;">
 
         <div class="row menu-orga espace-bot">
-            <div class="col-md-6 center show act" id="show-tournois"><span class="glyphicon glyphicon-list-alt"></span> Tournois auxquels je suis inscrit</div>
-            <div class="col-md-6 center show" id="show-matchs"><span class="glyphicon glyphicon-list"></span> Matchs auxquels je suis inscrit</div>
+            <div class="col-md-6 center show act" id="show-tournois"><span class="glyphicon glyphicon-list-alt"></span> Mes Tournois</div>
+            <div class="col-md-6 center show" id="show-matchs"><span class="glyphicon glyphicon-list"></span> Mes Matchs</div>
         </div>
 
         <!-- AFFICHAGE DES TOURNOIS -->
-        <div class="cont" id="tournois">
+        <div class="cont espace-bot" id="tournois">
 
             <?php
             if (!empty($liste_tournois) && $liste_tournois[0] != null){
@@ -72,13 +75,17 @@ $liste_tournois = liste_tournois_membres($_SESSION["id"]);
                     </div>
                     <?php
                 }
-            }
-            ?>
+            }else{ ?>
+                <div class="center">
+                    <h2 class="white">Vous ne participez à aucun tournoi pour l'instant</h2>
+                    <a href="index.php"><button class="btn btn-success btn-mid espace-top"><span class="glyphicon glyphicon-zoom-in"></span> Trouver un tournoi</button></a>
+                </div>
+            <?php } ?>
 
         </div>
 
         <!-- AFFICHAGE DES MATCHS -->
-        <div class="cont" id="matchs" style="display: none;">
+        <div class="cont espace-bot" id="matchs" style="display: none;">
 
             <h2 class="center espace-bot espace-top">Cette fonctionnalité n'est pas encore disponible</h2>
 
@@ -87,6 +94,8 @@ $liste_tournois = liste_tournois_membres($_SESSION["id"]);
 
     </div>
 </div>
+
+<?php include 'footer.php'; ?>
 
 <script type="text/javascript" src="js/scripts/menu_tournois_matchs.js"></script>
 

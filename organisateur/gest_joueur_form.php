@@ -32,7 +32,7 @@ if (isset($_GET["id"])){
 	<head>
 		<?php include('head.php'); ?>
 		<title>Ajouter un joueur</title>
-		<link rel="stylesheet" type="text/css" href="css/liste_tournois.css">
+		<link rel="stylesheet" type="text/css" href="../css/liste_tournois.css">
 		<link rel="stylesheet" type="text/css" href="css/gest_team.css">
 		<link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
 	</head>
@@ -42,8 +42,8 @@ if (isset($_GET["id"])){
 		<!-- HEADER -->
 		<?php include('header.php'); ?>
 		
-		<div class="container-fluid">
-			<div class="form-cont center">
+		<div class="container white center" id="container" style="margin: 5% auto;">
+
 			<?php if (!$upd) { ?>
 				<form method="post" action="gest_joueur_traitement.php?tournoi=<?php echo $id_tournoi; ?>&team=<?php echo $id_team; ?>">
 					<legend>
@@ -96,11 +96,11 @@ if (isset($_GET["id"])){
 					<button type="submit" name="submit" class="btn btn-primary btn-grand" style="margin-top: 3%;"><span class="glyphicon glyphicon-ok-sign"></span> Modifier</button>
 				</form>
 			<?php } ?>
-			</div>
+
 		</div>
 
 		<!-- FOOTER -->
-		<?php include('footer.php') ?>
+		<?php include('../footer.php') ?>
 
 		<script>
 

@@ -8,7 +8,7 @@
 		<ul class="dropdown-menu  menu_liste" aria-labelledby="dropdownMenu2">
             <?php if (isset($_SESSION["id"])) {
                 if ($_SESSION["membre_orga"] == 1) { ?>
-                    <li><a href="organisateur/gestion_orga.php">Section Organisateur</a></li>
+                    <li><a href="organisateur">Section Organisateur</a></li>
                 <?php } ?>
                 <li><a href="mes_matchs.php">Mes Tournois</a></li>
                 <li><a href="#">Paramètres</a></li>
