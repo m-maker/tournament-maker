@@ -47,6 +47,13 @@ function recupMessagesEquipe($id_equipe){
 	return $req->fetchAll();
 }
 
+$id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
+$leTournoi = recupObjetTournoiByID($id_tournoi);
+
+$mdp = false;
+if ($leTournoi->event_prive == 1 && !isset($_POST["mdp"]) || $leTournoi->event_prive == 1 && isset($_POST["mdp"]) && $_POST["mdp"] != $leTournoi->event_pass )
+    $mdp = true;
+
 ?>
 
 <html>
@@ -55,19 +62,15 @@ function recupMessagesEquipe($id_equipe){
 		<link rel="stylesheet" type="text/css" href="css/liste_tournois.css">
 		<link rel="stylesheet" type="text/css" href="css/feuille_tournoi.css">
 		<link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
-		<title>Tournoi</title>
+		<title><?php echo $leTournoi->event_titre; ?></title>
 	</head>
 
 	<body>
 	<?php include ('header.php'); ?>
 
-	<div class="container" id="container">
+	<div class="container" id="container" <?php if ($mdp){echo 'style="margin: 7% auto;"';} ?>>
 
-	<?php 
-
-		$id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
-		$leTournoi = recupObjetTournoiByID($id_tournoi);
-		if ($leTournoi->event_prive == 1 && !isset($_POST["mdp"]) || $leTournoi->event_prive == 1 && isset($_POST["mdp"]) && $_POST["mdp"] != $leTournoi->event_pass ){ ?>
+	<?php if ($mdp){ ?>
 			<div class="mdp">
 				<h3>Ce tournoi est privé !</h3>
 				<div class="form-mdp">
@@ -82,27 +85,45 @@ function recupMessagesEquipe($id_equipe){
 			echo "<div class='titre-liste-tournoi'> Bienvenue dans le tournoi : " . $leTournoi->event_titre . "</div>";
 			$heure_debut = format_heure_minute($leTournoi->event_heure_debut);
 			$heure_fin = format_heure_minute($leTournoi->event_heure_fin);
-			$duree = format_heure_minute($leTournoi->event_nb_heure_jeu);
+            $glyph = "glyphicon-eye-open";$prive="Public";$color='vert';
+            if ($leTournoi->event_prive == 1){$color='rouge';$glyph = "glyphicon-eye-close";$prive="Privé";}
+            $pay = "<span class='rouge'>Refusé</span>";
+            if ($leTournoi->event_paiement == 1){$pay="<span class='vert'>Accepté</span>";}
+            $desc = $leTournoi->event_descriptif;
+            if ($leTournoi->event_descriptif == NULL || empty($leTournoi->event_descriptif))
+                $desc = 'Pas de description.';
+            $team = "par équipe";
+            if ($leTournoi->event_tarification_equipe == 0){$team="par joueur";}
 	 	?>
 
 			<div class="conteneur-tournoi" style="border-radius:0;width: 100%;margin:0;padding: 1%;">
 				<div class="row">
 
-					<div class="col-lg-4 center">
-						<div class="logo_tournoi">
-							 <img class="img-responsive img-circle" height="50" src='img/logo-tournois/<?php echo $leTournoi->event_img;?>' alt="Tournoi">
-						</div>
-					</div>
-					<div class="col-lg-5">
-                        <p><span class="glyphicon glyphicon-calendar"></span> Le : <span class="bold"><?php echo $leTournoi->event_date;?></span></p>
-                        <p><span class="glyphicon glyphicon-time"></span> De : <span class="bold"><?php echo $heure_debut.'</span> à <span class="bold">'.$heure_fin; ?></span></p>
-                        <p><span class="glyphicon glyphicon-home"></span> Complexe : <span class="bold"><?php echo $leTournoi->lieu_nom;?></span></p>
-					</div>
-					<div class="col-lg-3">
-                        <p><span class="glyphicon glyphicon-euro"></span> Prix :  <span class="bold"><?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></span></p>
-                        <p><span class="glyphicon glyphicon-calendar"></span> Durée : <span class="bold"><?php echo $duree; ?></span></p>
-                        <p><span class="glyphicon glyphicon-user"></span> Nombre d'équipes : <span class="bold"><?php echo $leTournoi->event_nb_equipes; ?></span></p>
-					</div>
+                    <div class="logo_tournoi col-lg-2">
+                        <img class="img-responsive img-circle" height="50" src="img/logo-tournois/<?php echo $leTournoi->event_img; ?>" alt="Tournoi">
+                    </div>
+                    <div class="col-lg-3">
+                        <p><span class="glyphicon glyphicon-home"></span> Nom du complexe : <span class="bold"><?php echo $leTournoi->lieu_nom;?></span></p>
+                        <p><span class="glyphicon glyphicon-euro"></span> Paiement en ligne : <span class="bold"> <?php echo $pay; ?></span></p>
+                        <p><span class="glyphicon glyphicon-user"></span><span class="bold"> <?php echo compte_equipes($leTournoi->event_id) . ' / ' . $leTournoi->event_nb_equipes; ?></span> équipes inscrites</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p><span class="glyphicon glyphicon-calendar"></span> <span class="bold"><?php echo $leTournoi->event_date;?></span></p>
+                        <p><span class="glyphicon glyphicon-time"></span> <span class="bold"><?php echo $heure_debut.' - '.$heure_fin; ?></span></p>
+                        <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p>
+                    </div>
+                    <div class="col-lg-3">
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        <?php
+                        if (strlen($desc) > 120) {
+                            echo substr($desc, 0, 120)  . '...';
+                        }else{
+                            echo $desc;
+                        } ?>
+                    </div>
+                    <div class="col-lg-2 prix-team">
+                        <h1><span class="bold"><?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></h1> <?php ECHO $team; ?>
+                    </div>
 
 				</div>
 			</div>
@@ -194,7 +215,7 @@ function recupMessagesEquipe($id_equipe){
 
                                             <form method="post" action="post_msg_team.php?id=<?php echo $leTournoi->event_id; ?>">
                                                 <textarea class="form-control" name="message" placeholder="Entrez votre message..."></textarea>
-                                                <button class="btn btn-primary btn-grand">Poster mon message</button>
+                                                <button class="btn btn-success btn-grand">Poster mon message</button>
                                             </form>
 
                                             <?php $messages_equipe = recupMessagesEquipe($mon_equipe["team_id"]);
@@ -346,10 +367,12 @@ function recupMessagesEquipe($id_equipe){
 
 		    	</div>
 		    </div>
-	    </div>
 	    <?php
 	    }
 	    ?>
+    </div>
+
+    <?php include 'footer.php'; ?>
 
 	    <script type="text/javascript">
 
@@ -357,9 +380,6 @@ function recupMessagesEquipe($id_equipe){
 	    		$("#equipes").show();
 	    	}); */
 
-            /**
-             * Created by Niquelesstup on 19/05/2017.
-             */
             $(".show").click(function() {
                 $(".show").removeClass("acti");
                 $(this).addClass("acti");

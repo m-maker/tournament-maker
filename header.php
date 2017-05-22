@@ -13,7 +13,10 @@
                 <li><a href="mes_matchs.php">Mes Tournois</a></li>
                 <li><a href="#">Paramètres</a></li>
                 <li><a href="deconnexion.php">Déconnexion</a></li>
-            <?php } ?>
+            <?php }else{ ?>
+                <li><a href="connexion.php">Connexion</a></li>
+            <?php }?>
+
 		</ul>
         </div>
 	</div>
@@ -48,7 +51,7 @@
 				?>
 				<div class="dropdown element_bandeau ">
 					<div>
-						<a href="organiser_tournoi.php" class="btn btn-success">
+						<a href="organisateur/organiser_tournoi.php" class="btn btn-success">
 						Créer un tournois
 						</a>
 					</div>

@@ -211,6 +211,14 @@ function liste_tournois_membres($id_membre){
     return $liste_tournois;
 }
 
+function recupCompteOrga($id_orga){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT * FROM compte WHERE compte_membre_id = :id");
+    $req->bindValue(":id", $id_orga, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+}
+
 function liste_lieux(){
 
 }

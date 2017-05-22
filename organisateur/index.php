@@ -2,8 +2,8 @@
 
 include '../conf.php';
 
-//if ($_SESSION["orga"] != 1)
-	//header("Location: index.php");
+if ($_SESSION["membre_orga"] != 1)
+	header("Location: ../index.php");
 if (!isset($_SESSION["id"]))
 	header("Location: ../connexion.php");
 
@@ -96,7 +96,7 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 		</div>
 
 		<!-- FOOTER -->
-		<?php include('../footer.php') ?>
+		<?php include('footer.php') ?>
 
         <script src="../js/scripts/menu_tournois_matchs.js" type="text/javascript"></script>
 

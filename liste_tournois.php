@@ -66,6 +66,8 @@
                     $desc = $un_tournoi['event_descriptif'];
                     if ($un_tournoi['event_descriptif'] == NULL || empty($un_tournoi['event_descriptif']))
                         $desc = 'Pas de description.';
+                    $team = "par équipe";
+                    if ($un_tournoi['event_tarification_equipe'] == 0){$team="par joueur";}
 					?>
 					<div class="conteneur-tournoi">
 						<a href="feuille_de_tournois.php?tournoi=<?php echo $un_tournoi["event_id"]; ?>">
@@ -95,8 +97,8 @@
                                         echo $desc;
                                     } ?>
                                 </div>
-                                <div class="col-lg-2">
-                                    <h1><span class="bold"><?php echo $un_tournoi['event_tarif'] + $param->comission; ?> €</span></h1>
+                                <div class="col-lg-2 prix-team">
+                                    <h1><span class="bold"><?php echo $un_tournoi['event_tarif'] + $param->comission; ?> €</span></h1> <?php echo $team; ?>
                                 </div>
                             </div>
 						</a>

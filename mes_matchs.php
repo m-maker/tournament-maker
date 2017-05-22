@@ -20,6 +20,7 @@ $liste_tournois = liste_tournois_membres($_SESSION["id"]);
 
 <head>
     <?php include 'head.php'; ?>
+    <title>Les tournois / matchs auquels je suis inscript</title>
     <link rel="stylesheet" href="css/liste_tournois.css">
 </head>
 
@@ -49,7 +50,15 @@ $liste_tournois = liste_tournois_membres($_SESSION["id"]);
                 foreach ($liste_tournois AS $un_tournoi){
                     $heure_debut = format_heure_minute($un_tournoi['event_heure_debut']);
                     $heure_fin = format_heure_minute($un_tournoi['event_heure_fin']);
-                    $duree = format_heure_minute($un_tournoi['event_nb_heure_jeu']);
+                    $glyph = "glyphicon-eye-open";$prive="Public";$color='vert';
+                    if ($un_tournoi['event_prive'] == 1){$color='rouge';$glyph = "glyphicon-eye-close";$prive="Privé";}
+                    $pay = "<span class='rouge'>Refusé</span>";
+                    if ($un_tournoi['event_paiement'] == 1){$pay="<span class='vert'>Accepté</span>";}
+                    $desc = $un_tournoi['event_descriptif'];
+                    if ($un_tournoi['event_descriptif'] == NULL || empty($un_tournoi['event_descriptif']))
+                        $desc = 'Pas de description.';
+                    $team = "par équipe";
+                    if ($un_tournoi['event_tarification_equipe'] == 0){$team="par joueur";}
                     ?>
                     <div class="conteneur-tournoi">
                         <a href="feuille_de_tournois.php?tournoi=<?php echo $un_tournoi["event_id"]; ?>">
@@ -61,14 +70,26 @@ $liste_tournois = liste_tournois_membres($_SESSION["id"]);
                                     <img class="img-responsive img-circle" height="50" src="img/logo-tournois/<?php echo $un_tournoi['event_img']; ?>" alt="Tournoi">
                                 </div>
                                 <div class="col-lg-3">
+                                    <p><span class="glyphicon glyphicon-home"></span> Nom du complexe : <span class="bold"><?php echo $un_tournoi['lieu_nom'];?></span></p>
+                                    <p><span class="glyphicon glyphicon-euro"></span> Paiement en ligne : <span class="bold"> <?php echo $pay; ?></span></p>
+                                    <p><span class="glyphicon glyphicon-user"></span><span class="bold"> <?php echo compte_equipes($un_tournoi['event_id']) . ' / ' . $un_tournoi['event_nb_equipes']; ?></span> équipes inscrites</p>
+                                </div>
+                                <div class="col-lg-2">
                                     <p><span class="glyphicon glyphicon-calendar"></span> <span class="bold"><?php echo $un_tournoi['event_date'];?></span></p>
                                     <p><span class="glyphicon glyphicon-time"></span> <span class="bold"><?php echo $heure_debut.' - '.$heure_fin; ?></span></p>
-                                    <p><span class="glyphicon glyphicon-home"></span> Complexe : <span class="bold"><?php echo $un_tournoi['lieu_nom'];?></span></p>
+                                    <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p>
                                 </div>
                                 <div class="col-lg-3">
-                                    <p><span class="glyphicon glyphicon-euro"></span> Prix : <span class="bold"><?php echo $un_tournoi['event_tarif'] + $param->comission; ?> €</span></p>
-                                    <p><span class="glyphicon glyphicon-calendar"></span> Durée : <span class="bold"><?php echo $duree; ?></span></p>
-                                    <p><span class="glyphicon glyphicon-user"></span> Nombre d'équipes : <span class="bold"><?php echo $un_tournoi['event_nb_equipes']; ?></span></p>
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                    <?php
+                                    if (strlen($desc) > 90) {
+                                        echo substr($desc, 0, 90)  . '...';
+                                    }else{
+                                        echo $desc;
+                                    } ?>
+                                </div>
+                                <div class="col-lg-2 prix-team">
+                                    <h1><span class="bold"><?php echo $un_tournoi['event_tarif'] + $param->comission; ?> €</span></h1> <?php echo $team; ?>
                                 </div>
                             </div>
                         </a>

@@ -41,7 +41,7 @@ body{
     justify-content: center;
     align-items: center;
 	margin-top: 15%;
-	margin-bottom: 25%;
+	margin-bottom: 20%;
 }
 .form-simple {
 	color: white;
@@ -147,9 +147,9 @@ form .left a:hover{
 	color: white;
 }
 .form-invite {
-	width: 70%;
+	width: 90%;
 	margin: auto;
-	padding: 5% 0 10%;
+	padding: 2%;
 }
 .cont-info {
 	background: white;

@@ -37,7 +37,6 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 			include('header.php');
 			$heure_debut = format_heure_minute($leTournoi->event_heure_debut);
 			$heure_fin = format_heure_minute($leTournoi->event_heure_fin);
-            $glyph = "glyphicon-eye-open";$prive="Public";
             $glyph = "glyphicon-eye-open";$prive="Public";$color='vert';
             if ($leTournoi->event_prive == 1){$color='rouge';$glyph = "glyphicon-eye-close";$prive="Privé";}
             $pay = "<span class='rouge'>Refusé</span>";
@@ -45,6 +44,8 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
             $desc = $leTournoi->event_descriptif;
             if ($leTournoi->event_descriptif == NULL || empty($leTournoi->event_descriptif))
                 $desc = 'Pas de description.';
+            $team = "par équipe";
+            if ($leTournoi->event_tarification_equipe == 0){$team="par joueur";}
 		?>
 
 		<!-- CONTENU DE LA PAGE -->
@@ -75,8 +76,8 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
                             echo $desc;
                         } ?>
                     </div>
-                    <div class="col-lg-2">
-                        <h1><span class="bold"><?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></h1>
+                    <div class="col-lg-2 prix-team">
+                        <h1><span class="bold"><?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></h1> <?php ECHO $team; ?>
                     </div>
 
 				</div>
@@ -151,7 +152,7 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 		</div>
 
 		<!-- FOOTER -->
-		<?php include('../footer.php') ?>
+		<?php include('footer.php') ?>
 
 		<script type="text/javascript">
 			$(".info-team").click(function() {

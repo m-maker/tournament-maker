@@ -21,6 +21,6 @@ $req = $db->prepare("DELETE FROM messages_mur WHERE mur_tournoi_id = :id_tournoi
 $req->bindValue(":id_tournoi", $id_tournoi, PDO::PARAM_INT);
 $req->execute();
 
-header("Location: gestion_orga.php");
+header("Location: index.php");
 
 ?>

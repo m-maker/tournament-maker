@@ -8,12 +8,14 @@
 		<ul class="dropdown-menu  menu_liste" aria-labelledby="dropdownMenu2">
             <?php if (isset($_SESSION["id"])) {
                 if ($_SESSION["membre_orga"] == 1) { ?>
-                    <li><a href="gestion_orga.php">Section Organisateur</a></li>
+                    <li><a href="index.php">Section Organisateur</a></li>
                 <?php } ?>
                 <li><a href="../mes_matchs.php">Mes Tournois</a></li>
                 <li><a href="#">Paramètres</a></li>
                 <li><a href="../deconnexion.php">Déconnexion</a></li>
-            <?php } ?>
+            <?php }else{ ?>
+                <li><a href="../connexion.php">Connexion</a></li>
+            <?php }?>
 		</ul>
         </div>
 	</div>

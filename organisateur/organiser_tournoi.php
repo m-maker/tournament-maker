@@ -1,5 +1,8 @@
 <?php
     include '../conf.php';
+    if ($_SESSION['membre_orga'] == 0)
+        header("Location: ../index.php");
+    $liste_comptes = recupCompteOrga($_SESSION["id"]);
 ?>	
 <html>
 	
@@ -183,10 +186,10 @@
 						    	<div class="form-group form-group-sm center">
 						    		<p>Paiement</p>
 						    		<label style="margin-right: 2%;" for="radio_equipe">Prix par équipe
-						    		<input id="radio_equipe" type="radio" name="event_tarification_equipe" value="1" checked="checked">
+						    		<input id="radio_equipe" type="radio" name="event_tarification_equipe" value="1">
                                     </label>
 						    		<label for="radio_joueur">Prix par joueur
-						    		<input id="radio_joueur" type="radio" name="event_tarification_equipe" value="0">
+						    		<input id="radio_joueur" type="radio" name="event_tarification_equipe" value="0" checked="checked">
                                     </label>
 						    		<div id="tarif" class="ligne"> 
 							    		<select class="form-control" name="tarif">
@@ -209,11 +212,33 @@
 							    		<input class="pay-clic" id="paiement_refus" type="radio" name="paiement" value="0">
 							    		<label for="paiement_refus">Non merci, j'ai beaucoup de courage!</label>
 						    		</div>
+
 						    		<div id="section-rib" class="espace-top">
-						    			<label for="input_event_rib ">Merci de saisir le RIB sur lequel reverser l'argent des inscriptions</label>
-							        	<input type="text" class="form-control" id="input_event_rib" name="event_rib_bic" placeholder="Code BIC : DAAEFRPP (Optionnel)">
-                                        <input type="text" class="form-control" id="input_event_rib_iban" name="event_rib_iban" placeholder="Code IBAN : DAAEFRPP (Optionnel)">
-							        </div>
+                                        <div class="espace-bot">
+                                            Selectionnez un compte :
+                                            <select name="select-compte" id="select-compte" class="form-control">
+                                                <option value="new" id="opt-new">Nouveau compte..</option>
+                                                <?php foreach ($liste_comptes as $unCompte){ ?>
+                                                    <option value="<?php echo $unCompte["compte_id"]; ?>"><?php echo $unCompte['compte_nom'] . ' ' . $unCompte["compte_prenom"] . ' - ' . $unCompte['compte_rib_iban']; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <div id="new-compte">
+                                            <label for="input_event_rib ">Merci de saisir les informations suivantes afin de recueillir les fonds de votre tournoi :</label>
+                                            <div class="ligne">
+                                                <input type="text" class="form-control" id="input_compte_nom" name="compte_nom" placeholder="Nom du titulaire du compte">
+                                                <input type="text" class="form-control" id="input_compte_prenom" name="compte_prenom" placeholder="Prénom du titulaire du compte">
+                                            </div>
+                                            <input type="text" class="form-control" id=input_compte_adresse_l1" name="compte_adresse" placeholder="Adresse du titulaire du compte">
+                                            <input type="text" class="form-control" id="input_compte_adresse_l2" name="compte_adresse_2" placeholder="Complément d'adresse (Optionnel)">
+                                            <div class="ligne">
+                                                <input type="text" class="form-control" id="input_compte_code_postal" name="compte_cp" placeholder="Code Postal du titulaire du compte">
+                                                <input type="text" class="form-control" id="input_compte_ville" name="compte_ville" placeholder="Ville du tutulaire du compte">
+                                            </div>
+                                            <input type="text" class="form-control" id="input_event_rib" name="compte_rib_bic" placeholder="Code BIC : DAAEFRPP (Optionnel)">
+                                            <input type="text" class="form-control" id="input_event_rib_iban" name="compte_rib_iban" placeholder="Code IBAN : FR763XXXXXXXXXXX4567890185">
+                                        </div>
+                                    </div>
 						    	</div>
 						    	
 						    	<hr>
@@ -247,7 +272,7 @@
             </div>
 		</div>
 
-    <?php include "../footer.php"; ?>
+    <?php include "footer.php"; ?>
 
     <script src="../js/typeahead.min.js"></script>
 
@@ -263,6 +288,15 @@
             }
         });
 
+        $("#select-compte").change(function () {
+            var opt_select = $("#select-compte option:selected").val();
+            console.log(opt_select);
+           if (opt_select == "new")
+               $("#new-compte").show();
+           else
+               $("#new-compte").hide();
+        });
+
         $('.pay-clic').click(function () {
            var id = $(this).attr("id");
            var section_rib = $('#section-rib')
@@ -271,6 +305,14 @@
            else {
                $('#input_event_rib_iban').val('');
                $('#input_event_rib').val('');
+               $('#input_compte_nom').val('');
+               $('#input_compte_prenom').val('');
+               $('#input_compte_adresse_l1').val('');
+               $('#input_compte_adresse_l2').val('');
+               $('#input_compte_code_postal').val('');
+               $('#input_compte_ville').val('');
+               document.getElementById('select-compte').selectedIndex = 0;
+               $('#new-compte').show();
                section_rib.hide();
            }
         });

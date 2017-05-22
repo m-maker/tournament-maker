@@ -68,7 +68,7 @@ if (isset($_GET["id"])){
 		</div>
 
 		<!-- FOOTER -->
-		<?php include('../footer.php') ?>
+		<?php include('footer.php') ?>
 
 		<script>
 			$(".etat-team").click(function() {

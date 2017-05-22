@@ -27,8 +27,6 @@
 	$adresse = htmlspecialchars(trim($_POST['event_adresse']));
 	$nom_lieu = htmlspecialchars(trim($_POST['event_lieu_nom']));
 	$adresse = htmlspecialchars(trim($_POST['event_adresse']));
-	$rib_bic = htmlspecialchars(trim($_POST['event_rib_bic']));
-	$rib_iban = htmlspecialchars(trim($_POST['event_rib_iban']));
 	$minute_debut = htmlspecialchars(trim($_POST['minute_debut']));
 	$heure_debut = htmlspecialchars(trim($_POST['heure_debut']));
 	$minute_fin = htmlspecialchars(trim($_POST['minute_fin']));
@@ -44,6 +42,16 @@
 	$paiement = htmlspecialchars(trim($_POST['paiement']));
 	$tarification_equipe = htmlspecialchars(trim($_POST['event_tarification_equipe']));
 	$descriptif = htmlspecialchars(trim($_POST['event_descriptif']));
+	// Infos du compte
+	$select_compte = htmlspecialchars(trim($_POST["select-compte"]));
+	$rib_bic = htmlspecialchars(trim($_POST['compte_rib_bic']));
+	$rib_iban = htmlspecialchars(trim($_POST['compte_rib_iban']));
+	$compte_nom = htmlspecialchars(trim($_POST["compte_nom"]));
+	$compte_prenom = htmlspecialchars(trim($_POST["compte_prenom"]));
+	$compte_adresse_l1 = htmlspecialchars(trim($_POST["compte_adresse"]));
+	$compte_adresse_l2 = htmlspecialchars(trim($_POST["compte_adresse_2"]));
+	$compte_cp = htmlspecialchars(trim($_POST["compte_cp"]));
+	$compte_ville = htmlspecialchars(trim($_POST["compte_ville"]));
 
 	/*
 	 *   ***** GESTION DU DEPARTEMENT *****
@@ -86,21 +94,41 @@
     }
 
 	/*
-	 *   ***** GESTION DU PAIEMENT EN LIGNE *****
+	 *   ***** GESTION DU PAIEMENT EN LIGNE *****|
 	 */
-	if(!empty($_POST['event_rib_bic'])){
-		// Récupération du dernier id de rib
-        $req_rib_id = $db->query('SELECT MAX(rib_id) FROM rib;');
-        $req_rib_id->execute();
-        $rib_id = $req_rib_id->fetchColumn() + 1;
-        // Ajout du rib
-		$req_rib = $db->prepare('INSERT INTO rib(rib_id, rib_bic, rib_iban, rib_membre_id) VALUES (:rib_id, :rib_bic, :rib_iban, :rib_membre_id)');
-		$req_rib->bindValue(':rib_id', $rib_id, PDO::PARAM_INT);
-        $req_rib->bindValue(':rib_bic', $rib_bic, PDO::PARAM_STR);
-        $req_rib->bindValue(':rib_iban', $rib_iban, PDO::PARAM_STR);
-        $req_rib->bindValue(':rib_membre_id', $_SESSION["id"], PDO::PARAM_INT);
-		$req_rib->execute();
-		$paiement = 1;
+	if(!empty($_POST['compte_rib_iban']) && !empty($compte_nom) && !empty($compte_prenom) && !empty($compte_adresse_l1) && !empty($compte_ville) || $select_compte != "new"){
+
+		if ($select_compte != "new"){
+			$rib_id = $select_compte;
+		}else {
+            // Récupération du dernier id de rib
+            $req_rib_id = $db->query('SELECT MAX(compte_id) FROM compte;');
+            $req_rib_id->execute();
+            $rib_id = $req_rib_id->fetchColumn() + 1;
+            if (empty($rib_bic) || $rib_bic == "")
+                $rib_bic = null;
+            if (empty($compte_adresse_l2) || $compte_adresse_l2 == "")
+                $compte_adresse_l2 = null;
+            if (strlen($compte_cp) == 5) {
+                // Ajout du rib
+                $req_rib = $db->prepare('INSERT INTO compte (compte_id, compte_rib_bic, compte_rib_iban, compte_membre_id, compte_nom, compte_prenom, compte_adresse_l1, compte_adresse_l2, compte_cp, compte_ville) 
+			VALUES (:compte_id, :compte_rib_bic, :compte_rib_iban, :compte_membre_id, :compte_nom, :compte_prenom, :compte_adresse, :compte_adresse_2, :compte_cp, :compte_ville)');
+                $req_rib->bindValue(':compte_id', $rib_id, PDO::PARAM_INT);
+                $req_rib->bindValue(':compte_rib_bic', $rib_bic, PDO::PARAM_STR);
+                $req_rib->bindValue(':compte_rib_iban', $rib_iban, PDO::PARAM_STR);
+                $req_rib->bindValue(':compte_membre_id', $_SESSION["id"], PDO::PARAM_INT);
+                $req_rib->bindValue(':compte_nom', $compte_nom, PDO::PARAM_STR);
+                $req_rib->bindValue(':compte_prenom', $compte_prenom, PDO::PARAM_STR);
+                $req_rib->bindValue(':compte_adresse', $compte_adresse_l1, PDO::PARAM_STR);
+                $req_rib->bindValue(':compte_adresse_2', $compte_adresse_l2);
+                $req_rib->bindValue(':compte_cp', $compte_cp, PDO::PARAM_STR);
+                $req_rib->bindValue(':compte_ville', $compte_ville, PDO::PARAM_STR);
+                $req_rib->execute();
+                $paiement = 1;
+            } else {
+                echo 'err_code_postal_compte';
+            }
+        }
 	}
 	else{
 		$rib_id = NULL;
