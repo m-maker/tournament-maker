@@ -21,11 +21,6 @@
 		<!-- CONTENU DE LA PAGE -->
 
 		<!-- BARRE DE RECHERCHE -->
-		<div id="post" class="container">
-			<button id="btn_dpt" class="btn btn-success" data-toggle="modal" data-target="#myModal">
-				<div id="nom_departement" > Département  <b class="caret"></b> </div>
-			</button>			
-		</div>
 <!-- Modal -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		    <div class="modal-dialog" role="document">

@@ -1,17 +1,24 @@
 <div class="bandeau">
 
-	<div class="dropdown element_bandeau ">
-		<div>
-		<a href="#" data-toggle="dropdown" >
+	<div class="element_bandeau">
+		<div class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 		  <span class="glyphicon glyphicon-menu-hamburger"></span>
 		</a>
-		</div>
-		<ul class="dropdown-menu menu_liste" aria-labelledby="dropdownMenu2">
-			<li><a href="mes_matchs.php">Mes matchs</a></li>
-		    <li><a href="#">Paramètres</a></li>
-		    <li><a href="gestion_orga.php">Gerer mes tournois</a></li>
-		    <li><a href="deconnexion.php">Déconnexion</a></li>
+		<ul class="dropdown-menu  menu_liste" aria-labelledby="dropdownMenu2">
+            <?php if (isset($_SESSION["id"])) {
+                if ($_SESSION["membre_orga"] == 1) { ?>
+                    <li><a href="organisateur">Section Organisateur</a></li>
+                <?php } ?>
+                <li><a href="mes_matchs.php">Mes Tournois</a></li>
+                <li><a href="#">Paramètres</a></li>
+                <li><a href="deconnexion.php">Déconnexion</a></li>
+            <?php }else{ ?>
+                <li><a href="connexion.php">Connexion</a></li>
+            <?php }?>
+
 		</ul>
+        </div>
 	</div>
 
 	<div class="dropdown element_bandeau ">
@@ -44,7 +51,7 @@
 				?>
 				<div class="element_bandeau ">
 					<div>
-						<a href="organiser_tournoi.php" class="btn btn-success">
+						<a href="organisateur/organiser_tournoi.php" class="btn btn-success">
 						Créer un tournois
 						</a>
 					</div>
