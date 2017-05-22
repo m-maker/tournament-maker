@@ -34,7 +34,7 @@ if (isset($_POST)){
 			$User->Email = $mail;
 			$User->FirstName = $prenom;
 			$User->LastName = $nom;
-			$User->Birthday = $date_naissance->getTimestamp();;
+			$User->Birthday = $date_naissance->getTimestamp();
 			$User->Nationality = $nation;
 			$User->CountryOfResidence = $residence;
 			$userAdded = $mangoPayApi->Users->Create($User);
@@ -42,7 +42,7 @@ if (isset($_POST)){
 			$Wallet = new \MangoPay\Wallet();
 			$Wallet->Owners = array($userAdded->Id);
 			$Wallet->Description = "Porte-monnaie de base";
-			$Wallet->Currency = $devise;
+			$Wallet->Currency = "EUR";
 			$walletAdded = $mangoPayApi->Wallets->Create($Wallet);
 
             $_SESSION['utilisateur_mango'] = serialize($userAdded);

@@ -48,26 +48,29 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
             if ($leTournoi->event_tarification_equipe == 0){$team="par joueur";}
 		?>
 
+        <div class="title center bold">
+            Gérer les équipes
+        </div>
+
 		<!-- CONTENU DE LA PAGE -->
-		<div class="container" id="container">
-		<h2 class="titre center"><span class="left"><a href="index.php"> < </a></span> Gerer les équipes</h2>
+		<div class="container" id="container" style="margin-bottom: 3%;">
+            <?php echo "<div class='titre-liste-tournoi'>
+            <span class=\"left\"><a href=\"index.php\"> < </a></span>
+            " . $leTournoi->event_titre . "<br>
+            <p style='font-size: 15px;'>
+                <span class=\"glyphicon glyphicon-calendar\"></span> Le <span class=\"bold\">" . $leTournoi->event_date . "</span> de
+            <span class=\"bold\">" . $heure_debut . "</span> à <span class=\"bold\">" .$heure_fin . "</span>
+            </p>
+        </div>"; ?>
 			<div class="conteneur-tournoi" style="border-radius:0;width: 100%;margin:0;padding: 1%;">
 				<div class="row">
 
-                    <div class="logo_tournoi col-lg-2">
-                        <img class="img-responsive img-circle" height="50" src="../img/logo-tournois/<?php echo $leTournoi->event_img; ?>" alt="Tournoi">
-                    </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4" style="text-align: left;">
                         <p><span class="glyphicon glyphicon-home"></span> Nom du complexe : <span class="bold"><?php echo $leTournoi->lieu_nom;?></span></p>
                         <p><span class="glyphicon glyphicon-euro"></span> Paiement en ligne : <span class="bold"> <?php echo $pay; ?></span></p>
                         <p><span class="glyphicon glyphicon-user"></span><span class="bold"> <?php echo compte_equipes($leTournoi->event_id) . ' / ' . $leTournoi->event_nb_equipes; ?></span> équipes inscrites</p>
                     </div>
-                    <div class="col-lg-2">
-                        <p><span class="glyphicon glyphicon-calendar"></span> <span class="bold"><?php echo $leTournoi->event_date;?></span></p>
-                        <p><span class="glyphicon glyphicon-time"></span> <span class="bold"><?php echo $heure_debut.' - '.$heure_fin; ?></span></p>
-                        <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p>
-                    </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-5 espace-top" style="text-align: left;">
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <?php
                         if (strlen($desc) > 120) {
@@ -76,8 +79,9 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
                             echo $desc;
                         } ?>
                     </div>
-                    <div class="col-lg-2 prix-team">
-                        <h1><span class="bold"><?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></h1> <?php ECHO $team; ?>
+                    <div class="col-lg-3 prix-team">
+                        <h1 style="margin-top: 1.5%;"><span class="bold"><?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></h1> <?php ECHO $team; ?><br />
+                        <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p>
                     </div>
 
 				</div>

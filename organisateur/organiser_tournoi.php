@@ -3,6 +3,7 @@
     if ($_SESSION['membre_orga'] == 0)
         header("Location: ../index.php");
     $liste_comptes = recupCompteOrga($_SESSION["id"]);
+$tab_dates = array("01" => "Janvier", "02" => "Fevrier", "03" => "Mars", "04" => "Avril", "05" => "Mai", "06" => "Juin", "07" => "Juillet", "08" => "Aout", "09" => "Septembre", "10" => "Octobre", "11" => "Novembre", "12" => "Décembre");
 ?>	
 <html>
 	
@@ -228,6 +229,26 @@
                                             <div class="ligne">
                                                 <input type="text" class="form-control" id="input_compte_nom" name="compte_nom" placeholder="Nom du titulaire du compte">
                                                 <input type="text" class="form-control" id="input_compte_prenom" name="compte_prenom" placeholder="Prénom du titulaire du compte">
+                                            </div>
+                                            <div class="ligne">
+                                                    <select class="form-control align-select" name="jour">
+                                                        <optgroup label="Jour de naissance"></optgroup>
+                                                        <?php for ($i = 1; $i < 31; $i++) { ?>
+                                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                    <select class="form-control align-select" name="mois" placeholder="Mois">
+                                                        <optgroup label="Mois de naissance"></optgroup>
+                                                        <?php foreach ($tab_dates as $key => $value) { ?>
+                                                            <option value="<?php echo $key; ?>"><?php echo $value ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                    <select class="form-control align-select" name="annee" placeholder="Année">
+                                                        <optgroup label="Année de naissance"></optgroup>
+                                                        <?php for ($i = date("Y") - 19; $i > date("Y") - 100; $i--) { ?>
+                                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                        <?php } ?>
+                                                    </select>
                                             </div>
                                             <input type="text" class="form-control" id=input_compte_adresse_l1" name="compte_adresse" placeholder="Adresse du titulaire du compte">
                                             <input type="text" class="form-control" id="input_compte_adresse_l2" name="compte_adresse_2" placeholder="Complément d'adresse (Optionnel)">

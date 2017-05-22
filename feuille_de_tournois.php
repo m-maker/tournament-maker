@@ -39,20 +39,23 @@ function recupEquipesCompletes($id_tournoi, $nb_joueur_min){
 	return $equipes_completes;
 }
 
-function recupMessagesEquipe($id_equipe){
-	$db = connexionBdd();
-	$req = $db->prepare("SELECT * FROM mur_equipes INNER JOIN membres ON me_membre_id = membre_id WHERE me_equipe_id = :id_equipe ORDER BY me_date DESC;");
-	$req->bindValue(":id_equipe", $id_equipe, PDO::PARAM_INT);
-	$req->execute();
-	return $req->fetchAll();
+function recupMessagesEquipe($id_equipe)
+{
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT * FROM mur_equipes INNER JOIN membres ON me_membre_id = membre_id WHERE me_equipe_id = :id_equipe ORDER BY me_date DESC;");
+    $req->bindValue(":id_equipe", $id_equipe, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
 }
 
 $id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
 $leTournoi = recupObjetTournoiByID($id_tournoi);
 
 $mdp = false;
-if ($leTournoi->event_prive == 1 && !isset($_POST["mdp"]) || $leTournoi->event_prive == 1 && isset($_POST["mdp"]) && $_POST["mdp"] != $leTournoi->event_pass )
+if ($leTournoi->event_prive == 1 && !isset($_POST["mdp"]) || $leTournoi->event_prive == 1 && isset($_POST["mdp"]) && $_POST["mdp"] != $leTournoi->event_pass)
     $mdp = true;
+if (!empty(recupEquipeJoueur($_SESSION['id'], $id_tournoi)))
+    $mdp = false;
 
 ?>
 
@@ -81,10 +84,9 @@ if ($leTournoi->event_prive == 1 && !isset($_POST["mdp"]) || $leTournoi->event_p
 				</div>
 			</div>
 	<?php   
-		}else{	
-			echo "<div class='titre-liste-tournoi'> Bienvenue dans le tournoi : " . $leTournoi->event_titre . "</div>";
-			$heure_debut = format_heure_minute($leTournoi->event_heure_debut);
-			$heure_fin = format_heure_minute($leTournoi->event_heure_fin);
+		}else{
+            $heure_debut = format_heure_minute($leTournoi->event_heure_debut);
+            $heure_fin = format_heure_minute($leTournoi->event_heure_fin);
             $glyph = "glyphicon-eye-open";$prive="Public";$color='vert';
             if ($leTournoi->event_prive == 1){$color='rouge';$glyph = "glyphicon-eye-close";$prive="Privé";}
             $pay = "<span class='rouge'>Refusé</span>";
@@ -94,25 +96,26 @@ if ($leTournoi->event_prive == 1 && !isset($_POST["mdp"]) || $leTournoi->event_p
                 $desc = 'Pas de description.';
             $team = "par équipe";
             if ($leTournoi->event_tarification_equipe == 0){$team="par joueur";}
+
+			echo "<div class='titre-liste-tournoi'>
+            " . $leTournoi->event_titre . "<br>
+            <p style='font-size: 15px;'>
+                <span class=\"glyphicon glyphicon-calendar\"></span> Le <span class=\"bold\">" . $leTournoi->event_date . "</span> de 
+                <span class=\"bold\">" . $heure_debut . "</span> à <span class=\"bold\">" .$heure_fin . "</span>
+            </p>
+            </div>";
+
 	 	?>
 
 			<div class="conteneur-tournoi" style="border-radius:0;width: 100%;margin:0;padding: 1%;">
 				<div class="row">
 
-                    <div class="logo_tournoi col-lg-2">
-                        <img class="img-responsive img-circle" height="50" src="img/logo-tournois/<?php echo $leTournoi->event_img; ?>" alt="Tournoi">
-                    </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4" style="text-align: left;">
                         <p><span class="glyphicon glyphicon-home"></span> Nom du complexe : <span class="bold"><?php echo $leTournoi->lieu_nom;?></span></p>
                         <p><span class="glyphicon glyphicon-euro"></span> Paiement en ligne : <span class="bold"> <?php echo $pay; ?></span></p>
                         <p><span class="glyphicon glyphicon-user"></span><span class="bold"> <?php echo compte_equipes($leTournoi->event_id) . ' / ' . $leTournoi->event_nb_equipes; ?></span> équipes inscrites</p>
                     </div>
-                    <div class="col-lg-2">
-                        <p><span class="glyphicon glyphicon-calendar"></span> <span class="bold"><?php echo $leTournoi->event_date;?></span></p>
-                        <p><span class="glyphicon glyphicon-time"></span> <span class="bold"><?php echo $heure_debut.' - '.$heure_fin; ?></span></p>
-                        <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p>
-                    </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-5 espace-top" style="text-align: left;">
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <?php
                         if (strlen($desc) > 120) {
@@ -121,8 +124,9 @@ if ($leTournoi->event_prive == 1 && !isset($_POST["mdp"]) || $leTournoi->event_p
                             echo $desc;
                         } ?>
                     </div>
-                    <div class="col-lg-2 prix-team">
-                        <h1><span class="bold"><?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></h1> <?php ECHO $team; ?>
+                    <div class="col-lg-3 prix-team">
+                        <h1 style="margin-top: 1.5%;"><span class="bold"><?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></h1> <?php ECHO $team; ?><br />
+                        <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p>
                     </div>
 
 				</div>
@@ -130,8 +134,8 @@ if ($leTournoi->event_prive == 1 && !isset($_POST["mdp"]) || $leTournoi->event_p
 
         <div class="row menu-orga espace-bot" style="margin: 0;">
             <div class="col-md-4 center show" id="show-mur"><span class="glyphicon glyphicon-list"></span> Mur du tournoi</div>
-            <div class="col-md-4 center show" id="show-mon-equipe">Mon Equipe</div>
-            <div class="col-md-4 center show acti" id="show-equipes">Les équipes</div>
+            <div class="col-md-4 center show" id="show-mon-equipe"><span class="glyphicon glyphicon-flag"></span> Mon Equipe</div>
+            <div class="col-md-4 center show acti" id="show-equipes"><span class="glyphicon glyphicon-user"></span> Les équipes</div>
         </div>
 
 		  	<div id="body_match" class="espace-bot">
