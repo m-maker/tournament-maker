@@ -10,19 +10,6 @@
 		));
 	}
 
-	function liste_tournois($dpt){
-		$db = connexionBdd();
-		$req_dpt = $db->prepare("SELECT dpt_id FROM departements WHERE dpt_code = :code");
-		$req_dpt->bindValue(":code", $dpt, PDO::PARAM_STR);
-		$req_dpt->execute();
-		$dpt_id = $req_dpt->fetchColumn();
-		$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE lieu_dpt_id = :departement_id');
-		$req_liste_tournois->execute(array(
-			':departement_id' => $dpt_id
-			));
-		$liste = $req_liste_tournois->fetchAll();
-		return $liste;
-	}
 ?>
 
 <html>
@@ -70,6 +57,7 @@
                     if ($un_tournoi['event_tarification_equipe'] == 0){$team="par joueur";}
 					?>
 					<div class="conteneur-tournoi">
+
 						<a href="feuille_de_tournois.php?tournoi=<?php echo $un_tournoi["event_id"]; ?>">
                             <div class="header-tournoi col-sm-12">
 									<?php echo $un_tournoi['event_titre']; ?>
