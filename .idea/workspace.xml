@@ -4,32 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/organisateur/gest_team_traitement.php" description="include 'conf.php';" line="0" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="56039eb8-741c-449b-bdff-ec57736f9c34" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organisateur/footer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf.php" afterPath="$PROJECT_DIR$/conf.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/feuille_tournoi.css" afterPath="$PROJECT_DIR$/css/feuille_tournoi.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/footer.css" afterPath="$PROJECT_DIR$/css/footer.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/liste_tournois.css" afterPath="$PROJECT_DIR$/css/liste_tournois.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.css" afterPath="$PROJECT_DIR$/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/feuille_de_tournois.php" afterPath="$PROJECT_DIR$/feuille_de_tournois.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/footer.php" afterPath="$PROJECT_DIR$/footer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/head.php" afterPath="$PROJECT_DIR$/head.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/header.php" afterPath="$PROJECT_DIR$/header.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/invite.php" afterPath="$PROJECT_DIR$/invite.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/liste_tournois.php" afterPath="$PROJECT_DIR$/liste_tournois.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mes_matchs.php" afterPath="$PROJECT_DIR$/mes_matchs.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organisateur/gest_joueur_form.php" afterPath="$PROJECT_DIR$/organisateur/gest_joueur_form.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organisateur/gest_team_form.php" afterPath="$PROJECT_DIR$/organisateur/gest_team_form.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organisateur/gestion_equipes.php" afterPath="$PROJECT_DIR$/organisateur/gestion_equipes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organisateur/head.php" afterPath="$PROJECT_DIR$/organisateur/head.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organisateur/header.php" afterPath="$PROJECT_DIR$/organisateur/header.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organisateur/index.php" afterPath="$PROJECT_DIR$/organisateur/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organisateur/organiser_tournoi.php" afterPath="$PROJECT_DIR$/organisateur/organiser_tournoi.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organisateur/organiser_tournoi_traitement.php" afterPath="$PROJECT_DIR$/organisateur/organiser_tournoi_traitement.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organisateur/suppr_tournoi.php" afterPath="$PROJECT_DIR$/organisateur/suppr_tournoi.php" />
-    </list>
+    <list default="true" id="56039eb8-741c-449b-bdff-ec57736f9c34" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -113,8 +88,8 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/organisateur/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="5" column="25" lean-forward="false" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+            <state relative-caret-position="315">
+              <caret line="15" column="10" lean-forward="true" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -494,15 +469,15 @@
       <workItem from="1495230411837" duration="21932000" />
       <workItem from="1495314098028" duration="14810000" />
       <workItem from="1495363861712" duration="9473000" />
-      <workItem from="1495391650794" duration="17631000" />
+      <workItem from="1495391650794" duration="19426000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93763000" />
+    <option name="totallyTimeSpent" value="95558000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
+    <frame x="-9" y="-9" width="1938" height="1050" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18367347" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1029,8 +1004,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/organisateur/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="5" column="25" lean-forward="false" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+        <state relative-caret-position="315">
+          <caret line="15" column="10" lean-forward="true" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
           <folding />
         </state>
       </provider>
