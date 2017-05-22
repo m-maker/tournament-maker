@@ -6,14 +6,9 @@
 	<head>
 		<?php include('head.php'); ?>
 		<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-		<link rel="stylesheet" href="css/jquery_perso.css">
 		<link rel="stylesheet" type="text/css" href="css/organiser_tournoi.css">
-
 		<title>Organiser un tournoi</title>
-  		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   		<script type="text/javascript" src="js/datepicker.js"></script>
-
 	</head>
 
 	<body>

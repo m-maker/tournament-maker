@@ -196,6 +196,26 @@ function recupEquipeByCode($code){
 	return $req->fetch();
 }
 
+function listeDepartements(){
+	$db = connexionBdd();
+	$req = $db->prepare('SELECT * FROM departements');
+	$req->execute();
+	return $req->fetchAll();
+}
+function liste_tournois($dpt){
+	$db = connexionBdd();
+	$req_dpt = $db->prepare("SELECT * FROM departements WHERE dpt_code = :code");
+	$req_dpt->bindValue(":code", $dpt, PDO::PARAM_STR);
+	$req_dpt->execute();
+	$res_dpt = $req_dpt->fetch();
+	$dpt_id = $res_dpt['dpt_id'];
+	$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE lieu_dpt_id = :departement_id');
+	$req_liste_tournois->execute(array(
+		':departement_id' => $dpt_id
+		));
+	$liste = $req_liste_tournois->fetchAll();
+	return $liste;
+}
 $db = connexionBdd();
 $param = getParams();
 

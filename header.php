@@ -42,7 +42,7 @@
 		if (isset($_SESSION['id'])){
 			if($_SESSION['membre_orga'] == 1){
 				?>
-				<div class="dropdown element_bandeau ">
+				<div class="element_bandeau ">
 					<div>
 						<a href="organiser_tournoi.php" class="btn btn-success">
 						Créer un tournois
