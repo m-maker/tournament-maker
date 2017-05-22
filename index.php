@@ -5,6 +5,11 @@
 	
 	<head>
 		<?php include('head.php'); ?>
+		<link rel="stylesheet" type="text/css" href="css/index.css">
+		<link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/liste_tournois.css">
+		<script type="text/javascript" src="js/index.js"></script>
+ 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<title>Tournois de foot en salle</title>
 	</head>
 
@@ -16,14 +21,38 @@
 		<!-- CONTENU DE LA PAGE -->
 
 		<!-- BARRE DE RECHERCHE -->
-
-		<form id="form_recherche" action="liste_tournois.php" method="get">
-	  		<div id="barre_de_recherche">
-	  			<span> Les tournois à coté de chez toi </span>
-	    		<input id="input_barre_recherche" type="text" placeholder="Département: 33, 75, 13..." name="dpt">
-	  			<button class="btn btn-success btn-xs" type="submit" class="btn btn-default">Go!</button>
-	  		</div>
-		</form>
+<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		    <div class="modal-dialog" role="document">
+		  		<div class="modal-content">
+		    		<div class="modal-header">
+		        		<h2 class="modal-title" id="myModalLabel">Département</h2>
+		        	</div>
+		    		<div class="modal-body">
+			        	<div class="liste_departements" id="liste_departements">
+			        		<form id="form_dpt">
+				        		<ul>
+						       		<?php
+						       	 		foreach (listeDepartements() as $key) {
+											?>
+												<li>
+													<label> <?php echo '('.$key['dpt_code'].') '.$key['dpt_nom']; ?>
+														<input type="checkbox" name="dpt" value="<?php echo $key['dpt_code'] ?>" class="badgebox">
+													</label>
+												</li>
+											<?php
+										}
+									?>
+								</ul>
+							</form>   
+				        </div>
+		      		</div>
+		      		<div class="modal-footer">
+		        		<button id="valider" type="button" class="btn btn-default" data-dismiss="modal">Valider</button>
+		      		</div>
+		  		</div>
+		  	</div>
+		</div>
 
 		<!-- FOOTER -->
 		<?php include('footer.php') ?>

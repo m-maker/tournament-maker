@@ -1,0 +1,55 @@
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+li{
+	height: 2rem;
+}
+li:hover{
+	background-color: #ececec;
+}
+label{
+	width: 100%;
+}
+.liste_departements{
+	margin: 0.1rem;
+	padding: 0.1rem;
+}
+.modal-body{
+	margin: 0rem;
+	padding: 0.1rem;
+	max-height: 35rem;
+	overflow-x: scroll;
+}
+.badgebox
+{
+    opacity: 0;
+}
+#post{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 10px;
+	width: 95%;
+	min-height: 620px;
+	background-color: rgba(0,0,0,0.3);
+}
+#btn_dpt{
+	justify-content:  center;
+	width: 50%;
+	margin: 0;
+}
+#nav_complexes{
+	background-color: rgba(0,0,0,0.7);
+	padding: 2px;
+}
+#menu_liste_complexes{
+	display: flex;
+	width: 100%;
+	height: 50px;
+}
+.onglet_complexe{
+	background-color: black;
+	flex 1;
+	height: 100%;
+}

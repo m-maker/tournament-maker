@@ -3176,25 +3176,25 @@ fieldset[disabled] .btn-primary.focus {
 }
 .btn-success {
   color: #ffffff;
-  background-color: #93c54b;
+  background-color: #577c43;
   border-color: transparent;
 }
 .btn-success:focus,
 .btn-success.focus {
   color: #ffffff;
-  background-color: #79a736;
+  background-color: #3e5930;
   border-color: rgba(0, 0, 0, 0);
 }
 .btn-success:hover {
   color: #ffffff;
-  background-color: #79a736;
+  background-color: #3e5930;
   border-color: rgba(0, 0, 0, 0);
 }
 .btn-success:active,
 .btn-success.active,
 .open > .dropdown-toggle.btn-success {
   color: #ffffff;
-  background-color: #79a736;
+  background-color: #3e5930;
   border-color: rgba(0, 0, 0, 0);
 }
 .btn-success:active:hover,

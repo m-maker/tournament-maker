@@ -1,14 +1,26 @@
 #footer{
-	height: 4rem;
-	position: fixed;
-	top: calc(100% - 4rem);
-	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(0,0,0,0.7);
 	width: 100%;
 	margin: 0rem;
-	padding: 0rem;
+	padding: 1%;
 	text-align: center;
+	color: white;
 }
 #footer *{
 	margin: 1rem;
 }
-
+#footer a {
+ 	color: lightgrey;
+	margin: 0;
+}
+#footer a:hover {
+	text-decoration: none;
+	color: slategrey;
+}
+#footer img {
+	display: inline-block;
+	margin: 2px;
+}
+#footer h3 {
+	font-family: 'Montserrat', sans-serif;
+}
