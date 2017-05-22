@@ -230,6 +230,15 @@ function liste_tournois_membres($id_membre){
     return $liste_tournois;
 }
 
+function liste_tournois_complexe($lieu_id){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT * FROM tournois WHERE event_lieu = :event_lieu AND event_date >= NOW() ORDER BY event_date DESC");
+    $req->bindValue(':event_lieu', $lieu_id, PDO::PARAM_INT);
+    $req->execute();
+    $liste_tournois = $req->fetchAll();
+    return $liste_tournois;
+}
+
 function recupCompteOrga($id_orga){
     $db = connexionBdd();
     $req = $db->prepare("SELECT * FROM compte WHERE compte_membre_id = :id");
@@ -238,9 +247,21 @@ function recupCompteOrga($id_orga){
     return $req->fetchAll();
 }
 
-function liste_lieux(){
-
+function liste_lieux($dpt_id){    
+	$db = connexionBdd();
+    $req = $db->prepare("SELECT * FROM lieux WHERE lieu_dpt_id = :dpt_id");
+    $req->bindValue(":dpt_id", $dpt_id, PDO::PARAM_STR);
+    $req->execute();
+    return $req->fetchAll();
 }
+function recupLieuById ($lieu_id){    
+	$db = connexionBdd();
+    $req = $db->prepare("SELECT * FROM lieux WHERE lieu_id = :lieu_id");
+    $req->bindValue(":lieu_id", $lieu_id, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetch();
+}
+
 $db = connexionBdd();
 $param = getParams();
 
