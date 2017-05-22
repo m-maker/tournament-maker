@@ -25,10 +25,6 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 		<!-- HEADER -->
 		<?php include('header.php'); ?>
 
-        <div class="titre-liste-tournoi">
-            Gerer mes tournois
-        </div>
-
 		<!-- CONTENU DE LA PAGE -->
 		<div class="container" id="container" style="padding-top: 0; margin: 5% auto;">
 
@@ -54,12 +50,13 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 											<div class="col-md-2"><?php echo compte_joueurs_tournoi($unTournoi['event_id']); ?> Inscrits</div>
 										</div>
 										<div class="row mod-tournoi" id="m-<?php echo $unTournoi["event_id"]; ?>">
-											<div class="col-md-3">
-												<a target="_blank" href="../feuille_de_tournois.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
-													<button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-zoom-in"></span> Voir</button>
-												</a>
-											</div>
-											<div class="col-md-3">
+
+                                            <div class="col-md-2">
+                                                <a target="_blank" href="../feuille_de_tournois.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
+                                                    <button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-zoom-in"></span> Voir</button>
+                                                </a>
+                                            </div>
+											<div class="col-md-2">
 												<a href="modifier_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>">
 													<button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-edit"></span> Modifier</button>
 												</a>
@@ -69,7 +66,12 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 													<button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-cog"></span> Gerer les equipes</button>
 												</a>
 											</div>
-											<div class="col-md-3">
+                                            <div class="col-md-3">
+                                                <a href="paiements.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
+                                                    <button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-eur"></span> Gerer les paiements</button>
+                                                </a>
+                                            </div>
+											<div class="col-md-2">
 												<a href="suppr_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>">
 													<button class="btn btn-danger btn-grand"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
 												</a>

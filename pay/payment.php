@@ -27,6 +27,12 @@ include 'connect_api.php';
 $Wallet = unserialize($_SESSION['wallet_mango']);
 $User = unserialize($_SESSION["utilisateur_mango"]);
 $carteEnreg = unserialize($_SESSION['carte_mango']);
+$tournoi = unserialize($_SESSION["tournoi_mango"]);
+
+$req = $db->prepare("SELECT * FROM infos_mango INNER JOIN tournois ON im_id = event_mango WHERE event_id = :id_tournoi");
+$req->bindValue(":id_tournoi", $tournoi->event_id, PDO::PARAM_INT);
+$req->execute();
+$mango_tournoi = $req->fetch();
 
 try {
 
@@ -76,7 +82,7 @@ try {
     $Transfer->Fees->Currency = "EUR";
     $Transfer->Fees->Amount = 0;
     $Transfer->DebitedWalletId = $Wallet->Id;
-    $Transfer->CreditedWalletId = "25802914";
+    $Transfer->CreditedWalletId = $mango_tournoi["im_wallet_id"];
 
     // Création du transfert
     $Transfert = $mangoPayApi->Transfers->Create($Transfer);
