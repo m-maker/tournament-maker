@@ -25,8 +25,17 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 		<!-- HEADER -->
 		<?php include('header.php'); ?>
 
+        <div class="title center bold">
+            Administrer mes tournois / matchs
+        </div>
+
+        <div class="alert alert-dismissible alert-info" style="width: 80%; margin: auto;">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Heads up!</strong> This <a href="#" class="alert-link">alert needs your attention</a>, but it's not super important.
+        </div>
+
 		<!-- CONTENU DE LA PAGE -->
-		<div class="container" id="container" style="padding-top: 0; margin: 5% auto;">
+		<div class="container" id="container" style="padding-top: 0; ">
 
 			<div class="row menu-orga">
 				<div class="col-md-6 center show act" id="show-tournois"><span class="glyphicon glyphicon-list-alt"></span> Mes tournois</div>
@@ -43,11 +52,10 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 								foreach ($liste_tournois as $unTournoi) { ?>
 									<div class="tournoi-cont">
 										<div class="row infos-tournoi" id="<?php echo $unTournoi["event_id"]; ?>">
-											<div class="col-md-1"><img class="img-responsive img-circle" src="../img/logo-tournois/<?php echo $unTournoi["event_img"]; ?>" width=""></div>
-											<div class="col-md-4"><?php echo $unTournoi["event_titre"] ?></div>
-											<div class="col-md-3"><?php echo $unTournoi["event_date"]; ?></div>
-											<div class="col-md-2"><?php echo compte_equipes($unTournoi['event_id']); ?> Equipes</div>
-											<div class="col-md-2"><?php echo compte_joueurs_tournoi($unTournoi['event_id']); ?> Inscrits</div>
+											<div class="col-md-3 bold" style="text-decoration: underline;"><?php echo $unTournoi["event_titre"] ?></div>
+											<div class="col-md-2"><span class="glyphicon glyphicon-calendar"></span> <?php echo $unTournoi["event_date"]; ?></div>
+											<div class="col-md-2"><span class="glyphicon glyphicon-flag"></span> <?php echo compte_equipes($unTournoi['event_id']); ?> Equipes</div>
+											<div class="col-md-2"><span class="glyphicon glyphicon-user"></span>  <?php echo compte_joueurs_tournoi($unTournoi['event_id']); ?> Inscrits</div>
 										</div>
 										<div class="row mod-tournoi" id="m-<?php echo $unTournoi["event_id"]; ?>">
 
@@ -58,7 +66,7 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
                                             </div>
 											<div class="col-md-2">
 												<a href="modifier_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>">
-													<button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-edit"></span> Modifier</button>
+													<button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-edit"></span> Modifier</button>
 												</a>
 											</div>
 											<div class="col-md-3">
@@ -68,7 +76,7 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 											</div>
                                             <div class="col-md-3">
                                                 <a href="paiements.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
-                                                    <button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-eur"></span> Gerer les paiements</button>
+                                                    <button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-eur"></span> Encaissements</button>
                                                 </a>
                                             </div>
 											<div class="col-md-2">
@@ -83,7 +91,7 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 								<h4 class="padding center">Vous n'avez crée aucun tournoi !</h4> 
 							<?php } ?>
 
-							<div class="center espace-top">
+							<div class="center" style="margin-top: 5%;">
 								<a href="organiser_tournoi.php"><button class="btn btn-success btn-mid"><span class="glyphicon glyphicon-play-circle"></span> Ajouter un tournoi</button></a>
 							</div>
 

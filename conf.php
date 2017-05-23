@@ -262,6 +262,15 @@ function recupLieuById ($lieu_id){
     return $req->fetch();
 }
 
+function recupNbJoueurPayeEquipe($id_equipe, $paye = 1){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT COUNT(em_id) FROM equipe_membres WHERE em_team_id = :id_equipe AND em_membre_paye = :paye;");
+    $req->bindValue(":id_equipe", $id_equipe, PDO::PARAM_INT);
+    $req->bindValue(":paye", $paye, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchColumn();
+}
+
 $db = connexionBdd();
 $param = getParams();
 
