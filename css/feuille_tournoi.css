@@ -89,7 +89,7 @@ h3 {
 }
 .err-titre {
 	text-align: center;
-
+	background: #2F4F4F;
 	border-radius: 5px;
 	border: 1px solid white;
 	font-family: 'Baloo', cursive;

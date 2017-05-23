@@ -29,10 +29,6 @@ $liste_tournois = liste_tournois_membres($_SESSION["id"]);
 <!-- HEADER -->
 <?php include('header.php'); ?>
 
-<div class="titre-liste-tournoi">
-    Les tournois auxquels je participe
-</div>
-
 <!-- CONTENU DE LA PAGE -->
 <div class="row espace-top espace-bot">
     <div class="container white" id="container" style="padding-top:0;">

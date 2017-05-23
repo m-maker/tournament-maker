@@ -2,7 +2,8 @@
 
 .bandeau{
 	display: flex;
-	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(0,62,117, 1.0);
+	background: #1b3249;
 	margin: 0rem;
 	padding: 0rem;
 }

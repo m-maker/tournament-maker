@@ -16,8 +16,11 @@
 }
 .tournoi-cont {
 	border-radius: 5px;
-	background: #D3D3D3;
+	background: #2E8B57;
 	margin-top: 1%;
+	padding: 0.5%;
+	font-size: 18px;
+	color: white;
 	border: 1px solid black;
 }
 .infos-tournoi {
@@ -29,7 +32,7 @@
 }
 .mod-tournoi {
 	border-radius: 5px;
-	background: #A9A9A9;
+	background: #DCDCDC;
 	padding-top: 1%;
 	padding-bottom: 1%;
 	display: none;

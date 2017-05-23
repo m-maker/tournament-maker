@@ -19,6 +19,7 @@ if (isset($_POST["submit"])){
 			$_SESSION["id"] = $membre["membre_id"];
 			$_SESSION["pseudo"] = $membre["membre_pseudo"];
 			$_SESSION['membre_orga'] = $membre['membre_orga'];
+            $_SESSION["membre_mail"] = $membre["membre_mail"];
 
 			header("Location: index.php");
 		}else{

@@ -28,8 +28,6 @@ if (isset($_GET["tournoi"])) {
         }
         $_SESSION["montant"] = $montant;
 
-        echo $_SESSION["montant"];
-
 
         // Si il a déja un compte
         if ($req->rowCount() > 0) {
@@ -38,6 +36,7 @@ if (isset($_GET["tournoi"])) {
             $wallet = $mangoPayApi->Wallets->Get($membre_mango["im_wallet_id"]);
             $_SESSION['utilisateur_mango'] = serialize($user);
             $_SESSION["wallet_mango"] = serialize($wallet);
+            $_SESSION["tournoi_mango"] = serialize($leTournoi);
             header("Location: cartes.php");
         }
 
@@ -130,7 +129,7 @@ if (isset($_GET["tournoi"])) {
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <label for="select" class="col-lg-2 control-label">Devise (Monnaie) utilisée</label>
                             <div class="col-lg-10">
                                 <select class="form-control" name="devise" placeholder="Monnaie">
@@ -138,7 +137,7 @@ if (isset($_GET["tournoi"])) {
                                     <option value="DOL">Dollars</option>
                                 </select>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group" style="text-align: center;">
                             <button class="btn btn-default align-select" type="reset">Annuler</button>
                             <button class="btn btn-success align-select">Ajouter mon compte</button>

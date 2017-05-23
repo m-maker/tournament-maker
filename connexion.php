@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<title>Tournois de foot en salle</title>
+		<title>Connexion</title>
 	</head>
 
 	<body>
