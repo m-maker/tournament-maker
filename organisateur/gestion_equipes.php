@@ -28,6 +28,7 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 		<link rel="stylesheet" type="text/css" href="../css/liste_tournois.css">
 		<link rel="stylesheet" type="text/css" href="css/gest_team.css">
 		<link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
 	</head>
 
 	<body>
@@ -53,7 +54,7 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
         </div>
 
 		<!-- CONTENU DE LA PAGE -->
-		<div class="container" id="container" style="margin-bottom: 3%;">
+		<div class="container espace-bot" id="container">
             <?php echo "<div class='titre-liste-tournoi'>
             <span class=\"left\"><a href=\"index.php\"> < </a></span>
             " . $leTournoi->event_titre . "<br>
@@ -65,12 +66,14 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 			<div class="conteneur-tournoi" style="border-radius:0;width: 100%;margin:0;padding: 1%;">
 				<div class="row">
 
-                    <div class="col-lg-4" style="text-align: left;">
+                    <div class="col-lg-4" >
                         <p><span class="glyphicon glyphicon-home"></span> Nom du complexe : <span class="bold"><?php echo $leTournoi->lieu_nom;?></span></p>
-                        <p><span class="glyphicon glyphicon-euro"></span> Paiement en ligne : <span class="bold"> <?php echo $pay; ?></span></p>
+
                         <p><span class="glyphicon glyphicon-user"></span><span class="bold"> <?php echo compte_equipes($leTournoi->event_id) . ' / ' . $leTournoi->event_nb_equipes; ?></span> équipes inscrites</p>
+                        <p><span class="glyphicon glyphicon-euro"></span> Paiement en ligne : <span class="bold"> <?php echo $pay; ?></span></p>
+
                     </div>
-                    <div class="col-lg-5 espace-top" style="text-align: left;">
+                    <div class="col-lg-5 espace-top" >
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <?php
                         if (strlen($desc) > 120) {
@@ -92,13 +95,21 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 				<?php 
 				$equipes_tournoi = recupEquipesTournoi($id_tournoi);
 				if (!empty($equipes_tournoi)){
-					foreach ($equipes_tournoi as $uneEquipe) { ?>
+					foreach ($equipes_tournoi as $uneEquipe) {
+					    $nb_joueur_paye = recupNbJoueurPayeEquipe($uneEquipe["team_id"]);
+                        $nb_joueur_non_paye = recupNbJoueurPayeEquipe($uneEquipe["team_id"], 0);?>
 
 						<!-- Infos génerales de l'équipe -->
 						<div class="equipe-cont">
 							<div class="row info-team" id="<?php echo $uneEquipe['team_id']; ?>">
-								<div class="col-md-3"><?php echo $uneEquipe['team_nom']; ?></div>
-								<div class="col-md-3"><?php echo compter_membres($uneEquipe['team_id']); ?> Joueurs</div>
+								<div class="col-md-2"><h3 style="margin-top: 5%;"><?php echo $uneEquipe['team_nom']; ?></h3></div>
+								<div class="col-md-2"><h3 style="margin-top: 5%;"><?php echo compter_membres($uneEquipe['team_id']); ?> Joueurs</h3></div>
+                                <?php if ($leTournoi->event_paiement == 1){ ?>
+                                <div class="col-md-2 bold">
+                                    <span class="vert"><?php echo $nb_joueur_paye; ?> payés</span><br />
+                                    <span class="rouge"> <?php echo $nb_joueur_non_paye ?> non payés</span>
+                                </div>
+                                <?php } ?>
 								<div class="col-md-6">
 									<a href="gest_joueur_form.php?tournoi=<?php echo $leTournoi->event_id; ?>&team=<?php echo $uneEquipe['team_id']; ?>"><button class="btn btn-success" style="width: 33%;"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter un joueur</button></a>
 									<a href="gest_team_form.php?tournoi=<?php echo $leTournoi->event_id; ?>&id=<?php echo $uneEquipe['team_id']; ?>">

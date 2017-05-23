@@ -28,13 +28,14 @@ if (isset($_GET["tournoi"])) {
     $transacs = $mangoPayApi->Wallets->GetTransactions($mango_tournoi["im_wallet_id"]);//var_dump($transacs);
     $wallet = $mangoPayApi->Wallets->Get($mango_tournoi["im_wallet_id"]);
     $cagnotte = format_prix($wallet->Balance->Amount);
+    //var_dump($transacs);
     ?>
 
     <html>
 
     <head>
         <?php include('head.php'); ?>
-        <title>Administrer mes tournois</title>
+        <title>Suivi des paiements</title>
         <link rel="stylesheet" type="text/css" href="css/orga.css">
         <link rel="stylesheet" type="text/css" href="../css/liste_tournois.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
@@ -45,10 +46,10 @@ if (isset($_GET["tournoi"])) {
     <!-- HEADER -->
     <?php include('header.php'); ?>
 
-    <div class="title center bold">Gérer mes paiements</div>
+    <div class="title center bold">Suivi des paiements</div>
 
     <!-- CONTENU DE LA PAGE -->
-    <div class="container" id="container" style="padding: 2% 2% 1%; margin: 3% auto;">
+    <div class="container espace-top" id="container" style="padding: 2% 2% 1%;">
 
         <?php $heure_debut = format_heure_minute($leTournoi->event_heure_debut);
         $heure_fin = format_heure_minute($leTournoi->event_heure_fin);
@@ -98,8 +99,15 @@ if (isset($_GET["tournoi"])) {
             </div>
         </div>
 
-        <div class="espace-top" style="background: white; color: black; padding: 1%; border-radius: 5px;">
-            <h3 style="margin:0;">Total des fonds récoltés : <span class="bold"><?php echo $cagnotte; ?> €</span></h3>
+        <div class="espace-top" style="background: #f5f5f5; color: black; padding: 1%; border-radius: 5px;">
+            <div class="ligne">
+                <div class="col-lg-10">
+                    <h3 style="margin:1%;">Total des fonds récoltés : <span class="bold"><?php echo $cagnotte; ?> €</span></h3>
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-success">Verser sur mon compte</button>
+                </div>
+            </div>
         </div>
 
         <table class="table table-striped table-hover espace-top">
@@ -115,31 +123,36 @@ if (isset($_GET["tournoi"])) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($transacs as $uneTransac){
-                    $req_joueur = $db->prepare('Select * FROM membres INNER JOIN infos_mango ON membre_id = im_membre_id WHERE im_mango_id = :id_user');
-                    $req_joueur->bindValue(":id_user", $uneTransac->AuthorId, PDO::PARAM_INT);
-                    $req_joueur->execute();
-                    $joueur = $req_joueur->fetch();
-                    $equipe = recupEquipeJoueur($joueur['membre_id'], $id_tournoi);
-                    if ($uneTransac->Status == "SUCCEEDED") {
-                        $class = 'success';
-                        $statut = '<span class="vert"> Paiement réussi </span>';
-                    }else {
-                        $class = 'danger';
-                        $statut = '<span class="vert"> Paiement échoué </span>';
-                    }
-                    ?>
+                <?php foreach ($transacs as $uneTransac) {
+                    if ($uneTransac->DebitedWalletId != null) {
+                        $req_joueur = $db->prepare('Select * FROM membres INNER JOIN infos_mango ON membre_id = im_membre_id WHERE im_mango_id = :id_user');
+                        $req_joueur->bindValue(":id_user", $uneTransac->AuthorId, PDO::PARAM_INT);
+                        $req_joueur->execute();
+                        $joueur = $req_joueur->fetch();
+                        $equipe = recupEquipeJoueur($joueur['membre_id'], $id_tournoi);
+                        if ($uneTransac->Status == "SUCCEEDED") {
+                            $class = 'success';
+                            $statut = '<span class="vert"> Paiement réussi </span>';
+                        } else {
+                            $class = 'danger';
+                            $statut = '<span class="vert"> Paiement échoué </span>';
+                        }
+                        ?>
 
-                    <tr class="<?php echo $class; ?>">
-                        <td class="no-button"><?php echo $uneTransac->Id; ?></td>
-                        <td class="no-button"><?php echo $joueur["membre_pseudo"]; ?></td>
-                        <td class="no-button"><?php echo $joueur["membre_mail"]; ?></td>
-                        <td class="no-button">Le <?php echo date('d/m/Y', $uneTransac->CreationDate); ?> à <?php echo date('H:i:s', $uneTransac->CreationDate); ?></td>
-                        <td class="no-button"><?php echo format_prix($uneTransac->CreditedFunds->Amount); ?> €</td>
-                        <td class="no-button"><?php echo $statut; ?></td>
-                        <td><button class="btn btn-danger">Rembourser</button></td>
-                    </tr>
-                <?php } ?>
+                        <tr class="<?php echo $class; ?>">
+                            <td class="no-button"><?php echo $uneTransac->Id; ?></td>
+                            <td class="no-button"><?php echo $joueur["membre_pseudo"]; ?></td>
+                            <td class="no-button"><?php echo $joueur["membre_mail"]; ?></td>
+                            <td class="no-button">Le <?php echo date('d/m/Y', $uneTransac->CreationDate); ?>
+                                à <?php echo date('H:i:s', $uneTransac->CreationDate); ?></td>
+                            <td class="no-button"><?php echo $statut; ?></td>
+                            <td class="no-button"><?php echo format_prix($uneTransac->CreditedFunds->Amount); ?> €</td>
+                            <td>
+                                <button class="btn btn-danger">Rembourser</button>
+                            </td>
+                        </tr>
+                    <?php }
+                }?>
             </tbody>
         </table>
     </div>
