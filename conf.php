@@ -74,7 +74,7 @@ function recupEquipeByID($id_team){
 
 function liste_tournois_orga($id_orga){
 	$db = connexionBdd();
-	$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE event_orga = :orga');
+	$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE event_orga = :orga OR event_orga_2 = :orga');
 	$req_liste_tournois->bindValue(":orga", $id_orga, PDO::PARAM_INT);
 	$req_liste_tournois->execute();
 	return $req_liste_tournois->fetchAll();
@@ -269,6 +269,38 @@ function recupNbJoueurPayeEquipe($id_equipe, $paye = 1){
     $req->bindValue(":paye", $paye, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchColumn();
+}
+
+function recupImByMangoID($id_mango){
+    $db = connexionBdd();
+    $req_joueur = $db->prepare('Select * FROM membres INNER JOIN infos_mango ON membre_id = im_membre_id WHERE im_mango_id = :id_user');
+    $req_joueur->bindValue(":id_user", $id_mango, PDO::PARAM_INT);
+    $req_joueur->execute();
+    return $req_joueur->fetch();
+}
+
+function recupImByMembreID($id_membre){
+    $db = connexionBdd();
+    $req_mango = $db->prepare("SELECT * FROM infos_mango WHERE im_membre_id = :id");
+    $req_mango->bindValue(":id", $id_membre, PDO::PARAM_INT);
+    $req_mango->execute();
+    return $req_mango->fetch();
+}
+
+
+function recupMessagesMur($id_tournoi){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT * FROM messages_mur INNER JOIN membres ON mur_membre_id = membre_id WHERE mur_tournoi_id = :id ORDER BY mur_date DESC");
+    $req->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+}
+
+function liste_assoc(){
+    $db = connexionBdd();
+    $req = $db->query("SELECT * FROM associations;");
+    $req->execute();
+    return $req->fetchAll();
 }
 
 $db = connexionBdd();

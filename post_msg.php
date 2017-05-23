@@ -10,6 +10,9 @@ if (isset($_POST["submit"]) && isset($_GET["id"])){
 	$message = htmlspecialchars(trim($_POST["message"]));
 	$id_tournoi = htmlspecialchars(trim($_GET["id"]));
 
+    if (empty($leTournoi) || $leTournoi == null)
+        header("Location: index.php");
+
 	if (!empty($message)){
 		$req = $db->prepare("INSERT INTO messages_mur (mur_membre_id, mur_date, mur_contenu, mur_tournoi_id) VALUES (:id_membre, NOW(), :msg, :id_tournoi);");
 		$req->bindValue(":id_membre", $_SESSION["id"], PDO::PARAM_INT);
@@ -18,7 +21,7 @@ if (isset($_POST["submit"]) && isset($_GET["id"])){
 		$req->execute();
 		header("Location: feuille_de_tournois.php?tournoi=" . $id_tournoi);
 	}else{
-		"Erreur: Votre message ne peut être vide!";
+		echo "Erreur: Votre message ne peut être vide!";
 	}
 
 }else{
