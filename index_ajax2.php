@@ -40,9 +40,7 @@
 			<div id="nom_departement" > <?php echo $res_dpt['dpt_nom']; ?>  <b class="caret"></b> </div>
 		</button>
 
-<nav id="liste_complexes" class="navbar navbar-default">
- 	<div class="container-fluid">
- 		<div id="menu_liste_complexes" class="nav navbar-nav">
+ 		<div id="menu_liste_complexes" style="margin: 1%;">
 			<?php 
 				foreach ($tab_complexes_events as $lieu_id => $nb_events) {
 					$lieu = recupLieuById($lieu_id);
@@ -52,8 +50,6 @@
 	      		}
 	      	?>
 	    </div>
-	</div>
-</nav>
 
 <div id="liste_events" class="tab-content">
 	<?php 
@@ -66,36 +62,52 @@
     			<div id="<?php echo $lieu['lieu_id'];?>" class="tab-pane fade in active">
     			<?php
     				foreach ($liste_events as $key => $event) {
-						$heure_debut = format_heure_minute($event['event_heure_debut']);
-						$heure_fin = format_heure_minute($event['event_heure_fin']);
-						$lieu = recupLieuById($lieu_id);
-							?>
-								<div class="conteneur-tournoi">
-									<div class="header-tournoi">
-										<div class="header-tournoi-date">
-											<h2 class="date_recap_tournoi"><?php echo $event['event_date'];?></h2>
-											<p><?php echo $heure_debut.' - '.$heure_fin; ?></p>
-										</div>
-										<div class="header-tournoi-lieu">
-											<h2><?php echo $lieu['lieu_nom'];?></h2>
-										</div>
-										<div class="logo_tournoi">
-											<img class="img-responsive img-circle" src='img/logo-tournois/<?php echo $event['event_img'];?>' alt="Tournoi">
-										</div>
-									</div>
-									<div class="corps_tournoi">
-										<div class="infos_tournoi col-sm-4">
-											<p><span class="glyphicon glyphicon-euro"></span> Prix : <?php echo $event['event_tarif']; ?></p>
-											<p><span class="glyphicon glyphicon-user"></span> Nombre d'équipes : <?php echo $event['event_nb_equipes']; ?></p>
-										</div>
-										<div class="descriptif_tournoi col-sm-7">
-											<h2><?php echo $event['event_titre']; ?></h2>
-											<p><?php echo htmlspecialchars($event['event_descriptif']); ?></p>
-										</div>
-									</div>
-									<a href="feuille_de_tournois.php?tournoi=<?php echo $event["event_id"]; ?>">
-									</a>
-								</div>
+                        $heure_debut = format_heure_minute($event['event_heure_debut']);
+                        $heure_fin = format_heure_minute($event['event_heure_fin']);
+                        $glyph = "glyphicon-eye-open";$prive="Public";$color='vert';
+                        if ($event['event_prive'] == 1){$color='rouge';$glyph = "glyphicon-eye-close";$prive="Privé";}
+                        $pay = "<span class='rouge'>Refusé</span>";
+                        if ($event['event_paiement'] == 1){$pay="<span class='vert'>Accepté</span>";}
+                        $desc = $event['event_descriptif'];
+                        if ($event['event_descriptif'] == NULL || empty($event['event_descriptif']))
+                            $desc = 'Pas de description.';
+                        $team = "par équipe";
+                        if ($event['event_tarification_equipe'] == 0){$team="par joueur";}
+
+                        echo "<div class='titre-liste-tournoi'>
+                            " . $event['event_titre'] . "<br>
+                            <p style='font-size: 15px;'>
+                                <span class=\"glyphicon glyphicon-calendar\"></span> Le <span class=\"bold\">" . $event['event_date'] . "</span> de
+                                <span class=\"bold\">" . $heure_debut . "</span> à <span class=\"bold\">" .$heure_fin . "</span>
+                            </p>
+                        </div>";
+
+                        ?>
+
+                        <div class="conteneur-tournoi" style="border-radius:0;width: 100%;margin:0;padding: 1%;">
+                            <div class="row">
+
+                                <div class="col-lg-4" style="text-align: left;">
+                                    <p><span class="glyphicon glyphicon-home"></span> Nom du complexe : <span class="bold"><?php echo $lieu["lieu_nom"];?></span></p>
+                                    <p><span class="glyphicon glyphicon-euro"></span> Paiement en ligne : <span class="bold"> <?php echo $pay; ?></span></p>
+                                    <p><span class="glyphicon glyphicon-user"></span><span class="bold"> <?php echo compte_equipes($event['event_id']) . ' / ' . $event['event_nb_equipes']; ?></span> équipes inscrites</p>
+                                </div>
+                                <div class="col-lg-5 espace-top" style="text-align: left;">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                    <?php
+                                    if (strlen($desc) > 120) {
+                                        echo substr($desc, 0, 120)  . '...';
+                                    }else{
+                                        echo $desc;
+                                    } ?>
+                                </div>
+                                <div class="col-lg-3 prix-team">
+                                    <h1 style="margin-top: 1.5%;"><span class="bold"><?php echo $event['event_tarif'] + $param->comission; ?> €</span></h1> <?php ECHO $team; ?><br />
+                                    <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p>
+                                </div>
+
+                            </div>
+                        </div>
 							<?php
     				}
     			?>
