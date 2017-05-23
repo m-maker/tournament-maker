@@ -18,17 +18,20 @@ function format_prix($montant){
 if (isset($_GET["tournoi"])) {
     $id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
     $leTournoi = recupObjetTournoiByID($id_tournoi);
-    //var_dump($leTournoi);
+
     if (empty($leTournoi) || $leTournoi == null || $leTournoi->event_orga != $_SESSION["id"])
         header("Location: index.php");
     $req = $db->prepare("SELECT * FROM infos_mango INNER JOIN tournois ON im_id = event_mango WHERE event_id = :id_tournoi");
     $req->bindValue(":id_tournoi", $id_tournoi, PDO::PARAM_INT);
     $req->execute();
     $mango_tournoi = $req->fetch();
-    $transacs = $mangoPayApi->Wallets->GetTransactions($mango_tournoi["im_wallet_id"]);//var_dump($transacs);
+    $p1 = null; $p2 = null;
+    $sort = new \MangoPay\Sorting();
+    $sort->AddField("CreationDate", "DESC");
+    $transacs = $mangoPayApi->Wallets->GetTransactions($mango_tournoi["im_wallet_id"], $p1, $p2, $sort);
     $wallet = $mangoPayApi->Wallets->Get($mango_tournoi["im_wallet_id"]);
     $cagnotte = format_prix($wallet->Balance->Amount);
-    //var_dump($transacs);
+    //var_dump($transacs );
     ?>
 
     <html>
@@ -105,7 +108,7 @@ if (isset($_GET["tournoi"])) {
                     <h3 style="margin:1%;">Total des fonds récoltés : <span class="bold"><?php echo $cagnotte; ?> €</span></h3>
                 </div>
                 <div class="col-lg-2">
-                    <button class="btn btn-success">Verser sur mon compte</button>
+                    <button class="btn btn-success disabled">Verser sur mon compte</button>
                 </div>
             </div>
         </div>
@@ -113,29 +116,36 @@ if (isset($_GET["tournoi"])) {
         <table class="table table-striped table-hover espace-top">
             <thead class="white head-tab">
                 <tr>
-                    <th>ID de transaction</th>
+                    <th>ID</th>
                     <th>Joueur</th>
                     <th>E-mail</th>
                     <th>Date</th>
-                    <th>Etat</th>
+                    <th>Type</th>
                     <th>Prix</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($transacs as $uneTransac) {
+                <?php $liste_rembourses = [];
+                foreach ($transacs as $uneTransac) {
                     if ($uneTransac->DebitedWalletId != null) {
                         $req_joueur = $db->prepare('Select * FROM membres INNER JOIN infos_mango ON membre_id = im_membre_id WHERE im_mango_id = :id_user');
                         $req_joueur->bindValue(":id_user", $uneTransac->AuthorId, PDO::PARAM_INT);
                         $req_joueur->execute();
                         $joueur = $req_joueur->fetch();
+                        $prix = format_prix($uneTransac->CreditedFunds->Amount);
                         $equipe = recupEquipeJoueur($joueur['membre_id'], $id_tournoi);
+                        //var_dump($uneTransac);
+                        if ($uneTransac->Nature == "REFUND") {
+                            $liste_rembourses[] = $uneTransac->AuthorId;
+                            $type = "<span class=\"rouge\">Remboursement</span>"; $prix = "- ".$prix;
+                        }else {
+                            $type = '<span class="vert">Paiement</span>'; $prix = "+ ".$prix;
+                        }
                         if ($uneTransac->Status == "SUCCEEDED") {
                             $class = 'success';
-                            $statut = '<span class="vert"> Paiement réussi </span>';
                         } else {
                             $class = 'danger';
-                            $statut = '<span class="vert"> Paiement échoué </span>';
                         }
                         ?>
 
@@ -145,10 +155,11 @@ if (isset($_GET["tournoi"])) {
                             <td class="no-button"><?php echo $joueur["membre_mail"]; ?></td>
                             <td class="no-button">Le <?php echo date('d/m/Y', $uneTransac->CreationDate); ?>
                                 à <?php echo date('H:i:s', $uneTransac->CreationDate); ?></td>
-                            <td class="no-button"><?php echo $statut; ?></td>
-                            <td class="no-button"><?php echo format_prix($uneTransac->CreditedFunds->Amount); ?> €</td>
+                            <td><?php echo $type; ?></td>
+                            <td class="no-button"><?php echo $prix; ?> €</td>
                             <td>
-                                <button class="btn btn-danger">Rembourser</button>
+                                <a href="rembourser.php?tournoi=<?php echo $id_tournoi; ?>&transfert=<?php echo $uneTransac->Id; ?>&membre=<?php echo $joueur["membre_id"]; ?>"
+                                <?php if ($uneTransac->Nature == "REGULAR" && !in_array($uneTransac->AuthorId, $liste_rembourses)){ ?> <button class="btn btn-danger">Rembourser</button> <?php } ?>
                             </td>
                         </tr>
                     <?php }

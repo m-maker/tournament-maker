@@ -18,6 +18,7 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 		<title>Administrer mes tournois</title>
 		<link rel="stylesheet" type="text/css" href="css/orga.css">
         <link rel="stylesheet" type="text/css" href="../css/liste_tournois.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
 	</head>
 
 	<body>
@@ -29,20 +30,20 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
             Administrer mes tournois / matchs
         </div>
 
-        <div class="alert alert-dismissible alert-info" style="width: 80%; margin: auto;">
+        <div class="alert alert-dismissible alert-info" style="width: 80%; background:#4169E1; margin: auto;">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Heads up!</strong> This <a href="#" class="alert-link">alert needs your attention</a>, but it's not super important.
+            <strong>Bienvenue sur votre espace de gestion,  <?php echo $_SESSION["pseudo"]; ?></strong> Dans cette section vous pouvez gérer les équipes de vos tournois et vos matchs, voir et rembourser les achats de place des joueurs, modifier / ajouter des tournois ou des matchs...
         </div>
 
 		<!-- CONTENU DE LA PAGE -->
-		<div class="container" id="container" style="padding-top: 0; ">
+		<div class="container" id="container" style="padding: 0 1% 0;">
 
 			<div class="row menu-orga">
 				<div class="col-md-6 center show act" id="show-tournois"><span class="glyphicon glyphicon-list-alt"></span> Mes tournois</div>
 				<div class="col-md-6 center show" id="show-matchs"><span class="glyphicon glyphicon-list"></span> Mes matchs</div>
 			</div>
 
-			<div class="cont visible" id="tournois">
+			<div class="cont visible" id="tournois" style="margin-bottom: 0;">
 				<div class="row">
 					<div class="col-md-12 mid-cont">
 
@@ -60,8 +61,8 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 										<div class="row mod-tournoi" id="m-<?php echo $unTournoi["event_id"]; ?>">
 
                                             <div class="col-md-2">
-                                                <a target="_blank" href="../feuille_de_tournois.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
-                                                    <button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-zoom-in"></span> Voir</button>
+                                                <a href="mur.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
+                                                    <button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-zoom-in"></span> Voir le mur</button>
                                                 </a>
                                             </div>
 											<div class="col-md-2">
