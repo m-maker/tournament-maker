@@ -14,7 +14,8 @@
                 <li><a href="#">Paramètres</a></li>
                 <li><a href="deconnexion.php">Déconnexion</a></li>
             <?php }else{ ?>
-                <li><a href="connexion.php">Connexion</a></li>
+                <li><a href="connexion.php">Se connecter</a></li>
+                <li><a href="inscription.php">S'inscrire</a></li>
             <?php }?>
 
 		</ul>
@@ -33,7 +34,7 @@
 		<img src="logo.png" alt="RTT">
 	</div>
 
-	<?php 
+	<?php
 		if (isset($_SESSION['id'])){
 			if (!empty($_SESSION['id'])){
 				?>

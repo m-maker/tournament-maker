@@ -51,7 +51,7 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
         </div>
 
 		<!-- CONTENU DE LA PAGE -->
-		<div class="container espace-bot" id="container">
+		<div class="container espace-bot" style="width: 82%; margin: 2% auto;">
             <?php echo "<div class='titre-liste-tournoi'>
             <span class=\"left\"><a href=\"index.php\"> < </a></span>
             " . $leTournoi->event_titre . "<br>
@@ -86,6 +86,10 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 
 				</div>
 			</div>
+
+            <a href="gest_team_form.php?tournoi=<?php echo $leTournoi->event_id; ?>">
+                <button class="btn btn-success btn-grand espace-top"><span class="glyphicon glyphicon-play-circle"></span> Créer une nouvelle equipe</button>
+            </a>
 
 			<!-- Affichage des équipes -->
 			<div class="cont-equipe espace-top">
@@ -156,9 +160,6 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 					<div class="equipe-cont"><h2 style="margin: 0;" class="center">Il n'y a pas d'equipes pour ce tournoi pour l'instant</h2></div>
 				<?php } ?>
 
-				<a href="gest_team_form.php?tournoi=<?php echo $leTournoi->event_id; ?>">
-					<button class="btn btn-success btn-grand espace-top"><span class="glyphicon glyphicon-play-circle"></span> Créer une nouvelle equipe</button>
-				</a>
 			</div>
 
 		</div>

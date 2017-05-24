@@ -1,3 +1,7 @@
+<?php
+include 'conf.php';
+?>
+
 <html>
 	
 	<head>
@@ -7,10 +11,10 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<title>S'inscrire sur la plateforme</title>
+		<title>Créer un compte </title>
 	</head>
 
-	<body>
+	<body style="background: gainsboro;">
 
 		<!-- HEADER -->
 		<?php include('header.php'); ?>
@@ -18,6 +22,7 @@
 		<!-- CONTENU DE LA PAGE -->
 
 		<!-- BARRE DE RECHERCHE -->
+        <div class="container-fluid">
 	    <div class="row space-top">
 			<div class="form-grand">
 
@@ -26,7 +31,7 @@
 						<form class="form-horizontal form-grand" method="post" action="inscription_check.php">
 						  	<fieldset>
 
-						    	<legend class="center">Saisissez les infos suivantes :</legend>
+						    	<legend class="center">Créez un compte :</legend>
 
 						    	<div class="form-group">
 						        	<input type="text" class="form-control" id="inputPseudo" name="pseudo" placeholder="Votre pseudo">
@@ -66,7 +71,7 @@
 
 			</div>
 		</div>
-
+        </div>
 		<!-- FOOTER -->
 		<?php include('footer.php') ?>
 	</body>
