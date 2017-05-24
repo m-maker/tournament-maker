@@ -60,9 +60,17 @@ label{
 	color: white;
 	text-decoration: none;
 }
-.alert-info a {
-	color: lightgrey;
+.info-index {
+	width: 50%;
+	font-size: 20px;
+	margin: 2% auto;
+	border: 1px solid darkslateblue;
+	border-radius: 5px;
 }
-.alert-info a:hover {
+.info-index a {
+	color: darkslategray;
+	font-family: 'Kumar One', cursive;
+}
+.info-index a:hover {
 	color: grey;
 }

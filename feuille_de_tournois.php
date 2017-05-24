@@ -49,7 +49,7 @@ if ($leTournoi->event_prive == 1 && !isset($_POST["mdp"]) || $leTournoi->event_p
 if (!empty(recupEquipeJoueur($_SESSION['id'], $id_tournoi)))
     $mdp = false;
 $mon_equipe = recupEquipeJoueur($_SESSION["id"], $id_tournoi);
-var_dump($mon_equipe);
+//var_dump($mon_equipe);
 $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
 ?>
 
@@ -65,7 +65,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
 	<body>
 	<?php include ('header.php'); ?>
 
-	<div class="container" id="container" <?php if ($mdp){echo 'style="margin: 7% auto;"';} ?>>
+	<div class="container espace-top" <?php if ($mdp){echo 'style="margin: 7% auto;"';} ?>>
 
 	<?php if ($mdp){ ?>
 			<div class="mdp">
@@ -135,7 +135,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
 		  	<div id="body_match" class="espace-bot container-fluid">
 				<div id="contenu_body_match" class="tab-content">
 
-		    		<div id="mur" style="display: none;" class="cont espace-top">
+		    		<div id="mur" style="display: none; margin: 2% auto;" class="cont">
 		    			<form method="post" action="post_msg.php?id=<?php echo $leTournoi->event_id; ?>">
 		    				<textarea class="form-control" placeholder="Votre message..." name="message" rows="3" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;"></textarea>
 		    				<button class="btn btn-success btn-grand" style="border-top-left-radius: 0; border-top-right-radius: 0;" name="submit">Poster mon message</button>
@@ -471,7 +471,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
 			    						<div class="equipe_nom"><h1><?php echo $uneEquipe["team_nom"]; ?></h1></div>
 			    						<div class="equipe_nb_joueurs"><h1><?php echo compter_membres($uneEquipe["team_id"]); ?> Joueurs</h1></div>
 			    						<?php if (recupStatutJoueur($_SESSION["id"], $uneEquipe["team_id"]) == 1){ ?>
-			    							<div class="equipe_btn"><button style="width: 100%;" mod="suppr" id="<?php echo $uneEquipe['team_id']; ?>" class="btn btn-danger btn-md">Supprimer</button></div>
+			    							<div class="equipe_btn" style="padding-top: 0;margin:0;"><button style="width: 100%; font-size: 10px; padding: 1%;" mod="suppr" id="<?php echo $uneEquipe['team_id']; ?>" class="btn btn-danger btn-md">Supprimer</button></div>
 			    						<?php }else{
 			    							if ($mon_equipe["team_id"] == $uneEquipe["team_id"]){ ?>
 			    								<div class="equipe_btn"><button style="width: 100%;" mod="leave" id="<?php echo $uneEquipe['team_id']; ?>" class="btn btn-danger btn-md">Quitter</button></div>

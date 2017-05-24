@@ -30,22 +30,15 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
             Administrer mes tournois / matchs
         </div>
 
-        <div class="alert alert-dismissible alert-info" style="width: 80%; background:#4169E1; margin: auto;">
+        <div style="width: 80%; margin: auto; border: 1px solid darkslateblue; border-radius: 5px; padding: 1%;">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Bienvenue sur votre espace de gestion,  <?php echo $_SESSION["pseudo"]; ?></strong> Dans cette section vous pouvez gérer les équipes de vos tournois et vos matchs, voir et rembourser les achats de place des joueurs, modifier / ajouter des tournois ou des matchs...
+            <strong style="font-size: 18px;">Bienvenue sur votre espace de gestion, <?php echo $_SESSION["pseudo"]; ?>.</strong> Dans cette section vous pouvez gérer les équipes de vos tournois et vos matchs, voir et rembourser les achats de place des joueurs, modifier / ajouter des tournois ou des matchs...
         </div>
 
 		<!-- CONTENU DE LA PAGE -->
-		<div class="container" id="container" style="padding: 0 1% 0;">
+		<div class="container-fluid espace-top" style="width: 80%;padding: 0 1% 0;">
 
-			<div class="row menu-orga">
-				<div class="col-md-6 center show act" id="show-tournois"><span class="glyphicon glyphicon-list-alt"></span> Mes tournois</div>
-				<div class="col-md-6 center show" id="show-matchs"><span class="glyphicon glyphicon-list"></span> Mes matchs</div>
-			</div>
-
-			<div class="cont visible" id="tournois" style="margin-bottom: 0;">
 				<div class="row">
-					<div class="col-md-12 mid-cont">
 
 						<!--<h2 class="center"><span class="glyphicon glyphicon-list"></span> Mes tournois</h2>-->
 
@@ -97,16 +90,15 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 							</div>
 
 					</div>
-				</div>
-			</div>
 
 			<div class="cont white" id="matchs">
 				<h2 class="center">Cette fonctionnalité n'est pas encore disponible</h2>
 			</div>
 
-		</div>
+        </div>
 
-		<!-- FOOTER -->
+
+        <!-- FOOTER -->
 		<?php include('footer.php') ?>
 
         <script src="../js/scripts/menu_tournois_matchs.js" type="text/javascript"></script>

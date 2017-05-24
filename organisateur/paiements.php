@@ -52,7 +52,7 @@ if (isset($_GET["tournoi"])) {
     <div class="title center bold">Suivi des paiements</div>
 
     <!-- CONTENU DE LA PAGE -->
-    <div class="container espace-top" id="container" style="padding: 2% 2% 1%;">
+    <div class="container" style="padding: 2% 2% 1%;">
 
         <?php $heure_debut = format_heure_minute($leTournoi->event_heure_debut);
         $heure_fin = format_heure_minute($leTournoi->event_heure_fin);
@@ -102,7 +102,7 @@ if (isset($_GET["tournoi"])) {
             </div>
         </div>
 
-        <div class="espace-top" style="background: #f5f5f5; color: black; padding: 1%; border-radius: 5px;">
+        <div class="espace-top" style="background: lightgrey; border: 1px solid darkslateblue; color: black; padding: 1%; border-radius: 5px;">
             <div class="ligne">
                 <div class="col-lg-10">
                     <h3 style="margin:1%;">Total des fonds récoltés : <span class="bold"><?php echo $cagnotte; ?> €</span></h3>
@@ -113,7 +113,7 @@ if (isset($_GET["tournoi"])) {
             </div>
         </div>
 
-        <table class="table table-striped table-hover espace-top">
+        <table class="table table-striped table-hover espace-top" style="border: 1px solid black;">
             <thead class="white head-tab">
                 <tr>
                     <th>ID</th>
