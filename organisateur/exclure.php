@@ -7,11 +7,7 @@ if (isset($_GET["tournoi"]) && isset($_GET["team"]) && isset($_GET["id"])){
 	$id_team = htmlspecialchars(trim($_GET["team"]));
 	$id_joueur = htmlspecialchars(trim($_GET["id"]));
 	$equipe = recupEquipeByID($id_team);
-	$req = $db->prepare("SELECT event_orga FROM tournois WHERE event_id = :id_tournoi");
-	$req->bindValue(":id_tournoi", $id_tournoi, PDO::PARAM_INT);
-	$req->execute();
-	$id_orga = $req->fetchColumn();
-	if ($_SESSION["id"] != $id_orga)
+	if ($_SESSION["id"] != $leTournoi->event_orga && $_SESSION['id'] != $leTournoi->event_orga_2)
 		header("Location: ../index.php");
 }else{
 	header("Location: ../index.php");

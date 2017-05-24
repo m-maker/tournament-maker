@@ -54,6 +54,7 @@
 	$jour = htmlspecialchars(trim($_POST["jour"]));
 	$mois = htmlspecialchars(trim($_POST["mois"]));
 	$annee = htmlspecialchars(trim($_POST["annee"]));
+    $asso = htmlspecialchars(trim($_POST["asso"]));
 
 	if (!empty($dpt) && !empty($cp) && !empty($ville) && !empty($adresse) && !empty($nom_lieu) && !empty($titre) && !empty($joueurs_max) && !empty($tarif) && !empty($event_date)) {
         /*
@@ -236,13 +237,16 @@
         // Mot de pass null si l'evenement est public
         if ($restriction == 0)
             $pass = null;
+        if ($asso == 0)
+            $asso = null;
+
         // Récupération du dernier ID de tournoi
         $req_event_id = $db->query('SELECT MAX(event_id) FROM tournois');
         $req_event_id->execute();
         $res_event_id = $req_event_id->fetchColumn() + 1;
         // Ajout des informations du tournoi
-        $req_organiser_tournoi = $db->prepare('INSERT INTO tournois(event_id, event_titre, event_nb_equipes, event_joueurs_max, event_joueurs_min, event_tarif, event_lieu, event_date, event_heure_debut, event_heure_fin, event_prive, event_pass, event_paiement, event_rib_id, event_mango, event_tarification_equipe, event_orga, event_img, event_descriptif) 
-			VALUES (:event_id, :event_titre, :event_nb_equipes, :event_joueurs_max, :event_joueurs_min, :tarif, :event_lieu, :event_date, :event_heure_debut, :event_heure_fin, :event_prive, :event_pass, :event_paiement, :event_rib_id, :event_mango, :event_tarification_equipe, :event_orga, :event_img, :event_descriptif)');
+        $req_organiser_tournoi = $db->prepare('INSERT INTO tournois(event_id, event_titre, event_nb_equipes, event_joueurs_max, event_joueurs_min, event_tarif, event_lieu, event_date, event_heure_debut, event_heure_fin, event_prive, event_pass, event_paiement, event_rib_id, event_mango, event_tarification_equipe, event_orga, event_orga_2, event_img, event_descriptif) 
+			VALUES (:event_id, :event_titre, :event_nb_equipes, :event_joueurs_max, :event_joueurs_min, :tarif, :event_lieu, :event_date, :event_heure_debut, :event_heure_fin, :event_prive, :event_pass, :event_paiement, :event_rib_id, :event_mango, :event_tarification_equipe, :event_orga, :event_orga_2, :event_img, :event_descriptif)');
         $req_organiser_tournoi->bindValue(":event_id", $res_event_id, PDO::PARAM_INT);
         $req_organiser_tournoi->bindValue(":event_titre", $titre, PDO::PARAM_STR);
         $req_organiser_tournoi->bindValue(":event_nb_equipes", $nb_equipes, PDO::PARAM_INT);
@@ -260,6 +264,7 @@
         $req_organiser_tournoi->bindValue(":event_mango", $mango["im_id"], PDO::PARAM_INT);
         $req_organiser_tournoi->bindValue(":event_tarification_equipe", $tarification_equipe, PDO::PARAM_INT);
         $req_organiser_tournoi->bindValue(":event_orga", $_SESSION["id"], PDO::PARAM_INT);
+        $req_organiser_tournoi->bindValue(":event_orga_2", $asso, PDO::PARAM_INT);
         $req_organiser_tournoi->bindValue(":event_img", $path_img, PDO::PARAM_STR);
         $req_organiser_tournoi->bindValue(":event_descriptif", $descriptif, PDO::PARAM_STR);
         $req_organiser_tournoi->execute();
@@ -286,7 +291,7 @@
 
 
         //var_dump($res_event_id);
-        //header('location: ../feuille_de_tournois.php?tournoi='.$res_event_id);
+        header('location: ../feuille_de_tournois.php?tournoi='.$res_event_id);
     }else{
 		echo 'err_champs_vides';
 		die;

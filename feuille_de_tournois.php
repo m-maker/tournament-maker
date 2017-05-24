@@ -3,14 +3,6 @@
 if (!isset($_SESSION["id"]))
 	header("Location: connexion.php");
 
-function recupMessagesMur($id_tournoi){
-	$db = connexionBdd();
-	$req = $db->prepare("SELECT * FROM messages_mur INNER JOIN membres ON mur_membre_id = membre_id WHERE mur_tournoi_id = :id ORDER BY mur_date DESC");
-	$req->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
-	$req->execute();
-	return $req->fetchAll();
-}
-
 function recupEquipesIncompletes($id_tournoi, $nb_joueur_min){
 	$db = connexionBdd();
 	$req_equipes = $db->prepare("SELECT * FROM equipes INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id");

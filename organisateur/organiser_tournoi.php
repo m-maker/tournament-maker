@@ -3,7 +3,7 @@
     if ($_SESSION['membre_orga'] == 0)
         header("Location: ../index.php");
     $liste_comptes = recupCompteOrga($_SESSION["id"]);
-$tab_dates = array("01" => "Janvier", "02" => "Fevrier", "03" => "Mars", "04" => "Avril", "05" => "Mai", "06" => "Juin", "07" => "Juillet", "08" => "Aout", "09" => "Septembre", "10" => "Octobre", "11" => "Novembre", "12" => "Décembre");
+    $tab_dates = array("01" => "Janvier", "02" => "Fevrier", "03" => "Mars", "04" => "Avril", "05" => "Mai", "06" => "Juin", "07" => "Juillet", "08" => "Aout", "09" => "Septembre", "10" => "Octobre", "11" => "Novembre", "12" => "Décembre");
 ?>	
 <html>
 	
@@ -25,10 +25,10 @@ $tab_dates = array("01" => "Janvier", "02" => "Fevrier", "03" => "Mars", "04" =>
 
     <?php include 'header.php'; ?>
 
-	<div class="row">
-			<div class="form-grand">
+        <div class="container" id="container" style="padding: 1% 2%; width: 70%;">
+	        <div class="row">
 
-				<div class="container" id="container">
+
                     <div style="background: #f5f5f5;">
 
 						<form enctype="multipart/form-data" class="form-horizontal form-grand" method="post" action="organiser_tournoi_traitement.php">
@@ -50,6 +50,14 @@ $tab_dates = array("01" => "Janvier", "02" => "Fevrier", "03" => "Mars", "04" =>
 							        	<input type="text" class="form-control" id="input_event_code_postal" name="event_code_postal" placeholder="Code Postal">
 							        	<input type="text" class="form-control" id="input_event_ville" name="event_ville" placeholder="Ville">
 							        </div>
+                                    <select class="form-control" name="asso">
+                                        <optgroup label="Choisir une Association pour co-administrer le tournoi"></optgroup>
+                                        <option value="0">Aucune association</option>
+                                        <?php foreach (liste_assoc() as $uneAsso){ ?>
+                                            <option value="<?php echo $uneAsso['asso_id']; ?>"><?php echo $uneAsso['nom']; ?></option>
+                                        <?php } ?>
+                                    </select>
+
 						    	</div>
 
 						    	<hr>
@@ -290,7 +298,7 @@ $tab_dates = array("01" => "Janvier", "02" => "Fevrier", "03" => "Mars", "04" =>
 				    	</form>
 				    </div>
 				</div>
-            </div>
+
 		</div>
 
     <?php include "footer.php"; ?>
