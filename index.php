@@ -21,8 +21,8 @@ include('conf.php');
 <!-- CONTENU DE LA PAGE -->
 
 <!-- BARRE DE RECHERCHE -->
-<div id="post" class="container center" style="padding: 2%;">
-    <button id="btn_dpt" class="btn btn-success center" data-toggle="modal" data-target="#myModal">
+<div id="post" class="container-fluid center" style="padding: 2%;">
+    <button id="btn_dpt" class="btn btn-default center" data-toggle="modal" data-target="#myModal">
         <div id="nom_departement" > Département  <b class="caret"></b> </div>
     </button>
 </div>
@@ -42,7 +42,7 @@ include('conf.php');
                                 ?>
                                 <li>
                                     <label> <?php echo '('.$key['dpt_code'].') '.$key['dpt_nom']; ?>
-                                        <input type="checkbox" name="dpt" value="<?php echo $key['dpt_code'] ?>" class="badgebox">
+                                        <input type="radio" name="dpt" value="<?php echo $key['dpt_code'] ?>" class="badgebox">
                                     </label>
                                 </li>
                                 <?php

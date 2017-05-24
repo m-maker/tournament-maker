@@ -20,7 +20,7 @@
 	$res_dpt = $req_dpt->fetch();
 
 	$liste_complexes = liste_lieux($res_dpt['dpt_id']);
-
+    $tab_complexes_events = [];
 	foreach ($liste_complexes as $key => $value) {
 		//var_dump($key);
 		//var_dump($value);
@@ -29,37 +29,45 @@
 			'event_lieu' => $value['lieu_id']
 			));
 		$res_nb_events = $req_nb_events->fetchColumn();
-		$tab_complexes_events = array( $value['lieu_id'] => $res_nb_events);
+		$tab_complexes_events[] = array( $value['lieu_id'], $res_nb_events);
 		//var_dump($tab_complexes_events);
 		$req_nb_events->closeCursor();
 	}
-	arsort($tab_complexes_events, SORT_NUMERIC);
+	//arsort($tab_complexes_events, SORT_NUMERIC);
+	//var_dump($tab_complexes_events);
 	//var_dump($tab_complexes_events); 
 ?>		
-		<button id="btn_dpt" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+		<button id="btn_dpt" class="btn btn-default" data-toggle="modal" data-target="#myModal">
 			<div id="nom_departement" > <?php echo $res_dpt['dpt_nom']; ?>  <b class="caret"></b> </div>
 		</button>
 
- 		<div id="menu_liste_complexes" style="margin: 1%;">
-			<?php 
-				foreach ($tab_complexes_events as $lieu_id => $nb_events) {
-					$lieu = recupLieuById($lieu_id);
+ 		<div id="menu_liste_complexes">
+			<?php
+                $i = 0;
+				foreach ($tab_complexes_events as $key => $compl_event) {
+					$lieu = recupLieuById($compl_event[0]);
+					$class="";
+					if ($i == 0){$class="actif";}
 					?>
-	      				<a class="onglet_complexe" data-toggle="tab" href="#<?php echo $lieu['lieu_nom'];?>"><?php echo $lieu['lieu_nom'].' ('.$nb_events.') '; ?></a>
+	      				<a class="onglet_complexe <?php echo $class; ?>" id="<?php echo $compl_event[0]; ?>" data-toggle="tab" href="#<?php echo $lieu['lieu_nom'];?>"><?php echo $lieu['lieu_nom'].' ('.$compl_event[1].') '; ?></a>
 	      			<?php
+                    $i++;
 	      		}
 	      	?>
 	    </div>
 
 <div id="liste_events" class="tab-content">
-	<?php 
-		foreach ($tab_complexes_events as $lieu_id => $nb_events) {
-			$lieu = recupLieuById($lieu_id);
-			$liste_events = liste_tournois_complexe($lieu_id);
+	<?php
+        $i = 0;
+		foreach ($tab_complexes_events as $nb_events => $cmp_event) {
+            //var_dump($lieu_id);
+		    $lieu = recupLieuById($cmp_event[0]);
+
+			$liste_events = liste_tournois_complexe($cmp_event[0]);
 			//var_dump($lieu_id);
 			//var_dump($liste_events);
 			?>
-    			<div id="<?php echo $lieu['lieu_id'];?>" class="tab-pane fade in active">
+    			<div id="e-<?php echo $cmp_event[0];?>" class="cont">
     			<?php
     				foreach ($liste_events as $key => $event) {
                         $heure_debut = format_heure_minute($event['event_heure_debut']);
@@ -105,13 +113,28 @@
                                     <h1 style="margin-top: 1.5%;"><span class="bold"><?php echo $event['event_tarif'] + $param->comission; ?> €</span></h1> <?php ECHO $team; ?><br />
                                     <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p>
                                 </div>
-
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12" style="text-align: right; padding: 2% 10% 1%;">
+                                    <a href="feuille_de_tournois.php?tournoi=<?php echo $event["event_id"]; ?>"><button class="btn btn-success btn-grand">Reserver ma place</button></a>
+                                </div>
                             </div>
                         </div>
 							<?php
     				}
     			?>
     			</div>
+            <script>
+                $('.onglet_complexe').click(function () {
+                    var id = $(this).attr("id");
+                    var cont_event = $('#e-' + id);
+                    var cont = $('.cont');
+                    $(".actif").removeClass('actif');
+                    $(this).addClass("actif");
+                    cont.hide();
+                    cont_event.show();
+                })
+            </script>
     		<?php
     	}
     ?>
