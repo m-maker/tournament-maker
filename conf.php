@@ -13,10 +13,10 @@ function getParams(){
 }
 
 function connexionBdd(){
-	$hote = "localhost";
-	$db = "tournoi_soccer";
-	$user = "root";
-	$pass = "";
+	$hote = "db683268572.db.1and1.com";
+	$db = "db683268572";
+	$user = "dbo683268572";
+	$pass = "mate-maker33!";
 	try {
 		return new PDO('mysql:host='.$hote.';dbname='.$db.';charset=utf8', $user, $pass);
 	} catch (Exception $e) {

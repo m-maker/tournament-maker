@@ -21,6 +21,11 @@ include('conf.php');
 <!-- CONTENU DE LA PAGE -->
 
 <!-- BARRE DE RECHERCHE -->
+<div class="alert alert-dismissible alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Hey !</strong> Vous êtes un joueur de foot en salle, vous voulez vous  <a href="#" class="alert-link">créer un compte</a>
+</div>
+
 <div id="post" class="container-fluid center" style="padding: 2%;">
     <button id="btn_dpt" class="btn btn-default center" data-toggle="modal" data-target="#myModal">
         <div id="nom_departement" > Département  <b class="caret"></b> </div>
