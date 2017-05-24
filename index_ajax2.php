@@ -56,10 +56,11 @@
 	      	?>
 	    </div>
 
-<div id="liste_events" class="tab-content">
+
 	<?php
         $i = 0;
 		foreach ($tab_complexes_events as $nb_events => $cmp_event) {
+		    echo '<div id="e-'.$cmp_event[0].'" class="cont tab-content">';
             //var_dump($lieu_id);
 		    $lieu = recupLieuById($cmp_event[0]);
 
@@ -67,7 +68,7 @@
 			//var_dump($lieu_id);
 			//var_dump($liste_events);
 			?>
-    			<div id="e-<?php echo $cmp_event[0];?>" class="cont">
+    			<div class="espace-bot">
     			<?php
     				foreach ($liste_events as $key => $event) {
                         $heure_debut = format_heure_minute($event['event_heure_debut']);
@@ -120,10 +121,10 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 							<?php
     				}
     			?>
-    			</div>
             <script>
                 $('.onglet_complexe').click(function () {
                     var id = $(this).attr("id");
@@ -138,5 +139,5 @@
     		<?php
     	}
     ?>
-</div>
+
 			

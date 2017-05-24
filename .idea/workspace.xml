@@ -5,21 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="56039eb8-741c-449b-bdff-ec57736f9c34" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/connexion.php" afterPath="$PROJECT_DIR$/connexion.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/feuille_tournoi.css" afterPath="$PROJECT_DIR$/css/feuille_tournoi.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/header.css" afterPath="$PROJECT_DIR$/css/header.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/index.css" afterPath="$PROJECT_DIR$/css/index.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.css" afterPath="$PROJECT_DIR$/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/feuille_de_tournois.php" afterPath="$PROJECT_DIR$/feuille_de_tournois.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/header.php" afterPath="$PROJECT_DIR$/header.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/inscription.php" afterPath="$PROJECT_DIR$/inscription.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mango/MangoPaySdkStorage.tmp.php" afterPath="$PROJECT_DIR$/mango/MangoPaySdkStorage.tmp.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mes_matchs.php" afterPath="$PROJECT_DIR$/mes_matchs.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organisateur/gestion_equipes.php" afterPath="$PROJECT_DIR$/organisateur/gestion_equipes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organisateur/index.php" afterPath="$PROJECT_DIR$/organisateur/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organisateur/paiements.php" afterPath="$PROJECT_DIR$/organisateur/paiements.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index_ajax2.php" afterPath="$PROJECT_DIR$/index_ajax2.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -68,10 +54,28 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="index_ajax2.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/index_ajax2.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-811">
+              <caret line="62" column="18" lean-forward="false" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
+              <folding>
+                <marker date="1495632612015" expanded="true" signature="185:235" ph="SELECT * FRO... membres" />
+                <marker date="1495632612015" expanded="true" signature="333:386" ph="SELECT * FRO... departements" />
+                <marker date="1495632612015" expanded="true" signature="683:750" ph="SELECT COUNT... tournois" />
+                <marker date="1495632612015" expanded="true" signature="2266:2392" ph="..." />
+                <marker date="1495632612015" expanded="true" signature="3301:3761" ph="..." />
+                <marker date="1495632612015" expanded="false" signature="3403:3419" ph="..." />
+                <marker date="1495632612015" expanded="true" signature="3420:3730" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
+            <state relative-caret-position="63">
               <caret line="24" column="50" lean-forward="false" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -91,23 +95,6 @@
                 <marker date="1495621492368" expanded="true" signature="2013:2447" ph="..." />
                 <marker date="1495621492368" expanded="true" signature="2155:2171" ph="..." />
                 <marker date="1495621492368" expanded="true" signature="2172:2432" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index_ajax2.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index_ajax2.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="72" column="24" lean-forward="false" selection-start-line="72" selection-start-column="24" selection-end-line="121" selection-end-column="30" />
-              <folding>
-                <marker date="1495618004194" expanded="true" signature="185:235" ph="SELECT * FRO... membres" />
-                <marker date="1495618004194" expanded="true" signature="333:386" ph="SELECT * FRO... departements" />
-                <marker date="1495618004194" expanded="true" signature="683:750" ph="SELECT COUNT... tournois" />
-                <marker date="1495618004194" expanded="true" signature="3303:3763" ph="..." />
-                <marker date="1495618004194" expanded="false" signature="3405:3421" ph="..." />
-                <marker date="1495618004194" expanded="true" signature="3422:3732" ph="..." />
               </folding>
             </state>
           </provider>
@@ -157,10 +144,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="feuille_tournoi.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="feuille_tournoi.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/feuille_tournoi.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
+            <state relative-caret-position="429">
               <caret line="66" column="21" lean-forward="false" selection-start-line="66" selection-start-column="21" selection-end-line="66" selection-end-column="21" />
               <folding />
             </state>
@@ -243,7 +230,6 @@
         <option value="$PROJECT_DIR$/organisateur/modifier_tournoi_traitement.php" />
         <option value="$PROJECT_DIR$/organisateur/organiser_tournoi_traitement.php" />
         <option value="$PROJECT_DIR$/css/liste_tournois.css" />
-        <option value="$PROJECT_DIR$/index_ajax2.php" />
         <option value="$PROJECT_DIR$/conf.php" />
         <option value="$PROJECT_DIR$/conf/database.php" />
         <option value="$PROJECT_DIR$/css/index.css" />
@@ -260,6 +246,7 @@
         <option value="$PROJECT_DIR$/inscription.php" />
         <option value="$PROJECT_DIR$/feuille_de_tournois.php" />
         <option value="$PROJECT_DIR$/css/feuille_tournoi.css" />
+        <option value="$PROJECT_DIR$/index_ajax2.php" />
       </list>
     </option>
   </component>
@@ -500,12 +487,12 @@
       <workItem from="1495391650794" duration="19426000" />
       <workItem from="1495444644355" duration="21381000" />
       <workItem from="1495476667347" duration="35422000" />
-      <workItem from="1495567309823" duration="15982000" />
+      <workItem from="1495567309823" duration="17417000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="168343000" />
+    <option name="totallyTimeSpent" value="169778000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
@@ -1002,21 +989,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index_ajax2.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="72" column="24" lean-forward="false" selection-start-line="72" selection-start-column="24" selection-end-line="121" selection-end-column="30" />
-          <folding>
-            <marker date="1495618004194" expanded="true" signature="185:235" ph="SELECT * FRO... membres" />
-            <marker date="1495618004194" expanded="true" signature="333:386" ph="SELECT * FRO... departements" />
-            <marker date="1495618004194" expanded="true" signature="683:750" ph="SELECT COUNT... tournois" />
-            <marker date="1495618004194" expanded="true" signature="3303:3763" ph="..." />
-            <marker date="1495618004194" expanded="false" signature="3405:3421" ph="..." />
-            <marker date="1495618004194" expanded="true" signature="3422:3732" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mes_matchs.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1155">
@@ -1045,18 +1017,6 @@
         <state relative-caret-position="378">
           <caret line="33" column="34" lean-forward="true" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="24" column="50" lean-forward="false" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1112,9 +1072,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/css/feuille_tournoi.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
+        <state relative-caret-position="429">
           <caret line="66" column="21" lean-forward="false" selection-start-line="66" selection-start-column="21" selection-end-line="66" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="24" column="50" lean-forward="false" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index_ajax2.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-811">
+          <caret line="62" column="18" lean-forward="false" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
+          <folding>
+            <marker date="1495632612015" expanded="true" signature="185:235" ph="SELECT * FRO... membres" />
+            <marker date="1495632612015" expanded="true" signature="333:386" ph="SELECT * FRO... departements" />
+            <marker date="1495632612015" expanded="true" signature="683:750" ph="SELECT COUNT... tournois" />
+            <marker date="1495632612015" expanded="true" signature="2266:2392" ph="..." />
+            <marker date="1495632612015" expanded="true" signature="3301:3761" ph="..." />
+            <marker date="1495632612015" expanded="false" signature="3403:3419" ph="..." />
+            <marker date="1495632612015" expanded="true" signature="3420:3730" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
