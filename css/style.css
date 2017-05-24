@@ -44,8 +44,10 @@ body{
 	margin-bottom: 20%;
 }
 .form-simple {
-	color: white;
-	background: rgba(0,62,117, 0.8);
+	color: black;
+	background: whitesmoke;
+	border: 1px solid black;
+	border-radius: 5px;
 	padding: 2%;
 	margin: 4% 0 10%;
 }

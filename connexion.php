@@ -11,13 +11,14 @@
 		<title>Connexion</title>
 	</head>
 
-	<body>
+	<body style="background: gainsboro;">
 
 		<!-- HEADER -->
 		<?php include('header.php'); ?>
 
 		<!-- CONTENU DE LA PAGE -->
 
+        <div class="container-fluid">
 		<!-- Zone de connexion -->
 	    <div class="row space-top">
 			<div class="form-grand">
@@ -48,6 +49,8 @@
 
 		  	</div>
 		</div>
+
+        </div>
 
 		<!-- FOOTER -->
 		<?php include('footer.php') ?>

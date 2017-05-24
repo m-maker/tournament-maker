@@ -24,7 +24,9 @@
 	color: white;
 	border-style: ridge;
 }
-
+.menu_liste li {
+	height: 30px;
+}
 .menu_liste li a{
 	color: black;
 }

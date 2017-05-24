@@ -8,6 +8,7 @@ include('conf.php');
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/liste_tournois.css">
+    <link href="https://fonts.googleapis.com/css?family=Kumar+One" rel="stylesheet">
     <script type="text/javascript" src="js/index.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <title>Tournois de foot en salle</title>
@@ -21,12 +22,13 @@ include('conf.php');
 <!-- CONTENU DE LA PAGE -->
 
 <!-- BARRE DE RECHERCHE -->
-<div class="alert alert-dismissible alert-info" style="width: 70%;margin: 2% auto;">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Hey !</strong> Vous êtes un joueur de foot en salle? vous cherchez des tournois ? <h3><a href="inscription.php">Créez votre compte sur RTT</a></h3>
+<div class="center info-index" style="padding: 1%;">
+    <strong>Hey !</strong> Vous êtes un joueur de foot en salle? vous cherchez des tournois ? <a href="inscription.php">Créez votre compte sur RTT</a><br />
+
 </div>
 
 <div id="post" class="container-fluid center" style="padding: 2%;">
+    <p style="font-size: 20px;">Selectionnez un département afin de trouver les tournois / matchs</p>
     <button id="btn_dpt" class="btn btn-default center" data-toggle="modal" data-target="#myModal">
         <div id="nom_departement" > Département  <b class="caret"></b> </div>
     </button>
