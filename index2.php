@@ -61,6 +61,16 @@
 
 		<!-- FOOTER -->
 		<?php include('footer.php') ?>
+		<script type="text/javascript">
+			$(".show").click(function() {
+				console.log('lol');
+                $(".show").removeClass("acti");
+                $(this).addClass("acti");
+                $(".cont").hide();
+                var id = $(this).attr("id");
+                $("#a-"+id).show();
+            });
+		</script>
 	</body>
 
 </html>

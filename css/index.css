@@ -22,8 +22,7 @@ label{
 	max-height: 35rem;
 	overflow-x: scroll;
 }
-.badgebox
-{
+.badgebox{
     opacity: 0;
 }
 #post{
@@ -51,5 +50,10 @@ label{
 .onglet_complexe{
 	background-color: black;
 	flex 1;
-	height: 100%;
+	max-width: 100px;
 }
+.menu{
+	border: solid 1px grey;
+	background-color: rgba(0,0,0,0.2);
+}
+

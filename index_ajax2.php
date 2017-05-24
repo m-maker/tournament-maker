@@ -40,20 +40,19 @@
 			<div id="nom_departement" > <?php echo $res_dpt['dpt_nom']; ?>  <b class="caret"></b> </div>
 		</button>
 
-<nav id="liste_complexes" class="navbar navbar-default">
- 	<div class="container-fluid">
- 		<div id="menu_liste_complexes" class="nav navbar-nav">
+		<div class="row menu espace-bot" style="margin: 0;">
 			<?php 
 				foreach ($tab_complexes_events as $lieu_id => $nb_events) {
 					$lieu = recupLieuById($lieu_id);
 					?>
-	      				<a class="onglet_complexe" data-toggle="tab" href="#<?php echo $lieu['lieu_nom'];?>"><?php echo $lieu['lieu_nom'].' ('.$nb_events.') '; ?></a>
+						<div class="onglet_complexe show" id="<?php echo $lieu['lieu_id']; ?>">
+							<?php echo $lieu['lieu_nom'].' ('.$nb_events.') '; ?>
+						</div>	
 	      			<?php
 	      		}
 	      	?>
 	    </div>
 	</div>
-</nav>
 
 <div id="liste_events" class="tab-content">
 	<?php 
@@ -63,7 +62,7 @@
 			//var_dump($lieu_id);
 			//var_dump($liste_events);
 			?>
-    			<div id="<?php echo $lieu['lieu_id'];?>" class="tab-pane fade in active">
+    			<div id="<?php echo 'a-'.$lieu['lieu_id'];?>" style="display: none;" class="cont espace-top">
     			<?php
     				foreach ($liste_events as $key => $event) {
 						$heure_debut = format_heure_minute($event['event_heure_debut']);
@@ -104,4 +103,15 @@
     	}
     ?>
 </div>
+
+<script type="text/javascript">
+	$(".show").click(function() {
+		console.log('lol');
+        $(".show").removeClass("acti");
+        $(this).addClass("acti");
+        $(".cont").hide();
+        var id = $(this).attr("id");
+        $("#a-"+id).show();
+    });
+</script>
 			
