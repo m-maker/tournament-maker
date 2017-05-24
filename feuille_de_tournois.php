@@ -400,7 +400,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
 
 		    		</div>
 		    		<!-- LES ÉQUIPES -->
-		    		<div id="equipes" class="cont">
+		    		<div id="equipes" class="cont row">
 		    			<div class="categories-equipes">
 
 		    				<div class="row">

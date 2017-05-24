@@ -178,7 +178,10 @@ h3 {
 .menu-orga{
 	margin-top: 20px;
 	margin-bottom: 20px;
-	border: solid 1px grey;
+}
+.menu-orga div{
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
 }
 /* 
 	MUR DU TOURNOI	
@@ -223,7 +226,6 @@ h3{
 }
 .recap_equipe{
 	display: flex;
-	justify-content: 
 }
 .recap_equipe{
 	text-align: center;
