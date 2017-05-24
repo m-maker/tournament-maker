@@ -21,9 +21,9 @@ include('conf.php');
 <!-- CONTENU DE LA PAGE -->
 
 <!-- BARRE DE RECHERCHE -->
-<div class="alert alert-dismissible alert-info">
+<div class="alert alert-dismissible alert-info" style="width: 70%;margin: 2% auto;">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Hey !</strong> Vous êtes un joueur de foot en salle, vous voulez vous  <a href="#" class="alert-link">créer un compte</a>
+    <strong>Hey !</strong> Vous êtes un joueur de foot en salle? vous cherchez des tournois ? <h3><a href="inscription.php">Créez votre compte sur RTT</a></h3>
 </div>
 
 <div id="post" class="container-fluid center" style="padding: 2%;">

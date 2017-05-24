@@ -1,5 +1,7 @@
 <?php 
 
+include 'conf/database.php';
+
 session_start();
 
 global $db;
@@ -10,18 +12,6 @@ function getParams(){
 	$req = $db->query("SELECT * FROM parametres;");
 	$req->execute();
 	return $req->fetch(PDO::FETCH_OBJ);
-}
-
-function connexionBdd(){
-	$hote = "db683268572.db.1and1.com";
-	$db = "db683268572";
-	$user = "dbo683268572";
-	$pass = "mate-maker33!";
-	try {
-		return new PDO('mysql:host='.$hote.';dbname='.$db.';charset=utf8', $user, $pass);
-	} catch (Exception $e) {
-	    die('<b>Erreur de connexion à la Bdd :</b> <br>' . $e->getMessage());
-	}
 }
 
 function recupStatutJoueur($id_joueur, $id_equipe){

@@ -60,3 +60,9 @@ label{
 	color: white;
 	text-decoration: none;
 }
+.alert-info a {
+	color: lightgrey;
+}
+.alert-info a:hover {
+	color: grey;
+}
