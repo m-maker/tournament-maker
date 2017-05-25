@@ -65,7 +65,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
 	<body>
 	<?php include ('header.php'); ?>
 
-	<div class="container espace-top" <?php if ($mdp){echo 'style="margin: 7% auto;"';} ?>>
+	<div class="corps container espace-top" <?php if ($mdp){echo 'style="margin: 7% auto;"';} ?>>
 
 	<?php if ($mdp){ ?>
 			<div class="mdp">
@@ -79,6 +79,9 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
 			</div>
 	<?php   
 		}else{
+            ?>
+            <div id="header_feuille_de_tournoi">
+            <?php
             $heure_debut = format_heure_minute($leTournoi->event_heure_debut);
             $heure_fin = format_heure_minute($leTournoi->event_heure_fin);
             $glyph = "glyphicon-eye-open";$prive="Public";$color='vert';
@@ -125,6 +128,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
 
 				</div>
 			</div>
+        </div>
 
         <div class="menu-orga">
             <div class="col-md-4 center show" id="show-mur"><span class="glyphicon glyphicon-list"></span> Mur du tournoi</div>
@@ -154,7 +158,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
 
 					<!-- MON EQUIPE ET SES MEMBRES -->
 		    		<div id="mon_equipe" class="cont" style="display: none;">
-		    			<div>
+		    			<div class="row">
 		    				<div class="col-sm-4">
 		    					<!-- pour la marge -->
 		    				</div>
@@ -192,184 +196,143 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                                             </div>
                                         <?php
                                     }
+                                    else{
+                                        ?>
+                                            <div class="col-sm-4"></div>
+                                        <?php
+                                    }
                                     ?>
-                    	</div>
-                    	<div id="liste_joueurs_equipe" class="center container-fluid">
-                    		<div class="row">
-                    			<h2 class="center">Les joueurs sélectionnés</h2>
-                    				<div class="liste_joueur">
-                    				<?php 
-                    					foreach ($liste_joueurs_equipe as $key => $value) {
-                    						if ($value['em_statut_joueur'] == 1 OR $value['em_statut_joueur'] == 3){
-                    							if ($value['em_membre_id'] == $_SESSION['id']){
-                    								?>
-                    									<div class="joueur_user">
-                    										<div class="">
-                    											<?php
-                    												echo $value['membre_pseudo'];
-                    												echo '<br/>';
-                    												echo "<span class='vert'><span class='glyphicon glyphicon-ok'></span> Payé</span>";
-                    											?>
-                           									</div>
-                           									<div class="">
-                           										<a href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>">
-                                        							<button " class="btn btn-success btn-xs">Me desinscrire <br/>(a faire) (<?php echo $leTournoi->event_tarif + 1; ?> €)
-                                        							</button>
-                                        						</a>
-                           									</div>
-                    									</div>
-                    								<?php
-                    							}
-                    							else{
-                    								?>
-                    									<div class="joueur">
-                    										<div>
-                    											<?php
-                    												echo $value['membre_pseudo'];
-                    												echo '<br/>';
-                    												echo "<span class='rouge'><span class='glyphicon glyphicon-remove'></span> Non Payé</span>";
-                    											?>
-                           									</div>
-                    									</div>
-                    								<?php
-                    							}
-                    						}
-                    					}
-                    				?>
-                    				</div>
-                    		</div>
-                    		<div class="row">
-                    			<h2 class="">Remplaçants</h2> 
-                    				<div class="liste_joueur">
-                    			    <?php 
-                    					foreach ($liste_joueurs_equipe as $key => $value) {
-                    						if ($value['em_statut_joueur'] == 6){
-                    							if ($value['em_membre_id'] == $_SESSION['id']){
-                    								?>
-                    									<div class="joueur_user">
-                    										<div class="">
-                    											<?php
-                    												echo $value['membre_pseudo'];
-                    												echo '<br/>';
-                    												echo "<span class='vert'><span class='glyphicon glyphicon-ok'></span> Payé</span>";
-                    											?>
-                           									</div>
-                           									<div class="">
-                           										<a href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>">
-                                        							<button style="margin: 1% 0; padding: 2%;" class="btn btn-success btn-xs">Me desinscrire (a faire) (<?php echo $leTournoi->event_tarif + 1; ?> €)
-                                        							</button>
-                                        						</a>
-                           									</div>
-                    									</div>
-                    								<?php
-                    							}
-                    							else{
-                    								?>
-                    									<div class="joueur>
-                    										<div>
-                    											<?php
-                    												echo $value['membre_pseudo'];
-                    												echo '<br/>';
-                    												echo "<span class='rouge'><span class='glyphicon glyphicon-remove'></span> Non Payé</span>";
-                    											?>
-                           									</div>
-                    									</div>
-                    								<?php
-                    							}
-                    						}
-                    					}
-                    				?>
-                    				</div>
-                    		</div>
-                    		<div class="row">
-                    			<h2>En cours d'inscription</h2>
-                    				<div class="liste_joueur">
-                    			    <?php 
-                    					foreach ($liste_joueurs_equipe as $key => $value) {
-                    						if ($value['em_statut_joueur'] == 2 OR $value['em_statut_joueur'] == 5){
-                    							if ($value['em_membre_id'] == $_SESSION['id']){
-                    								?>
-                    									<div class="joueur_user">
-                    										<div class="col-md-6">
-                    											<?php
-                    												echo $value['membre_pseudo'];
-                    												echo '<br/>';
-                    												echo "<span class='rouge'><span class='glyphicon glyphicon-remove'></span> Non Payé</span>";
-                    											?>
-                           									</div>
-                           									<div class="col-md-6">
-                           										<a href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>">
-                                        							<button style="margin: 1% 0; padding: 2%;" class="btn btn-success btn-xs">Payer de ma place(<?php echo $leTournoi->event_tarif + 1; ?> €)
-                                        							</button>
-                                        						</a>
-                           									</div>
-                    									</div>
-                    								<?php
-                    							}
-                    							else{
-                    								?>
-                    									<div class="joueur">
-                    										<div>
-                    											<?php
-                    												echo $value['membre_pseudo'];
-                    												echo '<br/>';
-                    												echo "<span class='rouge'><span class='glyphicon glyphicon-remove'></span> Non Payé</span>";
-                    											?>
-                           									</div>
-                    									</div>
-                    								<?php
-                    							}
-                    						}
-                    					}
-                    				?>
-                    				</div>
-                    		</div>			
-                    	</div>
-
-                                    <a href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>">
-                                        <button style="margin: 1% 0; padding: 2%;" class="btn btn-success btn-grand">Payer ma place (<?php echo $leTournoi->event_tarif + 1; ?> €)</button>
-                                    </a>
-
-                                    <div class="row" style="margin: 0.5% 0;">
-                                        <div class="col-md-6" style="padding-left: 0;">
-                                    <!-- Affichage des paramètres pour le capitaine de l'equipe -->
-                                    <?php if (recupStatutJoueur($_SESSION["id"], $mon_equipe["team_id"]) == 1){ ?>
-                                                <div class="param-team center">
-                                                    <h3 class="clic-param espace-bot">Paramètres de l'equipe <span class="glyphicon glyphicon-menu-down right"></span></h3>
-                                                    <div>
-                                                        <form id="form-param-team" method="post" action="param_team.php?id=<?php echo $mon_equipe['team_id']; ?>&tournoi=<?php echo $leTournoi->event_id; ?>">
-                                                            <input style=" margin: auto;" class="form-control" type="text" placeholder="Nom de l'equipe" name="nom-team" value="<?php echo $mon_equipe['team_nom']; ?>"><br />
-                                                            Etat de l'équipe :
-                                                            <label class="etat-team espace-left" id="prv">
-                                                                Privé
-                                                                <input type="radio" name="etat-team" value="1" <?php if ($mon_equipe["team_prive"] == 1){ echo 'checked'; } ?> />
-                                                            </label>
-                                                            <label class="etat-team" id="pub">
-                                                                Public
-                                                                <input type="radio" name="etat-team" value="0" <?php if ($mon_equipe["team_prive"] == 0){ echo 'checked'; } ?> />
-                                                            </label>
-                                                            <input <?php if ($mon_equipe["team_prive"] == 0){ echo 'style="display: none;"'; }else{ echo 'value="'.$mon_equipe["team_pass"].'"'; } ?> id="mdp-team" class="espace-left" type="text" name="pass-team" placeholder="mot de passe de l'equipe"><br />
-                                                            <input type="submit" name="submit" class="espace-top btn btn-success btn-grand" value="Enregistrer">
-                                                        </form>
-                                                        <button class="btn btn-danger btn-grand espace-bot suppr-team" mod="suppr" id="<?php echo $mon_equipe['team_id']; ?>">Supprimer l'équipe</button>
-                                                    </div>
-                                                    Invite tes amis en leur transmettant ce lien : <input style="text-align: center; width: 50%;" type="text" readonly value="<?php echo $param->url_site; ?>invite.php?code_team=<?php echo $mon_equipe["team_code"]; ?>">
-                                                </div>
-                                            <?php }
-                                                // Affichage des joueurs de mon équipe
-                                                $joueurs = recupererJoueurs($mon_equipe["team_id"]);
-                                                foreach ($joueurs as $unJoueur) {
-                                                    if ($unJoueur["em_membre_paye"] == 1) { $paye = "<span class='vert'><span class='glyphicon glyphicon-ok'></span> Payé</span>"; } else { $paye="<span class='rouge'><span class='glyphicon glyphicon-remove'></span> Non Payé</span>"; }?>
-                                                    <div class="unJoueur" id="mon-equipe-cont">
-                                                        <span class="bold"><?php echo $unJoueur["membre_pseudo"]; ?></span><br />
-                                                        <?php echo $unJoueur["statut_nom"]; ?>
-                                                        <span class="statut"><?php echo $paye; ?></span>
-                                                    </div>
-                                                <?php } ?>
-                                            </div>
+                        </div>
+                                	<div id="liste_joueurs_equipe" class="center container-fluid">
+                                        <hr/>
+                                		<div class="row center">
+                                			<h2 class="center">Les joueurs sélectionnés</h2>
+                                				<div class="liste_joueur">
+                                				<?php 
+                                					foreach ($liste_joueurs_equipe as $key => $value) {
+                                						if ($value['em_statut_joueur'] == 1 OR $value['em_statut_joueur'] == 3){
+                                							if ($value['em_membre_id'] == $_SESSION['id']){
+                                								?>
+                                									<div class="joueur_user">
+                                										<div class="">
+                                											<?php
+                                												echo '<span> '.$value['membre_pseudo'].' </span>';
+                                												echo "<span class='vert glyphicon glyphicon-ok'> Payé</span>";
+                                											?>
+                                       									</div>
+                                       									<div class="">
+                                       										<a href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>">
+                                                    							<button " class="btn btn-success btn-xs">Me desinscrire <br/>(a faire) (<?php echo $leTournoi->event_tarif + 1; ?> €)
+                                                    							</button>
+                                                    						</a>
+                                       									</div>
+                                									</div>
+                                								<?php
+                                							}
+                                							else{
+                                								?>
+                                									<div class="joueur">
+                                										<div>
+                                											<?php
+                                												echo $value['membre_pseudo'];
+                                												echo "<span class='rouge glyphicon glyphicon-remove'> Non Payé</span>";
+                                											?>
+                                       									</div>
+                                									</div>
+                                								<?php
+                                							}
+                                						}
+                                					}
+                                				?>
+                                				</div>
+                                		</div>
+                                        <hr/>
+                                		<div class="row">
+                                			<h2 class="">Remplaçants</h2> 
+                                				<div class="liste_joueur">
+                                			    <?php 
+                                					foreach ($liste_joueurs_equipe as $key => $value) {
+                                						if ($value['em_statut_joueur'] == 6){
+                                							if ($value['em_membre_id'] == $_SESSION['id']){
+                                								?>
+                                									<div class="joueur_user">
+                                										<div class="">
+                                											<?php
+                                												echo $value['membre_pseudo']; ?>
+                                                                                <span class='vert glyphicon glyphicon-ok'> Payé</span>;
+                                       									</div>
+                                       									<div class="">
+                                       										<a href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>">
+                                                    							<button style="margin: 1% 0; padding: 2%;" class="btn btn-success btn-xs">Me desinscrire (a faire) (<?php echo $leTournoi->event_tarif + 1; ?> €)
+                                                    							</button>
+                                                    						</a>
+                                       									</div>
+                                									</div>
+                                								<?php
+                                							}
+                                							else{
+                                								?>
+                                									<div class="joueur">
+                                										<div>
+                                											<?php
+                                												echo $value['membre_pseudo'];
+                                												echo "<span class='rouge glyphicon glyphicon-remove'> Non Payé</span>";
+                                											?>
+                                       									</div>
+                                									</div>
+                                								<?php
+                                							}
+                                						}
+                                					}
+                                				?>
+                                				</div>
+                                		</div>
+                                        <hr/>
+                                		<div class="row">
+                                			<h2>En cours d'inscription</h2>
+                                				<div class="liste_joueur">
+                                			    <?php 
+                                					foreach ($liste_joueurs_equipe as $key => $value) {
+                                						if ($value['em_statut_joueur'] == 2 OR $value['em_statut_joueur'] == 5){
+                                							if ($value['em_membre_id'] == $_SESSION['id']){
+                                								?>
+                                									<div class="joueur_user">
+                                										<div class="col-md-6">
+                                											<?php
+                                												echo $value['membre_pseudo'];
+                                												echo "<span class='rouge glyphicon glyphicon-remove'> Non Payé</span>";
+                                											?>
+                                       									</div>
+                                       									<div class="col-md-6">
+                                       										<a href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>">
+                                                    							<button style="margin: 1% 0; padding: 2%;" class="btn btn-success btn-xs">Payer de ma place(<?php echo $leTournoi->event_tarif + 1; ?> €)
+                                                    							</button>
+                                                    						</a>
+                                       									</div>
+                                									</div>
+                                								<?php
+                                							}
+                                							else{
+                                								?>
+                                									<div class="joueur">
+                                										<div>
+                                											<?php
+                                												echo $value['membre_pseudo'];
+                                												echo "<span class='rouge glyphicon glyphicon-remove'>Non Payé</span>";
+                                											?>
+                                       									</div>
+                                									</div>
+                                								<?php
+                                							}
+                                						}
+                                					}
+                                				?>
+                                				</div>
+                                		</div>
+                                    </div>	
 
                                         <!-- Affichage du mur de l'équipe -->
-                                        <div class="col-md-6" id="mur-equipe-cont">
+                                        <div class="" id="mur-equipe-cont">
                                             <div class="titre-mur-equipe">
                                                 <p>Les messages de votre équipe</p>
                                             </div>
@@ -380,27 +343,34 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                                             </form>
 
                                             <?php $messages_equipe = recupMessagesEquipe($mon_equipe["team_id"]);
-                                            if (!empty($messages_equipe)){
-                                                foreach ($messages_equipe as $unMessage) { ?>
-                                                    <div class="msg-cont espace-bot">
-                                                        <?php if ($unMessage["membre_id"] == $_SESSION["id"]) { echo '<span class="delete-msg"><a href="delete_msg.php?type=1&id=' . $unMessage["me_id"] . '&tournoi=' . $leTournoi->event_id . '">X</a></span>'; }
-                                                        echo $unMessage["me_contenu"]; ?>
-                                                        <div class="sign-msg">
-                                                            Par <span><?php echo $unMessage["membre_pseudo"]; ?></span> le <span><?php echo $unMessage["me_date"]; ?></span>
+                                                if (!empty($messages_equipe)){
+                                                    foreach ($messages_equipe as $unMessage) { ?>
+                                                        <div class="msg-cont espace-bot">
+                                                            <?php 
+                                                                if ($unMessage["membre_id"] == $_SESSION["id"]) {
+                                                                    echo '<span class="delete-msg"><a href="delete_msg.php?type=1&id=' . $unMessage["me_id"] . '&tournoi=' . $leTournoi->event_id . '">X</a></span>'; 
+                                                                }
+                                                                echo $unMessage["me_contenu"]; 
+                                                            ?>
+                                                                <div class="sign-msg">
+                                                                      Par <span><?php echo $unMessage["membre_pseudo"]; ?></span> le <span><?php echo $unMessage["me_date"]; ?></span>
+                                                                </div>
                                                         </div>
-                                                    </div>
-                                                <?php }
-                                            }else{ ?>
-                                                <h4 class="center">Personne n'a posté de message pour le moment.</h4>
-                                            <?php } ?>
+                                                        <?php 
+                                                    }
+                                                }
+                                                else{
+                                                    ?>
+                                                        <h4 class="center">Personne n'a posté de message pour le moment.</h4>
+                                                   <?php 
+                                                } 
+                                            ?>
                                         </div>
-
-                                    </div>
                                 <?php } ?>
 
 		    		</div>
 		    		<!-- LES ÉQUIPES -->
-		    		<div id="equipes" class="cont">
+		    		<div id="equipes" class="cont row">
 		    			<div class="categories-equipes">
 
 		    				<div class="row">
