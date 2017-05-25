@@ -27,10 +27,14 @@
 	color: rgb(27,50,73);
 }
 .corps{
-	background-color: rgb(0,153,68);
+	background-color: rgb(0,0,0,0.75);
 	background-color: white;
 	padding: 0px;
 	border: solid 1px black;
+}
+.corps-ext{
+	background-color: rgba(0,0,0,0.5);
+	padding: 50px 30px;
 }
 .item-li a {
 	color: white;
@@ -51,28 +55,30 @@
 .add-team {
 	width: 100%;
 }
-.titre_categories_equipes {
+#cont_liste-msg-tournoi{
+	height: 400px;
+	overflow-y: scroll;
+}
+.titre_cadre_contenu_fdt{
 	margin: 0px;
 	padding: 0px;
-	padding-top: 10px;
+	padding-top: 15px;
 	padding-bottom: 10px;
-	background: white;
-	color: rgb(27,50,73);
+	background: rgb(27,50,73);
+	color: white;
 	text-align: center;
 	border: 1px solid rgb(27,50,73);
 	border-radius-top: 10px;
 }
-.categories-equipes h3 {
-	padding: 1%;
-}
-.categories-equipes {
-	background: rgb(27,50,73);
-	color: white;
+.cadre_contenu_fdt {
+	background: white;
+	color: rgb(27,50,73);
 	border: 1px solid rgb(27,50,73);
 	border-radius: 5px;
 	border-radius-top: 10px;
 	flex: 1;
 	margin: 3px;
+	margin-top: 0px;
 }
 .equipe-cont {
 	display: flex;
@@ -84,7 +90,7 @@
 .bouton_equipe{
 	height: 50%;
 }
-.equipe-cont h1, .equipe-cont h2 {
+.equipe-cont h1,{
 	margin-top: 0;
 }
 #contenu_body_match {
@@ -93,7 +99,6 @@
 	padding: 10px;
 	border-radius: 5px;
 	width: 100%;
-	height: 100%;
 	text-align: center;
 }
 #mon_equipe, #Mur { 
@@ -125,7 +130,7 @@
  	float: right;
 }
 .act {
-	background-color: rgb(27,50,73);
+	background-color: white;
 }
 .item-act {
 	/* zoom: 120%; */
@@ -134,26 +139,40 @@ h3 {
 	text-align: center;
 }
 .err-titre {
+	margin: 0px;
+	padding: 0px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color: rgb(27,50,73);
 	text-align: center;
-	border: 1px solid white;
 	font-family: 'Baloo', cursive;
-	color: black;
-	padding: 1.5%;
-	margin-bottom: 0;
 	font-weight: normal;
 	font-size: 18px;
 }
-#mon-equipe-cont, #mur-equipe-cont {
+#mur-equipe-cont {
+	margin: 0px;
+	padding: 0px;
+}
+#mon-equipe-cont{
 	margin: 10px;
-	background: #f5f5f5;
+	background: rgb(27,50,73);
 	margin-bottom: 1%;
 	border-radius: 5px;
 	border: 1px solid black;
 	padding-left: 10px;
 	padding-right: 10px;
+	color: white;
 }
 #mur-equipe-cont h4 {
 	padding: 1%;
+}
+#cont_liste-msg{
+	height: 350px;
+	overflow-y: scroll;
+}
+.cadre_contenu_fdt form{
+	margin-bottom: 0px;
+	padding-bottom: 0px;
 }
 .titre-mon-equipe, .titre-mur-equipe {
 	margin: 1% 0;
@@ -193,12 +212,13 @@ h3 {
 	padding: 1%;
 }
 .msg-cont {
-	border: 1px solid lightslategray;
-	padding: 1.5%;
-	border-radius: 5px;
+	padding: 3px;
+	font-size: 14px;
+	text-align: left;
 }
 .sign-msg {
-	text-align: right;
+	text-align: left;
+	font-size: 10px;
 }
 .menu-orga{
 	margin-top: 20px;
@@ -222,6 +242,10 @@ h3 {
 	width: 100%;
 	padding: 1%;
 	border-radius: 5px;
+}
+#mur form{
+	margin-bottom: 0px;
+	padding-bottom: 0px;
 }
 .sign {
 	margin-top: 1%;
@@ -255,6 +279,8 @@ h3{
 	margin: 5px;
 	padding: 5px;
 	border: solid 1px rgb(27,50,73);
+	background-color: rgb(232,234,236);
+	border-top: none;
 }
 .recap_equipe{
 	display: flex;
@@ -281,11 +307,14 @@ h3{
 	margin: auto;
 }
 .joueur_user{
-	border: solid 1px grey;
+	font-weight: bold;
 	padding: 1px;
 	order: 1;
 	display: flex;
 	flex-direction: column;
+}
+.joueur_user *{
+	font-weight: bold;
 }
 .joueur{
 }
@@ -294,6 +323,7 @@ h3{
 	flex-wrap: wrap;
 	font-size: 14px;
 	margin: 3px;
+	min-height: 50px;
 }
 #liste_joueurs_equipe h2 {
 	margin-top: 4px; 
@@ -305,7 +335,7 @@ hr {
 	border: solid 1px grey;
 }
 .acti{
-	background-color: white;
+	background-color: rgb(232,234,236);
 	color: rgb(27,50,73);
 	border-top: solid 1px rgb(27,50,73);
 	border-left: solid 1px rgb(27,50,73);
@@ -314,7 +344,7 @@ hr {
 	font-weight: bold;
 }
 .acti:hover{
-	background-color: white;
+	background-color: rgb(232,234,236);
 	cursor: default;
 
 }
