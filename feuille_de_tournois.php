@@ -64,7 +64,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
 
 	<body>
 	<?php include ('header.php'); ?>
-
+    <div class="corps-ext">
 	<div class="corps container espace-top">
         <?php 
             if ($mdp){ 
@@ -593,6 +593,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                 <?php
             }
         ?>
+    </div>
     </div>
 
     <?php include 'footer.php'; ?>

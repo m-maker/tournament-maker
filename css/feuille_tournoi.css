@@ -27,10 +27,14 @@
 	color: rgb(27,50,73);
 }
 .corps{
-	background-color: rgb(0,153,68);
+	background-color: rgb(0,0,0,0.75);
 	background-color: white;
 	padding: 0px;
 	border: solid 1px black;
+}
+.corps-ext{
+	background-color: rgba(0,0,0,0.5);
+	padding: 50px 30px;
 }
 .item-li a {
 	color: white;
