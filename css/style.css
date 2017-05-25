@@ -5,6 +5,14 @@ body{
 	/*background-image: url('../img/fond.jpg');*/
 	background-repeat: no-repeat;
 	background-size : 100% 100%;
+	background-color: white;
+	background-color: rgb(0,153,68);
+}
+.corps{
+	background-color: #f5f5f5;
+	padding: 10px;
+	margin-bottom: 20px;
+	border: solid 1px grey;
 }
 #container {
 	margin: 2% auto;
