@@ -30,13 +30,29 @@ if (isset($_GET["id"])){
 		<link rel="stylesheet" type="text/css" href="../css/liste_tournois.css">
 		<link rel="stylesheet" type="text/css" href="css/gest_team.css">
 		<link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
-	</head>
+    <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
-	<body>
+</head>
 
-		<!-- HEADER -->
-		<?php include('header.php'); ?>
+<body>
 
+<!-- HEADER -->
+<?php include('header.php'); ?>
+
+<!-- CONTENU DE LA PAGE -->
+<div id="page">
+
+    <!-- VOLET -->
+    <?php include('volet.php'); ?>
+
+    <!-- CONTENU DE LA PAGE -->
+    <div id="corps">
+        <h1 id="titre_corps">Accueil</h1>
+        <!-- CADRE DU CONTENU -->
+
+        <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
+
+            
 		<div class="container white center" id="container" style="margin: 5% auto;">
             <form method="post" action="gest_team_traitement.php?tournoi=<?php echo $id_tournoi; if ($upd){ echo '&id='. $id_team; } ?>">
                 <legend>
@@ -63,6 +79,8 @@ if (isset($_GET["id"])){
                 </button>
             </form>
 		</div>
+	</div>
+</div>
 
 		<!-- FOOTER -->
 		<?php include('footer.php') ?>

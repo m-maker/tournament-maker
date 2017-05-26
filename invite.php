@@ -10,16 +10,28 @@ if (!isset($_SESSION['id']))
 	
 	<head>
 		<?php include('head.php'); ?>
-		<title>Invitation dans une équipe</title>
 		<link rel="stylesheet" type="text/css" href="organisateur/css/orga.css">
-	</head>
+		<title>Invitation dans une équipe</title>    <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
-	<body>
+</head>
 
-		<!-- HEADER -->
-		<?php include('header.php'); ?>
+<body>
 
-		<!-- CONTENU DE LA PAGE -->
+<!-- HEADER -->
+<?php include('header.php'); ?>
+
+<!-- CONTENU DE LA PAGE -->
+<div id="page">
+
+    <!-- VOLET -->
+    <?php include('volet.php'); ?>
+
+    <!-- CONTENU DE LA PAGE -->
+    <div id="corps">
+        <h1 id="titre_corps">Invitation dans une équipe</h1>
+        <!-- CADRE DU CONTENU -->
+
+        <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->>
 		<div class="container" id="container">
 
 			<div class="form-invite">
@@ -83,6 +95,8 @@ if (!isset($_SESSION['id']))
 
 			</div>
 		</div>
+	</div>
+</div>
 
 		<!-- FOOTER -->
 		<?php include('footer.php') ?>

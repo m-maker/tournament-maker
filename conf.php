@@ -292,7 +292,28 @@ function liste_assoc(){
     $req->execute();
     return $req->fetchAll();
 }
-
+function date_lettres($date){
+	$liste_jours[0] = "Dimanche";
+	$liste_jours[1] = "Lundi";
+	$liste_jours[2] = "Mardi";
+	$liste_jours[3] = "Mercredi";
+	$liste_jours[4] = "Jeudi";
+	$liste_jours[5] = "Vendredi";
+	$liste_jours[6] = "Samedi";
+	
+	$liste_mois[1] = "Janvier";
+	$liste_mois[2] = "Février";
+	$liste_mois[3] = "Mars";
+	$liste_mois[4] = "Avril";
+	$liste_mois[5] = "Mai";
+	$liste_mois[6] = "Juin";
+	$liste_mois[7] = "Juillet";
+	$liste_mois[8] = "Août";
+	$liste_mois[9] = "Septembre";
+	$liste_mois[10] = "Octobre";
+	$liste_mois[11] = "Novembre";
+	$liste_mois[12] = "Décembre";
+}
 $db = connexionBdd();
 $param = getParams();
 

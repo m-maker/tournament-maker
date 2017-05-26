@@ -13,13 +13,29 @@
   		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   		<script type="text/javascript" src="../js/datepicker.js"></script>
+    <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
-	</head>
+</head>
 
-	<body>
+<body>
 
-    <?php include 'header.php'; ?>
+<!-- HEADER -->
+<?php include('header.php'); ?>
 
+<!-- CONTENU DE LA PAGE -->
+<div id="page">
+
+    <!-- VOLET -->
+    <?php include('volet.php'); ?>
+
+    <!-- CONTENU DE LA PAGE -->
+    <div id="corps">
+        <h1 id="titre_corps">Accueil</h1>
+        <!-- CADRE DU CONTENU -->
+
+        <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
+
+            
 	<?php $tournoiObjet = recupObjetTournoiByID($_GET['id']);
 		$req = $db->prepare("SELECT * FROM infos_mango WHERE im_id = :id");
 		$req->bindValue(":id", $tournoiObjet->event_mango, PDO::PARAM_INT);
@@ -312,6 +328,8 @@
 	<?php
 		}
 	?>
+    </div>
+</div>
 
     <!-- FOOTER -->
     <?php include 'footer.php'; ?>

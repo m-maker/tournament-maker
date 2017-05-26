@@ -42,13 +42,29 @@ if (isset($_GET["tournoi"])) {
         <link rel="stylesheet" type="text/css" href="css/orga.css">
         <link rel="stylesheet" type="text/css" href="../css/liste_tournois.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
-    </head>
+    <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
-    <body>
+</head>
 
-    <!-- HEADER -->
-    <?php include('header.php'); ?>
+<body>
 
+<!-- HEADER -->
+<?php include('header.php'); ?>
+
+<!-- CONTENU DE LA PAGE -->
+<div id="page">
+
+    <!-- VOLET -->
+    <?php include('volet.php'); ?>
+
+    <!-- CONTENU DE LA PAGE -->
+    <div id="corps">
+        <h1 id="titre_corps">Accueil</h1>
+        <!-- CADRE DU CONTENU -->
+
+        <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
+
+            
     <div class="title center bold">Suivi des paiements</div>
 
     <!-- CONTENU DE LA PAGE -->
@@ -160,6 +176,7 @@ if (isset($_GET["tournoi"])) {
                             <td>
                                 <a href="rembourser.php?tournoi=<?php echo $id_tournoi; ?>&transfert=<?php echo $uneTransac->Id; ?>&membre=<?php echo $joueur["membre_id"]; ?>"
                                 <?php if ($uneTransac->Nature == "REGULAR" && !in_array($uneTransac->AuthorId, $liste_rembourses)){ ?> <button class="btn btn-danger">Rembourser</button> <?php } ?>
+                                </a>
                             </td>
                         </tr>
                     <?php }
@@ -167,6 +184,8 @@ if (isset($_GET["tournoi"])) {
             </tbody>
         </table>
     </div>
+    </div>
+</div>
 
     <!-- FOOTER -->
     <?php include 'footer.php'; ?>

@@ -5,14 +5,31 @@
 	
 	<head>
 		<?php include('head.php'); ?>
+		<!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 		<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
 		<link rel="stylesheet" type="text/css" href="css/organiser_tournoi.css">
-		<title>Organiser un tournoi</title>
   		<script type="text/javascript" src="js/datepicker.js"></script>
+		<title>Organiser un tournoi</title>    
+		<!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
+
 	</head>
 
-	<body>
+<body>
 
+<!-- HEADER -->
+<?php include('header.php'); ?>
+
+<!-- CONTENU DE LA PAGE -->
+<div id="page">
+
+    <!-- VOLET -->
+    <?php include('volet.php'); ?>
+
+    <!-- CONTENU DE LA PAGE -->
+    <div id="corps">
+        <h1 id="titre_corps">Accueil</h1>
+
+        <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 	<div class="row space-top">
 			<div class="form-grand">
 
@@ -230,6 +247,8 @@
 				    </div>
 				</div>
 		  	</div>
-		</div>
+		</div>*
+	</div>
+</div>
 	</body>
 </html>
