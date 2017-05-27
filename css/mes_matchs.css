@@ -2,12 +2,6 @@
 	margin: 10px;
 	border: solid 1px grey;
 }
-.recap-event{
-	margin: auto;
-	margin-top: 40px;
-	border: solid 1px rgb(200,200,200);
-	max-width: 1000px;
-}
 .act{
 	background-color: rgb(232,234,236);
 	color: rgb(27,50,73);

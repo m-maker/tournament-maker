@@ -12,24 +12,50 @@ body{
 }
 #page{
 	display: flex;
+	background-color: rgb(245,245,245);
 }
 #corps{
 	flex: 1;
-	padding: 3px;
-	padding-bottom: 3px;
-	background-color: rgba(250,250,250,0.5);
-	background-color: rgb(25,135,73);
-	background-color: rgba(235,125,0,0.5);
-	background-color: rgb(245,245,245);
+	margin: 15px;
+	padding: 10px;
+	background-color: white;
 	display: flex;
 	flex-direction: column;
 }
+.corps_onglet{
+	margin: 5px;
+	margin-top: 0px;
+	padding: 5px;
+	border: solid 1px rgb(27,50,73);
+	background-color: rgb(232,234,236);
+	border-top: none;
+}
+
+.recap-event{
+	margin: auto;
+	margin-top: 40px;
+	border: solid 1px rgb(200,200,200);
+	max-width: 1000px;
+	background-color: white;
+}
+
+.titre-liste-tournoi{
+	border: none;
+	background-color: rgb(33,198,86);
+	color: white;
+	font-size: 35px;
+	text-align: center;
+	letter-spacing: 1px;
+	margin: 0;
+	padding: 1%;
+	font-family: 'Titillium Web', sans-serif;
+}
 #titre_corps{
 	width: 100%;
-	margin: auto;
-	margin-top: 20px;
-	margin-bottom: 30px;
+	padding-top: 0px;
+	margin-top: 0px;
 	color: black;
+	font-size: 15px;
 }
 .corps{
 	background-color: white;
@@ -44,19 +70,46 @@ body{
 	padding: 1%;
 }
 .menu-orga {
+	display: inline-flex;
 	color: white;
+	width: 100%;
+	height: 50px;
 	cursor: pointer;
+	margin-top: 20px;
+	padding: 5px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+.menu-orga div{
+	flex: 1;
+	display: flex;
+	padding-top: 10px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
 }
 .show{
 	padding: 1%;
 	background-color: rgb(27,50,73);
-	border: solid 1px rgb(27,50,73);
 	border: solid 1px rgb(20,20,20);
-	color: rgb(235,125,0);
+	color: white;
 	text-decoration: none;
 }
 .show:hover{
 	background: #778899;
+}
+.acti{
+	background-color: rgb(232,234,236);
+	color: rgb(27,50,73);
+	border-top: solid 1px rgb(27,50,73);
+	border-left: solid 1px rgb(27,50,73);
+	border-right: solid 1px rgb(27,50,73);
+	border-bottom: none;
+	font-weight: bold;
+}
+.acti:hover{
+	background-color: rgb(232,234,236);
+	cursor: default;
+
 }
 .actif{
 	background-color: rgb(245,245,245);

@@ -22,7 +22,12 @@
 #volet .btn-success{
 	width: 100%;
 	height: 100%;
-	background-color: rgb(235,125,0);
+	background-color: white;
+	color: rgb(0,62,117);
+}
+#volet .btn-success:hover{
+	background-color:rgb(220,220,220);
+	color: rgb(0,62,117);
 }
 #volet div a{
 	flex: 1;
@@ -38,10 +43,8 @@
 #volet div a *{
 }
 #volet div:hover{
-	background-color: rgb(200,105,0);
 	color: black;
 }
 #volet div *:hover{
-	background-color: rgb(210,110,0);
 	color: black;
 }

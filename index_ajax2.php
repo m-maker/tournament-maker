@@ -1,8 +1,7 @@
 <?php
 	include "conf.php";
 
-	//$dpt = $_POST['dpt'];
-    $dpt = 33;
+	$dpt = $_POST['dpt'];
 	$liste_tournois = liste_tournois($dpt);
 
 	global $res_dpt_from_liste_tournois;
@@ -42,22 +41,24 @@
 			<div id="nom_departement" > <?php echo $res_dpt['dpt_nom']; ?>  <b class="caret"></b> </div>
 		</button>
 
- 		<div id="menu_liste_complexes">
+ 		<div class="menu-orga">
 			<?php
                 $i = 0;
 				foreach ($tab_complexes_events as $key => $compl_event) {
 					$lieu = recupLieuById($compl_event[0]);
 					$class="";
-					if ($i == 0){$class="actif";}
+					if ($i == 0){$class="acti";}
 					?>
-	      				<a class="onglet_complexe onglet1 <?php echo $class; ?>" id="onglet-<?php echo $compl_event[0]; ?>" data-toggle="tab" href="#e-<?php echo $compl_event[0];?>"><?php echo $lieu['lieu_nom'].' ('.$compl_event[1].') '; ?></a>
+                        <div class="center show <?php echo $class; ?>" id="onglet-<?php echo $compl_event[0]; ?>" >
+                            <?php echo $lieu['lieu_nom'].' ('.$compl_event[1].') '; ?>
+                        </div>
 	      			<?php
                     $i++;
 	      		}
 	      	?>
 	    </div>
 
-        <div class="tab-content">
+        <div class="corps_onglet">
         <?php
         $i = 0;
         $boucle = 0;
@@ -69,7 +70,7 @@
             //var_dump($lieu);
             //var_dump($liste_events);
             ?>
-                <div id="e-<?php echo $tab_complexes_nb_events[0];?>" class="tab-pane fade<?php if ($boucle == 0){echo 'in active';} ?>">
+                <div id="cont-onglet-<?php echo $tab_complexes_nb_events[0];?>" class="cont <?php if($i == 0){ echo 'cont-event';} ?>">
                     <div class="espace-bot">
                         <?php
     				    foreach ($liste_events as $key => $event) {
@@ -92,7 +93,7 @@
                                 $team="par joueur";
                             }
                             ?>
-                            <div class="recap_event">
+                            <div class="recap-event">
                                 <div class='titre-liste-tournoi'>
                                     <?php echo $event['event_titre'];?>
                                     <br>
@@ -100,9 +101,6 @@
                                         <span class=\"glyphicon glyphicon-calendar\"></span> Le <span class=\"bold\"><?php echo $event['event_date']; ?></span> de
                                         <span class=\"bold\"><?php echo $heure_debut; ?></span> à <span class=\"bold\"><?php echo $heure_fin;?></span>
                                     </p>
-                                    <a href="feuille_de_tournois.php?tournoi=<?php echo $event["event_id"]; ?>">
-                                        <button class="btn btn-success btn-grand">Reserver ma place</button>
-                                    </a>
                                 </div>
                                 <div class="conteneur-tournoi" style="border-radius:0;width: 100%;margin:0;padding: 1%;">
                                     <div class="row">
@@ -126,6 +124,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-lg-12" style="text-align: right; padding: 2% 10% 1%;">
+                                        <a href="feuille_de_tournois.php?tournoi=<?php echo $event["event_id"]; ?>"><button class="btn btn-primary btn-grand">Voir</button></a>
+                                    </div>
+                                </div>
                             </div>
 							<?php
     				    }
@@ -133,19 +136,17 @@
                     </div>
                 </div>
             <script>
-                $('.onglet_complexe').click(function () {
+                $('.show').click(function () {
                     var id = $(this).attr("id");
-                    var cont_event = $('#e-' + id);
+                    var cont_event = $('#cont-' + id);
                     var cont = $('.cont');
-                    $(".actif").removeClass('actif');
-                    $(this).addClass("actif");
+                    $(".acti").removeClass('acti');
+                    $(this).addClass("acti");
                     cont.hide();
                     cont_event.show();
-                })
+                });
             </script>
     		<?php
             $boucle = 1;
     	}
     ?>
-
-			

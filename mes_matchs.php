@@ -49,8 +49,8 @@ else{
         <div class="">
 
                 <div class="menu-orga">
-                    <div class="col-md-6 center show act" id="show-tournois"><span class="glyphicon glyphicon-list-alt"></span> Mes Tournois</div>
-                    <div class="col-md-6 center show" id="show-matchs"><span class="glyphicon glyphicon-list"></span> Mes Matchs</div>
+                    <div class=" center show acti" id="show-tournois"><span class="glyphicon glyphicon-list-alt"></span> Mes Tournois</div>
+                    <div class="center show" id="show-matchs"><span class="glyphicon glyphicon-list"></span> Mes Matchs</div>
                 </div>
 
                 <!-- AFFICHAGE DES TOURNOIS -->

@@ -9,20 +9,6 @@
 #header_feuille_de_tournoi{
 	background-color: rgb(220,220,220);
 }
-.titre-liste-tournoi{
-	border: none;
-	color: rgb(27,50,73);
-	/*background-color: rgb(0,153,68);*/
-	background-color: rgb(35,35,35);
-	background-color: rgb(235,125,0);
-	color: white;
-	font-size: 35px;
-	text-align: center;
-	letter-spacing: 1px;
-	margin: 0;
-	padding: 1%;
-	font-family: 'Titillium Web', sans-serif;
-}
 #menu_match {
 	width: 100%;
 	margin: auto;
@@ -65,10 +51,8 @@
 	padding: 0px;
 	padding-top: 15px;
 	padding-bottom: 10px;
-	background: rgb(27,50,73);
-	background-color: rgb(15,15,15);
+	background-color: rgb(33,198,86);
 	color: white;
-	background-color: rgb(235,125,0);
 	text-align: center;
 	border: 1px solid rgb(27,50,73);
 	border-radius-top: 10px;
@@ -223,15 +207,6 @@ h3 {
 	text-align: left;
 	font-size: 10px;
 }
-.menu-orga{
-	margin-top: 20px;
-	margin-bottom: 20px;
-	padding: 5px;
-}
-.menu-orga div{
-	border-top-left-radius: 20px;
-	border-top-right-radius: 20px;
-}
 /* 
 	MUR DU TOURNOI	
 */
@@ -275,6 +250,7 @@ h3{
 }
 #body_match{
 	margin: 5px;
+	margin-top: 0px;
 	padding: 5px;
 	border: solid 1px rgb(27,50,73);
 	background-color: rgb(232,234,236);
@@ -331,18 +307,4 @@ hr {
 	margin-top: 0px;
 	margin-bottom: 0px;
 	border: solid 1px grey;
-}
-.acti{
-	background-color: rgb(232,234,236);
-	color: rgb(27,50,73);
-	border-top: solid 1px rgb(27,50,73);
-	border-left: solid 1px rgb(27,50,73);
-	border-right: solid 1px rgb(27,50,73);
-	border-bottom: none;
-	font-weight: bold;
-}
-.acti:hover{
-	background-color: rgb(232,234,236);
-	cursor: default;
-
 }

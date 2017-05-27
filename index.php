@@ -29,14 +29,14 @@ include('conf.php');
 
     <!-- CONTENU DE LA PAGE -->
     <div id="corps">
-        <h1 id="titre_corps">Accueil</h1>
         <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
         <?php
             if(isset($_SESSION['id'])){
                 if(!empty($_SESSION['id'])){
-                    ?>
+                    ?> 
+                        <h1 id="titre_corps">Accueil</h1>
                         <div id="post" class="container-fluid center" style="padding: 2%;">
                             <p style="font-size: 20px;">Selectionnez un département afin de trouver les tournois / matchs</p>
                             <button id="btn_dpt" class="btn btn-default center" data-toggle="modal" data-target="#myModal">

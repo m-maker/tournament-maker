@@ -12,12 +12,16 @@
 						</div>
 						<div id="mes_messages">
 							<a href="mes_maessages.php">
-								<span class="glyphicon glyphicon-envelope">Mes messages</span>			
+							<button class="btn btn-success">
+								<span class="glyphicon glyphicon-envelope">Mes messages</span>
+							</button>			
 							</a>
 						</div>
 						<div id="mes_matchs">
 							<a href="mes_matchs.php">
-								<span class="glyphicon glyphicon-thumbs-up">Mes matchs</span>			
+								<button class="btn btn-success">
+									<span class="glyphicon glyphicon-thumbs-up">Mes matchs</span>
+								</button>		
 							</a>
 						</div>
 				</div>
