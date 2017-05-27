@@ -313,6 +313,9 @@ function date_lettres($date){
 	$liste_mois[10] = "Octobre";
 	$liste_mois[11] = "Novembre";
 	$liste_mois[12] = "Décembre";
+
+	$jour = $liste_jours[$date->format('w')];
+	$mois = $liste_mois[$date->format('m')];
 }
 $db = connexionBdd();
 $param = getParams();

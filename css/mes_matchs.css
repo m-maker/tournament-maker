@@ -5,7 +5,7 @@
 .recap-event{
 	margin: auto;
 	margin-top: 40px;
-	border: solid 2px black;
+	border: solid 1px rgb(200,200,200);
 	max-width: 1000px;
 }
 .act{

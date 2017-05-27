@@ -14,7 +14,14 @@
 	color: rgb(27,50,73);
 	/*background-color: rgb(0,153,68);*/
 	background-color: rgb(35,35,35);
+	background-color: rgb(235,125,0);
 	color: white;
+	font-size: 35px;
+	text-align: center;
+	letter-spacing: 1px;
+	margin: 0;
+	padding: 1%;
+	font-family: 'Titillium Web', sans-serif;
 }
 #menu_match {
 	width: 100%;
@@ -59,7 +66,9 @@
 	padding-top: 15px;
 	padding-bottom: 10px;
 	background: rgb(27,50,73);
+	background-color: rgb(15,15,15);
 	color: white;
+	background-color: rgb(235,125,0);
 	text-align: center;
 	border: 1px solid rgb(27,50,73);
 	border-radius-top: 10px;
@@ -223,10 +232,6 @@ h3 {
 	border-top-left-radius: 20px;
 	border-top-right-radius: 20px;
 }
-.show{
-	background-color: rgb(27,50,73);
-	border: solid 1px rgb(27,50,73);
-}
 /* 
 	MUR DU TOURNOI	
 */
@@ -259,7 +264,6 @@ h3 {
 .delete-msg a:hover {
 	text-decoration: none;
 }
-
 h1{
 	font-size: 15px;
 }

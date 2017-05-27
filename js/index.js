@@ -14,13 +14,4 @@ $(document).ready(function(){
   });
 });
 
-function nomducomplexe() {
-  var nom = document.querySelector('#post input:checked + input').value;
-  var id = document.querySelector('#post input:checked').value;
-  document.getElementById('nom_complexe').innerHTML= nom;
-  document.getElementById('glyph_complexe').className= "glyphicon glyphicon-ok-circle";
-  document.getElementById('nom_complexe_input').value= nom;
-  document.getElementById('id_complexe_input').value= id;
-}
-
 var numeroInput=1;
