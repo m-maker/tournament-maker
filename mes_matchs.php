@@ -32,9 +32,6 @@ else{
 
     <body>
 
-    <!-- HEADER -->
-    <?php include('header.php'); ?>
-
     <!-- CONTENU DE LA PAGE -->
     <div id="page">
 
@@ -42,21 +39,20 @@ else{
         <?php include('volet.php'); ?>
 
         <!-- CONTENU DE LA PAGE -->
-    <div id="corps">
-        <h1 id="titre_corps">Mes Matchs</h1>
+        <div id="corps">
+            <h1 id="titre_corps">Mes Matchs</h1>
 
-        <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
-        <div class="">
+            <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
-                <div class="menu-orga">
-                    <div class=" center show acti" id="show-tournois"><span class="glyphicon glyphicon-list-alt"></span> Mes Tournois</div>
-                    <div class="center show" id="show-matchs"><span class="glyphicon glyphicon-list"></span> Mes Matchs</div>
-                </div>
+            <div class="menu-orga">
+                <div class=" center show acti" id="show-tournois"><span class="glyphicon glyphicon-list-alt"></span> Mes Tournois</div>
+                <div class="center show" id="show-matchs"><span class="glyphicon glyphicon-list"></span> Mes Matchs</div>
+            </div>
 
-                <!-- AFFICHAGE DES TOURNOIS -->
-                <div id="body_match">
-                <div class="" id="tournois">
+            <!-- AFFICHAGE DES TOURNOIS -->
+            <div id="body_match">
 
+                <div class="cont" style="color: black;" id="tournois">
                     <?php
                     if (!empty($liste_tournois) && $liste_tournois[0] != null){
                         foreach ($liste_tournois AS $event){
@@ -80,7 +76,7 @@ else{
                             }
                             ?>  <div class="recap-event">
                                     <div class='titre-liste-tournoi'>
-                                        <?php echo $event['event_titre'] ?> 
+                                        <?php echo $event['event_titre'] ?>
                                         <br>
                                         <p style='font-size: 15px;'>
                                             <span class="glyphicon glyphicon-calendar"></span> Le <span class="bold"><?php echo $event['event_date'] ?> </span> de
@@ -118,24 +114,24 @@ else{
                             <?php
                         }
                     }
-                    else{ 
+                    else{
                         ?>
                             <div class="center">
-                                <h2 class="white">Vous ne participez à aucun tournoi pour l'instant</h2>
+                                <h2 class="normal-size">Vous ne participez à aucun tournoi pour l'instant</h2>
                                 <a href="index.php"><button class="btn btn-success btn-mid espace-top"><span class="glyphicon glyphicon-zoom-in"></span> Trouver un tournoi</button></a>
                             </div>
                         <?php
                     }
                     ?>
                 </div>
-                </div>
 
                 <!-- AFFICHAGE DES MATCHS -->
                 <div class="cont espace-bot" id="matchs" style="display: none;">
-                    <h2 class="center espace-bot espace-top">Cette fonctionnalité n'est pas encore disponible</h2>
+                    <h2 class="normal-size center espace-bot espace-top">Cette fonctionnalité n'est pas encore disponible</h2>
                 </div>
+            </div>
         </div>
-    </div>
+
     </div>
 </body>
 

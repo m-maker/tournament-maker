@@ -43,10 +43,9 @@ label{
     opacity: 0;
 }
 #post{
-	margin-top: 20px;
-	margin-bottom: 20px;
 	padding: 10px;
-	width: 95%;
+	margin-top: 0;
+	width: 100%;
 	background-color: white;
 	color: black;
 }

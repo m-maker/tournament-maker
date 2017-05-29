@@ -24,9 +24,6 @@
 
 <body>
 
-<!-- HEADER -->
-<?php include('header.php'); ?>
-
 <!-- CONTENU DE LA PAGE -->
 <div id="page">
 

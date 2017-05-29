@@ -16,12 +16,8 @@ body{
 }
 #corps{
 	flex: 1;
-	padding: 10px;
-	background-image: url('../img/fond.jpg');
 	background-image: url('../img/gazon3.jpg');
-	background-color: rgb(90,255,160);
-	display: flex;
-	flex-direction: column;
+	background: white;
 }
 .corps_onglet{
 	margin: 5px;
@@ -35,14 +31,14 @@ body{
 .recap-event{
 	margin: auto;
 	margin-top: 40px;
-	border: solid 1px rgb(200,200,200);
+	border: solid 1px black;
 	max-width: 1000px;
 	background-color: white;
 }
 
 .titre-liste-tournoi{
 	border: none;
-	background-color: rgb(55,181,1);
+	background-color: #006400;
 	color: white;
 	font-size: 35px;
 	text-align: center;
@@ -53,10 +49,13 @@ body{
 }
 #titre_corps{
 	width: 100%;
-	padding-top: 0px;
-	margin-top: 0px;
 	color: black;
+	background: rgb(235,235,235);
+	padding: 1%;
+	margin:0;
 	font-size: 15px;
+	font-weight: bold;
+	border-bottom: 1px solid lightgrey;
 }
 .corps{
 	background-color: white;
@@ -167,7 +166,6 @@ body{
 .btn-grand {
 	width: 100%;
 	margin: 0;
-	background-color: rgb(45,156,1);
 }
 .btn-grand:hover{
 }

@@ -126,7 +126,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12" style="text-align: right; padding: 2% 10% 1%;">
-                                        <a href="feuille_de_tournois.php?tournoi=<?php echo $event["event_id"]; ?>"><button class="btn btn-primary btn-grand">Voir</button></a>
+                                        <a href="feuille_de_tournois.php?tournoi=<?php echo $event["event_id"]; ?>"><button class="btn btn-success btn-grand">Voir</button></a>
                                     </div>
                                 </div>
                             </div>

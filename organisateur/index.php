@@ -26,9 +26,6 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 
 <body>
 
-<!-- HEADER -->
-<?php include('header.php'); ?>
-
 <!-- CONTENU DE LA PAGE -->
 <div id="page">
 
