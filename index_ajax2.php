@@ -19,6 +19,13 @@
 		));
 	$res_dpt = $req_dpt->fetch();
 
+    $req_membre_dpt_code = $db->prepare('UPDATE membres SET membre_dpt_code = :dpt_code WHERE membre_id = :membre_id');
+    $req_membre_dpt_code->execute(array(
+        'dpt_code' => $dpt,
+        'membre_id' => $_SESSION['id']
+        ));
+
+
 	$liste_complexes = liste_lieux($res_dpt['dpt_id']);
     $tab_complexes_events = [];
 	foreach ($liste_complexes as $key => $value) {
@@ -40,23 +47,23 @@
 		<button id="btn_dpt" class="btn btn-default" data-toggle="modal" data-target="#myModal">
 			<div id="nom_departement" > <?php echo $res_dpt['dpt_nom']; ?>  <b class="caret"></b> </div>
 		</button>
-
- 		<div class="menu-orga">
-			<?php
-                $i = 0;
-				foreach ($tab_complexes_events as $key => $compl_event) {
-					$lieu = recupLieuById($compl_event[0]);
-					$class="";
-					if ($i == 0){$class="acti";}
-					?>
-                        <div class="center show <?php echo $class; ?>" id="onglet-<?php echo $compl_event[0]; ?>" >
-                            <?php echo $lieu['lieu_nom'].' ('.$compl_event[1].') '; ?>
-                        </div>
-	      			<?php
-                    $i++;
-	      		}
-	      	?>
-	    </div>
+        <div class="onglet-contenu">
+     		<div class="menu-orga">
+    			<?php
+                    $i = 0;
+    				foreach ($tab_complexes_events as $key => $compl_event) {
+    					$lieu = recupLieuById($compl_event[0]);
+    					$class="";
+    					if ($i == 0){$class="acti";}
+    					?>
+                            <div class="center show <?php echo $class; ?>" id="onglet-<?php echo $compl_event[0]; ?>" >
+                                <?php echo $lieu['lieu_nom'].' ('.$compl_event[1].') '; ?>
+                            </div>
+    	      			<?php
+                        $i++;
+    	      		}
+    	      	?>
+    	    </div>
 
         <div class="corps_onglet">
         <?php
@@ -135,6 +142,7 @@
                         ?>
                     </div>
                 </div>
+        </div>
             <script>
                 $('.show').click(function () {
                     var id = $(this).attr("id");
