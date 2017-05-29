@@ -34,7 +34,12 @@ include('conf.php');
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
         <?php
             if(isset($_SESSION['id'])){
-                if(!empty($_SESSION['id'])){
+                if(!empty($_SESSION['id']) AND isset($_SESSION['membre_orga'])) {
+                    if ($_SESSION['membre_orga']){
+                    header('location:organisateur/index.php');
+                    }   
+                }
+                elseif (!empty($_SESSION['id'])){
                     ?> 
                         <h1 id="titre_corps">Accueil</h1>
                         <div id="post" class="container-fluid center" style="padding: 2%;">
