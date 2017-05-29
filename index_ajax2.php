@@ -24,7 +24,7 @@
 	foreach ($liste_complexes as $key => $value) {
 		//var_dump($key);
 		//var_dump($value);
-		$req_nb_events = $db->prepare('SELECT COUNT(event_id) FROM tournois WHERE event_lieu = :event_lieu');
+		$req_nb_events = $db->prepare('SELECT COUNT(event_id) FROM tournois WHERE event_lieu = :event_lieu AND event_date >= NOW()');
 		$req_nb_events->execute(array(
 			'event_lieu' => $value['lieu_id']
 			));
@@ -62,18 +62,18 @@
         <?php
         $i = 0;
         $boucle = 0;
+        //var_dump($tab_complexes_events);
 		foreach ($tab_complexes_events as $onglet => $tab_complexes_nb_events) {
             //var_dump($lieu_id);
             $lieu = recupLieuById($tab_complexes_nb_events[0]);
             $liste_events = liste_tournois_complexe($tab_complexes_nb_events[0]);
-            //var_dump($tab_complexes_nb_events[0]);
-            //var_dump($lieu);
-            //var_dump($liste_events);
             ?>
                 <div id="cont-onglet-<?php echo $tab_complexes_nb_events[0];?>" class="cont <?php if($i == 0){ echo 'cont-event';} ?>">
                     <div class="espace-bot">
                         <?php
     				    foreach ($liste_events as $key => $event) {
+                            //var_dump($key);
+                            //var_dump($event);
                             $heure_debut = format_heure_minute($event['event_heure_debut']);
                             $heure_fin = format_heure_minute($event['event_heure_fin']);
                             $glyph = "glyphicon-eye-open";$prive="Public";$color='vert';
