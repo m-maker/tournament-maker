@@ -70,6 +70,10 @@ label{
 	padding-left: 5px;
 	padding-right: 5px;
 }
+.onglet-contenu{
+	display: flex;
+	flex-direction: column;
+}
 .menu-list{
 }
 .menu_liste_complexes a{
