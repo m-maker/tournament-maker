@@ -18,14 +18,29 @@
   		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   		<script type="text/javascript" src="../js/datepicker.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+    <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
-	</head>
+</head>
 
-	<body>
+<body>
 
-    <?php include 'header.php'; ?>
+<!-- HEADER -->
+<?php include('header.php'); ?>
 
-        <div class="container" id="container" style="padding: 1% 2%; width: 70%;">
+<!-- CONTENU DE LA PAGE -->
+<div id="page">
+
+    <!-- VOLET -->
+    <?php include('volet.php'); ?>
+
+    <!-- CONTENU DE LA PAGE -->
+    <div id="corps">
+        <h1 id="titre_corps">Accueil</h1>
+        <!-- CADRE DU CONTENU -->
+
+        <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
+
+            <div class="container" id="container" style="padding: 1% 2%; width: 70%;">
 	        <div class="row">
 
 
@@ -300,6 +315,8 @@
 				</div>
 
 		</div>
+	</div>
+</div>
 
     <?php include "footer.php"; ?>
 

@@ -6,32 +6,120 @@ body{
 	background-repeat: no-repeat;
 	background-size : 100% 100%;
 	background-color: white;
-	background-color: rgb(0,153,68);
-	background-image: url('../img/fond2.jpg')
+	background-image: url('../img/fond2.jpg');
+	background-color: rgb(233,235,238);
+	background-image: url('../img/fond.jpg');
+}
+#page{
+	display: flex;
+	background-color: rgb(245,245,245);
+}
+#corps{
+	flex: 1;
+	padding: 10px;
+	background-image: url('../img/fond.jpg');
+	background-image: url('../img/gazon3.jpg');
+	background-color: rgb(90,255,160);
+	display: flex;
+	flex-direction: column;
+}
+.corps_onglet{
+	margin: 5px;
+	margin-top: 0px;
+	padding: 5px;
+	border: solid 1px rgb(27,50,73);
+	background-color: rgb(232,234,236);
+	border-top: none;
+}
+
+.recap-event{
+	margin: auto;
+	margin-top: 40px;
+	border: solid 1px rgb(200,200,200);
+	max-width: 1000px;
+	background-color: white;
+}
+
+.titre-liste-tournoi{
+	border: none;
+	background-color: rgb(55,181,1);
+	color: white;
+	font-size: 35px;
+	text-align: center;
+	letter-spacing: 1px;
+	margin: 0;
+	padding: 1%;
+	font-family: 'Titillium Web', sans-serif;
+}
+#titre_corps{
+	width: 100%;
+	padding-top: 0px;
+	margin-top: 0px;
+	color: black;
+	font-size: 15px;
 }
 .corps{
-	background-color: #f5f5f5;
-	padding: 10px;
-	margin-bottom: 20px;
-	border: solid 1px grey;
+	background-color: white;
+	border: solid 1px rgb(200,200,200);
+	padding: 0px;
+	border-radius: 5px;
 }
 #container {
 	margin: 2% auto;
-	background: rgba(0,62,117,1.0);
 	border: 1px solid grey;
 	width: 80%;
 	padding: 1%;
 }
 .menu-orga {
+	display: inline-flex;
 	color: white;
+	width: 100%;
+	height: 50px;
 	cursor: pointer;
+	margin-top: 20px;
+	padding: 5px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
 }
-.show {
+.menu-orga div{
+	flex: 1;
+	display: flex;
+	padding-top: 10px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+}
+.show{
 	padding: 1%;
-	background: dimgray;
+	background-color: rgb(27,50,73);
+	background-color: grey;
+	border: solid 1px rgb(20,20,20);
+	color: white;
+	text-decoration: none;
 }
-.show:hover, .act, .acti {
+.show:hover{
 	background: #778899;
+}
+.acti{
+	background-color: rgb(232,234,236);
+	color: rgb(27,50,73);
+	border-top: solid 1px rgb(27,50,73);
+	border-left: solid 1px rgb(27,50,73);
+	border-right: solid 1px rgb(27,50,73);
+	border-bottom: none;
+	font-weight: bold;
+}
+.acti:hover{
+	background-color: rgb(232,234,236);
+	cursor: default;
+
+}
+.actif{
+	background-color: rgb(245,245,245);
+	text-decoration: none;
+	border-bottom: none;
+}
+.actif a:focus{
+	text-decoration: none;
 }
 .bandeau{
 	padding-top: 13px;
@@ -79,6 +167,9 @@ body{
 .btn-grand {
 	width: 100%;
 	margin: 0;
+	background-color: rgb(45,156,1);
+}
+.btn-grand:hover{
 }
 .btn-mid {
 	width: 50%;

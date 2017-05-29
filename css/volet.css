@@ -1,0 +1,50 @@
+#volet{
+	background-color: rgb(235,235,235);
+	color: black;
+	padding: 2px;
+	margin: 0px;
+	max-width: 250px;
+	min-width: 100px;
+	width: 15%;
+	min-height: 570px;
+	border-right: solid 1px rgb(200,200,200);
+}
+#volet div{
+	text-align: center;
+	margin: 2px;
+	color: white;
+	display: flex;
+	height: 40px;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+#volet .btn-success{
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	color: rgb(0,62,117);
+}
+#volet .btn-success:hover{
+	background-color:rgb(220,220,220);
+	color: rgb(0,62,117);
+}
+#volet div a{
+	flex: 1;
+	height: 100%;
+	color: black;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+#volet div a *{
+}
+#volet div:hover{
+	color: black;
+}
+#volet div *:hover{
+	color: black;
+}

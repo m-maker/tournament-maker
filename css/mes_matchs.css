@@ -1,0 +1,18 @@
+#tournoi{
+	margin: 10px;
+	border: solid 1px grey;
+}
+.act{
+	background-color: rgb(232,234,236);
+	color: rgb(27,50,73);
+	border-top: solid 1px rgb(27,50,73);
+	border-left: solid 1px rgb(27,50,73);
+	border-right: solid 1px rgb(27,50,73);
+	border-bottom: none;
+	font-weight: bold;
+}
+.act:hover{
+	background-color: rgb(232,234,236);
+	cursor: default;
+
+}

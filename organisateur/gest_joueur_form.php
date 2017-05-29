@@ -12,9 +12,9 @@ if (isset($_GET["tournoi"]) && isset($_GET["team"])){
 	$equipe = recupEquipeByID($id_team);
 	$leTournoi = recupObjetTournoiByID($id_tournoi);
 	if ($leTournoi->event_orga_2 != $_SESSION["id"] && $leTournoi->event_orga != $_SESSION["id"])
-		header("Location: ../dex.php");
+		header("Location: index.php");
 }else{
-	header("Location: ../dex.php");
+	header("Location: index.php");
 }
 
 if (isset($_GET["id"])){
@@ -32,13 +32,27 @@ if (isset($_GET["id"])){
 		<link rel="stylesheet" type="text/css" href="../css/liste_tournois.css">
 		<link rel="stylesheet" type="text/css" href="css/gest_team.css">
 		<link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
-	</head>
+    <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
-	<body>
+</head>
 
-		<!-- HEADER -->
-		<?php include('header.php'); ?>
-		
+<body>
+
+<!-- HEADER -->
+<?php include('header.php'); ?>
+
+<!-- CONTENU DE LA PAGE -->
+<div id="page">
+
+    <!-- VOLET -->
+    <?php include('volet.php'); ?>
+
+    <!-- CONTENU DE LA PAGE -->
+    <div id="corps">
+        <h1 id="titre_corps">Gestion des joueurs</h1>
+        <!-- CADRE DU CONTENU -->
+
+        <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 		<div class="container white center" id="container" style="margin: 5% auto;">
 
 			<?php if (!$upd) { ?>
@@ -95,6 +109,8 @@ if (isset($_GET["id"])){
 			<?php } ?>
 
 		</div>
+	</div>
+</div>
 
 		<!-- FOOTER -->
 		<?php include('footer.php') ?>

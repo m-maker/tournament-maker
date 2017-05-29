@@ -1,16 +1,19 @@
 
-
 .bandeau{
-	display: flex;
-	background-color: rgba(27,50,73,1);
+	background-color: rgb(0,62,117);
+	background-color: rgb(33,49,77);
+	background-color: rgb(0,62,117);
+	color: rgb(230,230,230);
 	margin: 0rem;
 	padding: 0rem;
+	box-shadow: 2px 2px 3px 1px;
 }
 .bandeau * {
 	padding: 1px;
 }
 .dropdown a{
 	color: white;
+	color: rgb(230,230,230);
 }
 .dropdown{
 	border: none;
@@ -29,9 +32,17 @@
 .menu_liste li a{
 	color: black;
 }
-.element_bandeau:nth-child(3){
-	flex: 1;
+.element_bandeau{
 	text-align: center;
 }
+.element_bandeau_3{
+	display: flex;
+	justify-content: flex-end;
+}
+.recap_event{
+	border: solid 1px rgb(200,200,200);
+	padding: 10px;
+}
+
 
 

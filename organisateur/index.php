@@ -15,17 +15,32 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 	
 	<head>
 		<?php include('head.php'); ?>
+		<?php include('../head.php'); ?>
 		<title>Administrer mes tournois</title>
 		<link rel="stylesheet" type="text/css" href="css/orga.css">
         <link rel="stylesheet" type="text/css" href="../css/liste_tournois.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
-	</head>
+    <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
-	<body>
+</head>
 
-		<!-- HEADER -->
-		<?php include('header.php'); ?>
+<body>
 
+<!-- HEADER -->
+<?php include('header.php'); ?>
+
+<!-- CONTENU DE LA PAGE -->
+<div id="page">
+
+    <!-- VOLET -->
+    <?php include('volet.php'); ?>
+
+    <!-- CONTENU DE LA PAGE -->
+    <div id="corps">
+        <h1 id="titre_corps">Accueil</h1>
+        <!-- CADRE DU CONTENU -->
+
+        <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
         <div class="title center bold">
             Administrer mes tournois / matchs
         </div>
@@ -96,6 +111,8 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 			</div>
 
         </div>
+    </div>
+</div>
 
 
         <!-- FOOTER -->

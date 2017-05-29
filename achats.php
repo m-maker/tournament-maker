@@ -35,16 +35,28 @@ $im = recupImByMembreID($id_membre);
             .cont-achat a:hover {
                 color: darkgrey;
             }
-        </style>
+        </style>    
+        <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
     </head>
 
 <body>
 
-    <!-- HEADER -->
-    <?php include('header.php'); ?>
-    <!-- CONTENU DE LA PAGE -->
+<!-- HEADER -->
+<?php include('header.php'); ?>
 
+<!-- CONTENU DE LA PAGE -->
+<div id="page">
+
+    <!-- VOLET -->
+    <?php include('volet.php'); ?>
+
+    <!-- CONTENU DE LA PAGE -->
+    <div id="corps">
+        <h1 id="titre_corps">Historique des achats</h1>
+        <!-- CADRE DU CONTENU -->
+
+        <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
     <div class="title center bold">Les paiements que j'ai effectué</div>
 
     <div class="container" id="container">
@@ -113,6 +125,8 @@ $im = recupImByMembreID($id_membre);
     <?php } ?>
 
     </div>
+    </div>
+</div>
 
     <?php include 'footer.php'; ?>
 

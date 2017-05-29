@@ -26,10 +26,29 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 		<link rel="stylesheet" type="text/css" href="css/gest_team.css">
 		<link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
-	</head>
+    <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
-	<body>
+</head>
 
+<body>
+
+<!-- HEADER -->
+<?php include('header.php'); ?>
+
+<!-- CONTENU DE LA PAGE -->
+<div id="page">
+
+    <!-- VOLET -->
+    <?php include('volet.php'); ?>
+
+    <!-- CONTENU DE LA PAGE -->
+    <div id="corps">
+        <h1 id="titre_corps">Accueil</h1>
+        <!-- CADRE DU CONTENU -->
+
+        <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
+
+            
 		<!-- HEADER -->
 		<?php
 			include('header.php');
@@ -163,6 +182,8 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 			</div>
 
 		</div>
+	</div>
+</div>
 
 		<!-- FOOTER -->
 		<?php include('footer.php') ?>
