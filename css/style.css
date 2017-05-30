@@ -71,11 +71,11 @@ body{
 }
 .menu-orga {
 	display: flex;
+	text-align: center;
 	color: white;
 	width: 100%;
 	flex-wrap: wrap;
-	cursor: pointer;
-	margin-top: 20px;
+	margin-top: 10px;
 	padding: 5px;
 	margin-bottom: 0px;
 	padding-bottom: 0px;
@@ -236,15 +236,15 @@ hr{
 	border-bottom: 1px solid black;
 }
 .left a {
-	color: white;
+	color: black;
 }
 .left a:hover, .left a:focu {
 	text-decoration: none;
-	color: darkgray;
+	color: dimgray;
 }
 form .left a:hover{
 	text-decoration: none;
-	color: white;
+	color: dimgray;
 }
 .form-invite {
 	width: 90%;
@@ -298,4 +298,9 @@ a:hover {
 }
 .no-button {
 	line-height: 50px;
+}
+.menu-orga .show {
+	width: 19%;
+	margin: 0.25%;
+	cursor: pointer;
 }

@@ -26,17 +26,17 @@
 <div id="page">
 
     <!-- VOLET -->
-    <?php include('volet.php'); ?>
+    <?php include('volet.php'); $tournoiObjet = recupObjetTournoiByID(htmlspecialchars(trim($_GET['id']))); ?>
 
     <!-- CONTENU DE LA PAGE -->
     <div id="corps">
-        <h1 id="titre_corps">Accueil</h1>
+        <h1 id="titre_corps"><?php echo $tournoiObjet->event_titre; ?> > Modifier</h1>
         <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
             
-	<?php $tournoiObjet = recupObjetTournoiByID($_GET['id']);
+	<?php
 		$req = $db->prepare("SELECT * FROM infos_mango WHERE im_id = :id");
 		$req->bindValue(":id", $tournoiObjet->event_mango, PDO::PARAM_INT);
 		$req->execute();
@@ -53,14 +53,14 @@
 
 	?>
 
-            <div class="container" id="container" style="padding: 1% 2%; width: 70%;">
+            <div class="container-fluid" id="container" style="padding: 1% 2%;">
                 <div class="row">
                         <div style="background: #f5f5f5;">
 
                             <form enctype="multipart/form-data" class="form-horizontal form-grand" method="post" action="modifier_tournoi_traitement.php?tournoi=<?php echo $tournoiObjet->event_id;  ?>">
                                 <fieldset>
 
-                                    <legend class="bold center" id="titre-form">Modifier un tournoi</legend>
+                                    <legend class="bold center" id="titre-form"><span class="left"><a href="index.php"><</a></span> Modifier un tournoi</legend>
 
                                     <hr>
                                     <div class="form-group form-group-sm center">
@@ -317,7 +317,7 @@
                                     </div>
 
                                     <div class="form-group form-group-sm center">
-                                        <button type="submit" name="submit" class="btn btn-success btn-grand espace-top">Ajouter ce tournoi</button>
+                                        <button type="submit" name="submit" class="btn btn-success btn-grand espace-top">Modifier ce tournoi</button>
                                     </div>
                                 </fieldset>
                             </form>

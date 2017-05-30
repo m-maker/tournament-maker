@@ -226,7 +226,7 @@
          *   ***** GESTION DE L'ICONE *****
          */
         $path_img = date("Y-m-d_H-i-s") . '_' . $_FILES["icone"]["name"];
-        $upload1 = upload('icone', '../img/logo-tournois/' . $path_img, 15360, array('png', 'gif', 'jpg', 'jpeg'));
+        //$upload1 = upload('icone', '../img/logo-tournois/' . $path_img, 15360, array('png', 'gif', 'jpg', 'jpeg'));
 
         //var_dump($upload1);
 

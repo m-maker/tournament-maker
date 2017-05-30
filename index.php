@@ -10,13 +10,15 @@ include('conf.php');
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kumar+One" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/index.css">
-    <script type="text/javascript" src="js/index.js"></script>
     <title>Tournois de foot en salle</title>
     <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
 </head>
 
 <body>
+
+<!-- HEADER -->
+<?php include('header.php'); ?>
 
 <!-- CONTENU DE LA PAGE -->
 <div id="page">
@@ -36,6 +38,17 @@ include('conf.php');
                     header('location:organisateur/index.php');
                 }
                 else {
+                    $req = $db->prepare("SELECT membre_dpt_code FROM membres WHERE membre_id = :id");
+                    $req->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
+                    $req->execute();
+                    $dpt_user = $req->fetchColumn();
+                    if ($req->rowCount() > 0){
+                        echo '<script>
+                            $.post("index_ajax2.php", {dpt:'.$dpt_user.'}, function(data) {
+                              $("#post").html(data);
+                            });
+                        </script>';
+                    }
                     ?>
                         <div id="post" class="container-fluid center" style="padding: 2%;">
                             <p style="font-size: 20px;">Selectionnez un département afin de trouver les tournois / matchs</p>
@@ -81,18 +94,19 @@ include('conf.php');
             else{
                     ?>
                         <div class="center info-index" style="padding: 1%;">
-                            <strong>Hey !</strong> T'es chaud pour faire un foot en salle? <br/> <br/> Reste pas sur la page d'accueil et <strong>rejoins nous!</strong>
+                            <strong>Hey !</strong> T'es chaud pour faire un foot en salle? <br/> Reste pas sur la page d'accueil et <strong>rejoins nous!</strong>
                         </div>
                         <div id="contenu_corps">
-                            <div id="connexion">
-                                <form class="form-horizontal" method="post" action="connexion_check.php">
+                            <div id="connexion" style="background: #f5f5f5;">
+                                <form class="form-horizontal" id="form-connexion" method="post" action="connexion_check.php">
                                     <fieldset>
                                         <legend class="center">Se connecter</legend>
+                                        <div id="erreur-co"></div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="inputPseudo" name="pseudo" placeholder="Votre pseudo/adresse-mail">
+                                            <input type="text" class="form-control" id="pseudo-inp" name="pseudo" placeholder="Votre pseudo/adresse-mail">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control" id="inputPass" name="pass" placeholder="*******">
+                                            <input type="password" class="form-control" id="pass-inp" name="pass" placeholder="*******">
                                         </div>
                                         <div class="form-group center">
                                             <button type="submit" name="submit" class="btn btn-success" style="width: 80%;">Se connecter</button>
@@ -100,10 +114,11 @@ include('conf.php');
                                     </fieldset>
                                 </form>
                             </div>
-                            <div id="inscription">
-                                <form class="form-horizontal" method="post" action="inscription_check.php">
+                            <div id="inscription" style="background: #f5f5f5;">
+                                <form class="form-horizontal" method="post" id="form-inscription" action="inscription_check.php">
                                     <fieldset>
                                         <legend class="center">Créez un compte :</legend>
+                                        <div id="erreur-insc"></div>
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="inputPseudo" name="pseudo" placeholder="Votre pseudo">
                                         </div>
@@ -128,6 +143,7 @@ include('conf.php');
         ?>            
         <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
     </div>
+    <script type="text/javascript" src="js/index.js"></script>
 </div>
 <!-- FOOTER -->
 <?php include('footer.php') ?>

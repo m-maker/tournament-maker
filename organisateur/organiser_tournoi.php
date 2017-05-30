@@ -24,6 +24,9 @@
 
 <body>
 
+<!-- HEADER -->
+<?php include('header.php'); ?>
+
 <!-- CONTENU DE LA PAGE -->
 <div id="page">
 
@@ -32,12 +35,12 @@
 
     <!-- CONTENU DE LA PAGE -->
     <div id="corps">
-        <h1 id="titre_corps">Accueil</h1>
+        <h1 id="titre_corps">Organisation d'un tournoi</h1>
         <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
-            <div class="container" id="container" style="padding: 1% 2%; width: 70%;">
+            <div class="container-fluid" id="container" style="padding: 1% 2%;">
 	        <div class="row">
 
 
@@ -46,7 +49,7 @@
 						<form enctype="multipart/form-data" class="form-horizontal form-grand" method="post" action="organiser_tournoi_traitement.php">
 				  			<fieldset>
 
-				    			<legend class="bold center" id="titre-form">Organiser un tournoi</legend>
+				    			<legend class="bold center" id="titre-form"><span class="left"><a href="index.php"><</a></span> Organiser un tournoi</legend>
 
 				    			<hr>
 				    			<div class="form-group form-group-sm center">
@@ -66,7 +69,7 @@
                                         <optgroup label="Choisir une Association pour co-administrer le tournoi"></optgroup>
                                         <option value="0">Aucune association</option>
                                         <?php foreach (liste_assoc() as $uneAsso){ ?>
-                                            <option value="<?php echo $uneAsso['asso_id']; ?>"><?php echo $uneAsso['nom']; ?></option>
+                                            <option value="<?php echo $uneAsso['membre_id']; ?>"><?php echo $uneAsso['membre_pseudo']; ?></option>
                                         <?php } ?>
                                     </select>
 
@@ -288,8 +291,8 @@
                                     <textarea class="form-control" name="event_descriptif" rows="3" placeholder="Match organisé par ADN-five, tous niveaux acceptés et super ambiance"></textarea>
 						    		<!-- LOGO -->
                                     <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
-                                    <label for="file" class="label-file">Choisir une icone pour le tournoi</label>
-                                    <input type="file" name="icone" id="file" style="display: none;"/>
+                                    <!--<label for="file" class="label-file">Choisir une icone pour le tournoi</label>
+                                    <input type="file" name="icone" id="file" style="display: none;"/>-->
 						    	</div>
 
 						    	<hr>

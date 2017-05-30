@@ -312,7 +312,7 @@ if (isset($_GET["tournoi"]) && !empty($dpt) && !empty($cp) && !empty($ville) && 
 
 
     //var_dump($res_event_id);
-    header('location: ../feuille_de_tournois.php?tournoi='.$res_event_id);
+    header('location: index.php');
 }else{
     echo 'err_champs_vides';
     die;

@@ -4,6 +4,8 @@
 <link rel="stylesheet" href="css/jquery_perso.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/volet.css">
+<link rel="stylesheet" type="text/css" href="../css/volet.css">
+<link rel="icon" type="image/png" href="img/logo.png" />
 <script src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>

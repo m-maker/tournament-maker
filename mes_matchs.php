@@ -25,12 +25,15 @@ else{
         <link rel="stylesheet" href="css/liste_tournois.css">
         <link rel="stylesheet" type="text/css" href="css/feuille_tournoi.css">
         <link rel="stylesheet" type="text/css" href="css/mes_matchs.css">
-        <title>Les tournois / matchs auquels je suis inscript</title>    
+        <title>Les tournois / matchs auquels je suis inscrit</title>
         <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
     </head>
 
     <body>
+
+    <!-- HEADER -->
+    <?php include('header.php'); ?>
 
     <!-- CONTENU DE LA PAGE -->
     <div id="page">
@@ -44,15 +47,11 @@ else{
 
             <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
-            <div class="menu-orga">
-                <div class=" center show acti" id="show-tournois"><span class="glyphicon glyphicon-list-alt"></span> Mes Tournois</div>
-                <div class="center show" id="show-matchs"><span class="glyphicon glyphicon-list"></span> Mes Matchs</div>
-            </div>
 
             <!-- AFFICHAGE DES TOURNOIS -->
-            <div id="body_match">
 
-                <div class="cont" style="color: black;" id="tournois">
+
+                <div style="color: black;">
                     <?php
                     if (!empty($liste_tournois) && $liste_tournois[0] != null){
                         foreach ($liste_tournois AS $event){
@@ -116,8 +115,8 @@ else{
                     }
                     else{
                         ?>
-                            <div class="center">
-                                <h2 class="normal-size">Vous ne participez à aucun tournoi pour l'instant</h2>
+                            <div class="espace-top center" style="margin-top: 3%;">
+                                <h2 style="font-size: 20px; margin:0;">Vous ne participez à aucun tournoi pour l'instant</h2>
                                 <a href="index.php"><button class="btn btn-success btn-mid espace-top"><span class="glyphicon glyphicon-zoom-in"></span> Trouver un tournoi</button></a>
                             </div>
                         <?php
@@ -125,11 +124,7 @@ else{
                     ?>
                 </div>
 
-                <!-- AFFICHAGE DES MATCHS -->
-                <div class="cont espace-bot" id="matchs" style="display: none;">
-                    <h2 class="normal-size center espace-bot espace-top">Cette fonctionnalité n'est pas encore disponible</h2>
-                </div>
-            </div>
+
         </div>
 
     </div>

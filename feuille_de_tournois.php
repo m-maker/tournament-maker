@@ -583,7 +583,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                                     ?>			
                                 <!-- Creer une equipe si pas encore de team -->
             		    			<?php 
-                                        if(empty($mon_equipe)){ 
+                                        if(empty($mon_equipe) && $leTournoi->event_nb_equipes > compte_equipes($leTournoi->event_id)){
                 		    				?>
                                                 <hr style="border-color: white;">
                     		    				<button class="add-team btn btn-success" value="<?php echo $leTournoi->event_id; ?>">Créer mon équipe</button>

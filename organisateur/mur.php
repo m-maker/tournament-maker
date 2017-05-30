@@ -41,18 +41,13 @@ if (isset($_GET["tournoi"])){
 
     <!-- CONTENU DE LA PAGE -->
     <div id="corps">
-        <h1 id="titre_corps">Accueil</h1>
+        <h1 id="titre_corps"><?php echo $leTournoi->event_titre; ?> > Gerer le mur</h1>
         <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
-            
-        <div class="title center bold">
-            Messages sur le mur du tournoi
-        </div>
-
         <!-- CONTENU DE LA PAGE -->
-        <div class="container" id="container" style="padding: 1% 1% 2.5%;">
+        <div class="container-fluid" style="padding: 1% 1% 2.5%;">
 
             <?php $heure_debut = format_heure_minute($leTournoi->event_heure_debut);
             $heure_fin = format_heure_minute($leTournoi->event_heure_fin);
@@ -104,7 +99,7 @@ if (isset($_GET["tournoi"])){
 
             <hr style="border-color: white;">
 
-            <div id="mur">
+            <div id="mur" class="center">
                 <form method="post" action="post_msg.php?id=<?php echo $leTournoi->event_id; ?>">
                     <textarea class="form-control" placeholder="Votre message..." name="message" rows="3" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;"></textarea>
                     <button class="btn btn-success btn-grand" style="border-top-left-radius: 0; border-top-right-radius: 0;" name="submit">Poster mon message</button>

@@ -49,11 +49,11 @@ if (isset($_GET["id"])){
 
     <!-- CONTENU DE LA PAGE -->
     <div id="corps">
-        <h1 id="titre_corps">Gestion des joueurs</h1>
+        <h1 id="titre_corps"><?php echo $leTournoi->event_titre; ?> > <?php if (!$upd) { echo 'Ajouter'; }else{echo 'Modifier';} ?> un joueur</h1>
         <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
-		<div class="container white center" id="container" style="margin: 5% auto;">
+		<div class="container center" id="container" style="margin: 5% auto;">
 
 			<?php if (!$upd) { ?>
 				<form method="post" action="gest_joueur_traitement.php?tournoi=<?php echo $id_tournoi; ?>&team=<?php echo $id_team; ?>">

@@ -277,7 +277,6 @@ function recupImByMembreID($id_membre){
     return $req_mango->fetch();
 }
 
-
 function recupMessagesMur($id_tournoi){
     $db = connexionBdd();
     $req = $db->prepare("SELECT * FROM messages_mur INNER JOIN membres ON mur_membre_id = membre_id WHERE mur_tournoi_id = :id ORDER BY mur_date DESC");
@@ -288,7 +287,7 @@ function recupMessagesMur($id_tournoi){
 
 function liste_assoc(){
     $db = connexionBdd();
-    $req = $db->query("SELECT * FROM associations;");
+    $req = $db->query("SELECT * FROM membres WHERE membre_orga = 1;");
     $req->execute();
     return $req->fetchAll();
 }
@@ -319,5 +318,86 @@ function date_lettres($date){
 }
 $db = connexionBdd();
 $param = getParams();
+
+function recupMembresMessages($id_membre){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT DISTINCT pv_expediteur_id, pv_destinataire_id, pv_date FROM messages_prives WHERE (pv_expediteur_id = :id OR pv_destinataire_id = :id) GROUP BY pv_expediteur_id, pv_destinataire_id, pv_date ORDER BY pv_date DESC;");
+    $req->bindValue(":id", $id_membre, PDO::PARAM_INT);
+    $req->execute();
+    //$req2 = $db->prepare('SELECT ')
+    $liste = $req->fetchAll();
+    return  $liste;
+}
+
+function liste_messages($id_membre_1, $id_membre_2){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT * FROM messages_prives WHERE pv_expediteur_id = :id_m1 AND pv_destinataire_id = :id_m2 OR pv_expediteur_id = :id_m2 AND pv_destinataire_id = :id_m1 ORDER BY pv_date");
+    $req->bindValue(":id_m1", $id_membre_1, PDO::PARAM_INT);
+    $req->bindValue(":id_m2", $id_membre_2, PDO::PARAM_INT);
+    $req->execute();
+    $tab_msg = [];
+    while ($msg = $req->fetch())
+        $tab_msg[] = array("msg" => $msg["pv_message"], "date" => $msg["pv_date"], "exp" => $msg["pv_expediteur_id"]);
+    return $tab_msg;
+}
+
+function recupMembreByID($id_membre){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT * FROM membres WHERE membre_id = :id");
+    $req->bindValue(":id", $id_membre, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetch();
+}
+
+function compte_msg_envoyes($id_membre){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT COUNT(pv_id) FROM messages_prives WHERE pv_expediteur_id = :id");
+    $req->bindValue(":id", $id_membre, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchColumn();
+}
+
+function compte_msg_recus($id_membre){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT COUNT(pv_id) FROM messages_prives WHERE pv_destinataire_id = :id");
+    $req->bindValue(":id", $id_membre, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchColumn();
+}
+
+function compte_msg_total($id_membre){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT COUNT(pv_id) FROM messages_prives WHERE pv_destinataire_id = :id OR pv_expediteur_id = :id");
+    $req->bindValue(":id", $id_membre, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchColumn();
+}
+
+function activer_item($url_page){
+    $url_complete = $_SERVER['REQUEST_URI'];
+    if (strpos($url_complete, $url_page)){echo 'class="active"';}
+}
+
+function compte_event_dpt($dpt_code){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT COUNT(event_id) FROM tournois INNER JOIN lieux ON event_lieu = lieu_id INNER JOIN departements ON lieu_dpt_id = dpt_id WHERE dpt_code = :code");
+    $req->bindValue(":code", $dpt_code, PDO::PARAM_STR);
+    $req->execute();
+    return $req->fetchColumn();
+}
+
+function alert($msg, $succes = 0){
+    $class = 'danger';
+    if ($succes == 1){
+        $class = 'success';
+    }
+    $msg = str_replace('�', '&eacute;', $msg);
+    echo '<div class="alert alert-dismissible alert-'.$class.'">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>';
+    if($succes == 1){ echo 'Bravo! '; }else{ echo 'Erreur! ';}
+    echo '</strong> '.$msg.'</div>';
+}
+
 
 ?>

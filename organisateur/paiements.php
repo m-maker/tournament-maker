@@ -59,16 +59,13 @@ if (isset($_GET["tournoi"])) {
 
     <!-- CONTENU DE LA PAGE -->
     <div id="corps">
-        <h1 id="titre_corps">Accueil</h1>
+        <h1 id="titre_corps"><?php echo $leTournoi->event_titre; ?> > Suivi des paiements</h1>
         <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
-            
-    <div class="title center bold">Suivi des paiements</div>
-
     <!-- CONTENU DE LA PAGE -->
-    <div class="container" style="padding: 2% 2% 1%;">
+    <div class="container-fluid" style="padding: 2% 2% 1%;">
 
         <?php $heure_debut = format_heure_minute($leTournoi->event_heure_debut);
         $heure_fin = format_heure_minute($leTournoi->event_heure_fin);

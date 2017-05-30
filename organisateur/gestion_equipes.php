@@ -43,7 +43,7 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
 
     <!-- CONTENU DE LA PAGE -->
     <div id="corps">
-        <h1 id="titre_corps">Accueil</h1>
+        <h1 id="titre_corps"><?php echo $leTournoi->event_titre; ?> > Gestion des equipes</h1>
         <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
@@ -51,7 +51,6 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
             
 		<!-- HEADER -->
 		<?php
-			include('header.php');
 			$heure_debut = format_heure_minute($leTournoi->event_heure_debut);
 			$heure_fin = format_heure_minute($leTournoi->event_heure_fin);
             $glyph = "glyphicon-eye-open";$prive="Public";$color='vert';
@@ -65,12 +64,8 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
             if ($leTournoi->event_tarification_equipe == 0){$team="par joueur";}
 		?>
 
-        <div class="title center bold">
-            Gérer les équipes
-        </div>
-
 		<!-- CONTENU DE LA PAGE -->
-		<div class="container espace-bot" style="width: 82%; margin: 2% auto;">
+		<div class="container-fluid espace-bot" style="margin: 2% auto;">
             <?php echo "<div class='titre-liste-tournoi'>
             <span class=\"left\"><a href=\"index.php\"> < </a></span>
             " . $leTournoi->event_titre . "<br>

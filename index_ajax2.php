@@ -1,8 +1,13 @@
 <?php
 	include "conf.php";
 
-	$dpt = $_POST['dpt'];
+	$dpt = htmlspecialchars(trim($_POST['dpt']));
 	$liste_tournois = liste_tournois($dpt);
+
+	$req_ajout_dpt = $db->prepare("UPDATE membres SET membre_dpt_code = :dpt WHERE membre_id = :id_membre");
+	$req_ajout_dpt->bindValue(":dpt", $dpt, PDO::PARAM_STR);
+	$req_ajout_dpt->bindValue(":id_membre", $_SESSION["id"], PDO::PARAM_INT);
+	$req_ajout_dpt->execute();
 
 	global $res_dpt_from_liste_tournois;
 
@@ -25,7 +30,6 @@
         'membre_id' => $_SESSION['id']
         ));
 
-
 	$liste_complexes = liste_lieux($res_dpt['dpt_id']);
     $tab_complexes_events = [];
 	foreach ($liste_complexes as $key => $value) {
@@ -47,16 +51,18 @@
 		<button id="btn_dpt" class="btn btn-default" data-toggle="modal" data-target="#myModal">
 			<div id="nom_departement" > <?php echo $res_dpt['dpt_nom']; ?>  <b class="caret"></b> </div>
 		</button>
-        <div class="onglet-contenu">
+        <div class="onglet-contenu" style="text-align: center;">
      		<div class="menu-orga">
+                <div class="center show acti" id="onglet-all" >
+                    Tous (<?php echo compte_event_dpt($dpt); ?>)
+                </div>
     			<?php
                     $i = 0;
     				foreach ($tab_complexes_events as $key => $compl_event) {
     					$lieu = recupLieuById($compl_event[0]);
     					$class="";
-    					if ($i == 0){$class="acti";}
     					?>
-                            <div class="center show <?php echo $class; ?>" id="onglet-<?php echo $compl_event[0]; ?>" >
+                            <div class="center show" id="onglet-<?php echo $compl_event[0]; ?>" >
                                 <?php echo $lieu['lieu_nom'].' ('.$compl_event[1].') '; ?>
                             </div>
     	      			<?php
@@ -64,8 +70,8 @@
     	      		}
     	      	?>
     	    </div>
+        </div>
 
-        <div class="corps_onglet">
         <?php
         $i = 0;
         $boucle = 0;
@@ -142,16 +148,20 @@
                         ?>
                     </div>
                 </div>
-        </div>
+
             <script>
                 $('.show').click(function () {
                     var id = $(this).attr("id");
-                    var cont_event = $('#cont-' + id);
                     var cont = $('.cont');
+                    if (id == "onglet-all"){
+                        cont.show();
+                    }else{
+                        var cont_event = $('#cont-' + id);
+                        cont.hide();
+                        cont_event.show();
+                    }
                     $(".acti").removeClass('acti');
                     $(this).addClass("acti");
-                    cont.hide();
-                    cont_event.show();
                 });
             </script>
     		<?php

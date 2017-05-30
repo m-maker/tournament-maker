@@ -2,7 +2,7 @@
 
 include "conf.php";
 
-if (isset($_POST["submit"])){
+if (isset($_POST["pseudo"])){
 	if (!empty($_POST["pseudo"]) && !empty($_POST["pass"])){
 
 		$pseudo = htmlspecialchars(trim($_POST["pseudo"]));
@@ -14,21 +14,26 @@ if (isset($_POST["submit"])){
 		$req->execute();
 
 		if ($req->rowCount() == 1){
+
 			$membre = $req->fetch();
+
 			// Ajout des variables de session
 			$_SESSION["id"] = $membre["membre_id"];
 			$_SESSION["pseudo"] = $membre["membre_pseudo"];
 			$_SESSION['membre_orga'] = $membre['membre_orga'];
             $_SESSION["membre_mail"] = $membre["membre_mail"];
 
-			header("Location: index.php");
+            alert("Vous êtes à present connecté", 1);
+			echo '<script>document.location.replace("index.php");</script>';
+
 		}else{
 			// Pseudo / mdp invalide
-			echo 'err_pseudo_mdp_invalide';
-			//header("Location: index.php");
+			alert('Pseudo / mdp incorrects');
 		}
 
-	}
+	}else{
+	    alert('Certains champs sont vides');
+    }
 }
 
 ?>

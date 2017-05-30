@@ -26,6 +26,9 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 
 <body>
 
+<!-- HEADER -->
+<?php include('header.php'); ?>
+
 <!-- CONTENU DE LA PAGE -->
 <div id="page">
 
@@ -38,11 +41,8 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
         <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
-        <div class="title center bold">
-            Administrer mes tournois / matchs
-        </div>
 
-        <div style="width: 80%; margin: auto; border: 1px solid darkslateblue; border-radius: 5px; padding: 1%;">
+        <div style="width: 80%; margin: 2% auto; border: 1px solid darkslateblue; border-radius: 5px; padding: 1%;">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong style="font-size: 18px;">Bienvenue sur votre espace de gestion, <?php echo $_SESSION["pseudo"]; ?>.</strong> Dans cette section vous pouvez gérer les équipes de vos tournois et vos matchs, voir et rembourser les achats de place des joueurs, modifier / ajouter des tournois ou des matchs...
         </div>

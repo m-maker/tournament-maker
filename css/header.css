@@ -1,48 +1,10 @@
-
-.bandeau{
-	background-color: rgb(0,62,117);
-	background-color: rgb(33,49,77);
-	background-color: rgb(0,62,117);
-	color: rgb(230,230,230);
-	margin: 0rem;
-	padding: 0rem;
-	box-shadow: 2px 2px 3px 1px;
-}
-.bandeau * {
-	padding: 1px;
-}
-.dropdown a{
-	color: white;
-	color: rgb(230,230,230);
-}
-.dropdown{
-	border: none;
-}
-
-.dropdown a:hover{
-	color: rgb(200,200,200);
-}
-.menu_liste{
-	color: white;
-	border-style: ridge;
-}
-.menu_liste li {
-	height: 30px;
-}
-.menu_liste li a{
-	color: black;
-}
-.element_bandeau{
+.header {
+	background: rgb(0,62,117);
+	padding: 2%;
 	text-align: center;
+	color: white;
 }
-.element_bandeau_3{
-	display: flex;
-	justify-content: flex-end;
+.header h2 {
+	font-family: 'Baloo', cursive;
+	margin: 0;
 }
-.recap_event{
-	border: solid 1px rgb(200,200,200);
-	padding: 10px;
-}
-
-
-
