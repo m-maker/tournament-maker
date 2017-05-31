@@ -156,7 +156,7 @@
                     $User->Birthday = $date_naissance->getTimestamp();
                     $User->Nationality = "FR";
                     $User->CountryOfResidence = "FR";
-                    var_dump($User);
+                    //var_dump($User);
                     $userAdded = $mangoPayApi->Users->Create($User);
 
                     $Wallet = new \MangoPay\Wallet();
@@ -291,9 +291,11 @@
 
 
         //var_dump($res_event_id);
-        header('location: ../feuille_de_tournois.php?tournoi='.$res_event_id);
     }else{
 		echo 'err_champs_vides';
 		die;
 	}
+
+    header("Location: ../index.php");
+
 ?>

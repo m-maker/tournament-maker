@@ -1,6 +1,8 @@
 <div id="volet">
 
-    <img src="../img/logo.png" width="100%" height="80" style="margin-bottom: 1%;">
+    <h3 class="volet-titre"><?php echo $_SESSION["pseudo"]; ?></h3>
+
+    <!--<img src="../img/logo.png" width="100%" height="80" style="margin-bottom: 1%;">-->
 
     <?php $url_complete = $_SERVER['REQUEST_URI']; ?>
 

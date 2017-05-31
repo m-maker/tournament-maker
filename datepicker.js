@@ -24,7 +24,7 @@
 		yearSuffix: '',
 		minDate: 0,
 		maxDate: '+12M +0D',
-		numberOfMonths: 3,
+		numberOfMonths: 12,
 		showButtonPanel: true
 		};
 		$.datepicker.setDefaults($.datepicker.regional['fr']);

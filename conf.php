@@ -198,7 +198,7 @@ function liste_tournois($dpt){
 	$req_dpt->execute();
 	$res_dpt = $req_dpt->fetch();
 	$dpt_id = $res_dpt['dpt_id'];
-	$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE lieu_dpt_id = :departement_id');
+	$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE lieu_dpt_id = :departement_id AND event_date >= NOW();');
 	$req_liste_tournois->execute(array(
 		':departement_id' => $dpt_id
 		));
@@ -380,7 +380,7 @@ function activer_item($url_page){
 
 function compte_event_dpt($dpt_code){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT COUNT(event_id) FROM tournois INNER JOIN lieux ON event_lieu = lieu_id INNER JOIN departements ON lieu_dpt_id = dpt_id WHERE dpt_code = :code");
+    $req = $db->prepare("SELECT COUNT(event_id) FROM tournois INNER JOIN lieux ON event_lieu = lieu_id INNER JOIN departements ON lieu_dpt_id = dpt_id WHERE dpt_code = :code AND event_date >= NOW()");
     $req->bindValue(":code", $dpt_code, PDO::PARAM_STR);
     $req->execute();
     return $req->fetchColumn();

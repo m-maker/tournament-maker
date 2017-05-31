@@ -1,24 +1,28 @@
 <div id="volet">
 
-    <img src="img/logo.png" width="100%" height="80" style="margin-bottom: 1%;">
+    <h3 class="volet-titre"><?php echo $_SESSION["pseudo"]; ?></h3>
 
     <div id="accueil">
         <a href="index.php" <?php activer_item('index.php'); ?> >
-            <span class="glyphicon glyphicon-home"></span> Accueil
+            <?php if (isset($_SESSION['id']) && !empty($_SESSION['id']) && $_SESSION["membre_orga"] == 0){ ?>
+                <span class="glyphicon glyphicon-search"></span> Trouver des tournois
+            <?php }else{ ?>
+                <span class="glyphicon glyphicon-home"></span> Accueil
+            <?php } ?>
         </a>
     </div>
 
     <?php if(isset($_SESSION['id']) && !empty($_SESSION['id'])){ ?>
             <div id="mes_messages">
                 <a href="mes_messages.php" <?php activer_item('mes_messages.php'); ?>>
-                    <span class="glyphicon glyphicon-envelope"></span> Messages
+                    <span class="glyphicon glyphicon-envelope"></span> Messagerie
                 </a>
             </div>
 
         <?php if ($_SESSION["membre_orga"] == 0) { ?>
             <div id="mes_matchs">
                 <a href="mes_matchs.php" <?php activer_item('mes_matchs.php'); ?>>
-                    <span class="glyphicon glyphicon-thumbs-up"></span> Matchs
+                    <span class="glyphicon glyphicon-thumbs-up"></span> Mes tournois
                 </a>
             </div>
         <?php }else{ ?>

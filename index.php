@@ -9,6 +9,8 @@ include('conf.php');
     <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************                      -->
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kumar+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <title>Tournois de foot en salle</title>
     <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
@@ -18,18 +20,22 @@ include('conf.php');
 <body>
 
 <!-- HEADER -->
-<?php include('header.php'); ?>
+<?php if (isset($_SESSION["id"])){
+    include('header.php');
+} ?>
 
 <!-- CONTENU DE LA PAGE -->
 <div id="page">
 
     <!-- VOLET -->
-    <?php include('volet.php'); ?>
+    <?php
+    if (isset($_SESSION['id']) && !empty($_SESSION['id'])){
+        include('volet.php');
+    }?>
 
 
     <!-- CONTENU DE LA PAGE -->
     <div id="corps">
-        <h1 id="titre_corps">Accueil</h1>
         <!-- CADRE DU CONTENU -->
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
         <?php
@@ -42,7 +48,7 @@ include('conf.php');
                     $req->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
                     $req->execute();
                     $dpt_user = $req->fetchColumn();
-                    if ($req->rowCount() > 0){
+                    if ($dpt_user != null){
                         echo '<script>
                             $.post("index_ajax2.php", {dpt:'.$dpt_user.'}, function(data) {
                               $("#post").html(data);
@@ -50,6 +56,7 @@ include('conf.php');
                         </script>';
                     }
                     ?>
+                    <h1 id="titre_corps">Trouver des tournois</h1>
                         <div id="post" class="container-fluid center" style="padding: 2%;">
                             <p style="font-size: 20px;">Selectionnez un département afin de trouver les tournois / matchs</p>
                             <button id="btn_dpt" class="btn btn-default center" data-toggle="modal" data-target="#myModal">
@@ -93,11 +100,25 @@ include('conf.php');
             }
             else{
                     ?>
-                        <div class="center info-index" style="padding: 1%;">
-                            <strong>Hey !</strong> T'es chaud pour faire un foot en salle? <br/> Reste pas sur la page d'accueil et <strong>rejoins nous!</strong>
-                        </div>
-                        <div id="contenu_corps">
-                            <div id="connexion" style="background: #f5f5f5;">
+                <div class="conteneur-index center">
+                    <div class="opaciteur">
+                            <!--<div class="center info-index" style="padding: 1%;">
+                                <strong>Hey !</strong> T'es chaud pour faire un foot en salle? <br/> Reste pas sur la page d'accueil et <strong>rejoins nous!</strong>
+                            </div>-->
+                    <!--<img src="img/logo.png" width="213" height="50" style="margin: auto;"><br />-->
+                    <h1 class="nom-site">
+                        Reserve Ton Terrain<br />
+                    </h1>
+
+                    <h3 class="desc-site">
+                        Trouve des équipiers et amuse toi dans les principaux complexes de France
+                    </h3>
+
+
+
+                    <div id="contenu_corps">
+
+                            <div id="connexion" style="background: rgba(236,240,241,1); margin-top: 20px;">
                                 <form class="form-horizontal" id="form-connexion" method="post" action="connexion_check.php">
                                     <fieldset>
                                         <legend class="center">Se connecter</legend>
@@ -114,10 +135,10 @@ include('conf.php');
                                     </fieldset>
                                 </form>
                             </div>
-                            <div id="inscription" style="background: #f5f5f5;">
+                            <div id="inscription" style="background: rgba(236,240,241,1); margin-top: 20px;">
                                 <form class="form-horizontal" method="post" id="form-inscription" action="inscription_check.php">
                                     <fieldset>
-                                        <legend class="center">Créez un compte :</legend>
+                                        <legend class="center">Créez un compte</legend>
                                         <div id="erreur-insc"></div>
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="inputPseudo" name="pseudo" placeholder="Votre pseudo">
@@ -137,7 +158,11 @@ include('conf.php');
                                     </fieldset>
                                 </form>
                             </div>
+                            </div>
+                    </div>
                         </div>
+
+                </div>
                     <?php
             }
         ?>            
@@ -146,7 +171,9 @@ include('conf.php');
     <script type="text/javascript" src="js/index.js"></script>
 </div>
 <!-- FOOTER -->
-<?php include('footer.php') ?>
+<?php if (isset($_SESSION["id"])){
+    include('footer.php');
+} ?>
 </body>
 
 </html>

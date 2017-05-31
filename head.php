@@ -12,3 +12,6 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Kumar+One" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Metamorphous" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Metamorphous" rel="stylesheet">

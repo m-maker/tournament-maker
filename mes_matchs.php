@@ -23,7 +23,6 @@ else{
     <head>
         <?php include 'head.php'; ?>
         <link rel="stylesheet" href="css/liste_tournois.css">
-        <link rel="stylesheet" type="text/css" href="css/feuille_tournoi.css">
         <link rel="stylesheet" type="text/css" href="css/mes_matchs.css">
         <title>Les tournois / matchs auquels je suis inscrit</title>
         <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
@@ -43,7 +42,7 @@ else{
 
         <!-- CONTENU DE LA PAGE -->
         <div id="corps">
-            <h1 id="titre_corps">Mes Matchs</h1>
+            <h1 id="titre_corps">Mes Tournois / Matchs</h1>
 
             <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
@@ -105,7 +104,7 @@ else{
                         </div>
                         <div class="row">
                             <div class="col-lg-12" style="text-align: right; padding: 2% 10% 1%;">
-                                <a href="feuille_de_tournois.php?tournoi=<?php echo $event["event_id"]; ?>"><button class="btn btn-primary btn-grand">Voir</button></a>
+                                <a href="feuille_de_tournois.php?tournoi=<?php echo $event["event_id"]; ?>"><button class="btn btn-success btn-grand">Voir</button></a>
                             </div>
                         </div>
                                     </div>
