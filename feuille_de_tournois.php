@@ -77,7 +77,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
 
         <!-- CONTENU DE LA PAGE -->
         <div id="corps">
-            <h1 id="titre_corps">Feuille de tournoi</h1>
+            <h1 id="titre_corps"><?php echo $leTournoi->event_titre; ?> > Feuille de tournoi</h1>
             <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->

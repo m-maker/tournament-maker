@@ -15,7 +15,7 @@ function pseudo_existe($pseudo){
 
 if (isset($_POST["pseudo"])){
 
-    var_dump($_POST);
+    //var_dump($_POST);
 
 	// Initialisation & sécurisation des données utilisateur
 	$pseudo = htmlspecialchars(trim($_POST["pseudo"]));

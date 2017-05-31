@@ -6,8 +6,8 @@
  jQuery(function($){
 	$.datepicker.regional['fr'] = {
 		closeText: 'Fermer',
+        prevText: '&#x3c;Préc',
 		nextText: 'Suiv&#x3e;',
-		prevText: '&#x3c;Préc',
 		currentText: 'Aujourd\'hui',
 		monthNames: ['Janvier','Fevrier','Mars','Avril','Mai','Juin',
 		'Juillet','Aout','Septembre','Octobre','Novembre','Decembre'],
@@ -23,7 +23,7 @@
 		showMonthAfterYear: false,
 		yearSuffix: '',
 		minDate: 0,
-		maxDate: '+2M +0D',
+		maxDate: '+5M +0D',
 		numberOfMonths: 1,
 		showButtonPanel: true
 		};
