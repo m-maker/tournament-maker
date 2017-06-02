@@ -2,6 +2,7 @@
 
 include "conf.php";
 
+
 if (isset($_POST["pseudo"])){
 	if (!empty($_POST["pseudo"]) && !empty($_POST["pass"])){
 
@@ -23,8 +24,18 @@ if (isset($_POST["pseudo"])){
 			$_SESSION['membre_orga'] = $membre['membre_orga'];
             $_SESSION["membre_mail"] = $membre["membre_mail"];
 
+            $req_upd = $db->prepare("UPDATE membres SET membre_derniere_connexion = NOW(),membre_ip_derniere_connexion = :ip WHERE membre_id = :id");
+            $req_upd->bindValue(":ip", $_SERVER["REMOTE_ADDR"], PDO::PARAM_STR);
+            $req_upd->bindValue(":id", $membre["membre_id"], PDO::PARAM_INT);
+            $req_upd->execute();
+
             alert("Vous êtes à present connecté", 1);
-			echo '<script>document.location.replace("index.php");</script>';
+
+            if(!empty($_POST["return"])) {
+                echo '<script>document.location.replace("'.htmlspecialchars(trim($_POST['return'])).'");</script>';
+            }else{
+                echo '<script>document.location.replace("index.php");</script>';
+            }
 
 		}else{
 			// Pseudo / mdp invalide

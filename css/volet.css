@@ -37,3 +37,7 @@
 	margin: 2% auto 2%;
 	border-bottom: 1px solid lightgrey;
 }
+.separateur-volet {
+	border-color: lightgrey;
+	margin:5px;
+}

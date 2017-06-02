@@ -25,8 +25,11 @@
 	border: 1px solid black;
 }
 .infos-tournoi {
-	cursor: pointer;
+	cursor: default;
 	padding: 1%;
+}
+.infos-tournoi *{
+	cursor: default;
 }
 .infos-tournoi img {
 	height: 20px;
@@ -36,7 +39,6 @@
 	background: #DCDCDC;
 	padding-top: 1%;
 	padding-bottom: 1%;
-	display: none;
 	border-top: 1px solid black;
 	margin: 0;
 }

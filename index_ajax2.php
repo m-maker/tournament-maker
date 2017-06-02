@@ -128,15 +128,15 @@
                             <div class="col-lg-5 espace-top" style="text-align: left;">
                                 <span class="glyphicon glyphicon-info-sign"></span>
                                 <?php
-                                if (strlen($desc) > 120) {
-                                    echo substr($desc, 0, 120) . '...';
+                                if (strlen($desc) > 300) {
+                                    echo substr($desc, 0, 300) . '...';
                                 } else {
                                     echo $desc;
                                 } ?>
                             </div>
                             <div class="col-lg-3 prix-team">
                                 <h1 style="margin-top: 1.5%;"><span
-                                            class="bold"><?php echo $event['event_tarif'] + $param->comission; ?>
+                                            class="bold"><?php echo $event['event_tarif']; ?>
                                         €</span></h1> <?php ECHO $team; ?><br/>
                                 <p class="<?php echo $color; ?>"><span
                                             class="glyphicon <?php echo $glyph; ?>"></span>
@@ -216,15 +216,15 @@
                                             <div class="col-lg-5 espace-top" style="text-align: left;">
                                                 <span class="glyphicon glyphicon-info-sign"></span>
                                                 <?php
-                                                if (strlen($desc) > 120) {
-                                                    echo substr($desc, 0, 120) . '...';
+                                                if (strlen($desc) > 300) {
+                                                    echo substr($desc, 0, 300) . '...';
                                                 } else {
                                                     echo $desc;
                                                 } ?>
                                             </div>
                                             <div class="col-lg-3 prix-team">
                                                 <h1 style="margin-top: 1.5%;"><span
-                                                            class="bold"><?php echo $event['event_tarif'] + $param->comission; ?>
+                                                            class="bold"><?php echo $event['event_tarif']; ?>
                                                         €</span></h1> <?php ECHO $team; ?><br/>
                                                 <p class="<?php echo $color; ?>"><span
                                                             class="glyphicon <?php echo $glyph; ?>"></span>

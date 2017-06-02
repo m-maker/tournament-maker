@@ -3,7 +3,7 @@
 include 'conf.php';
 
 if (!isset($_SESSION["id"]))
-	header("Location: connexion.php");
+	header("Location: index.php");
 
 if (isset($_GET["id"]) && isset($_GET["tournoi"]) && isset($_GET["type"])){
 

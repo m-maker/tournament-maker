@@ -62,7 +62,7 @@ if (isset($_GET["tournoi"]) && !empty($dpt) && !empty($cp) && !empty($ville) && 
 
     $tournoiObjet = recupObjetTournoiByID($_GET['tournoi']);
     if (empty($tournoiObjet) || $tournoiObjet == null || $_SESSION['id'] != $tournoiObjet->event_orga && $_SESSION['id'] != $tournoiObjet->event_orga_2)
-        header('location: index.php');
+        header('Location: index.php');
 
     /*
      *   ***** GESTION DU DEPARTEMENT *****
@@ -163,7 +163,7 @@ if (isset($_GET["tournoi"]) && !empty($dpt) && !empty($cp) && !empty($ville) && 
                 $User->Birthday = $date_naissance->getTimestamp();
                 $User->Nationality = "FR";
                 $User->CountryOfResidence = "FR";
-                var_dump($User);
+                //var_dump($User);
                 $userAdded = $mangoPayApi->Users->Create($User);
 
                 $Wallet = new \MangoPay\Wallet();
@@ -207,7 +207,7 @@ if (isset($_GET["tournoi"]) && !empty($dpt) && !empty($cp) && !empty($ville) && 
             $compte->Type = "IBAN";
             $compte->Active = true;
             $compte->CreationDate = time();
-            var_dump($compte);
+            //var_dump($compte);
             $mangoPayApi->Users->CreateBankAccount($id_mango, $compte);
         } catch (\MangoPay\Libraries\ResponseException $err) {
             echo 'err_donnees_compte_invalides' . $err->getMessage();
@@ -267,7 +267,7 @@ if (isset($_GET["tournoi"]) && !empty($dpt) && !empty($cp) && !empty($ville) && 
 		event_orga_2 = :event_orga_2, 
 		event_descriptif = :event_descriptif
 		WHERE event_id = :event_id');
-    echo $restriction;
+    //echo $restriction;
     $req_organiser_tournoi->bindValue(":event_titre", $titre, PDO::PARAM_STR);
     $req_organiser_tournoi->bindValue(":event_nb_equipes", $nb_equipes, PDO::PARAM_INT);
     $req_organiser_tournoi->bindValue(":event_joueurs_max", $joueurs_max, PDO::PARAM_INT);
@@ -312,9 +312,13 @@ if (isset($_GET["tournoi"]) && !empty($dpt) && !empty($cp) && !empty($ville) && 
 
 
     //var_dump($res_event_id);
-    header('location: index.php');
+
 }else{
     echo 'err_champs_vides';
     die;
 }
+
+header('Location: index.php');
+exit();
+
 ?>
