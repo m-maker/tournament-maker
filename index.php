@@ -1,5 +1,29 @@
 <?php
 include('conf.php');
+
+$ip = $_SERVER['REMOTE_ADDR'];
+$fichier_log = 'log/visites.txt';
+$fichier_compte = 'log/visites_compte.txt';
+$pointeur = fopen($fichier_log, 'a+');
+$pointeur_compte = fopen($fichier_compte, 'w+');
+
+$visites = file($fichier_log);
+$ecrire = true;
+foreach ($visites as $uneVisite){
+    if ($ip."\r\n" == $uneVisite)
+        $ecrire = false;
+}
+if ($ecrire) {
+    fwrite($pointeur, $ip . "\r\n");
+    $compte_visites = count(file($fichier_log));
+    fwrite($pointeur_compte, $compte_visites);
+}
+
+if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
+    header('location:organisateur/index.php');
+    exit();
+}
+
 ?>
 <html>
 
@@ -40,10 +64,6 @@ include('conf.php');
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
         <?php
             if(isset($_SESSION['id']) && !empty($_SESSION['id'])){
-                if ($_SESSION['membre_orga'] == 1){
-                    header('location:organisateur/index.php');
-                }
-                else {
                     $req = $db->prepare("SELECT membre_dpt_code FROM membres WHERE membre_id = :id");
                     $req->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
                     $req->execute();
@@ -57,6 +77,19 @@ include('conf.php');
                     }
                     ?>
                     <h1 id="titre_corps">Trouver des tournois</h1>
+
+                    <div class="center espace-bot" id="post-avis">
+                        <span id="quit-avis" class="right rouge">X</span>
+                        <h3>Le site est actuellement en béta ! Aidez-nous à améliorer la plateforme en donnant votre avis : </h3>
+                        <form id="form-avis" class="form-horizontal">
+                            <div class="form-group">
+                                <textarea id="avis" class="form-control btn-grand" placeholder="Votre avis..."></textarea>
+                                <button type="submit" class="form-control btn btn-success btn-grand">Envoyer</button>
+                            </div>
+                        </form>
+                        <b>Les paiements en ligne seront disponibles dès mardi 06 juin.</b>
+                    </div>
+
                         <div id="post" class="container-fluid center" style="padding: 2%;">
                             <p style="font-size: 20px;">Selectionnez un département afin de trouver les tournois / matchs</p>
                             <button id="btn_dpt" class="btn btn-default center" data-toggle="modal" data-target="#myModal">
@@ -96,7 +129,6 @@ include('conf.php');
                             </div>
                         </div>
                     <?php
-                }
             }
             else{
                     ?>
@@ -129,6 +161,7 @@ include('conf.php');
                                         <div class="form-group">
                                             <input type="password" class="form-control" id="pass-inp" name="pass" placeholder="*******">
                                         </div>
+                                        <input style="display: none;" id="return" name="return" type="text" value="<?php if (isset($_GET["return"])){ echo $_GET['return']; }?>">
                                         <div class="form-group center">
                                             <button type="submit" name="submit" class="btn btn-success" style="width: 80%;">Se connecter</button>
                                         </div>
@@ -136,7 +169,7 @@ include('conf.php');
                                 </form>
                             </div>
                             <div id="inscription" style="background: rgba(236,240,241,1); margin-top: 20px;">
-                                <form class="form-horizontal" method="post" id="form-inscription" action="inscription_check.php">
+                                <form class="form-horizontal" method="post" id="form-inscription" action="inscription_check.php<?php if (isset($_GET['return'])){echo "?return=".$_GET['return'];} ?>">
                                     <fieldset>
                                         <legend class="center">Créez un compte</legend>
                                         <div id="erreur-insc"></div>
@@ -173,7 +206,8 @@ include('conf.php');
 <!-- FOOTER -->
 <?php if (isset($_SESSION["id"])){
     include('footer.php');
-} ?>
+}
+?>
 </body>
 
 </html>

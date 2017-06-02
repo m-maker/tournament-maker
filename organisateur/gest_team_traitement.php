@@ -4,7 +4,7 @@ include '../conf.php';
 
 $upd = false;
 if (!isset($_SESSION["id"]))
-	header("Location: ../connexion.php");
+	header("Location: index.php");
 
 if (isset($_GET["tournoi"])){
 	$id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
@@ -23,7 +23,7 @@ if (isset($_GET["id"])){
 
 if (isset($_POST["submit"])){
 
-	var_dump($_POST);
+	//var_dump($_POST);
 	$nom = htmlspecialchars(trim($_POST["nom"]));
 	$etat = htmlspecialchars(trim($_POST["etat-team"]));
 	$mdp = htmlspecialchars(trim($_POST["mdp-team"]));

@@ -343,3 +343,35 @@ a:hover {
 	margin: 0.25%;
 	cursor: pointer;
 }
+
+#post-avis {
+	background: lightgrey;
+	padding: 1%;
+	border: 1px solid lightslategrey;
+}
+#quit-avis {
+	cursor: pointer;
+}
+
+.form-control::-moz-placeholder {
+	color: black;
+	opacity: 0.9;
+}
+.form-control:-ms-input-placeholder {
+	color: black;
+	opacity: 0.9;
+}
+.form-control::-webkit-input-placeholder {
+	color: black;
+	opacity: 0.8;
+}
+
+@media screen and (max-width: 1280px) {
+	#volet {
+		width: 50%;
+		font-size: 9px;
+	}
+	#volet div {
+		min-height: 30px;
+	}
+}

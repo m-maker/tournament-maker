@@ -8,6 +8,9 @@
 
 include 'conf.php';
 
+if (!isset($_SESSION["id"]))
+    header("Location: ../connexion.php");
+
 if (isset($_GET["term"])){
     $pseudo = htmlspecialchars(trim($_GET["term"]));
     $req = $db->prepare("SELECT * FROM membres WHERE membre_pseudo LIKE :pseudo AND membre_id != :id");

@@ -2,6 +2,7 @@
 
 include 'conf/database.php';
 
+
 session_start();
 
 global $db;
@@ -64,7 +65,7 @@ function recupEquipeByID($id_team){
 
 function liste_tournois_orga($id_orga){
 	$db = connexionBdd();
-	$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE event_orga = :orga OR event_orga_2 = :orga');
+	$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE event_orga = :orga OR event_orga_2 = :orga ORDER BY event_date');
 	$req_liste_tournois->bindValue(":orga", $id_orga, PDO::PARAM_INT);
 	$req_liste_tournois->execute();
 	return $req_liste_tournois->fetchAll();
@@ -104,7 +105,7 @@ function recupEquipesTournoi($id_tournoi){
 
 function recupJoueurByMail($mail){
 	$db = connexionBdd();
-	$req_joueurs = $db->prepare("SELECT * FROM membres INNER JOIN equipe_membres ON membre_id = em_membre_id INNER JOIN statuts_joueurs ON em_statut_joueur = statut_id WHERE membre_mail = :mail");
+	$req_joueurs = $db->prepare("SELECT * FROM membres WHERE membre_mail = :mail");
 	$req_joueurs->bindValue(":mail", $mail, PDO::PARAM_STR);
 	$req_joueurs->execute();
 	return $req_joueurs->fetch();
@@ -119,7 +120,7 @@ function envoyerMail($email_expediteur, $email_recepteur, $objet, $nom_exp, $mes
 
     // Headers du mail
     $headers= 'To: <'.$email_recepteur.'>' .$passage_ligne;
-    $headers .= 'From: "'.$nom_exp.'" <'.$email_expediteur.'>' .$passage_ligne;
+    $headers .= 'From: "'.$nom_exp.' <'.$email_expediteur.'>"' .$passage_ligne;
     $headers .= "Content-type: text/html; charset=utf-8'.$passage_ligne";
 
     // Mise en forme du message, ajout de l'expediteur
@@ -135,6 +136,14 @@ function envoyerMail($email_expediteur, $email_recepteur, $objet, $nom_exp, $mes
     }else{
         return 'ERR_INCONNU';
     }
+}
+
+function recupTournoiEquipe($id_team){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT * FROM tournois INNER JOIN equipes_tournois ON event_id = et_event_id WHERE et_equipe = :id");
+    $req->bindValue(":id", $id_team, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetch();
 }
 
 function recupStatuts(){
@@ -198,7 +207,7 @@ function liste_tournois($dpt){
 	$req_dpt->execute();
 	$res_dpt = $req_dpt->fetch();
 	$dpt_id = $res_dpt['dpt_id'];
-	$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE lieu_dpt_id = :departement_id AND event_date >= NOW();');
+	$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE lieu_dpt_id = :departement_id AND event_date >= NOW() ORDER BY event_date;');
 	$req_liste_tournois->execute(array(
 		':departement_id' => $dpt_id
 		));
@@ -341,6 +350,17 @@ function liste_messages($id_membre_1, $id_membre_2){
     return $tab_msg;
 }
 
+function membre_existe($colonne, $val){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT * FROM membres WHERE '.$colonne.' = :val");
+    $req->bindValue(":val", $val, PDO::PARAM_STR);
+    $req->execute();
+    if ($req->rowCount() > 0)
+        return true;
+    else
+        return false;
+}
+
 function recupMembreByID($id_membre){
     $db = connexionBdd();
     $req = $db->prepare("SELECT * FROM membres WHERE membre_id = :id");
@@ -386,6 +406,16 @@ function compte_event_dpt($dpt_code){
     return $req->fetchColumn();
 }
 
+function recupCapitaine($id_team){
+    $db = connexionBdd();
+    $req_select_capitaine = $db->prepare("SELECT * FROM membres INNER JOIN equipe_membres ON membre_id = em_membre_id WHERE em_team_id = :id_team AND em_statut_joueur = 1");
+    $req_select_capitaine->bindValue(":id_team", $id_team, PDO::PARAM_INT);
+    $req_select_capitaine->execute();
+    $capitaine = $req_select_capitaine->fetch();
+    $req_select_capitaine->closeCursor();
+    return $capitaine;
+}
+
 function alert($msg, $succes = 0){
     $class = 'danger';
     if ($succes == 1){
@@ -399,5 +429,15 @@ function alert($msg, $succes = 0){
     echo '</strong> '.$msg.'</div>';
 }
 
+function compteMessagesNonVus($membre){
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT COUNT(pv_id) FROM messages_prives WHERE pv_vu = 0 AND pv_destinataire_id = :membre");
+    $req->bindValue(":membre", $membre, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchColumn();
+}
+
+include 'Notifications.php';
+//$Notifs = new Notifications();
 
 ?>

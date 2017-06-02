@@ -1,7 +1,7 @@
 <?php include ('conf.php');
 
 if (!isset($_SESSION["id"]))
-	header("Location: connexion.php");
+	header("Location: index.php");
 
 function recupEquipesIncompletes($id_tournoi, $nb_joueur_min){
 	$db = connexionBdd();
@@ -51,6 +51,10 @@ if (!empty(recupEquipeJoueur($_SESSION['id'], $id_tournoi)))
 $mon_equipe = recupEquipeJoueur($_SESSION["id"], $id_tournoi);
 //var_dump($mon_equipe);
 $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
+
+if ($_SESSION["membre_orga"] == 1)
+    header("Location: organisateur/gestion_equipes.php?tournoi=" . $id_tournoi);
+
 ?>
 
 <html>
@@ -77,11 +81,11 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
 
         <!-- CONTENU DE LA PAGE -->
         <div id="corps">
-            <h1 id="titre_corps"><?php echo $leTournoi->event_titre; ?> > Feuille de tournoi</h1>
+            <h1 id="titre_corps">Informations du tournoi</h1>
             <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
-    	<div class="corps container espace-top">
+    	<div class="corps container espace-top espace-bot">
             <?php 
                 if ($mdp){ 
                     ?>
@@ -146,7 +150,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                                     ?>
                                 </div>
                                 <div class="col-lg-3 prix-team">
-                                    <h1 style="margin-top: 1.5%;"><span class="bold"><?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></h1> <?php ECHO $team; ?><br />
+                                    <h1 style="margin-top: 1.5%;"><span class="bold"><?php echo $leTournoi->event_tarif; ?> €</span></h1> <?php ECHO $team; ?><br />
                                     <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p>
                                 </div>
     				        </div>
@@ -154,12 +158,24 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                         </div>
 
                         <div class="menu-orga">
-                        <div class="col-md-4 center show" id="show-mur"><span class="glyphicon glyphicon-list"></span> Mur du tournoi</div>
-                        <div class="col-md-4 center show" id="show-mon-equipe"><span class="glyphicon glyphicon-flag"></span> Mon Equipe</div>
-                        <div class="col-md-4 center show acti" id="show-equipes"><span class="glyphicon glyphicon-user"></span> Les équipes</div>
+                            <div class="col-md-4 center" style="padding:0;">
+                                <div class="show" id="show-mur" style="width: 100%; margin:0;">
+                                    <span class="glyphicon glyphicon-list"></span> Mur du tournoi
+                                </div>
+                            </div>
+                            <div class="col-md-4 center" style="padding:0;">
+                                <div class="show" id="show-mon-equipe" style="width: 100%; margin:0;">
+                                    <span class="glyphicon glyphicon-flag"></span> Mon Equipe (<?php if (!empty($mon_equipe)){ echo $mon_equipe["team_nom"]; }else{ echo 'Aucune'; } ?>)
+                                </div>
+                            </div>
+                            <div class="col-md-4 center" style="padding:0;">
+                                <div class="show acti" id="show-equipes" style="width: 100%; margin:0;">
+                                    <span class="glyphicon glyphicon-user"></span> Les équipes
+                                </div>
+                            </div>
                         </div>
                         
-                        <div id="body_match" class="espace-bot container-fluid">
+                        <div id="body_match" class="container-fluid">
         				<div id="contenu_body_match" class="tab-content">
                             <!-- Mur -->
         		    		<div id="mur" style="display: none; margin: 2% auto;" class="cont">
@@ -183,9 +199,9 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                                             }
                                         ?>
                                     </div>
-                                    <form method="post" action="post_msg.php?id=<?php echo $leTournoi->event_id; ?>">
-                                        <textarea class="form-control" placeholder="Votre message..." name="message" rows="3" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;"></textarea>
-                                        <button class="btn btn-success btn-grand" style="border-top-left-radius: 0; border-top-right-radius: 0;" name="submit">Poster mon message</button>
+                                    <form method="post" id="form-mur" action="post_msg.php?id=<?php echo $leTournoi->event_id; ?>">
+                                        <textarea class="form-control" placeholder="Votre message..." id="message" name="message" rows="3" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;"></textarea>
+                                        <button class="btn btn-success btn-grand" style="border-top-left-radius: 0; border-top-right-radius: 0;" name="submit"><span class="glyphicon glyphicon-comment"></span> Poster mon message</button>
                                     </form>
                                 </div>
         		    		</div>
@@ -197,83 +213,83 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                 	    				   <h2 class="err-titre">Vous n'avez pas encore d'équipe</h2>
                 	    		    	<?php 
                 	    		    }
-                	   			    else { 
-                       					?>
-                                            <h2 class="err-titre">Equipe <?php echo $mon_equipe["team_nom"]; ?></h2>
+                	   			    else {
+                                        if (recupStatutJoueur($_SESSION["id"], $mon_equipe["team_id"]) == 1){
+                                            ?>
+                                                <div class="param-team center row" style="margin:2px auto; margin-bottom: 10px;">
+                                                   <h3 class="clic-param espace-bot">Paramètres de l'equipe <span class="glyphicon glyphicon-menu-down right"></span></h3>
+                                                    <div>
+                                                            <form id="form-param-team" method="post" action="param_team.php?id=<?php echo $mon_equipe['team_id']; ?>&tournoi=<?php echo $leTournoi->event_id; ?>">
+                                                                <input style=" margin: auto;" class="form-control" type="text" placeholder="Nom de l'equipe" name="nom-team" value="<?php echo $mon_equipe['team_nom']; ?>"><br />
+                                                                    Etat de l'équipe :
+                                                                <label class="etat-team espace-left" id="prv">
+                                                                    Privé
+                                                                    <input type="radio" name="etat-team" value="1" <?php if ($mon_equipe["team_prive"] == 1){ echo 'checked'; } ?> />
+                                                                </label>
+                                                                <label class="etat-team" id="pub">
+                                                                    Public
+                                                                    <input type="radio" name="etat-team" value="0" <?php if ($mon_equipe["team_prive"] == 0){ echo 'checked'; } ?> />
+                                                                </label>
+                                                                    <input <?php if ($mon_equipe["team_prive"] == 0){ echo 'style="display: none;"'; }else{ echo 'value="'.$mon_equipe["team_pass"].'"'; } ?> id="mdp-team" class="espace-left" type="text" name="pass-team" placeholder="mot de passe de l'equipe"><br />
+                                                                        <input type="submit" name="submit" class="espace-top btn btn-success btn-grand" value="Enregistrer">
+                                                            </form>
+                                                            <button class="btn btn-danger btn-grand espace-bot suppr-team" mod="suppr" id="<?php echo $mon_equipe['team_id']; ?>">Supprimer l'équipe</button>
+                                                    </div>
+                                                </div>
                                             <?php
-                                                        if (recupStatutJoueur($_SESSION["id"], $mon_equipe["team_id"]) == 1){
-                                                            ?>
-                                                                <div class="param-team center col-sm-4">
-                                                                   <h3 class="clic-param espace-bot">Paramètres de l'equipe <span class="glyphicon glyphicon-menu-down right"></span></h3>
-                                                                    <div>
-                                                                            <form id="form-param-team" method="post" action="param_team.php?id=<?php echo $mon_equipe['team_id']; ?>&tournoi=<?php echo $leTournoi->event_id; ?>">
-                                                                                <input style=" margin: auto;" class="form-control" type="text" placeholder="Nom de l'equipe" name="nom-team" value="<?php echo $mon_equipe['team_nom']; ?>"><br />
-                                                                                    Etat de l'équipe :
-                                                                                <label class="etat-team espace-left" id="prv">
-                                                                                    Privé
-                                                                                    <input type="radio" name="etat-team" value="1" <?php if ($mon_equipe["team_prive"] == 1){ echo 'checked'; } ?> />
-                                                                                </label>
-                                                                                <label class="etat-team" id="pub">
-                                                                                    Public
-                                                                                    <input type="radio" name="etat-team" value="0" <?php if ($mon_equipe["team_prive"] == 0){ echo 'checked'; } ?> />
-                                                                                </label>
-                                                                                    <input <?php if ($mon_equipe["team_prive"] == 0){ echo 'style="display: none;"'; }else{ echo 'value="'.$mon_equipe["team_pass"].'"'; } ?> id="mdp-team" class="espace-left" type="text" name="pass-team" placeholder="mot de passe de l'equipe"><br />
-                                                                                        <input type="submit" name="submit" class="espace-top btn btn-success btn-grand" value="Enregistrer">
-                                                                            </form>
-                                                                            <button class="btn btn-danger btn-grand espace-bot suppr-team" mod="suppr" id="<?php echo $mon_equipe['team_id']; ?>">Supprimer l'équipe</button>
-                                                                    </div>
-                                                                </div>
-                                                            <?php
-                                                        }
+                                        }
                                             ?>
                                             <div class="ligne">
                                                 <!-- affichage de l'effectif -->
                                                 <div class="cadre_contenu_fdt">
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <h2 class="titre_cadre_contenu_fdt">L'effectif</h2>
+                                                            <!--<h2 class="titre_cadre_contenu_fdt">L'effectif</h2>-->
                                                         </div>
                                                     </div>
                                                     <div class="center">
-                                                        		<h2 class="center">Les joueurs sélectionnés</h2>
-                                                            	<div class="liste_joueur">
-                                                            		<?php
-                                                                        			foreach ($liste_joueurs_equipe as $key => $value) {
-                                                                    					if ($value['em_statut_joueur'] == 1 OR $value['em_statut_joueur'] == 3){
-                                                                							if ($value['em_membre_id'] == $_SESSION['id']){
-                                                                								?>
-                                                                									<div class="joueur_user">
-                                                                				        				<div class="">
-                                                                        									<?php
-                                                                        										echo '<span> '.$value['membre_pseudo'].' </span>';
-                                                                												echo "<span class='vert glyphicon glyphicon-ok'> Payé</span>";
-                                                                											?>
-                                                                       									</div>
-                                                                       									<div class="">
-                                                                       										<a href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>">
-                                                                                            					<button " class="btn btn-success btn-xs">Me desinscrire <br/>(a faire) (<?php echo $leTournoi->event_tarif + 1; ?> €)
-                                                                                        						</button>
-                                                                                    						</a>
-                                                                        								</div>
-                                                                									</div>
-                                                                								<?php
-                                                                							}
-                                                                							else{
-                                                                        						?>
-                                                                        							<div class="joueur">
-                                                                        								<div>
-                                                                        									<?php
-                                                                                                                echo '<span>'.$value['membre_pseudo'].'</span>';
-                                                                												echo "<span class='rouge glyphicon glyphicon-remove'> Non Payé</span>";
-                                                                											?>
-                                                                       									</div>
-                                                                									</div>
-                                                                        						<?php
-                                                                        					}
-                                                                        				}
-                                                                        			}
-                                                            		?>
-                                                    			</div>
+                                                        <h2 class="center">Les joueurs sélectionnés</h2>
+                                                        <div class="liste_joueur">
+                                                            <?php
+                                                            foreach ($liste_joueurs_equipe as $key => $value) {
+                                                                if ($value['em_statut_joueur'] == 1 || $value['em_statut_joueur'] == 3) { ?>
+                                                                    <div class="joueur row"
+                                                                         style="margin: 0; padding: 1%;">
+                                                                        <div class='col-sm-10'>
+                                                                            <?php
+                                                                            if ($value["em_membre_paye"] == 1) {
+                                                                                echo '<span> ' . $value['membre_pseudo'] . ' </span><br /> ';
+                                                                                echo "<span class='vert glyphicon glyphicon-ok'></span> Payé";
+                                                                            } else {
+                                                                                echo '<span>' . $value['membre_pseudo'] . '</span><br /> ';
+                                                                                echo "<span class='rouge glyphicon glyphicon-remove'></span> Non Payé";
+                                                                            }
+                                                                            ?>
+                                                                        </div>
+                                                                        <div class='col-sm-2'>
+                                                                            <?php if ($value['em_membre_id'] == $_SESSION['id']) {
+                                                                                if ($value["em_membre_paye"] == 1) { ?>
+                                                                                    <a style="float: right;" <!--href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>-->">
+                                                                                    <button class="btn btn-success btn-xs">
+                                                                                        Me desinscrire<br/>
+                                                                                    </button>
+                                                                                    </a>
+                                                                                <?php } else { ?>
+                                                                                    <a style="float: right;"
+                                                                                       href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>">
+                                                                                        <button class="btn btn-success btn-xs">
+                                                                                            Payer
+                                                                                            (<?php echo $leTournoi->event_tarif; ?>
+                                                                                            €)
+                                                                                        </button>
+                                                                                    </a>
+                                                                                <?php }
+                                                                            } ?>
+                                                                        </div>
+                                                                    </div>
+                                                                <?php }
+                                                            }?>
+                                                        </div>
                                                     </div>
                                                     <hr/>
                                                     <div class="">
@@ -293,7 +309,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                                                                            							</div>
                                                                                    					<div class="">
                                                                                    						<a href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>">
-                                                                                    						<button style="margin: 1% 0; padding: 2%;" class="btn btn-success btn-xs">Me desinscrire (a faire) (<?php echo $leTournoi->event_tarif + 1; ?> €)
+                                                                                    						<button style="margin: 1% 0; padding: 2%;" class="btn btn-success btn-xs">Me desinscrire (a faire) (<?php echo $leTournoi->event_tarif; ?> €)
                                                                                 							</button>
                                                                                 						</a>
                                                                    									</div>
@@ -319,54 +335,55 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                                                 	</div>
                                                     <hr/>
                                                 	<div class="">
-                                                    			<h2>En cours d'inscription</h2>
-                                                            	<div class="liste_joueur">
-                                                                    			    <?php 
-                                                                        				foreach ($liste_joueurs_equipe as $key => $value) {
-                                                                        					if ($value['em_statut_joueur'] == 2 OR $value['em_statut_joueur'] == 5){
-                                                                        						if ($value['em_membre_id'] == $_SESSION['id']){
-                                                                        							?>
-                                                                        								<div class="joueur_user">
-                                                                    										<div class="">
-                                                                    											<?php
-                                                                    												echo '<span>'.$value['membre_pseudo'].'</span>';
-                                                                    												echo "<span class='rouge glyphicon glyphicon-remove'> Non Payé</span>";
-                                                                    											?>
-                                                                           									</div>
-                                                                                                            <br/>
-                                                                           									<div class="">
-                                                                           										<a href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>">
-                                                                                        							<button style="margin: 1% 0; padding: 2%;" class="btn btn-success btn-xs">Payer de ma place(<?php echo $leTournoi->event_tarif + 1; ?> €)
-                                                                                            						</button>
-                                                                                            			     	</a>
-                                                                               								</div>
-                                                                        								</div>
-                                                                        							<?php
-                                                                        						}
-                                                                        						else{
-                                                                        							?>
-                                                                        								<div class="joueur">
-                                                                        									<div>
-                                                                        										<?php
-                                                                    												echo $value['membre_pseudo'];
-                                                                    												echo "<span class='rouge glyphicon glyphicon-remove'>Non Payé</span>";
-                                                                    											?>
-                                                                           									</div>
-                                                                    									</div>
-                                                                    								<?php
-                                                                    							}
-                                                                    						}
-                                                                    					}
-                                                                    				?>
-                                                        		</div>
+                                                        <h2>En cours d'inscription</h2>
+                                                        <div class="liste_joueur">
+                                                            <?php
+                                                                foreach ($liste_joueurs_equipe as $key => $value) {
+                                                            if ($value['em_statut_joueur'] == 2 OR $value['em_statut_joueur'] == 5){ ?>
+                                                            <div class="joueur row" style="margin: 0; padding: 1%;">
+                                                                <div class='col-sm-10'>
+                                                                    <?php
+                                                                    if ($value["em_membre_paye"] == 1) {
+                                                                        echo '<span> ' . $value['membre_pseudo'] . ' </span><br /> ';
+                                                                        echo "<span class='vert glyphicon glyphicon-ok'></span> Payé";
+                                                                    } else {
+                                                                        echo '<span>' . $value['membre_pseudo'] . '</span><br /> ';
+                                                                        echo "<span class='rouge glyphicon glyphicon-remove'></span> Non Payé";
+                                                                    }
+                                                                    ?>
+                                                                </div>
+                                                                <div class='col-sm-2'>
+                                                                    <?php if ($value['em_membre_id'] == $_SESSION['id']) {
+                                                                        if ($value["em_membre_paye"] == 1) { ?>
+                                                                            <a style="float: right;" <!--href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>-->">
+                                                                            <button class="btn btn-success btn-xs">
+                                                                                Me desinscrire<br/>
+                                                                            </button>
+                                                                            </a>
+                                                                        <?php } else { ?>
+                                                                            <a style="float: right;"
+                                                                               href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>">
+                                                                                <button class="btn btn-success btn-xs">
+                                                                                    Payer
+                                                                                    (<?php echo $leTournoi->event_tarif; ?>
+                                                                                    €)
+                                                                                </button>
+                                                                            </a>
+                                                                        <?php }
+                                                                    } ?>
+                                                                </div>
+                                                            </div>
+                                                                <?php }
+                                                                }
+                                                            ?>
+                                                        </div>
                                                     </div>
-                                                    <hr/>
                                                 </div>	
                                                 <!-- Affichage du mur de l'équipe -->
                                                 <div class="cadre_contenu_fdt">
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <h2 class="titre_cadre_contenu_fdt">Mur de l'équipe</h2>
+                                                            <h2 class="titre_cadre_contenu_fdt bold">Messages</h2>
                                                         </div>
                                                     </div>
                                                         <div class="" id="mur-equipe-cont">
@@ -391,14 +408,14 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                                                                 }
                                                                 else{
                                                                     ?>
-                                                                        <h4 class="center">Personne n'a posté de message pour le moment.</h4>
+                                                                        <h4 class="center no-msg">Personne n'a posté de message pour le moment.</h4>
                                                                    <?php 
                                                                 } 
                                                             ?>
                                                             </div>
-                                                            <form method="post" action="post_msg_team.php?id=<?php echo $leTournoi->event_id; ?>">
-                                                                <textarea class="form-control" name="message" placeholder="Entrez votre message..."></textarea>
-                                                                <button class="btn btn-success btn-grand">Poster mon message</button>
+                                                            <form method="post" id="form-mur-team" action="post_msg_team.php?id=<?php echo $leTournoi->event_id; ?>">
+                                                                <textarea class="form-control" id="msg-team" name="message" placeholder="Entrez votre message..."></textarea>
+                                                                <button class="btn btn-success btn-grand"><span class="glyphicon glyphicon-comment"></span> Poster mon message</button>
                                                             </form>
                                                         </div>
                                                 </div>
@@ -408,7 +425,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                                 ?>
         		    		</div>
         		    		<!-- LES ÉQUIPES -->
-        		    		<div id="equipes" class="cont row">
+        		    		<div id="equipes" class="cont">
         		    			<div class="cadre_contenu_fdt">
 
         		    				<div class="row">
@@ -451,6 +468,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                                                                         ?>
                                                                             <div class="col-md-2">
                                                                                 <button style="width: 100%;" mod="rej" id="<?php echo $uneEquipe['team_id']; ?>" class="btn btn-success">Rejoindre</button>
+                                                                                <form method="post["
                                                                             </div>
                                                                         <?php
                                                                     }
@@ -472,7 +490,7 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                                                                             $paye="<span class='rouge'><span class='glyphicon glyphicon-remove'></span> Non Payé</span>"; 
                                                                         }
                                                                         ?>
-                                    		    							<div class="col-md-6">
+                                    		    							<div class="col-md-6 un-joueur">
                                     		    								<?php echo $unJoueur["membre_pseudo"]; ?><br />
                                     		    								<?php echo $unJoueur["statut_nom"]; ?>
                                     		    								<span class="statut"><?php echo $paye; ?></span>
@@ -586,18 +604,14 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
                                         if(empty($mon_equipe) && $leTournoi->event_nb_equipes > compte_equipes($leTournoi->event_id)){
                 		    				?>
                                                 <hr style="border-color: white;">
-                    		    				<button class="add-team btn btn-success" value="<?php echo $leTournoi->event_id; ?>">Créer mon équipe</button>
+                    		    				<button class="add-team btn btn-primary" value="<?php echo $leTournoi->event_id; ?>">Créer mon équipe <span class="glyphicon glyphicon-menu-down right"></span></button>
                     		    				<form class="espace-top form-equipe" method="post" action="creer_equipe.php?tournoi=<?php echo $leTournoi->event_id; ?>">
-                    		    					<fieldset>
-                    							    	<div class="form-group">
-                    							        	<div class="col-md-8">
-                    							        		<input type="text" class="form-control" id="inputPseudo" name="nom" placeholder="Nom de l'équipe">
-                    							        	</div>
-                    							        	<div class="col-md-4">
-                    							    			<button type="submit" name="submit" class="btn btn-primary btn-grand" >Ajouter</button>
-                    							    		</div>        	
-                    								    </div>
-                    							    </fieldset>
+                                                    <div class="col-md-8" style="padding:0; background: lightgrey;">
+                                                        <input style="width:100%;" type="text" class="form-control" id="inputPseudo" name="nom" placeholder="Nom de l'équipe">
+                                                    </div>
+                                                    <div class="col-md-4" style="padding:0; background: lightgrey;">
+                                                        <button  type="submit" name="submit" class="btn btn-success btn-grand" >Ajouter</button>
+                                                    </div>
                     		    				</form>
                                             <?php 
                                         }
@@ -613,7 +627,17 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
     </div>
 </div>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'footer.php';
+    echo '<script>
+	    	$(".equipe-cont button, .suppr-team").click(function(){
+	    		var id = $(this).attr("id");
+	    		var mod = $(this).attr("mod");
+	    		var pass = $(this).attr("pass");
+	    		
+	    		if (mod != "suppr" || mod == "suppr" && confirm("Etes vous sur de vouloir supprimer votre équipe du tournoi ? Cette action sera définitive !" ))
+	    			document.location.replace("action_team.php?mod=" + mod + "&id=" + id + "&tournoi=" + '.$id_tournoi.' + "&pass= " + pass);
+	    	});</script>';
+    ?>
 
 	    <script type="text/javascript">
 
@@ -647,13 +671,6 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
 	    		}
 	    	});
 
-	    	$(".equipe-cont button, .suppr-team").click(function(){
-	    		var id = $(this).attr("id");
-	    		var mod = $(this).attr("mod");
-	    		if (mod != "suppr" || mod == "suppr" && confirm("Etes vous sur de vouloir supprimer votre équipe du tournoi ? Cette action sera définitive !" ))
-	    			document.location.replace("action_team.php?mod=" + mod + "&id=" + id);
-	    	});
-
 	    	$(".item-li, .item-act").click(function() {
 	    		$(".item-li").removeClass("item-act");
 	    		$(this).addClass("item-act");
@@ -684,6 +701,29 @@ $liste_joueurs_equipe = recupererJoueurs($mon_equipe['team_id']);
 	    		else
 	    			form.hide();
 	    	});
+
+	    	$("#form-mur").submit(function (e) {
+                e.preventDefault();
+	    	    var action = $(this).attr("action");
+	    	    var message_cont = $("#message");
+                var message = message_cont.val();
+                $.post(action, {message:message}, function (data) {
+                    $('#cont_liste-msg-tournoi').prepend(data);
+                    message_cont.val("");
+                });
+            });
+
+	    	$("#form-mur-team").submit(function (e) {
+                e.preventDefault();
+                var action = $(this).attr("action");
+                var message_cont = $("#msg-team");
+                var message = message_cont.val();
+                $.post(action, {message:message}, function (data) {
+                    $('#cont_liste-msg').prepend(data);
+                    $(".no-msg").hide();
+                    message_cont.val("");
+                });
+            })
 
 	    </script>
 	</body>

@@ -8,3 +8,9 @@
 	margin: 0;
 	font-family: 'Permanent Marker', cursive;
 }
+.header a {
+	color: white;
+}
+.header a:hover, .header a:focus {
+	color: lightgrey;
+}

@@ -94,7 +94,7 @@ $leTournoi = recupObjetTournoiByID($id_tournoi);
                         } ?>
                     </div>
                     <div class="col-lg-3 prix-team">
-                        <h1 style="margin-top: 1.5%;"><span class="bold"><?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></h1> <?php ECHO $team; ?><br />
+                        <h1 style="margin-top: 1.5%;"><span class="bold"><?php echo $leTournoi->event_tarif; ?> €</span></h1> <?php ECHO $team; ?><br />
                         <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p>
                     </div>
 

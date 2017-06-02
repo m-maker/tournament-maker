@@ -58,7 +58,7 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 								foreach ($liste_tournois as $unTournoi) { ?>
 									<div class="tournoi-cont">
 										<div class="row infos-tournoi" id="<?php echo $unTournoi["event_id"]; ?>">
-											<div class="col-md-3 bold" style="text-decoration: underline;"><?php echo $unTournoi["event_titre"] ?></div>
+											<div class="col-md-6 bold" style="text-decoration: underline;"><?php echo $unTournoi["event_titre"] ?></div>
 											<div class="col-md-2"><span class="glyphicon glyphicon-calendar"></span> <?php echo $unTournoi["event_date"]; ?></div>
 											<div class="col-md-2"><span class="glyphicon glyphicon-flag"></span> <?php echo compte_equipes($unTournoi['event_id']); ?> Equipes</div>
 											<div class="col-md-2"><span class="glyphicon glyphicon-user"></span>  <?php echo compte_joueurs_tournoi($unTournoi['event_id']); ?> Inscrits</div>

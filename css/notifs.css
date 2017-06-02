@@ -1,0 +1,25 @@
+.notifications {
+    height: 540px;
+    overflow-y: scroll;
+}
+.notif {
+    background: #f5f5f5;
+    border-bottom: 1px solid gray;
+    padding: 1.5%;
+}
+.notif:hover {
+    background: #f5f5f5;
+}
+.lu {
+    background: white;
+}
+.non-lu {
+    background: #f5f5f5;
+    font-weight: bold;
+}
+a {
+    color: black;
+}
+a:hover {
+    color: dimgray;
+}

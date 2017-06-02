@@ -200,7 +200,7 @@
                 $compte->Type = "IBAN";
                 $compte->Active = true;
                 $compte->CreationDate = time();
-                var_dump($compte);
+                //var_dump($compte);
                 $mangoPayApi->Users->CreateBankAccount($id_mango, $compte);
             } catch (\MangoPay\Libraries\ResponseException $err) {
                 echo 'err_donnees_compte_invalides' . $err->getMessage();
@@ -296,6 +296,6 @@
 		die;
 	}
 
-    header("Location: ../index.php");
+    header("Location: index.php");
 
 ?>

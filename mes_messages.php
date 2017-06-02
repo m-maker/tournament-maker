@@ -1,5 +1,9 @@
 <?php
 include('conf.php');
+
+if (!isset($_SESSION["id"]))
+    header("Location: index.php");
+
 $liste_membre_msg = recupMembresMessages($_SESSION["id"]);
 $tab_id = [];
 foreach ($liste_membre_msg as $unMembre){
@@ -62,10 +66,10 @@ $tab_id_unique = array_unique($tab_id);
                     Envoyés : <span class="bold"><?php echo compte_msg_envoyes($_SESSION["id"]); ?></span>
                 </div>
                 <div class="col-md-3">
-                    <button id="btn-vider" class="btn-grand"><span class="glyphicon glyphicon-trash"></span> Vider la boite de réception</button>
+                    <button id="btn-vider" class="btn-grand disabled" disabled><span class="glyphicon glyphicon-trash"></span> Vider la boite de réception</button>
                 </div>
                 <div class="col-md-3">
-                    <button id="btn-supr" class="btn-grand"><span class="glyphicon glyphicon-minus"></span> Supprimer la conversation</button>
+                    <button id="btn-supr" class="btn-grand" disabled><span class="glyphicon glyphicon-minus"></span> Supprimer la conversation</button>
                 </div>
             </div>
         </div>
@@ -156,7 +160,12 @@ $tab_id_unique = array_unique($tab_id);
     </div>
 </div>
 <!-- FOOTER -->
-<?php include('footer.php') ?>
+<?php
+include('footer.php');
+$req = $db->prepare("UPDATE messages_prives SET pv_vu = 1 WHERE pv_destinataire_id = :id");
+$req->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
+$req->execute();
+?>
 
 <script>
     $(".un-exp").click(function () {
