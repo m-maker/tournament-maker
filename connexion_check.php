@@ -8,16 +8,14 @@ if (isset($_POST["pseudo"])){
 
 		$pseudo = htmlspecialchars(trim($_POST["pseudo"]));
 		$pass = md5(htmlspecialchars(trim($_POST["pass"])));
-
 		$req = $db->prepare("SELECT * FROM membres WHERE membre_pseudo = :pseudo AND membre_pass = :pass OR membre_mail = :pseudo AND membre_pass = :pass");
 		$req->bindValue(":pseudo", $pseudo, PDO::PARAM_STR);
 		$req->bindValue(":pass", $pass, PDO::PARAM_STR);
 		$req->execute();
 
-		if ($req->rowCount() == 1){
-
-			$membre = $req->fetch();
-
+		$membre = $req->fetch();
+		if (!empty($membre)){
+			var_dump($membre);
 			// Ajout des variables de session
 			$_SESSION["id"] = $membre["membre_id"];
 			$_SESSION["pseudo"] = $membre["membre_pseudo"];
