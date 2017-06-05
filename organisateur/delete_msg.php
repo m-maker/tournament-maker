@@ -17,10 +17,6 @@ if (isset($_GET["id"]) && isset($_GET["tournoi"])){
     $id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
     $leTournoi = recupObjetTournoiByID($id_tournoi);
 
-    var_dump($id_tournoi);
-    var_dump($id_message);
-    var_dump($leTournoi);
-
     if (empty($leTournoi) || $leTournoi == null || $leTournoi->event_orga != $_SESSION["id"] && $leTournoi->event_orga_2 != $_SESSION["id"])
         header("Location: index.php");
 
@@ -34,7 +30,7 @@ if (isset($_GET["id"]) && isset($_GET["tournoi"])){
     $req->bindValue(":id_msg", $id_message, PDO::PARAM_INT);
     $req->execute();
 
-    //header("Location: mur.php?tournoi=" . $id_tournoi);
+    header("Location: mur.php?tournoi=" . $id_tournoi);
 
 }else{
     echo "403 Acces Interdit !!";

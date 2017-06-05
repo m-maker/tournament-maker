@@ -101,16 +101,18 @@
                 if ($event['event_tarification_equipe'] == 0) {
                 $team = "par joueur";
                 }
+                $date_tournoi = new DateTime($event['event_date']);
+                $date_tournoi = date_lettres($date_tournoi->format("w-d-m-Y"));
                 ?>
                 <div class="recap-event">
-                    <div class='titre-liste-tournoi'>
+                    <div class='titre-liste-tournoi' <?php if ($event["event_tournoi"] == 0){ echo 'style="background: darkgoldenrod;"'; } ?>>
                         <?php echo $event['event_titre']; ?>
                         <br>
                         <p style='font-size: 15px;'>
-                            <span class=\"glyphicon glyphicon-calendar\"></span> Le <span
-                                    class=\"bold\"><?php echo $event['event_date']; ?></span> de
-                            <span class=\"bold\"><?php echo $heure_debut; ?></span> à <span
-                                    class=\"bold\"><?php echo $heure_fin; ?></span>
+                            <span class=\"glyphicon glyphicon-calendar\"></span>
+                                Le <span class=\"bold\"><?php echo $date_tournoi; ?></span>
+                                de <span class=\"bold\"><?php echo $heure_debut; ?></span> à <span class=\"bold\"><?php echo $heure_fin; ?>
+                            </span>
                         </p>
                     </div>
                     <div class="conteneur-tournoi"
@@ -121,9 +123,10 @@
                                     <span class="bold"><?php echo $event["lieu_nom"]; ?></span></p>
                                 <p><span class="glyphicon glyphicon-euro"></span> Paiement en ligne :
                                     <span class="bold"> <?php echo $pay; ?></span></p>
-                                <p><span class="glyphicon glyphicon-user"></span><span
-                                            class="bold"> <?php echo compte_equipes($event['event_id']) . ' / ' . $event['event_nb_equipes']; ?></span>
-                                    équipes inscrites</p>
+                                <p><span class="glyphicon glyphicon-user"></span><span class="bold">
+                                        <?php echo compte_equipes($event['event_id']) . ' / ' . $event['event_nb_equipes']; ?>
+                                    </span> équipes inscrites
+                                </p>
                             </div>
                             <div class="col-lg-5 espace-top" style="text-align: left;">
                                 <span class="glyphicon glyphicon-info-sign"></span>
@@ -189,14 +192,16 @@
                                 if ($event['event_tarification_equipe'] == 0) {
                                     $team = "par joueur";
                                 }
+                                $date_tournoi = new DateTime($event['event_date']);
+                                $date_tournoi = date_lettres($date_tournoi->format("w-d-m-Y"));
                                 ?>
                                 <div class="recap-event">
-                                    <div class='titre-liste-tournoi'>
+                                    <div class='titre-liste-tournoi' <?php if ($event["event_tournoi"] == 0){ echo 'style="background: darkgoldenrod;"'; } ?>>
                                         <?php echo $event['event_titre']; ?>
                                         <br>
                                         <p style='font-size: 15px;'>
                                             <span class=\"glyphicon glyphicon-calendar\"></span> Le <span
-                                                    class=\"bold\"><?php echo $event['event_date']; ?></span> de
+                                                    class=\"bold\"><?php echo $date_tournoi; ?></span> de
                                             <span class=\"bold\"><?php echo $heure_debut; ?></span> à <span
                                                     class=\"bold\"><?php echo $heure_fin; ?></span>
                                         </p>

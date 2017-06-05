@@ -207,7 +207,7 @@ function liste_tournois($dpt){
 	$req_dpt->execute();
 	$res_dpt = $req_dpt->fetch();
 	$dpt_id = $res_dpt['dpt_id'];
-	$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE lieu_dpt_id = :departement_id AND event_date >= NOW() ORDER BY event_date;');
+	$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE lieu_dpt_id = :departement_id AND event_date >= DATE(NOW()) ORDER BY event_date;');
 	$req_liste_tournois->execute(array(
 		':departement_id' => $dpt_id
 		));
@@ -231,7 +231,7 @@ function liste_tournois_membres($id_membre){
 
 function liste_tournois_complexe($lieu_id){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT * FROM tournois WHERE event_lieu = :event_lieu AND event_date >= NOW() ORDER BY event_date DESC");
+    $req = $db->prepare("SELECT * FROM tournois WHERE event_lieu = :event_lieu AND event_date >= DATE(NOW()) ORDER BY event_date DESC");
     $req->bindValue(':event_lieu', $lieu_id, PDO::PARAM_INT);
     $req->execute();
     $liste_tournois = $req->fetchAll();
@@ -301,6 +301,10 @@ function liste_assoc(){
     return $req->fetchAll();
 }
 function date_lettres($date){
+    $date_tab = explode("-", $date);
+    $jour = $date_tab[0];
+    $mois = $date_tab[2];
+
 	$liste_jours[0] = "Dimanche";
 	$liste_jours[1] = "Lundi";
 	$liste_jours[2] = "Mardi";
@@ -322,9 +326,21 @@ function date_lettres($date){
 	$liste_mois[11] = "Novembre";
 	$liste_mois[12] = "Décembre";
 
-	$jour = $liste_jours[$date->format('w')];
-	$mois = $liste_mois[$date->format('m')];
+	foreach ($liste_jours as $k => $unJour){
+	    if ($k == $jour){
+	        $jour = $unJour;
+        }
+    }
+    foreach ($liste_mois as $k => $unMois){
+        if ($k == $mois){
+            $mois = $unMois;
+        }
+    }
+
+    $date = $jour . " " . $date_tab[1] . " " . $mois . " " . $date_tab[3];
+	return $date;
 }
+
 $db = connexionBdd();
 $param = getParams();
 
@@ -350,11 +366,22 @@ function liste_messages($id_membre_1, $id_membre_2){
     return $tab_msg;
 }
 
+function recupComplexes(){
+    $db = connexionBdd();
+    $req = $db->query("SELECT * FROM lieux INNER JOIN departements ON lieu_dpt_id = dpt_id;");
+    $req->execute();
+    return $req->fetchAll();
+}
+
 function membre_existe($colonne, $val){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT * FROM membres WHERE '.$colonne.' = :val");
+    if ($colonne == 0)
+        $req = $db->prepare("SELECT * FROM membres WHERE membre_mail = :val");
+    else
+        $req = $db->prepare("SELECT * FROM membres WHERE membre_pseudo = :val");
     $req->bindValue(":val", $val, PDO::PARAM_STR);
     $req->execute();
+    //var_dump($req);
     if ($req->rowCount() > 0)
         return true;
     else
@@ -400,7 +427,7 @@ function activer_item($url_page){
 
 function compte_event_dpt($dpt_code){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT COUNT(event_id) FROM tournois INNER JOIN lieux ON event_lieu = lieu_id INNER JOIN departements ON lieu_dpt_id = dpt_id WHERE dpt_code = :code AND event_date >= NOW()");
+    $req = $db->prepare("SELECT COUNT(event_id) FROM tournois INNER JOIN lieux ON event_lieu = lieu_id INNER JOIN departements ON lieu_dpt_id = dpt_id WHERE dpt_code = :code AND event_date >= DATE(NOW())");
     $req->bindValue(":code", $dpt_code, PDO::PARAM_STR);
     $req->execute();
     return $req->fetchColumn();

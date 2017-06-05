@@ -78,12 +78,14 @@ if (isset($_GET["tournoi"])) {
         $desc = 'Pas de description.';
         $team = "par équipe";
         if ($leTournoi->event_tarification_equipe == 0){$team="par joueur";}
+        $date_tournoi = new DateTime($leTournoi->event_date);
+        $date_tournoi = date_lettres($date_tournoi->format("w-d-m-Y"));
 
         echo "<div class='titre-liste-tournoi'>
             <span class=\"left\"><a href=\"index.php\"> < </a></span>
             " . $leTournoi->event_titre . "<br>
             <p style='font-size: 15px;'>
-                <span class=\"glyphicon glyphicon-calendar\"></span> Le <span class=\"bold\">" . $leTournoi->event_date . "</span> de
+                <span class=\"glyphicon glyphicon-calendar\"></span> Le <span class=\"bold\">" . $date_tournoi . "</span> de
                 <span class=\"bold\">" . $heure_debut . "</span> à <span class=\"bold\">" .$heure_fin . "</span>
             </p>
         </div>";

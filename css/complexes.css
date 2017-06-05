@@ -1,0 +1,10 @@
+.un-complexe {
+    padding: 1.5%;
+    border-bottom: 1px solid lightslategrey;
+}
+a {
+    color: black;
+}
+a:hover, a:focus {
+    color: dimgray;
+}

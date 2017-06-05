@@ -8,7 +8,7 @@
 
 include "conf.php";
 
-var_dump($_POST);
+//var_dump($_POST);
 
 if (!isset($_SESSION["id"]))
     header("Location: index.php");
@@ -45,17 +45,17 @@ if (isset($_POST["pseudo"]) && isset($_POST["mail"])){
         $nouveau_pass = htmlspecialchars(trim($_POST['nouveau_pass']));
 
         if (!empty($nouveau_pass) && !empty($ancien_pass)){
-            $ancien_pass = md5($ancien_pass);
-            $req = $db->prepare("SELECT * FROM membres WHERE membre_pass = :ancien_pass;");
-            $req->bindValue(":ancien_pass", $ancien_pass, PDO::PARAM_STR);
+            $req = $db->prepare("SELECT * FROM membres WHERE membre_id = :id");
+            $req->bindValue(':id', $_SESSION["id"], PDO::PARAM_INT);
             $req->execute();
-            if ($req->rowCount() > 0){
+            $infos_membre = $req->fetch();
+            if ($infos_membre['membre_pass'] == md5($ancien_pass)) {
                 $nouveau_pass = md5($nouveau_pass);
-                $req_upd = $db->prepare("UPDATE membres SET membre_pass = :nv_pass;");
+                $req_upd = $db->prepare("UPDATE membres SET membre_pass = :nv_pass WHERE membre_id = :id;");
+                $req_upd->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
                 $req_upd->bindValue(":nv_pass", $nouveau_pass, PDO::PARAM_STR);
                 $req_upd->execute();
-                header("Location: parametres.fr");
-
+                header("Location: parametres.php");
             }
         }
 

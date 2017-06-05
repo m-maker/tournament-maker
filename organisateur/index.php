@@ -47,6 +47,10 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
             <strong style="font-size: 18px;">Bienvenue sur votre espace de gestion, <?php echo $_SESSION["pseudo"]; ?>.</strong> Dans cette section vous pouvez gérer les équipes de vos tournois et vos matchs, voir et rembourser les achats de place des joueurs, modifier / ajouter des tournois ou des matchs...
         </div>
 
+        <div class="center" style="margin-bottom: 1%;">
+            <a href="organiser_tournoi.php"><button class="btn btn-success btn-mid"><span class="glyphicon glyphicon-play-circle"></span> Ajouter un tournoi</button></a>
+        </div>
+
 		<!-- CONTENU DE LA PAGE -->
 		<div class="container-fluid espace-top" style="width: 80%;padding: 0 1% 0;">
 
@@ -56,7 +60,9 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 
 						<?php if (!empty($liste_tournois)){
 								foreach ($liste_tournois as $unTournoi) { ?>
-									<div class="tournoi-cont">
+                                    <div class="row">
+                                    <div class="col-md-10 " style="padding: 0;margin:0; ">
+                                        <div class="tournoi-cont" style="padding: 0; margin:0 1% 1%; <?php if($unTournoi["event_tournoi"] == 0){ echo 'background: #B8860B;';} ?>">
 										<div class="row infos-tournoi" id="<?php echo $unTournoi["event_id"]; ?>">
 											<div class="col-md-6 bold" style="text-decoration: underline;"><?php echo $unTournoi["event_titre"] ?></div>
 											<div class="col-md-2"><span class="glyphicon glyphicon-calendar"></span> <?php echo $unTournoi["event_date"]; ?></div>
@@ -65,12 +71,12 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 										</div>
 										<div class="row mod-tournoi" id="m-<?php echo $unTournoi["event_id"]; ?>">
 
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <a href="mur.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
-                                                    <button class="btn btn-primary btn-grand"><span class="glyphicon glyphicon-zoom-in"></span> Voir le mur</button>
+                                                    <button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-zoom-in"></span> Voir le mur</button>
                                                 </a>
                                             </div>
-											<div class="col-md-2">
+											<div class="col-md-3">
 												<a href="modifier_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>">
 													<button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-edit"></span> Modifier</button>
 												</a>
@@ -85,21 +91,20 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
                                                     <button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-eur"></span> Encaissements</button>
                                                 </a>
                                             </div>
-											<div class="col-md-2">
-												<a href="suppr_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>">
-													<button class="btn btn-danger btn-grand"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
-												</a>
-											</div>
+
 										</div>
 									</div>
+                                    </div>
+                                    <div class="col-md-2" >
+                                        <a href="suppr_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>" style="margin: auto;">
+                                            <button class="btn btn-default btn-grand" style=" background: slategrey;"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
+                                        </a>
+                                    </div>
+                                    </div>
 						<?php } 
 							}else{ ?>
 								<h4 class="padding center">Vous n'avez crée aucun tournoi !</h4> 
 							<?php } ?>
-
-							<div class="center" style="margin-top: 5%;">
-								<a href="organiser_tournoi.php"><button class="btn btn-success btn-mid"><span class="glyphicon glyphicon-play-circle"></span> Ajouter un tournoi</button></a>
-							</div>
 
 					</div>
 

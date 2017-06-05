@@ -13,6 +13,7 @@ foreach ($visites as $uneVisite){
     if ($ip."\r\n" == $uneVisite)
         $ecrire = false;
 }
+
 if ($ecrire) {
     fwrite($pointeur, $ip . "\r\n");
     $compte_visites = count(file($fichier_log));
@@ -165,7 +166,8 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
                                         <div class="form-group center">
                                             <button type="submit" name="submit" class="btn btn-success" style="width: 80%;">Se connecter</button>
                                         </div>
-                                    </fieldset>
+                                    </fieldset><br /><br />
+                                    <a href="recup_pass.php">Mot de passe oublié ?</a>
                                 </form>
                             </div>
                             <div id="inscription" style="background: rgba(236,240,241,1); margin-top: 20px;">
