@@ -7,7 +7,7 @@ if (!isset($_SESSION["id"]))
 
 if (isset($_POST["message"]) && isset($_GET["id"])){
 	
-	$message = htmlspecialchars(trim($_POST["message"]));
+	$message = nl2br(htmlspecialchars(trim($_POST["message"])));
 	$id_tournoi = htmlspecialchars(trim($_GET["id"]));
 
 	if (!empty($message)){

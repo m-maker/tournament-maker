@@ -30,13 +30,13 @@ if (isset($_POST) && isset($_GET["code"])){
         $joueur = $req_recup_joueur->fetch();
 
         if ($req_recup_joueur->rowCount() > 0) {
-            $req = $db->prepare("UPDATE equipe_membres SET em_statut_joueur = 3 WHERE em_membre_id = :id AND em_team_id = :team_id");
-            $req->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
-            $req->bindValue(":team_id", $team['team_id'], PDO::PARAM_INT);
-            $req->execute();
-            var_dump($_SESSION["id"]);
-            echo 'lol';
-        }else{
+            if ($joueur["em_statut_joueur"] != 1) {
+                $req = $db->prepare("UPDATE equipe_membres SET em_statut_joueur = 3 WHERE em_membre_id = :id AND em_team_id = :team_id");
+                $req->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
+                $req->bindValue(":team_id", $team['team_id'], PDO::PARAM_INT);
+                $req->execute();
+            }
+        } else {
             $req = $db->prepare("INSERT INTO equipe_membres(em_membre_id, em_team_id, em_statut_joueur, em_membre_paye) VALUES (:id, :id_team, 3, 0);");
             $req->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
             $req->bindValue(":team_id", $team['team_id'], PDO::PARAM_INT);
@@ -51,7 +51,7 @@ if (isset($_POST) && isset($_GET["code"])){
             $notif->addNotif();
         }
 
-        //header("Location: mes_matchs.php");
+        header("Location: mes_matchs.php");
 
     }else{
         $req = $db->prepare("DELETE FROM equipe_membres WHERE em_membre_id = :id_membre AND em_team_id = :team_id");

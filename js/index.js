@@ -47,6 +47,11 @@ $("#form-avis").submit(function (e) {
     $('#quit-avis').click(function () {
         $('#post-avis').css("display", "none");
     });
+
+});
+
+$('#quit-avis').click(function () {
+    $('#post-avis').css("display", "none");
 });
 
 var numeroInput=1;

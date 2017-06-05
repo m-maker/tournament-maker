@@ -122,10 +122,12 @@ if ($_SESSION["membre_orga"] == 1)
                             if ($leTournoi->event_tarification_equipe == 0){
                                 $team="par joueur";
                             }
+                        $date_tournoi = new DateTime($leTournoi->event_date);
+                        $date_tournoi = date_lettres($date_tournoi->format("w-d-m-Y"));
 
                             echo "<div class='titre-liste-tournoi'>
                                 " . $leTournoi->event_titre . "<br><p style='font-size: 15px;'>
-                                <span class=\"glyphicon glyphicon-calendar\"></span> Le <span class=\"bold\">" . $leTournoi->event_date . "</span> de 
+                                <span class=\"glyphicon glyphicon-calendar\"></span> Le <span class=\"bold\">" . $date_tournoi . "</span> de 
                                 <span class=\"bold\">" . $heure_debut . "</span> à <span class=\"bold\">" .$heure_fin . "</span>
                                 </p>
                             </div>";
@@ -633,9 +635,9 @@ if ($_SESSION["membre_orga"] == 1)
 	    		var id = $(this).attr("id");
 	    		var mod = $(this).attr("mod");
 	    		var pass = $(this).attr("pass");
-	    		
+	    		 
 	    		if (mod != "suppr" || mod == "suppr" && confirm("Etes vous sur de vouloir supprimer votre équipe du tournoi ? Cette action sera définitive !" ))
-	    			document.location.replace("action_team.php?mod=" + mod + "&id=" + id + "&tournoi=" + '.$id_tournoi.' + "&pass= " + pass);
+	    			document.location.replace("action_team.php?mod=" + mod + "&id=" + id + "&tournoi=" + '.$id_tournoi.');
 	    	});</script>';
     ?>
 

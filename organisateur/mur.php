@@ -60,12 +60,14 @@ if (isset($_GET["tournoi"])){
                 $desc = 'Pas de description.';
             $team = "par équipe";
             if ($leTournoi->event_tarification_equipe == 0){$team="par joueur";}
+            $date_tournoi = new DateTime($leTournoi->event_date);
+            $date_tournoi = date_lettres($date_tournoi->format("w-d-m-Y"));
 
             echo "<div class='titre-liste-tournoi'>
                     <span class=\"left\"><a href=\"index.php\"> < </a></span>
                     " . $leTournoi->event_titre . "<br>
                     <p style='font-size: 15px;'>
-                        <span class=\"glyphicon glyphicon-calendar\"></span> Le <span class=\"bold\">" . $leTournoi->event_date . "</span> de
+                        <span class=\"glyphicon glyphicon-calendar\"></span> Le <span class=\"bold\">" . $date_tournoi . "</span> de
                         <span class=\"bold\">" . $heure_debut . "</span> à <span class=\"bold\">" .$heure_fin . "</span>
                     </p>
                 </div>";
@@ -99,23 +101,33 @@ if (isset($_GET["tournoi"])){
 
             <hr style="border-color: white;">
 
-            <div id="mur" class="center">
-                <form method="post" action="post_msg.php?id=<?php echo $leTournoi->event_id; ?>">
-                    <textarea class="form-control" placeholder="Votre message..." name="message" rows="3" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;"></textarea>
-                    <button class="btn btn-success btn-grand" style="border-top-left-radius: 0; border-top-right-radius: 0;" name="submit">Poster mon message</button>
-                </form>
-                <?php $messages = recupMessagesMur($leTournoi->event_id);
-                foreach ($messages as $unMessage) { ?>
-                    <div class="message-cont espace-top">
-                        <?php echo $unMessage["mur_contenu"]; ?>
-                        <span class="delete-msg"><a href="delete_msg.php?id=<?php echo $unMessage["mur_id"]; ?>&tournoi=<?php echo $leTournoi->event_id; ?>">X</a></span>
-                        <div class="sign">
-                            Par <span><?php echo $unMessage["membre_pseudo"]; ?></span> le <span><?php echo $unMessage["mur_date"]; ?></span>
-                        </div>
+            <div id="mur" style="margin: auto;" class="center">
+                <div class="cadre_contenu_fdt">
+                    <div id="cont_liste-msg-tournoi">
+                        <?php $messages = recupMessagesMur($leTournoi->event_id);
+                        foreach ($messages as $unMessage) {
+                            ?>
+                            <div class="msg-cont">
+                                <?php
+                                echo $unMessage["mur_contenu"];
+                                if ($unMessage["membre_id"] == $_SESSION["id"]) {
+                                    echo '<span class="delete-msg"><a href="delete_msg.php?type=0&id=' . $unMessage["mur_id"] . '&tournoi=' . $leTournoi->event_id . '">X</a></span>';
+                                }
+                                ?>
+                                <div class="sign-msg">
+                                    Par <span><?php echo $unMessage["membre_pseudo"]; ?></span> le <span><?php echo $unMessage["mur_date"]; ?></span>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        ?>
                     </div>
-                <?php } ?>
+                    <form method="post" id="form-mur" action="../post_msg.php?id=<?php echo $leTournoi->event_id; ?>">
+                        <textarea class="form-control" placeholder="Votre message..." id="message" name="message" rows="3" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;"></textarea>
+                        <button class="btn btn-success btn-grand" style="border-top-left-radius: 0; border-top-right-radius: 0;" name="submit"><span class="glyphicon glyphicon-comment"></span> Poster mon message</button>
+                    </form>
+                </div>
             </div>
-
 
         </div>
 </div>
@@ -125,6 +137,19 @@ if (isset($_GET["tournoi"])){
 
 </body>
 </html>
+
+    <script>
+        $("#form-mur").submit(function (e) {
+            e.preventDefault();
+            var action = $(this).attr("action");
+            var message_cont = $("#message");
+            var message = message_cont.val();
+            $.post(action, {message:message}, function (data) {
+                $('#cont_liste-msg-tournoi').prepend(data);
+                message_cont.val("");
+            });
+        });
+    </script>
 
 <?php }else{
     header("Location: index.php");
