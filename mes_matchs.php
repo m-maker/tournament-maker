@@ -75,13 +75,15 @@ else{
                             if ($event['event_tarification_equipe'] == 0){
                                 $team="par joueur";
                             }
+                            $date_tournoi = new DateTime($event['event_date']);
+                            $date_tournoi = date_lettres($date_tournoi->format("w-d-m-Y"));
                             ?>  <div class="recap-event">
                                     <div class='titre-liste-tournoi'>
                                         <?php echo $event['event_titre'] ?>
                                         <br>
                                         <p style='font-size: 15px;'>
-                                            <span class="glyphicon glyphicon-calendar"></span> Le <span class="bold"><?php echo $event['event_date'] ?> </span> de
-                                            <span class="bold"><?php echo $heure_debut?></span> à <span class="bold"><?php $heure_fin?></span>
+                                            <span class="glyphicon glyphicon-calendar"></span> Le <span class="bold"><?php echo $date_tournoi; ?> </span> de
+                                            <span class="bold"><?php echo $heure_debut?></span> à <span class="bold"><?php echo $heure_fin; ?></span>
                                         </p>
                                     </div>
                                     <div class="conteneur-tournoi" style="border-radius:0;width: 100%;margin:0;padding: 1%;">

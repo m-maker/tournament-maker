@@ -3,17 +3,11 @@
  * Created by PhpStorm.
  * User: Niquelesstup
  * Date: 02/06/2017
- * Time: 11:57
+ * Time: 14:32
  */
 
-include 'conf.php';
-
-$complexe = null;
-if (isset($_GET['id'])){
-    $id_lieu = htmlspecialchars(trim($_GET["id"]));
-    $complexe = recupLieuById($id_lieu);
-}
 ?>
+
 <html>
 
 <head>
@@ -25,7 +19,6 @@ if (isset($_GET['id'])){
     <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" type="text/css" href="css/complexes.css">
     <title>Tournois de foot en salle</title>
     <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
@@ -51,33 +44,13 @@ if (isset($_GET['id'])){
     <!-- CONTENU DE LA PAGE -->
     <div id="corps">
 
-        <?php if (isset($_GET['id'])){ ?>
-            <div id="titre_corps"><?php echo $complexe["lieu_id"]; ?></div>
+        <div id="titre_corps">Equipe privée</div>
 
-        <?php }elseif (isset($_GET["dpt"])){
-            $dpt_code = htmlspecialchars(trim($_GET["dpt"])); ?>
-            <div id="titre_corps">Les complexes dans le <?php echo $dpt_code; ?></div>
-
-        <?php }else{
-            $liste_complexes = recupComplexes(); ?>
-            <div id="titre_corps">Tous les complexes</div>
-
-            <a href="#">
-                <div class="un-complexe row" style="margin:0;">
-                    <div class="col-md-4">Soccer Park</div>
-                    <div class="col-md-4">Gironde</div>
-                    <div class="col-md-4">Bordeaux</div>
-                </div>
-            </a>
-
-        <?php } ?>
+        <h2 class="center" style="padding: 1%; width: 80%; margin: 2% auto; border-bottom: 1px solid lightslategrey;">
+            Cette equipe est privée, <br />Veuillez saisir le mot de passe afin de la rejoindre !
+        </h2>
 
 
 
 
-    </div>
 
-</div>
-
-</body>
-</html>
