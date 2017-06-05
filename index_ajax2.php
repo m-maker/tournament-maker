@@ -35,7 +35,7 @@
 	foreach ($liste_complexes as $key => $value) {
 		//var_dump($key);
 		//var_dump($value);
-		$req_nb_events = $db->prepare('SELECT COUNT(event_id) FROM tournois WHERE event_lieu = :event_lieu AND event_date >= NOW()');
+		$req_nb_events = $db->prepare('SELECT COUNT(event_id) FROM tournois WHERE event_lieu = :event_lieu AND event_date >= DATE(NOW())');
 		$req_nb_events->execute(array(
 			'event_lieu' => $value['lieu_id']
 			));
