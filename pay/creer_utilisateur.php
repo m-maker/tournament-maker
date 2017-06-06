@@ -3,7 +3,7 @@
 include "../conf.php";
 include 'connect_api.php';
 
-if (isset($_GET["tournoi"])) {
+if (isset($_GET["tournoi"]) && $_GET["team"]) {
     $tab_dates = array("01" => "Janvier", "02" => "Fevrier", "03" => "Mars", "04" => "Avril", "05" => "Mai", "06" => "Juin", "07" => "Juillet", "08" => "Aout", "09" => "Septembre", "10" => "Octobre", "11" => "Novembre", "12" => "Décembre");
 
     // Cherche si le membre a déja un compte MangoPay
@@ -13,11 +13,12 @@ if (isset($_GET["tournoi"])) {
     $membre_mango = $req->fetch();
 
     $id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
+    $team = htmlspecialchars(trim($_GET["team"]));
     $leTournoi = recupObjetTournoiByID($id_tournoi);
 
     if (!empty($leTournoi)) {
 
-        $montant =  explode(".", $leTournoi->event_tarif + 1);
+        $montant =  explode(".", $leTournoi->event_tarif);
         if (isset($montant[1])){
             if (strlen($montant[1]) < 2)
                 $montant = $montant[0] . $montant[1].'0';
@@ -26,8 +27,10 @@ if (isset($_GET["tournoi"])) {
         }else{
             $montant = $montant[0] . '00';
         }
-        $_SESSION["montant"] = $montant;
 
+        $_SESSION["montant"] = $montant;
+        $_SESSION["tournoi_mango"] = serialize($leTournoi);
+        $_SESSION["team"] = $team;
 
         // Si il a déja un compte
         if ($req->rowCount() > 0) {
@@ -36,21 +39,50 @@ if (isset($_GET["tournoi"])) {
             $wallet = $mangoPayApi->Wallets->Get($membre_mango["im_wallet_id"]);
             $_SESSION['utilisateur_mango'] = serialize($user);
             $_SESSION["wallet_mango"] = serialize($wallet);
-            $_SESSION["tournoi_mango"] = serialize($leTournoi);
             header("Location: cartes.php");
         }
 
     ?>
 
         <html>
+
         <head>
             <?php include('head.php'); ?>
-            <title>Tournoi</title>
+
+            <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************                      -->
+            <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Kumar+One" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
+            <link rel="stylesheet" type="text/css" href="../css/volet.css">
+            <title>Tournois de foot en salle</title>
+            <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
+
         </head>
 
         <body>
 
-        <div class="container">
+        <!-- HEADER -->
+        <?php if (isset($_SESSION["id"])){
+            include('header.php');
+        } ?>
+
+        <!-- CONTENU DE LA PAGE -->
+        <div id="page">
+
+            <!-- VOLET -->
+            <?php
+            if (isset($_SESSION['id']) && !empty($_SESSION['id'])){
+                include('volet.php');
+            }?>
+
+
+            <!-- CONTENU DE LA PAGE -->
+            <div id="corps">
+
+                <div id="titre_corps">Vos informations d'utilisateur</div>
+
+            <div class="container espace-bot">
 
             <div class="form-mango">
                 <form class="form-horizontal" method="post" action="add_user.php">
@@ -145,8 +177,11 @@ if (isset($_GET["tournoi"])) {
                     </fieldset>
                 </form>
             </div>
-
+            </div>
+            </div>
         </div>
+
+        <?php include 'footer.php'; ?>
 
         </body>
         </html>

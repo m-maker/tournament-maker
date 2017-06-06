@@ -21,7 +21,7 @@ include 'conf.php';
     <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/index.css">
-    <title>Tournois de foot en salle</title>
+    <title>Mes Paramètres</title>
     <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
 </head>
@@ -65,13 +65,11 @@ include 'conf.php';
             <button type="submit" class="form-control btn btn-success">Changer mes informations</button>
         </form>
 
-
-
-
-
     </div>
 
 </div>
+
+<?php include 'footer.php'; ?>
 
 </body>
 </html>
