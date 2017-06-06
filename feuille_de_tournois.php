@@ -278,7 +278,7 @@ if ($_SESSION["membre_orga"] == 1)
                                                                                     </a>
                                                                                 <?php } else { ?>
                                                                                     <a style="float: right;"
-                                                                                       href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>">
+                                                                                       href="pay/creer_utilisateur.php?tournoi=<?php echo $leTournoi->event_id; ?>&team=<?php echo $mon_equipe["team_id"]; ?>">
                                                                                         <button class="btn btn-success btn-xs">
                                                                                             Payer
                                                                                             (<?php echo $leTournoi->event_tarif; ?>

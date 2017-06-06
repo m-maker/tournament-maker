@@ -6,17 +6,3 @@
     Ce site utilise la base de données de <a href="#">GeoLoc</a><br />
     Merci de bien lire nos <a href="#">Conditions génerales d'utilisation</a> de la plateforme
 </div>
-
-<?php
-echo '
-<script>
-    function recupCompteNotif() {
-        var id = '.$_SESSION["id"].';
-        $.post("ajax_notif.php", {id:id}, function(data) {
-            $("#notif-compte").html(data);
-        });
-    }
-    setInterval(recupCompteNotif, 5000);
-</script>
-';
-?>

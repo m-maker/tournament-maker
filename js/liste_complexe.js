@@ -5,7 +5,7 @@ $(document).ready(function(){
       $("#post_liste_complexe").html(data);
       $("#post_liste_complexe").click();
     },
-  error: function(){
+    error: function(){
               $("#post").html('Une erreur est survenue.');
             }
           });
