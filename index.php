@@ -80,23 +80,14 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
                     ?>
                     <h1 id="titre_corps">Trouver des tournois</h1>
 
-                    <div class="center espace-bot" id="post-avis">
-                        <span id="quit-avis" class="right rouge">X</span>
-                        <h3>Le site est actuellement en béta ! Aidez-nous à améliorer la plateforme en donnant votre avis : </h3>
-                        <form id="form-avis" class="form-horizontal">
-                            <div class="form-group">
-                                <textarea id="avis" class="form-control btn-grand" placeholder="Votre avis..."></textarea>
-                                <button type="submit" class="form-control btn btn-success btn-grand">Envoyer</button>
-                            </div>
-                        </form>
-                        <b>Les paiements en ligne seront disponibles dès mardi 06 juin.</b>
-                    </div>
-
+                    <hr/>
                         <div id="post" class="container-fluid center" style="padding: 2%;">
-                            <p style="font-size: 20px;">Selectionnez un département afin de trouver les tournois / matchs</p>
+                            <p style="color: black; font-size: 20px;">Selectionnez un département afin de trouver les tournois / matchs</p>
                             <button id="btn_dpt" class="btn btn-default center" data-toggle="modal" data-target="#myModal">
                                 <div id="nom_departement" > Département  <b class="caret"></b> </div>
                             </button>
+
+                            <hr/>
                         </div>
                         <!-- Modal -->
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

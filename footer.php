@@ -6,7 +6,7 @@
     <!--Ce site utilise la base de données de <a href="#">GeoLoc</a><br />
     Merci de bien lire nos <a href="#">Conditions génerales d'utilisation</a> de la plateforme-->
 </div>
-
+<script src="js/volet.js"></script>
 <?php
 echo '
 <script>

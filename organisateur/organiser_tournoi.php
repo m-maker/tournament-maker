@@ -34,7 +34,7 @@
     <?php include('volet.php'); ?>
 
     <!-- CONTENU DE LA PAGE -->
-    <div id="corps" style="background: rgb(232,234,236);">
+    <div id="corps">
         <h1 id="titre_corps">Organisation d'un événement</h1>
         <!-- CADRE DU CONTENU -->
 

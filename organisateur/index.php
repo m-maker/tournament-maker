@@ -54,7 +54,7 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 		<!-- CONTENU DE LA PAGE -->
 		<div class="container-fluid espace-top" style="width: 80%;padding: 0 1% 0;">
 
-				<div class="row">
+				<div class="row espace-bot">
 
 						<!--<h2 class="center"><span class="glyphicon glyphicon-list"></span> Mes tournois</h2>-->
 
@@ -107,10 +107,6 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 							<?php } ?>
 
 					</div>
-
-			<div class="cont white" id="matchs">
-				<h2 class="center">Cette fonctionnalité n'est pas encore disponible</h2>
-			</div>
 
         </div>
     </div>

@@ -1,9 +1,12 @@
 .conteneur-tournoi {
-	background: white;
 	border: 1px solid black;
 	margin: 1% 0;
 	border-radius: 5px;
 	text-align: center;
+	color: black;
+}
+.conteneur-tournoi * {
+	color: black;
 }
 .corps_tournoi{
 	display: flex;
