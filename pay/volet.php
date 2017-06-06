@@ -5,7 +5,9 @@
     $compte_msg = compteMessagesNonVus($_SESSION["id"]);
     ?>
 
-    <h3 class="volet-titre"><?php echo $_SESSION["pseudo"]; ?></h3>
+    <h3 class="volet-titre">
+        <img src="../<?php echo $_SESSION["membre_avatar"]; ?>" width="30" /> <?php echo $_SESSION["pseudo"]; ?>
+    </h3>
 
     <div id="accueil">
         <a href="../index.php" <?php activer_item('index.php'); ?> >

@@ -39,7 +39,7 @@ if (isset($_POST) && isset($_GET["code"])){
         } else {
             $req = $db->prepare("INSERT INTO equipe_membres(em_membre_id, em_team_id, em_statut_joueur, em_membre_paye) VALUES (:id, :id_team, 3, 0);");
             $req->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
-            $req->bindValue(":team_id", $team['team_id'], PDO::PARAM_INT);
+            $req->bindValue(":id_team", $team['team_id'], PDO::PARAM_INT);
             $req->execute();
         }
 

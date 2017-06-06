@@ -12,8 +12,8 @@
 include 'conf.php';
 
 
-if (!isset($_SESSION['id'])){
-    header("Location: connexion.php");
+if (!isset($_SESSION['id']) && !isset($_SESSION["fb_access_token"])){
+    header("Location: index.php");
 }
 else{
 

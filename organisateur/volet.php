@@ -5,7 +5,9 @@
     $compte_msg = compteMessagesNonVus($_SESSION["id"]);
     ?>
 
-    <h3 class="volet-titre"><?php echo $_SESSION["pseudo"]; ?></h3>
+    <h3 class="volet-titre">
+        <img src="../<?php echo $_SESSION["membre_avatar"]; ?>" width="30" /> <?php echo $_SESSION["pseudo"]; ?>
+    </h3>
 
     <div id="accueil">
         <a href="../index.php" <?php activer_item('index.php'); ?> >
@@ -31,8 +33,8 @@
                 </a>
             </div>
         <?php }else{ ?>
-            <div id="mes_paiements" <?php activer_item('organiser_tournoi.php'); ?>>
-                <a href="../organisateur/organiser_tournoi.php">
+            <div id="mes_tournois">
+                <a href="../organisateur/organiser_tournoi.php" <?php activer_item('organiser_tournoi.php'); ?>>
                     <span class="glyphicon glyphicon-asterisk"></span> Organiser un tournoi
                 </a>
             </div>
@@ -40,7 +42,7 @@
 
         <hr class="separateur-volet">
 
-        <div id="mes_messages">
+        <div id="mes_notifs">
             <a href="../notifs.php" <?php activer_item('notifs.php'); ?>>
                 <span class="glyphicon glyphicon-alert"></span>
                 <span id="notif-compte">

@@ -1,5 +1,6 @@
 <?php
 include('conf.php');
+include "connect_api_fb.php";
 
 $ip = $_SERVER['REMOTE_ADDR'];
 $fichier_log = 'log/visites.txt';
@@ -166,7 +167,18 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
                                         <div class="form-group center">
                                             <button type="submit" name="submit" class="btn btn-success" style="width: 80%;">Se connecter</button>
                                         </div>
-                                    </fieldset><br /><br />
+                                        <?php
+                                        $permissions = ['email']; // Optional permissions
+                                        $loginUrl = $helper->getLoginUrl('https://reservetonterrain.fr/fb-callback.php', $permissions);
+
+                                        echo '<div class="form-group center" style="margin-top: 20px; margin-bottom:20px;">
+                                        <a class="espace-bot espace-top" href="' . htmlspecialchars($loginUrl) . '">
+                                            <button type="button" class="btn btn-primary" style="width: 80%;">
+                                                <img src="img/icones/icone_facebook.ico" width="25" style="margin-top: -5px;" /> Se connecter avec Facebook!
+                                            </button>
+                                        </a>
+                                        </div>'; ?>
+                                    </fieldset>
                                     <a href="recup_pass.php">Mot de passe oublié ?</a>
                                 </form>
                             </div>
