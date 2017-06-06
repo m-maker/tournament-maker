@@ -15,7 +15,6 @@ if (isset($_POST["pseudo"])){
 
 		$membre = $req->fetch();
 		if (!empty($membre)){
-			var_dump($membre);
 			// Ajout des variables de session
 			$_SESSION["id"] = $membre["membre_id"];
 			$_SESSION["pseudo"] = $membre["membre_pseudo"];

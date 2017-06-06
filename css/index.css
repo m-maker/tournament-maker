@@ -32,6 +32,9 @@ label{
 	margin: 0.1rem;
 	padding: 0.1rem;
 }
+.modal-dialog{
+	color: black;
+}
 .modal-body{
 	margin: 0rem;
 	padding: 0.1rem;
@@ -44,18 +47,31 @@ label{
 }
 #post{
 	padding: 10px;
+	padding-top: 0px;
 	margin-top: 0;
 	width: 100%;
-	background-color: white;
+	color: white;
+}
+hr{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+b{
 	color: black;
+	text-decoration: underline;	
+	line-height: 25px;
 }
 #btn_dpt{
-	justify-content:  center;
-	width: 50%;
-	margin: 0 auto 2%;
+	width: 100px;
+	padding: 1px;
 }
 #nav_complexes{
 	background-color: rgba(0,0,0,0.7);
+}
+.conteneur-tournoi{
+	color: black;
 }
 #menu_liste_complexes{
 	margin-top: 20px;
@@ -72,7 +88,15 @@ label{
 }
 .onglet-contenu{
 	display: flex;
-	flex-direction: column;
+}
+.filtre{
+	width: 150px;
+}
+.logo_complexe{
+	width: 50%;
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
 }
 .menu-list{
 }
