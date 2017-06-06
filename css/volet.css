@@ -1,5 +1,5 @@
 #volet{
-	background-color: rgb(235,235,235);
+	background-color: rgba(235,235,235,0.95);
 	color: black;
 	padding: 2px;
 	margin: 0;
@@ -14,7 +14,7 @@
 #volet div{
 	margin: 2%;
 	color: white;
-	height: 20px;
+	min-height: 20px;
 }
 #volet div a:hover, #volet .active{
 	background-color:rgb(220,220,220);
@@ -40,4 +40,14 @@
 .separateur-volet {
 	border-color: lightgrey;
 	margin:5px;
+}
+#post-avis h3 {
+	color: black;
+	font-size: 12px;
+}
+#post-avis b{
+	color: black;
+}
+#post-avis{
+	margin: 2px;
 }

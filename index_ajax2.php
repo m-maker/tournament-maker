@@ -48,29 +48,42 @@
 	//var_dump($tab_complexes_events);
 	//var_dump($tab_complexes_events); 
 ?>		
-		<button id="btn_dpt" class="btn btn-default" data-toggle="modal" data-target="#myModal">
-			<div id="nom_departement" > <?php echo $res_dpt['dpt_nom']; ?>  <b class="caret"></b> </div>
-		</button>
-        <div class="onglet-contenu" style="text-align: center;">
-     		<div class="menu-orga">
-                <div class="center show acti" id="onglet-all" >
-                    Tous (<?php echo compte_event_dpt($dpt); ?>)
+        <div class="gauche">
+            <div class="ligne">
+                <span class="filtre"><b>Département:</b></span>
+                <div>
+            	<button id="btn_dpt" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="margin-left: 2px;">
+            		<div id="nom_departement" > <?php echo $res_dpt['dpt_nom']; ?>  <b class="caret"></b> </div>
+            	</button>
                 </div>
-    			<?php
-                    $i = 0;
-    				foreach ($tab_complexes_events as $key => $compl_event) {
-    					$lieu = recupLieuById($compl_event[0]);
-    					$class="";
-    					?>
-                            <div class="center show" id="onglet-<?php echo $compl_event[0]; ?>" >
-                                <?php echo $lieu['lieu_nom'].' ('.$compl_event[1].') '; ?>
-                            </div>
-    	      			<?php
-                        $i++;
-    	      		}
-    	      	?>
-    	    </div>
+            </div>
+            <div class="onglet-contenu" style="text-align: center;">
+                <span class="filtre"><b> Complexe:</b></span>
+         		<div class="menu-orga">
+                    <div class="center show acti" id="onglet-all" >
+                        Tous (<?php echo compte_event_dpt($dpt); ?>)
+                    </div>
+        			<?php
+                        $i = 0;
+        				foreach ($tab_complexes_events as $key => $compl_event) {
+        					$lieu = recupLieuById($compl_event[0]);
+        					$class="";
+        					?>
+                                <div class="center show" id="onglet-<?php echo $compl_event[0]; ?>" >
+                                    <div class="ligne">
+                                        <img class="logo_complexe img-responsive" src="<?php echo $lieu['lieu_logo']; ?>" alt="<?php echo $lieu['lieu_nom']; ?>">
+                                        <p><?php echo $lieu['lieu_nom'].'<br/>'.$lieu['lieu_ville'].'<br/> ('.$compl_event[1].') '; ?></p>
+                                    </div>
+                                </div>
+        	      			<?php
+                            $i++;
+        	      		}
+        	      	?>
+        	    </div>
+            </div>
         </div>
+
+            <hr/>
 
         <?php
         $i = 0;
@@ -78,6 +91,7 @@
         ?>
         <div class="cont espace-bot" id="cont-all">
             <?php $liste_all = liste_tournois($dpt);
+            //var_dump($liste_all);
             foreach ($liste_all as $event){
                 $heure_debut = format_heure_minute($event['event_heure_debut']);
                 $heure_fin = format_heure_minute($event['event_heure_fin']);
@@ -105,7 +119,7 @@
                 $date_tournoi = date_lettres($date_tournoi->format("w-d-m-Y"));
                 ?>
                 <div class="recap-event">
-                    <div class='titre-liste-tournoi' <?php if ($event["event_tournoi"] == 0){ echo 'style="background: darkgoldenrod;"'; } ?>>
+                    <div class='titre-liste-tournoi' <?php if (isset($event["event_tournoi"]) && $event["event_tournoi"] == 0){ echo 'style="background: darkgoldenrod;"'; } ?>>
                         <?php echo $event['event_titre']; ?>
                         <br>
                         <p style='font-size: 15px;'>
@@ -196,7 +210,7 @@
                                 $date_tournoi = date_lettres($date_tournoi->format("w-d-m-Y"));
                                 ?>
                                 <div class="recap-event">
-                                    <div class='titre-liste-tournoi' <?php if ($event["event_tournoi"] == 0){ echo 'style="background: darkgoldenrod;"'; } ?>>
+                                    <div class='titre-liste-tournoi' <?php if (isset($event["event_tournoi"]) && $event["event_tournoi"] == 0){ echo 'style="background: darkgoldenrod;"'; } ?>>
                                         <?php echo $event['event_titre']; ?>
                                         <br>
                                         <p style='font-size: 15px;'>
