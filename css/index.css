@@ -63,6 +63,27 @@ b{
 	text-decoration: underline;	
 	line-height: 25px;
 }
+#complexe{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.complexe img{
+	width: 70px;
+}
+.complexe{
+	width: 200px;
+	background-color: rgba(0,0,0,0.8);
+	color: white;
+	margin: 10px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	padding: 10px;
+}
+.div_input2 *{
+	color: black;
+}
 #btn_dpt{
 	width: 100px;
 	padding: 1px;
@@ -131,4 +152,7 @@ b{
 .form-control{
 	margin: auto;
 	width: 80%;
+}
+p{
+	style="font-size: 20px;
 }

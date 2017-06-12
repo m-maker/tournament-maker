@@ -12,6 +12,19 @@ $(document).ready(function(){
   });
 });
 
+$(document).ready(function(){
+  $("#liste_departements2 input").click(function(){
+    $.ajax({type:"POST", data: $(this).serialize(), url:"index_ajax.php",
+      success: function(data){
+        $("#post2").html(data);
+      },
+      error: function(){
+        $("#post2").html('Une erreur est survenue.');
+      }
+    });
+    document.getElementById('valider2').click();
+  });
+});
 $("#form-inscription").submit(function (e) {
     e.preventDefault();
     var pseudo = $("#inputPseudo").val();
@@ -34,6 +47,7 @@ $("#form-connexion").submit(function (e) {
         $('#erreur-co').html(data);
     });
 });
+
 
 
 

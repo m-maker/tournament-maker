@@ -5,6 +5,16 @@ body{
 	background:url('../img/fond_index.jpg');
 	background-size: cover;
 }
+.show1{
+	margin: 20px;
+}
+.menu-orga1 {
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	color: white;
+	padding: 10px;
+}
 .conteneur-index {
 }
 .opaciteur {
@@ -44,8 +54,8 @@ body{
 }
 #corps{
 	flex: 1;
-	margin: 20px;
 	background-color: rgba(235,235,235,0.3);
+	background-color: rgb(142,200,237);
 	color: white;
 }
 .corps_onglet{
