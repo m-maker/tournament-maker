@@ -1,3 +1,32 @@
+<?php
+include('conf.php');
+include ("connect_api_fb.php");
+
+$ip = $_SERVER['REMOTE_ADDR'];
+$fichier_log = 'log/visites.txt';
+$fichier_compte = 'log/visites_compte.txt';
+$pointeur = fopen($fichier_log, 'a+');
+$pointeur_compte = fopen($fichier_compte, 'w+');
+
+$visites = file($fichier_log);
+$ecrire = true;
+foreach ($visites as $uneVisite){
+    if ($ip."\r\n" == $uneVisite)
+        $ecrire = false;
+}
+
+if ($ecrire) {
+    fwrite($pointeur, $ip . "\r\n");
+    $compte_visites = count(file($fichier_log));
+    fwrite($pointeur_compte, $compte_visites);
+}
+
+if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
+    header('location:organisateur/index.php');
+    exit();
+}
+
+?>
 <html>
 
 <head>
@@ -75,7 +104,7 @@
                                             </button>
                                         </a>
                                         </div>'; ?>
-                                        
+
                     <a href="recup_pass.php">Mot de passe oublié ?</a>
                 </form>
             </div>
