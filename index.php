@@ -80,14 +80,13 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
                     }
                     ?>
                     <h1 id="titre_corps">Trouver des tournois</h1>
-
+                        
                     <hr/>
                         <div id="post" class="container-fluid center" style="padding: 2%;">
                             <p style="color: black; font-size: 20px;">Selectionnez un département afin de trouver les tournois / matchs</p>
                             <button id="btn_dpt" class="btn btn-default center" data-toggle="modal" data-target="#myModal">
                                 <div id="nom_departement" > Département  <b class="caret"></b> </div>
                             </button>
-
                             <hr/>
                         </div>
                         <!-- Modal -->

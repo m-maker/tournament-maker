@@ -10,13 +10,12 @@
 
     ?>
                             <div class="container-fluid center" style="padding: 2%;">
-                                <div class="gauche">
-                                <p>Selectionnez un département</p>
-                                <button id="btn_dpt2" class="btn btn-default center" data-toggle="modal" data-target="#myModal2">
-                                    <div id="nom_departement2" > Département  <b class="caret"></b> </div>
-                                </button>
-                                </div>
-                                <hr/>
+                                <p style="color: black; font-size: 20px;">Selectionnez un département afin de trouver les tournois / matchs</p>
+                            <button id="btn_dpt" class="btn btn-default center" data-toggle="modal" data-target="#myModal2">
+                                <div id="nom_departement2" > Département  <b class="caret"></b> </div>
+                            </button>
+
+                            <hr/>
                             </div>
                             <!-- Modal -->
                             <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
