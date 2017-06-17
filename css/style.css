@@ -23,7 +23,7 @@ body{
 }
 .volet-titre {
 	color: black;
-	font-family: 'Metamorphous', cursive;
+	font-family: 'Ubuntu', sans-serif;
 	border-bottom: 1px solid lightgrey;
 	margin: auto;
 	padding: 10px 0;
@@ -70,13 +70,11 @@ body{
 
 .titre-liste-tournoi{
 	border: none;
-	background-color: #006400;
-	color: white;
-	font-size: 35px;
+	font-size: 18px;
 	text-align: center;
-	letter-spacing: 1px;
 	margin: 0;
-	padding: 1%;
+	padding: 15px;
+	padding-bottom: 0px;
 	font-family: 'Titillium Web', sans-serif;
 }
 #titre_corps{
@@ -363,3 +361,7 @@ a:hover {
 
 a { color: black; }
 a:hover { color: dimgray; }
+
+body *{
+	font-family: 'Nunito', sans-serif;
+}

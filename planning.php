@@ -1,28 +1,31 @@
 <?php
 	include ('conf.php');
 	$format = 'Y-m-d';
+	// $parametres_fonction = $_POST['nom_fonction'];
 	$nom_fonction = "afficher_events";
 	$parametres_fonction;
+	// $parametres_fonction = $_POST['parametres_fonction'];
 	$parametres_fonction['lieu_id'] = 7;
 	$heure_min = 7.5;
 	$heure_max = 24.0;
 	$date_min = new DateTime;
-	// On enlève un jour et un heure au valeur min, afin de générer les entête du tableau
-	//enlever un jour idem pour l'heure
+	$date_max = clone($date_min);
+	$date_max->add( new DateInterval('P6M'));
+	var_dump($date_max);
 
-	//définition de la date_max;
-	if ($nom_fonction == "afficher_events"){
-		$req_date_max = $db->prepare('SELECT MAX(event_date) FROM tournois WHERE event_lieu = :event_lieu');
-		$req_date_max->execute(array(
-			'event_lieu' => $parametres_fonction['lieu_id']
+	if ($nom_fonction = "planning_complexe"){
+		$req_terrains = $db->prepare('SELECT * FROM terrains WHERE terrain_lieu_id = :lieu_id');
+		$req_terrains->execute(array(
+			'lieu_id' => $parametres_fonction['lieu_id']
 			));
-		$res_date_max = $req_date_max->fetch();
-		$date_max = DateTime::createFromFormat($format, $res_date_max[0]);
+		$res_terrains = $req_terrains->fetchAll();
+		$nb_terrain = count($);
+		var_dump($res_terrains);
 	}
 	?>
 		<table>
 			<?php
-				$date_min->sub( new DateInterval('P1D'));
+				$nom_fonction($date_min, $date_max, $lieu_id, $res_nb_terrains)
 
 				for ($heure = $heure_min; $heure < $heure_max; $heure= $heure + 0.5) {
 					?>
@@ -41,6 +44,7 @@
 									$test_date = 2;
 								}
 								//var_dump($test_date);
+								entete_complexe($jourmin, $jourmax, $lieu_id);
 								while ($jour <= $date_max){
 									if ( $jour == $date_min AND $heure == $heure_min){
 										?>
@@ -85,3 +89,44 @@
 				}
 			?>
 		</table>
+
+<?php
+
+	function entete_complexe($jourmin, $jourmax, $lieu_id, $tab_terrains){
+		$req_format_terrains = $db->prepare('SELECT * FROM formats_terrains');
+		$req_format_terrains->execute();
+		$format_terrains = $req_format_terrains->fetchAll();
+		?>
+			<tr class="entete_complexe_jour">
+				<?php	
+					$jour = clone ($jourmin);
+					while ($jour <= $jourmax){
+						?>
+							<th>
+								<?php echo $jour->format("d/m"); ?>
+							</th>
+						<?php
+						$jour->add( new DateInterval('P1D'));
+					}
+					unset($jour);
+				?>
+			</tr>
+			<tr>
+				<?php	
+					$jour = clone ($jourmin);
+					while ($jour <= $jourmax){
+						foreach ($tab_terrains as $terrain) {
+							?>
+								<td>
+									<?php echo $terrain['terrain_nom'].'<br>'.$format_terrains[$terrain['terrain_format']];
+									?>
+								</td>
+							<?php
+						}
+					}
+					unset($jour);
+				?>
+			</tr>
+		<?php
+	}
+?>

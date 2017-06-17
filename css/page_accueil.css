@@ -16,8 +16,6 @@ body{
 	background-image: none;
 	background-color: white;
 	font-family: ubuntu;
-	display: flex;
-	flex-direction: column;
 }
 body *{
 	font-family: 'Roboto Slab', serif;
@@ -69,6 +67,9 @@ body *{
 	margin-top: 0px;
 	padding-top: 0px;
 }
+.form-horizontal{
+	width: 100%;
+}
 #inscription{
 	padding-bottom: 0px;
 	margin-bottom: 0px;
@@ -93,6 +94,7 @@ body *{
 	margin: 20px;
 	background-color: rgba(255,255,255,0.7);
 }
+
 #div1_img{
 	flex: 1;
 	padding-top: 2%;
@@ -106,6 +108,7 @@ body *{
 	background: rgba(236,240,241,1); 
 	/*background-color: rgb(142,200,237);*/
 }
+
 #div2{
 	padding: 50px;
 	padding-top: 50px;

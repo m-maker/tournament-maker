@@ -6,7 +6,7 @@
 	text-align: center;	
 }
 #inscription, #connexion{
-	width: 40%;
+	width: 90%;
 	max-width: 350px;
 	margin: 10px;
 	margin-bottom: 50px;
@@ -172,6 +172,7 @@ b{
 .form-horizontal{
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 }
 .form-group{
 	clear: both;
@@ -240,4 +241,7 @@ vertical-align: center;
 .tournoi * {
 	background-color: rgb(66,133,244);
 	color: white;
+}
+body *{
+	font-family: 'Nunito', sans-serif;
 }

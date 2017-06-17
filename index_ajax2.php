@@ -217,7 +217,7 @@
                                 $date_tournoi = new DateTime($event['event_date']);
                                 $date_tournoi = date_lettres($date_tournoi->format("w-d-m-Y"));
                                 ?>
-                                <div class="row">
+                                <div class="">
                                     <div class="recap_event center <?php if (isset($event['event_tournoi']) && $event['event_tournoi'] == 0){ echo 'match'; } else { echo 'tournoi';}?> container-fluid">
                                         <a href="feuille_de_tournois.php?tournoi=<?php echo $event["event_id"]; ?>">
                                             <div class="col-sm-3">

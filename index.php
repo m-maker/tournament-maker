@@ -37,8 +37,8 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
     <link href="https://fonts.googleapis.com/css?family=Kumar+One" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/page_accueil.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
     <title>Tournois de foot en salle</title>
     <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
