@@ -43,6 +43,7 @@ if (isset($_POST["pseudo"])){
                         $_SESSION["pseudo"] = $pseudo;
                         $_SESSION["membre_mail"] = $mail;
                         $_SESSION["membre_orga"] = 0;
+                        $_SESSION["membre_avatar"] = "img/avatars/nice.png";
                         //$_SESSION["membre_valide"] = 0;
 
                         $message = "<html>

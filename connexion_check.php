@@ -8,7 +8,7 @@ if (isset($_POST["pseudo"])){
 
 		$pseudo = htmlspecialchars(trim($_POST["pseudo"]));
 		$pass = md5(htmlspecialchars(trim($_POST["pass"])));
-		$req = $db->prepare("SELECT * FROM membres WHERE membre_pseudo = :pseudo AND membre_pass = :pass OR membre_mail = :pseudo AND membre_pass = :pass");
+		$req = $db->prepare("SELECT * FROM membres INNER JOIN avatars ON membre_avatar = avatar_id WHERE membre_pseudo = :pseudo AND membre_pass = :pass OR membre_mail = :pseudo AND membre_pass = :pass");
 		$req->bindValue(":pseudo", $pseudo, PDO::PARAM_STR);
 		$req->bindValue(":pass", $pass, PDO::PARAM_STR);
 		$req->execute();
@@ -20,6 +20,7 @@ if (isset($_POST["pseudo"])){
 			$_SESSION["pseudo"] = $membre["membre_pseudo"];
 			$_SESSION['membre_orga'] = $membre['membre_orga'];
             $_SESSION["membre_mail"] = $membre["membre_mail"];
+            $_SESSION["membre_avatar"] = $membre["avatar_url"];
 
             $req_upd = $db->prepare("UPDATE membres SET membre_derniere_connexion = NOW(),membre_ip_derniere_connexion = :ip WHERE membre_id = :id");
             $req_upd->bindValue(":ip", $_SERVER["REMOTE_ADDR"], PDO::PARAM_STR);

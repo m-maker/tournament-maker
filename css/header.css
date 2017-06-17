@@ -1,9 +1,11 @@
 .header {
+<<<<<<< HEAD
 	background-color: rgb(62,63,58);
 	/*background-image: url('../img/image_foot2.jpg');*/
 	background-size: 100%;
 	background-size: cover;
 	background-repeat: no-repeat;
+	background: rgba(0,0,0,0.9);
 	padding: 2%;
 	border-bottom: 3px solid rgb(255,255,255); 
 	text-align: center;

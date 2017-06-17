@@ -28,8 +28,8 @@ $payIn->ExecutionDetails->SecureModeReturnURL = 'http://test.com';
 
 // create Pay-In
 $createdPayIn = $mangoPayApi->PayIns->Create($payIn);
-var_dump($result);
+//var_dump($createdPayIn);
 
-//$result = $mangoPayApi->PayIns->Get($_SESSION["MangoPayDemo"]["PayInCardWeb"]); */
+//$Paiement = $mangoPayApi->PayIns->Get($_SESSION["MangoPayDemo"]["PayInCardWeb"]);
 
 ?>

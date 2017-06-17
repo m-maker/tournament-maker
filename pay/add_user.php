@@ -12,7 +12,7 @@ if (isset($_POST)){
 	$mois = htmlspecialchars(trim($_POST["mois"]));
 	$annee = htmlspecialchars(trim($_POST["annee"]));
 	$nation = htmlspecialchars(trim($_POST["nat"]));
-	$devise = htmlspecialchars(trim($_POST["devise"]));
+	//$devise = htmlspecialchars(trim($_POST["devise"]));
 	/*$adresse = htmlspecialchars(trim($_POST["adresse"]));
 	$ville = htmlspecialchars(trim($_POST["ville"]));
 	$cp = htmlspecialchars(trim($_POST["cp"]));*/
@@ -56,7 +56,9 @@ if (isset($_POST)){
 
 			header("Location: cartes.php");
 
-		}
+		}else{
+		    alert("Vous devez être majeur pour payer en ligne");
+        }
 
 	}
 

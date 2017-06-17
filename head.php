@@ -15,3 +15,5 @@
 <link href="https://fonts.googleapis.com/css?family=Kumar+One" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Metamorphous" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Metamorphous" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> 

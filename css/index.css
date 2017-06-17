@@ -6,7 +6,7 @@
 	text-align: center;	
 }
 #inscription, #connexion{
-	width: 40%;
+	width: 90%;
 	max-width: 350px;
 	margin: 10px;
 	margin-bottom: 50px;
@@ -99,25 +99,75 @@ b{
 	margin-bottom: 20px;
 	padding: 5px;
 }
-.onglet1{	
-	background-color: rgb(27,50,73);
-	border: solid 1px rgb(20,20,20);
-	color: rgb(235,125,0);
-	height: 100%;
-	padding-left: 5px;
-	padding-right: 5px;
+.menu_complexe div{
+	cursor: pointer;
+	margin: 2px;
+	border-radius: 5px;
+	min-width: 100px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
 }
-.onglet-contenu{
+.menu_complexe{
 	display: flex;
+	flex-wrap: wrap;
+}
+.show_complexe{
+	background-color: white;
+	background-color: rgba(66,133,244, 0.3);
+	color: black;
+	text-align: center;
+}
+.show_complexe *{
+	text-align: center;
+}
+.acti{
+	background-color: rgb(66,133,244);
+}
+.acti:hover{
+	background-color: rgb(66,133,244);
+}
+
+.onglet_complexe{
+	clear: both;
+	padding: 0px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	display: flex;
+	justify-content: space-between;
+}
+.onglet_complexe_1{
+	display: flex;
+	height: auto;
+	justify-content: space-between;
+	flex-direction: column;
+}
+.onglet_complexe_1_1, .onglet_complexe_1_2, .onglet_complexe_1_3{
+	display: flex;
+	width: 100%;
+}
+.onglet_complexe_1_1 *, .onglet_complexe_1_2 *, .onglet_complexe_1_3 *{
+	margin: auto;
+}
+.onglet_complexe_1_2{
+	height: 50px;
+	width: 50px;
+	margin-bottom: 2px;
+}
+..onglet_complexe_1_2 img{
+	max-height: 100%;
+	min-width: 100%;
+}
+.onglet_complexe_1_3{
+	margin-bottom: 0px;
+}
+.onglet_complexe_1_1{
+}
+.formatage_onglet{
+	display: flex;
+	flex-direction: column;
 }
 .filtre{
 	width: 150px;
-}
-.logo_complexe{
-	width: 50%;
-	text-align: center;
-	margin: 0px;
-	padding: 0px;
 }
 .menu-list{
 }
@@ -143,6 +193,7 @@ b{
 .form-horizontal{
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 }
 .form-group{
 	clear: both;
@@ -155,4 +206,66 @@ b{
 }
 p{
 	style="font-size: 20px;
+}
+#cont-all{
+	padding: 10px;
+}
+#page{
+	background-color: rgb(66,133,244);
+	background-color: rgb(104,159,56);
+}
+
+.recap_event{
+	color: black;
+	display: flex;
+	margin: 5px;
+}
+.heure{
+	font-style: normal;
+	line-height: 10px;
+	font-size: 13px;
+}
+.recap_event a div{
+vertical-align: center;
+}
+.recap_event{
+	background-color: white;
+	border: 1px solid rgb(180,180,180);
+	padding: 0px;
+}
+.recap_event p{
+	margin: 0px;
+	padding: 0px;
+}
+.recap_event div *{
+	text-align: left;
+	vertical-align: center;
+}
+.recap_event_2 h1{
+	margin-top: 0px;
+	padding-top: 0px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+.match{
+	/*background-color: #4682b4;*/
+	border-radius: 5px;
+	color: white;
+	color: blue;
+}
+.tournoi{
+	/*background-color: #2099CF;*/
+	border-radius: 5px;
+	color: white;
+	color: orange;
+}
+.match *{
+	background-color: blue;
+}
+.tournoi * {
+	background-color: rgb(66,133,244);
+	color: white;
+}
+body *{
+	font-family: 'Nunito', sans-serif;
 }

@@ -1,3 +1,4 @@
+
 body{
 	margin: 0rem;
 	padding: 0rem;
@@ -32,7 +33,7 @@ body{
 }
 .volet-titre {
 	color: black;
-	font-family: 'Metamorphous', cursive;
+	font-family: 'Ubuntu', sans-serif;
 	border-bottom: 1px solid lightgrey;
 	margin: auto;
 	padding: 10px 0;
@@ -57,6 +58,8 @@ body{
 	background-color: rgba(235,235,235,0.3);
 	background-color: rgb(142,200,237);
 	color: white;
+	background-color: rgba(235,235,235,0.9);
+	color: black;
 }
 .corps_onglet{
 	margin: 5px;
@@ -66,29 +69,32 @@ body{
 	border-top: none;
 }
 
+
 .recap-event{
 	margin: auto;
-	margin-top: 40px;
-	border: solid 1px black;
+	margin-top: 10px;
 	width: 95%;
 	background-color: white;
+}
+.recap_event a{
+	width: 100%;
 }
 
 .titre-liste-tournoi{
 	border: none;
-	background-color: #006400;
-	color: white;
-	font-size: 35px;
+	font-size: 18px;
 	text-align: center;
-	letter-spacing: 1px;
 	margin: 0;
-	padding: 1%;
+	padding: 15px;
+	padding-bottom: 0px;
 	font-family: 'Titillium Web', sans-serif;
 }
 #titre_corps{
 	width: 100%;
 	color: white;
 	padding: 16px;
+	border-bottom: 1px solid dimgray;
+	background-color: rgba(0,0,0,0.5);
 	margin:0;
 	font-size: 15px;
 	font-weight: bold;
@@ -106,6 +112,7 @@ body{
 	width: 80%;
 	padding: 1%;
 }
+
 .menu-orga {
 	display: flex;
 	text-align: center;
@@ -119,18 +126,12 @@ body{
 }
 .menu-orga div{
 	display: flex;
-	padding-top: 10px;
+	padding-top: 0px;
 	min-width: 150px;
 	border-top-left-radius: 2px;
 	border-top-right-radius: 2px;
 }
 .show{
-	padding: 1%;
-	background-color: rgba(0,0,0,0.8);
-	border: solid 1px rgb(20,20,20);
-	color: rgb(200,200,200);
-	text-decoration: none;
-	font-weight: bold;
 }
 .show:hover{
 	background: #778899;
@@ -336,12 +337,6 @@ a:hover {
 .no-button {
 	line-height: 50px;
 }
-.menu-orga .show {
-	width: 19%;
-	margin: 0.25%;
-	cursor: pointer;
-}
-
 #quit-avis {
 	cursor: pointer;
 }
@@ -378,3 +373,7 @@ a:hover {
 
 a { color: black; }
 a:hover { color: dimgray; }
+
+body *{
+	font-family: 'Nunito', sans-serif;
+}

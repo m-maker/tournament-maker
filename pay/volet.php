@@ -33,8 +33,8 @@
                 </a>
             </div>
         <?php }else{ ?>
-            <div id="mes_tournois">
-                <a href="../organisateur/organiser_tournoi.php" <?php activer_item('organiser_tournoi.php'); ?>>
+            <div id="mes_paiements" <?php activer_item('organiser_tournoi.php'); ?>>
+                <a href="../organisateur/organiser_tournoi.php">
                     <span class="glyphicon glyphicon-asterisk"></span> Organiser un tournoi
                 </a>
             </div>
@@ -42,7 +42,7 @@
 
         <hr class="separateur-volet">
 
-        <div id="mes_notifs">
+        <div id="mes_messages">
             <a href="../notifs.php" <?php activer_item('notifs.php'); ?>>
                 <span class="glyphicon glyphicon-alert"></span>
                 <span id="notif-compte">

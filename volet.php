@@ -7,12 +7,14 @@
         }
     ?>
 
-    <h3 class="volet-titre"><?php if (isset($_SESSION['pseudo'])) {echo $_SESSION["pseudo"];} ?></h3>
+    <h3 class="volet-titre">
+        <img src="<?php echo $_SESSION["membre_avatar"]; ?>" width="30" /> <?php echo $_SESSION["pseudo"]; ?>
+    </h3>
 
     <div id="accueil">
         <a href="index.php" <?php activer_item('index.php'); ?> >
             <?php 
-                if (isset($_SESSION['id']) && !empty($_SESSION['id']) && $_SESSION["membre_orga"] == 0){
+                if ($_SESSION["membre_orga"] == 0){
                     ?>
                         <span class="glyphicon glyphicon-search"></span> Trouver des tournois
                     <?php 
