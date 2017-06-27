@@ -26,7 +26,7 @@
 	margin-bottom: 15px;
 }
 #header_feuille_de_tournoi *{
-	font-weight: 900;
+	font-weight: 500;
 	color: rgb(220,220,220);
 	background-color: rgb(20,20,20);
 	background-color: #4682b4;
@@ -68,11 +68,16 @@
 	background: #f5f5f5;
 }
 .add-team {
-	width: 100%;
+	margin: 5px;
+	padding: 3px;
+	padding-right: 5px;
+	padding-left: 5px;
 }
 #cont_liste-msg-tournoi{
 	height: 400px;
 	overflow-y: scroll;
+	background-color: white;
+	padding: 5px;
 }
 .titre_cadre_contenu_fdt{
 	margin: 0px;
@@ -110,7 +115,7 @@
 	margin-top: 0;
 }
 #contenu_body_match {
-	font-size: 20px;
+	font-size: 15px;
 	margin: 10px auto;
 	border-radius: 5px;
 	width: 100%;
@@ -169,7 +174,6 @@ h3 {
 	padding-bottom: 10px;
 	color: rgb(27,50,73);
 	text-align: center;
-	font-family: 'Baloo', cursive;
 	font-weight: normal;
 	font-size: 18px;
 }
@@ -202,7 +206,7 @@ h3 {
 	margin: 1% 0;
 	text-align: center;
 	font-weight: bold;
-	font-size: 20px;
+	font-size: 14px;
 }
 .titre-mur-equipe {
 	border-bottom: 1px solid black;
@@ -235,15 +239,13 @@ h3 {
 	padding: 1%;
 }
 .msg-cont {
-	padding: 3px;
-	font-size: 14px;
+	padding: 7px;
+	font-size: 12px;
 	text-align: left;
-	background: #f5f5f5;
-	border-bottom: 1px solid lightslategrey;
 }
 .sign-msg {
-	text-align: left;
 	font-size: 10px;
+	text-align: right;
 }
 /* 
 	MUR DU TOURNOI	

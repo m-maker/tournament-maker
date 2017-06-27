@@ -18,6 +18,16 @@
             <?php } ?>
         </a>
     </div>
+    <div id="Planning">
+
+        <a href="planning.php" <?php activer_item('planning.php'); ?> >
+            <?php if (isset($_SESSION['id']) && !empty($_SESSION['id']) && $_SESSION["membre_orga"] == 0){ ?>
+                <span class="glyphicon glyphicon-search"></span> Trouver des tournois
+            <?php }else{ ?>
+                <span class="glyphicon glyphicon-calendar"></span> Planning
+            <?php } ?>
+        </a>
+    </div>
 
     <?php if(isset($_SESSION['id']) && !empty($_SESSION['id'])){ ?>
 

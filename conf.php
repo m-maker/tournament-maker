@@ -464,6 +464,16 @@ function compteMessagesNonVus($membre){
     return $req->fetchColumn();
 }
 
+function liste_event_terrain($terrain_id) {
+    $db = connexionBdd();
+    $req = $db->prepare('SELECT * FROM creneaux INNER JOIN tournois ON creneaux.creneau_event_id = tournois.event_id WHERE creneaux.creneau_terrain_id = :terrain_id');
+    $req->execute(array(    
+        'terrain_id' => $terrain_id
+        ));
+    $res = $req->fetchAll();
+    return $res;
+}
+
 include 'Notifications.php';
 //$Notifs = new Notifications();
 

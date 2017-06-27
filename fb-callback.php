@@ -83,8 +83,9 @@ $user = $response->getGraphUser();
 
 $img_url = 'http://graph.facebook.com/'.$user["id"].'/picture';
 
-$req_user_exist = $db->prepare("SELECT * FROM membres WHERE membre_mail = :mail");
+$req_user_exist = $db->prepare("SELECT * FROM membres WHERE membre_mail = :mail OR membre_fb_id = :fb_id");
 $req_user_exist->bindValue(":mail", $user["email"], PDO::PARAM_STR);
+$req_user_exist->bindValue(":fb_id", $user["id"], PDO::PARAM_STR);
 $req_user_exist->execute();
 
 if ($req_user_exist->rowCount() == 0) {
@@ -108,7 +109,7 @@ if ($req_user_exist->rowCount() == 0) {
     $req_id = $db->query("SELECT MAX(membre_id) FROM membres;");
     $req_id->execute();
     $id = $req_id->fetchColumn() + 1;
-    $req = $db->prepare("INSERT INTO membres (membre_id, membre_pseudo, membre_pass, membre_tel, membre_mail, membre_orga, membre_date_inscription, membre_derniere_connexion, membre_ip_inscription, membre_ip_derniere_connexion, membre_code_validation, membre_validation, membre_dpt_code, membre_avatar) VALUES (:id, :pseudo, :pass, :tel, :mail, 0, NOW(), NOW(), :ip, :ip, :code, 0, null, :av_id)");
+    $req = $db->prepare("INSERT INTO membres (membre_id, membre_pseudo, membre_pass, membre_tel, membre_mail, membre_orga, membre_date_inscription, membre_derniere_connexion, membre_ip_inscription, membre_ip_derniere_connexion, membre_code_validation, membre_validation, membre_dpt_code, membre_avatar, membre_fb_id) VALUES (:id, :pseudo, :pass, :tel, :mail, 0, NOW(), NOW(), :ip, :ip, :code, 0, null, :av_id, :fb_id)");
     $req->bindParam(":id", $id, PDO::PARAM_INT);
     $req->bindParam(":pseudo", $pseudo, PDO::PARAM_STR);
     $req->bindParam(":pass", $pass, PDO::PARAM_STR);
@@ -117,6 +118,7 @@ if ($req_user_exist->rowCount() == 0) {
     $req->bindParam(":code", $code, PDO::PARAM_STR);
     $req->bindParam(":ip", $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
     $req->bindParam(":av_id", $av_id, PDO::PARAM_INT);
+    $req->bindValue(":fb_id", $user["id"], PDO::PARAM_STR);
     $req->execute();
 }else{
     $utilisateur = $req_user_exist->fetch();
@@ -132,7 +134,18 @@ if ($req_user_exist->rowCount() == 0) {
 $_SESSION["id"] = $id;
 $_SESSION["pseudo"] = $pseudo;
 $_SESSION["membre_mail"] = $mail;
-$_SESSION["membre_orga"] = 0;
+$req_orga = $db->prepare('SELECT * FROM membres WHERE membre_id = :membre_id');
+$req_orga->execute(array(
+    'membre_id' => $id
+    ));
+$res_orga = $req_orga->fetch();
+if (isset($res_orga['membre_orga'])){
+    $orga = $res_orga['membre_orga'];
+}
+else{
+    $orga = 0;
+}
+$_SESSION["membre_orga"] = $orga;
 $_SESSION["membre_avatar"] = $img_url;
 
 //echo '<br><br>';

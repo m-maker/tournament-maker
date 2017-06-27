@@ -4,6 +4,7 @@
 	width: 70%;
 	height: 70%;
 	background-image: url('../img/image_foot2.jpg');
+	background-image: url('../img/accueil1.jpg');
 	background-size: cover;
 	background-position: center;
 	background-position: bottom;
@@ -15,17 +16,6 @@ body{
 	clear: both;
 	background-image: none;
 	background-color: white;
-	font-family: ubuntu;
-}
-body *{
-	font-family: 'Roboto Slab', serif;
-	font-family: 'Titillium Web', sans-serif;
-	font-family: 'Lobster', cursive;
-	font-family: 'Yellowtail', cursive;
-	font-family: 'Metamorphous', cursive;
-	font-family: 'Permanent Marker', cursive;
-	font-family: 'Muli', sans-serif;
-	font-family: 'Roboto Slab', serif;
 }
 #navbar a{
 	clear: both;
@@ -49,14 +39,17 @@ body *{
 	display: flex;
 	margin: 0;
 	background: rgba(236,240,241,1); 
+	background-image: url(../img/accueil1.jpg);
+	background-size: cover;
 	padding-bottom: 50px;
-	padding-top: 40px;
+	padding-top: 10px;
 }
 #inscription, #connexion{
 	max-width: 350px;
 	margin: 10px;
 	background-color: white;
 	border: solid 1px rgb(200,200,200);
+	border-radius: 5px;
 	padding: 15px;
 	padding-top: 5px;
 	padding-bottom: 5px;
@@ -87,26 +80,33 @@ body *{
 	flex: 1;
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 }
 #div1-1 h1{
-	text-align: center;
-	height: 20%;
-	margin: 20px;
-	background-color: rgba(255,255,255,0.7);
+	padding: 45px;
+	margin: auto;
+	margin-top: 0px;
+	background-color: rgba(104,159,56,0.95);
+	background-color: rgba(240,240,240,0.9);
+	color: white;
+	color: rgb(66,133,244);
+	font-family: 'Roboto', sans-serif;
+	border-radius: 15px;
 }
 
 #div1_img{
 	flex: 1;
-	padding-top: 2%;
 	width: 100%;
-	background-image: url('../img/fond_index.jpg');
+	display: flex;
+	/*background-image: url('../img/fond_index.jpg');
+	background-image: url('../img/accueil1.jpg');*/
 	background-size: 100%;
 	background-repeat: no-repeat;
 }
 #div1-2{
 	width: 300px;
-	background: rgba(236,240,241,1); 
-	/*background-color: rgb(142,200,237);*/
+	/*background: rgba(236,240,241,1); 
+	background-color: rgb(142,200,237);*/
 }
 
 #div2{

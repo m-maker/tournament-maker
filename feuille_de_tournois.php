@@ -368,7 +368,7 @@ if ($_SESSION["membre_orga"] == 1)
                                         if(empty($mon_equipe) && $leTournoi->event_nb_equipes > compte_equipes($leTournoi->event_id)){
                                             ?>
                                                 <hr style="border-color: white;">
-                                                <button class="add-team btn btn-primary" value="<?php echo $leTournoi->event_id; ?>">Créer mon équipe <span class="glyphicon glyphicon-menu-down right"></span></button>
+                                                <button class="add-team btn btn-primary" value="<?php echo $leTournoi->event_id; ?>">Créer mon équipe </button>
                                                 <form class="espace-top form-equipe" method="post" action="creer_equipe.php?tournoi=<?php echo $leTournoi->event_id; ?>">
                                                     <div class="col-md-8" style="padding:0; background: lightgrey;">
                                                         <input style="width:100%;" type="text" class="form-control" id="inputPseudo" name="nom" placeholder="Nom de l'équipe">
@@ -394,9 +394,12 @@ if ($_SESSION["membre_orga"] == 1)
                                                             }
                                                         ?>
                         			    				<div class="sign-msg">
-                        			    					Par <span><?php echo $unMessage["membre_pseudo"]; ?></span> le <span><?php echo $unMessage["mur_date"]; ?></span>
+                                                            <span class="sign-msg-date"> Le <?php echo $unMessage["mur_date"]; ?></span>
+                                                            <br/>
+                        			    					<span class="sign-msg-membre"> Par <?php echo $unMessage["membre_pseudo"]; ?></span>
                         			    				</div>
                         			    			</div>
+                                                    <hr style="margin-right: 30%; margin-left: 30%; margin-bottom: 5px;"/>
                                                 <?php
                                             }
                                         ?>
