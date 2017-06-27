@@ -8,11 +8,11 @@
 #inscription, #connexion{
 	width: 90%;
 	max-width: 350px;
-	margin: 10px;
-	margin-bottom: 50px;
+	margin: auto;
+	margin-bottom: 10px;
 	background-color: white;
 	border: solid 1px rgb(200,200,200);
-	padding: 15px;
+	padding: 3px;
 }
 .scrollable-menu {
     height: auto;
@@ -27,6 +27,9 @@ li:hover{
 }
 label{
 	width: 100%;
+}
+legend{
+	margin-bottom: 10px;
 }
 .liste_departements{
 	margin: 0.1rem;
@@ -63,6 +66,27 @@ b{
 	text-decoration: underline;	
 	line-height: 25px;
 }
+#complexe{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.complexe img{
+	width: 70px;
+}
+.complexe{
+	width: 200px;
+	background-color: rgba(0,0,0,0.8);
+	color: white;
+	margin: 10px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	padding: 10px;
+}
+.div_input2 *{
+	color: black;
+}
 #btn_dpt{
 	width: 100px;
 	padding: 1px;
@@ -92,8 +116,10 @@ b{
 }
 .show_complexe{
 	background-color: white;
-	background-color: rgba(66,133,244, 0.3);
+	background-color: rgba(66,133,244);
+	background-color: rgb(50,50,50);
 	color: black;
+	color: white;
 	text-align: center;
 }
 .show_complexe *{
@@ -113,12 +139,15 @@ b{
 	border-top-right-radius: 2px;
 	display: flex;
 	justify-content: space-between;
+	width: 150px
 }
 .onglet_complexe_1{
 	display: flex;
-	height: auto;
+	height: 100px;
 	justify-content: space-between;
 	flex-direction: column;
+	width: 100px;
+	font-size: 12px;
 }
 .onglet_complexe_1_1, .onglet_complexe_1_2, .onglet_complexe_1_3{
 	display: flex;
@@ -128,9 +157,12 @@ b{
 	margin: auto;
 }
 .onglet_complexe_1_2{
-	height: 50px;
-	width: 50px;
+	height: 30px;
 	margin-bottom: 2px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	padding: 3px;
 }
 ..onglet_complexe_1_2 img{
 	max-height: 100%;
@@ -164,7 +196,6 @@ b{
 }
 .info-index a {
 	color: darkslategray;
-	font-family: 'Kumar One', cursive;
 }
 .info-index a:hover {
 	color: grey;
@@ -182,6 +213,9 @@ b{
 .form-control{
 	margin: auto;
 	width: 80%;
+}
+p{
+	style="font-size: 20px;
 }
 #cont-all{
 	padding: 10px;
@@ -241,7 +275,4 @@ vertical-align: center;
 .tournoi * {
 	background-color: rgb(66,133,244);
 	color: white;
-}
-body *{
-	font-family: 'Nunito', sans-serif;
 }

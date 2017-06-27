@@ -1,12 +1,17 @@
 #volet{
 	background-color: rgba(235,235,235,0.95);
-	color: black;
+	background-color: rgb(142,200,237);
+	background-color: rgb(104,159,56);
+	background-color: rgb(66,133,244);
+	background-color: #008080;
+	color: 
+	color: white;
 	padding: 2px;
 	margin: 0;
 	min-width: 100px;
 	width: 15%;
 	min-height: 570px;
-	border-right: solid 1px rgb(200,200,200);
+	border-right: solid 3px rgb(200,200,200);
 }
 #volet .glyphicon {
 	margin-top: 2px;
@@ -23,6 +28,8 @@
 #volet div a{
 	padding: 1%;
 	color: black;
+	color: rgb(20,20,20);
+	color: white;
 	border-radius: 5px;
 	display: block;
 	width: 100%;
@@ -50,4 +57,9 @@
 }
 #post-avis{
 	margin: 2px;
+}
+@media only screen and (max-device-width:480px) {
+	#div1-1{
+		display: none;
+	}
 }

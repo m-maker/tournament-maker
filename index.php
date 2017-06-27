@@ -11,8 +11,9 @@ $pointeur_compte = fopen($fichier_compte, 'w+');
 $visites = file($fichier_log);
 $ecrire = true;
 foreach ($visites as $uneVisite){
-    if ($ip."\r\n" == $uneVisite)
+    if ($ip."\r\n" == $uneVisite){
         $ecrire = false;
+      }
 }
 
 if ($ecrire) {
@@ -33,10 +34,6 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
     <?php include('head.php'); ?>
 
     <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************                      -->
-    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Kumar+One" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/page_accueil.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <title>Tournois de foot en salle</title>
@@ -49,6 +46,7 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
 <!-- HEADER -->
 <?php if (isset($_SESSION["id"])){
     include('header.php');
+    var_dump($_SESSION['membre_orga']);
 } ?>
 
 <!-- CONTENU DE LA PAGE -->
@@ -79,9 +77,7 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
                         </script>';
                     }
                     ?>
-                    <h1 id="titre_corps">Trouver des tournois</h1>
-                        
-                    <hr/>
+                    <h1 id="titre_corps">Trouver des matchs</h1>
                         <div id="post" class="container-fluid center" style="padding: 2%;">
                             <p style="color: black; font-size: 20px;">Selectionnez un département afin de trouver les tournois / matchs</p>
                             <button id="btn_dpt" class="btn btn-default center" data-toggle="modal" data-target="#myModal">
@@ -139,20 +135,17 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
                                 <li>
                                     <a href="#com">On parle de nous</a>
                                 </li>
-                                <li>
-                                    coucou
-                                </li>
                             </ul>
                         </div>
                     </div>
                 </nav>
 
     <div id="div1">
-        <div id="div1-1">    
+        <div id="div1-1" class="col-sm-12 col-md-8">    
             <!-- <img class="img img-responsive" src="img/image_foot2.jpg"> -->
             <div id="div1_img">
 
-            <h1>Facilite-toi la vie: <br/> utilise un outil pour organiser tes matchs</h1>
+            <h1 id="titre_image_acceuil" class="col-sm-12 col-md-8">Des tournois et des matchs de foot en salle<br/>Rejoignez-nous, <br/> que vous soyez seul ou en équipe!</h1>
             </div>
         </div>
         <div id="div1-2">
@@ -224,16 +217,16 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
             <h2 class="fct_titre">1ère plateforme en diversité de matchs</h2>
             <hr>
             <p>
-                <strong>Vous n'êtes pas assez pour faire un match</strong>, rejoignez un de nos <strong>matchs publiques</strong> et jouez venez jouez avec d'autres personnes.
+                <strong>Vous n'êtes pas assez pour faire un match</strong>, rejoignez un de nos <strong>matchs publiques</strong>.
                 <br/>
                 <br/>
-                <strong>Vous êtes une équipe</strong>, nous avons des créneaux spécialement réservés pour les <strong>rencontre d'équipes</strong>. C'est l'occasion de faire un <strong>match</strong> ou un <strong>mini-championnat</strong> en fonction du nombre d'équipes.
+                <strong>Vous êtes une équipe ?</strong>, nous avons des créneaux spécialement réservés pour les <strong>rencontres d'équipes</strong>. C'est l'occasion de faire un <strong>match</strong> ou un <strong>mini-championnat</strong>.
                 <br>
                 <br/>
-                Sur RTT* ce sont directement <strong>les complexes qui publient leurs matchs</strong> et <strong>il y en à pour tous le goûts!</strong>
+                Sur RTT* ce sont directement <strong>les complexes qui publient leurs matchs</strong> et <strong>il y en a pour tous le goûts!</strong>
                 <br/>
                 <br/>
-                Ha oui, nous avions oublié, bientôt vous pourrez créer vos propres matchs ;-)
+                Ha oui, nous avons oublié de vous dire que bientôt, vous pourrez créer vos propres matchs ;-)
                 <br/>
                 *RTT: ReserveTonTerrain.fr
             </p>
@@ -251,7 +244,7 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
             Mais comme il est d'usage de mettre <strong>l'eau à la bouche</strong> des personnes qui font l'effort de lire notre page d'accueil, et même si cela sera <strong>difficile à croire</strong> voici quelque'unes des <strong>principales fonctionnalités.</strong>
             <br/>
             <br/>
-            - La possibilité de voire <strong>tous les matchs du son complexe en 5 secondes</strong> (oui c'est votre écran d'accueil quand vous vous connectez haha)
+            - La possibilité de voir <strong>tous les matchs de son complexe en 5 secondes</strong> (oui c'est notre écran d'accueil quand vous vous une fois connecté, allez regarder pour voir.).
             <br/>
             <br/>
             - <strong>L'inscription</strong> à un match se fait en <strong>5 secondes aussi.</strong> (2 clics).
@@ -287,27 +280,27 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
             <h2 class="fct_titre">Sans parler de...</h2>
             <hr>
             <p> Nous avons déjà réussi à négocier des avantages pour nos utilisateurs!
-            <br>Nous faisons tout notre possible pour que puissiez régulièrement bénéificier des <strong>meilleurs offres</strong> aussi bien <strong>sur les tarifs</strong> que <strong>sur les services</strong></p>
+            <br>Nous faisons tout notre possible pour que puissiez régulièrement bénéficier des <strong>meilleurs offres</strong> aussi bien <strong>sur les tarifs</strong> que <strong>sur les services</strong></p>
             <hr>
         </div>
     </div>
     <div id="div_equipe" class="row">
         <div class="container-fluid">
             <h2>Notre mission - notre équipe - notre histoire</h2>
-            <p>Nous savons ce qu'il en est pour vous mais dans notre équipe, nous avons tous connu un paquet de gélères quand il s'agît de faire un foot en salle.
+            <p>Dans notre équipe, nous avons tous connu un paquet de galères quand il s'agit de faire un foot en salle...
             <br/>
             <br/>
-            Sérieusement, nous sommes au 21ème siècle à l'age d'or du numérique et on arrive même pas à savoir qui sera présent au prochain match...
+            Nous sommes au 21ème siècle, à l'age d'or du numérique, et nous n'arrivons même pas à savoir qui sera présent au prochain match...
             <br/>
             <br/>
-            Imaginez une app, capable de gérer le match comme facebook gère un événément. C'est à dire une liste des participants, des invitations en deux clics, la possibilité de poster un message sur le mur pour que tout le monde puisse le voir...
+            Imaginez une app' capable de gérer le match comme facebook gère un événément. Avec une liste des participants, des invitations en deux clics, la possibilité de poster un message sur le mur pour que tout le monde puisse le voir...
             <br/>
             Trop c'est trop, nous n'avons pas pu attendre plus longtemps! 
             <br/>
             <br/>
-            Nous avons donc décidé de créer une application à la hauteur des problèmes que rencontre les joueurs et joueuses de foot en salle. 
+            Nous avons donc décidé de créer une application à la hauteur des problèmes que rencontrent les joueurs et joueuses de foot en salle. 
             <br/>
-            Aujourd'hui nous sommes toutes une équipe à travailler sur cette plateforme pour vous la proposé très prochainement.
+            Aujourd'hui nous sommes toute une équipe à travailler sur cette plateforme pour vous la proposer très prochainement.
             <br/>
             <br/>
             Pour les curieux, les impatients et nos testeurs que nous remercions, nous avons mis sur ce site une version web de la future application. Pour cela il vous suffit de vous<a href="#div1"> Connecter</a>.
@@ -353,6 +346,19 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
     include('footer.php');
 }
 ?>
+<script type="text/javascript">
+    
+            $(".show1").click(function() {
+                $(".show1").removeClass("acti1");
+                $(this).addClass("acti1");
+                $(".cont1").hide();
+                var id = $(this).attr("id");
+                if (id == "show-prives")
+                    $("#prives").show();
+                else if (id == "show-publiques")
+                    $("#publiques").show();
+            });
+</script>
 </body>
 
 </html>

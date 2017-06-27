@@ -1,0 +1,70 @@
+#corps{
+	background-color: rgb(200,200,200);
+}
+.tableau{
+	width: 90%;
+	margin: auto;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	display: flex;
+}
+.boutton{
+	width: 150px;
+	font-size: 12px;
+	padding: 0px;
+	margin: 0px;
+	height: 100%;
+}
+table {
+	margin: auto;
+}
+table *{
+	text-align: center;
+}
+td{
+	margin: 0px;
+	padding: 0px;
+	height: 23px;
+	border: solid 1px grey;
+}
+.creneau_match{
+	background-color: rgb(104,159,56);
+	color: white;
+
+}
+table *{
+	margin: 0px;
+	padding: 0px;
+}
+#datepicker{
+	background-color: rgba(0,0,0,0);
+	border: none;
+}
+#post_planning{
+	width: 800px;
+	text-align: center;
+	margin: auto;
+}
+.div_input2{
+	margin-top: 10px;
+	display: flex;
+}
+#jour{
+	margin-top: 10px;
+	margin: auto;
+}
+.form-control{
+	width: 200px;
+	padding: 1px; 
+	height: 20px;
+}
+#new-compte-match{
+	border: solid 1px grey;
+	background-color: #ececec;
+	padding: 5px;
+}
+#new-compte-match .form-control{
+	width: 90%;
+	text-align: left;
+	margin-top: 5px;
+}

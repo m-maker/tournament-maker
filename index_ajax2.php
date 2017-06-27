@@ -48,13 +48,16 @@
 	//var_dump($tab_complexes_events);
 	//var_dump($tab_complexes_events); 
 ?>		
-            <p style="color: black; font-size: 20px;">Selectionnez un département afin de trouver les tournois / matchs</p>
-            <button id="btn_dpt" class="btn btn-default center" data-toggle="modal" data-target="#myModal">
-                <div id="nom_departement" > <?php echo $res_dpt['dpt_nom']; ?>  <b class="caret"></b> </div>
-            </button>
-                <hr/>
+            <hr/>
             <div class="onglet-contenu">
-                <span class="filtre"><b> Complexe:</b></span>
+            <p>
+                <span class="filtre"><b> Complexe:</b>
+                    <button id="btn_dpt" class="btn btn-default center" data-toggle="modal" data-target="#myModal">
+                        <div id="nom_departement" > <?php echo $res_dpt['dpt_nom']; ?>  <b class="caret"></b> </div>
+                    </button>
+                </span>
+            </p>
+            <br/>
          		<div class="menu_complexe">
                     <div class="center show_complexe acti" id="onglet-all" >
                         Tous (<?php echo compte_event_dpt($dpt); ?>)
@@ -69,7 +72,7 @@
                                         <div class="center onglet_complexe_1_1">
                                             <p><?php echo $lieu['lieu_nom']; ?> <br/> <?php echo $lieu['lieu_ville']; ?></p>
                                         </div>
-                                        <div class="center onglet_complexe_1_2" style="background-image: url(<?php echo $lieu['lieu_logo']; ?>); background-size: contain; background-repeat: no-repeat; background-position: center;">
+                                        <div class="center onglet_complexe_1_2" style="background-image: url(<?php echo $lieu['lieu_logo']; ?>);">
                                             <!-- <img src="<?php echo $lieu['lieu_logo']; ?>" alt="<?php echo $lieu['lieu_nom']; ?>"> -->
                                         </div>
                                         <div class="center onglet_complexe_1_3 "> 
@@ -131,7 +134,7 @@
                     <div class="recap_event center <?php if (isset($event['event_tournoi']) && $event['event_tournoi'] == 0){ echo 'match'; } else { echo 'tournoi';}?> container-fluid">
                         <a href="feuille_de_tournois.php?tournoi=<?php echo $event["event_id"]; ?>">
                             <div class="col-sm-3">
-                                <p class="bold">
+                                <p class="">
                                 Le <span ><?php echo $date_tournoi; ?></span>
                                 <br/>
                                 <span class="heure"><?php echo $heure_debut; ?></span> - <span><?php echo $heure_fin; ?></span>
@@ -156,11 +159,11 @@
                                 </p>
                             </div>
                             <div class="prix col-sm-3">
-                                <span class="bold"><?php echo $event['event_tarif']; ?>€
+                                <span class=""><?php echo $event['event_tarif']; ?>€
                                 <?php echo $team; ?></span>
                             </div>
                             <div class="col-sm-3">
-                                <span class="glyphicon glyphicon-user"></span><span class="bold">
+                                <span class="glyphicon glyphicon-user"></span><span class="">
                                     <?php echo compte_equipes($event['event_id']) . ' / ' . $event['event_nb_equipes']; ?>
                                 </span> 
                                 <span>

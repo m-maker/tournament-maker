@@ -16,12 +16,12 @@
             <?php 
                 if ($_SESSION["membre_orga"] == 0){
                     ?>
-                        <span class="glyphicon glyphicon-search"></span> Trouver des tournois
+                        <span class="glyphicon glyphicon-search"></span> Trouver des matchs
                     <?php 
                 }
                 else{ 
                     ?>
-                        <span class="glyphicon glyphicon-home"></span> Gerer mes tournois
+                        <span class="glyphicon glyphicon-home"></span> Gerer mes matchs
                     <?php 
                 }
             ?>

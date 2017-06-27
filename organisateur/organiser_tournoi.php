@@ -374,8 +374,7 @@
                                             <p>Heure du début</p>
                                             <div class="ligne">
                                                 <div>
-                                                    <label class="control-label">Heures</label>
-                                                    <select class="form-control" id="input_heure_debut_match" name="heure_debut">
+                                                    <select class="form-control" id="input_heure_debut_match" style="width: 50%;" name="heure_debut">
                                                         <?php
                                                         for ($i=0; $i<25 ; $i++) {
                                                             if ($i<10){
