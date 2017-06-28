@@ -32,22 +32,22 @@ if (!isset($_SESSION["id"]))
 
     <!-- CONTENU DE LA PAGE -->
     <div id="corps">
-        <h1 id="titre_corps"><?php echo $tournoiObjet->event_titre; ?> > Modifier</h1>
+        <h1 id="titre_corps"><?php echo $tournoiObjet["event_titre"]; ?> > Modifier</h1>
         <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
             
 	<?php
-		$req = $db->prepare("SELECT * FROM infos_mango WHERE im_id = :id");
-		$req->bindValue(":id", $tournoiObjet->event_mango, PDO::PARAM_INT);
+		$req = $db->prepare("SELECT * FROM infos_mango WHERE id = :id");
+		$req->bindValue(":id", $tournoiObjet["event_mango_id"], PDO::PARAM_INT);
 		$req->execute();
 		$im = $req->fetch();
-		$heure_debut = explode(":", $tournoiObjet->event_heure_debut)[0];
-        $heure_fin = explode(":", $tournoiObjet->event_heure_fin)[0];
-        $minute_debut = explode(":", $tournoiObjet->event_heure_debut)[1];
-        $minute_fin = explode(":", $tournoiObjet->event_heure_fin)[1];
-		if (empty($tournoiObjet) || $tournoiObjet == null || $_SESSION['id'] != $tournoiObjet->event_orga && $_SESSION["id"] != $tournoiObjet->event_orga_2){
+		$heure_debut = explode(":", $tournoiObjet['event_heure_debut'])[0];
+        $heure_fin = explode(":", $tournoiObjet['event_heure_fin'])[0];
+        $minute_debut = explode(":", $tournoiObjet['event_heure_debut'])[1];
+        $minute_fin = explode(":", $tournoiObjet['event_heure_fin'])[1];
+		if (empty($tournoiObjet) || $tournoiObjet == null || $_SESSION['id'] != $tournoiObjet['event_orga_id'] && $_SESSION["id"] != $tournoiObjet['event_orga2_id']){
 		    header('location: index.php');
 		}else{
         $liste_comptes = recupCompteOrga($_SESSION["id"]);
@@ -59,7 +59,7 @@ if (!isset($_SESSION["id"]))
                 <div class="row">
                         <div style="background: #f5f5f5;">
 
-                            <form enctype="multipart/form-data" class="form-horizontal form-grand" method="post" action="modifier_tournoi_traitement.php?tournoi=<?php echo $tournoiObjet->event_id;  ?>">
+                            <form enctype="multipart/form-data" class="form-horizontal form-grand" method="post" action="modifier_tournoi_traitement.php?tournoi=<?php echo $tournoiObjet[0];  ?>">
                                 <fieldset>
 
                                     <legend class="bold center" id="titre-form"><span class="left"><a href="index.php"><</a></span> Modifier un tournoi</legend>
@@ -67,16 +67,16 @@ if (!isset($_SESSION["id"]))
                                     <hr>
                                     <div class="form-group form-group-sm center">
                                         <p>Coordonnées</p>
-                                        <input type="text" class="form-control" id="input_event_titre" name="event_titre" placeholder="Nom du tournoi" value="<?php echo $tournoiObjet->event_titre; ?>">
+                                        <input type="text" class="form-control" id="input_event_titre" name="event_titre" placeholder="Nom du tournoi" value="<?php echo $tournoiObjet['event_titre']; ?>">
                                         <br/>
                                         <?php ?>
-                                        <input type="text" class="form-control" data-provide="typeahead" id="input_event_lieu_nom" name="event_lieu_nom" placeholder="Nom du lieu qui accueil le tournoi" value="<?php echo $tournoiObjet->lieu_nom; ?>">
+                                        <input type="text" class="form-control" data-provide="typeahead" id="input_event_lieu_nom" name="event_lieu_nom" placeholder="Nom du lieu qui accueil le tournoi" value="<?php echo $tournoiObjet['lieu_nom']; ?>">
                                         <div id="autocomplete" style="position: absolute; display: none; color: black; background: white; border: 1px solid black;">
                                         </div>
-                                        <input type="text" class="form-control" id="input_event_adresse" name="event_adresse" placeholder="Adresse du tournoi" value="<?php echo $tournoiObjet->lieu_adresse_l1; ?>">
+                                        <input type="text" class="form-control" id="input_event_adresse" name="event_adresse" placeholder="Adresse du tournoi" value="<?php echo $tournoiObjet['lieu_adresse_l1']; ?>">
                                         <div class="ligne">
-                                            <input type="text" class="form-control" id="input_event_code_postal" name="event_code_postal" placeholder="Code Postal" value="<?php echo $tournoiObjet->lieu_cp; ?>">
-                                            <input type="text" class="form-control" id="input_event_ville" name="event_ville" placeholder="Ville" value="<?php echo $tournoiObjet->lieu_ville; ?>">
+                                            <input type="text" class="form-control" id="input_event_code_postal" name="event_code_postal" placeholder="Code Postal" value="<?php echo $tournoiObjet['lieu_cp']; ?>">
+                                            <input type="text" class="form-control" id="input_event_ville" name="event_ville" placeholder="Ville" value="<?php echo $tournoiObjet['lieu_ville']; ?>">
                                         </div>
                                         <select class="form-control" name="asso">
                                             <optgroup label="Choisir une Association pour co-administrer le tournoi"></optgroup>
@@ -97,7 +97,7 @@ if (!isset($_SESSION["id"]))
                                                 <p> Date du tournoi </p>
                                                 <div class="form-group has-feedback">
                                                     <label class="control-label">Date</label>
-                                                    <input readonly class="form-control" type="text" name="event_date" id="datepicker" value="<?php ECHO $tournoiObjet->event_date; ?>">
+                                                    <input readonly class="form-control" type="text" name="event_date" id="datepicker" value="<?php ECHO $tournoiObjet["event_date"]; ?>">
                                                     <i class="glyphicon glyphicon-calendar form-control-feedback"></i>
                                                 </div>
                                             </div>
@@ -184,7 +184,7 @@ if (!isset($_SESSION["id"]))
                                                     <?php
                                                     for ($i=1; $i<33; $i++) {
                                                         ?>
-                                                        <option <?php if ($tournoiObjet->event_nb_equipes == $i){echo "selected";} ?> value='<?php echo $i; ?>'><?php echo $i.' équipes'; ?></option>
+                                                        <option <?php if ($tournoiObjet["event_nb_equipes"] == $i){echo "selected";} ?> value='<?php echo $i; ?>'><?php echo $i.' équipes'; ?></option>
                                                         <?php
                                                     }
                                                     ?>
@@ -196,7 +196,7 @@ if (!isset($_SESSION["id"]))
                                                     <?php
                                                     for ($i=0; $i<8; $i++) {
                                                         ?>
-                                                        <option <?php if ($tournoiObjet->event_joueurs_min == $i){echo "selected";} ?> value='<?php echo $i; ?>'><?php echo $i.' joueurs minimum'; ?></option>
+                                                        <option <?php if ($tournoiObjet["event_joueurs_min"] == $i){echo "selected";} ?> value='<?php echo $i; ?>'><?php echo $i.' joueurs minimum'; ?></option>
                                                         <?php
                                                     }
                                                     ?>
@@ -208,7 +208,7 @@ if (!isset($_SESSION["id"]))
                                                     <?php
                                                     for ($i=5; $i<10; $i++) {
                                                         ?>
-                                                        <option <?php if ($tournoiObjet->event_joueurs_max == $i){echo "selected";} ?> value='<?php echo $i; ?>'><?php echo $i.' joueurs maximum'; ?></option>
+                                                        <option <?php if ($tournoiObjet["event_joueurs_max"] == $i){echo "selected";} ?> value='<?php echo $i; ?>'><?php echo $i.' joueurs maximum'; ?></option>
                                                         <?php
                                                     }
                                                     ?>
@@ -222,17 +222,17 @@ if (!isset($_SESSION["id"]))
                                     <div class="form-group form-group-sm center">
                                         <p>Paiement</p>
                                         <label style="margin-right: 2%;" for="radio_equipe">Prix par équipe
-                                            <input <?php if ($tournoiObjet->event_tarification_equipe == 0){echo "selected";} ?> id="radio_equipe" type="radio" name="event_tarification_equipe" value="1">
+                                            <input <?php if ($tournoiObjet["event_tarification_equipe"] == 0){echo "selected";} ?> id="radio_equipe" type="radio" name="event_tarification_equipe" value="1">
                                         </label>
                                         <label for="radio_joueur">Prix par joueur
-                                            <input <?php if ($tournoiObjet->event_tarification_equipe == 0){echo "selected";} ?> id="radio_joueur" type="radio" name="event_tarification_equipe" value="0" checked="checked">
+                                            <input <?php if ($tournoiObjet["event_tarification_equipe"] == 0){echo "selected";} ?> id="radio_joueur" type="radio" name="event_tarification_equipe" value="0" checked="checked">
                                         </label>
                                         <div id="tarif" class="ligne">
                                             <select class="form-control" name="tarif">
                                                 <?php
                                                 for ($i=0; $i < 60; $i=$i+0.5) {
                                                     ?>
-                                                    <option <?php if ($tournoiObjet->event_tarif == $i){echo "selected";} ?> value='<?php echo $i; ?>'>
+                                                    <option <?php if ($tournoiObjet["event_tarif"] == $i){echo "selected";} ?> value='<?php echo $i; ?>'>
                                                         <?php echo $i.' € '; ?>
                                                     </option>
                                                     <?php
@@ -243,9 +243,9 @@ if (!isset($_SESSION["id"]))
                                         <div>
                                             <br/>
                                             <p>Notre service permet de gérer les encaissements des joueurs directement depuis la plateforme. Souhaitez-vous en profiter?</p>
-                                            <input <?php if ($tournoiObjet->event_paiement == 1){echo "selected";} ?> class="pay-clic" id="paiement_ok" type="radio" name="paiement" value="1" checked="checked">
+                                            <input <?php if ($tournoiObjet["event_paiement"] == 1){echo "selected";} ?> class="pay-clic" id="paiement_ok" type="radio" name="paiement" value="1" checked="checked">
                                             <label style="margin-right: 2%;"' for="paiement_ok">Oui, ça m'enlève une grosse épine du pied</label>
-                                            <input <?php if ($tournoiObjet->event_paiement == 0){echo "selected";} ?> class="pay-clic" id="paiement_refus" type="radio" name="paiement" value="0">
+                                            <input <?php if ($tournoiObjet["event_paiement"] == 0){echo "selected";} ?> class="pay-clic" id="paiement_refus" type="radio" name="paiement" value="0">
                                             <label for="paiement_refus">Non merci, j'ai beaucoup de courage!</label>
                                         </div>
 
@@ -255,11 +255,11 @@ if (!isset($_SESSION["id"]))
                                                 <select name="select-compte" id="select-compte" class="form-control">
                                                     <option value="new" id="opt-new">Nouveau compte..</option>
                                                     <?php foreach ($liste_comptes as $unCompte){ ?>
-                                                        <option <?php if ($tournoiObjet->event_rib_id == $unCompte["compte_id"]){echo 'selected';} ?> value="<?php  echo $unCompte["compte_id"]; ?>"><?php echo $unCompte['compte_nom'] . ' ' . $unCompte["compte_prenom"] . ' - ' . $unCompte['compte_rib_iban']; ?></option>
+                                                        <option <?php if ($tournoiObjet["event_compte_id"] == $unCompte["id"]){echo 'selected';} ?> value="<?php  echo $unCompte["id"]; ?>"><?php echo $unCompte['compte_nom'] . ' ' . $unCompte["compte_prenom"] . ' - ' . $unCompte['compte_rib_iban']; ?></option>
                                                     <?php } ?>
                                                 </select>
                                             </div>
-                                            <div <?php if ($tournoiObjet->event_rib_id != null){echo 'style="display:none;"';} ?> id="new-compte">
+                                            <div <?php if ($tournoiObjet["event_compte_id"] != null){echo 'style="display:none;"';} ?> id="new-compte">
                                                 <label for="input_event_rib ">Merci de saisir les informations suivantes afin de recueillir les fonds de votre tournoi :</label>
                                                 <div class="ligne">
                                                     <input type="text" class="form-control" id="input_compte_nom" name="compte_nom" placeholder="Nom du titulaire du compte">
@@ -300,7 +300,7 @@ if (!isset($_SESSION["id"]))
                                     <hr>
                                     <div class="form-group form-group-sm center">
                                         <p>Descriptif</p>
-                                        <textarea class="form-control" name="event_descriptif" rows="3" placeholder="Match organisé par ADN-five, tous niveaux acceptés et super ambiance"><?php echo $tournoiObjet->event_descriptif; ?></textarea>
+                                        <textarea class="form-control" name="event_descriptif" rows="3" placeholder="Match organisé par ADN-five, tous niveaux acceptés et super ambiance"><?php echo $tournoiObjet["event_descriptif"]; ?></textarea>
                                         <!-- LOGO -->
                                         <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
                                         <!--<label for="file" class="label-file">Choisir une icone pour le tournoi</label>
@@ -310,12 +310,12 @@ if (!isset($_SESSION["id"]))
                                     <hr>
                                     <div class="form-group form-group-sm center">
                                         <p>Inscription</p>
-                                        <input <?php if ($tournoiObjet->event_prive == false){ echo 'checked'; } ?> id="match_public" class="clic-radio" type="radio" name="restriction" value="0">
+                                        <input <?php if ($tournoiObjet["event_prive"] == false){ echo 'checked'; } ?> id="match_public" class="clic-radio" type="radio" name="restriction" value="0">
                                         <label for="match_public">Match publique</label>
-                                        <input <?php if ($tournoiObjet->event_prive == true){ echo 'checked'; } ?> id="match_prive" class="clic-radio" type="radio" name="restriction" value="1">
+                                        <input <?php if ($tournoiObjet["event_prive"] == true){ echo 'checked'; } ?> id="match_prive" class="clic-radio" type="radio" name="restriction" value="1">
                                         <label for="match_prive">Match privé (avec mot de passe)</label>
                                         <br/>
-                                        <input <?php if ($tournoiObjet->event_prive == false){ echo 'style="display: none;"'; } ?> type="text"  class="form-control" id="input_event_pass" name="event_pass" placeholder="Mot de passe. ex:******" value="<?php if ($tournoiObjet->event_prive == true){ echo $tournoiObjet->event_pass; } ?>">
+                                        <input <?php if ($tournoiObjet["event_prive"] == false){ echo 'style="display: none;"'; } ?> type="text"  class="form-control" id="input_event_pass" name="event_pass" placeholder="Mot de passe. ex:******" value="<?php if ($tournoiObjet["event_prive"] == true){ echo $tournoiObjet["event_pass"]; } ?>">
                                     </div>
 
                                     <div class="form-group form-group-sm center">

@@ -33,7 +33,7 @@ if (isset($_GET["tournoi"]) && $_GET["team"]) {
         $_SESSION["team"] = $team;
 
         // Si il a déja un compte
-        if ($req->rowCount() > 0) {
+        if ($req->rowCount() > 1) {
             // on récupère le compte et on redirige
             $user = $mangoPayApi->Users->Get($membre_mango["im_mango_id"]);
             $wallet = $mangoPayApi->Wallets->Get($membre_mango["im_wallet_id"]);

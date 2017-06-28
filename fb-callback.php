@@ -106,10 +106,10 @@ if ($req_user_exist->rowCount() == 0) {
     $req_av->execute();
 
     // AJOUT DU NOUVEAU MEMBRE
-    $req_id = $db->query("SELECT MAX(membre_id) FROM membres;");
+    $req_id = $db->query("SELECT MAX(id) FROM membres;");
     $req_id->execute();
     $id = $req_id->fetchColumn() + 1;
-    $req = $db->prepare("INSERT INTO membres (membre_id, membre_pseudo, membre_pass, membre_tel, membre_mail, membre_orga, membre_date_inscription, membre_derniere_connexion, membre_ip_inscription, membre_ip_derniere_connexion, membre_code_validation, membre_validation, membre_dpt_code, membre_avatar, membre_fb_id) VALUES (:id, :pseudo, :pass, :tel, :mail, 0, NOW(), NOW(), :ip, :ip, :code, 0, null, :av_id, :fb_id)");
+    $req = $db->prepare("INSERT INTO membres (id, membre_pseudo, membre_pass, membre_tel, membre_mail, membre_orga, membre_date_inscription, membre_derniere_connexion, membre_ip_inscription, membre_ip_derniere_connexion, membre_code_validation, membre_validation, membre_dpt_code, membre_avatar, membre_fb_id) VALUES (:id, :pseudo, :pass, :tel, :mail, 0, NOW(), NOW(), :ip, :ip, :code, 0, null, :av_id, :fb_id)");
     $req->bindParam(":id", $id, PDO::PARAM_INT);
     $req->bindParam(":pseudo", $pseudo, PDO::PARAM_STR);
     $req->bindParam(":pass", $pass, PDO::PARAM_STR);
@@ -134,7 +134,7 @@ if ($req_user_exist->rowCount() == 0) {
 $_SESSION["id"] = $id;
 $_SESSION["pseudo"] = $pseudo;
 $_SESSION["membre_mail"] = $mail;
-$req_orga = $db->prepare('SELECT * FROM membres WHERE membre_id = :membre_id');
+$req_orga = $db->prepare('SELECT * FROM membres WHERE id = :membre_id');
 $req_orga->execute(array(
     'membre_id' => $id
     ));

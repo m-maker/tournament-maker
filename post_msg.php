@@ -12,11 +12,11 @@ if (isset($_POST["message"]) && isset($_GET["id"])){
 
 	if (!empty($message)){
 
-	    $req_id = $db->query("SELECT MAX(mur_id) FROM messages_mur;");
+	    $req_id = $db->query("SELECT MAX(id) FROM messages_mur;");
 	    $req_id->execute();
 	    $id = $req_id->fetchColumn() + 1;
 
-		$req = $db->prepare("INSERT INTO messages_mur (mur_id, mur_membre_id, mur_date, mur_contenu, mur_tournoi_id) VALUES (:id, :id_membre, NOW(), :msg, :id_tournoi);");
+		$req = $db->prepare("INSERT INTO messages_mur (id, mur_membre_id, mur_date, mur_contenu, mur_evenement_id) VALUES (:id, :id_membre, NOW(), :msg, :id_tournoi);");
         $req->bindValue(":id", $id, PDO::PARAM_INT);
 		$req->bindValue(":id_membre", $_SESSION["id"], PDO::PARAM_INT);
 		$req->bindValue(":msg", $message, PDO::PARAM_STR);

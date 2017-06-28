@@ -65,7 +65,7 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
         <?php
             if(isset($_SESSION['id']) && !empty($_SESSION['id'])){
-                    $req = $db->prepare("SELECT membre_dpt_code FROM membres WHERE membre_id = :id");
+                    $req = $db->prepare("SELECT membre_dpt_code FROM membres WHERE id = :id");
                     $req->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
                     $req->execute();
                     $dpt_user = $req->fetchColumn();

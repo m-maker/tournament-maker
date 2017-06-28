@@ -17,7 +17,7 @@ function getParams(){
 
 function recupStatutJoueur($id_joueur, $id_equipe){
 	$db = connexionBdd();
-	$req = $db->prepare("SELECT em_statut_joueur FROM equipe_membres WHERE em_membre_id = :id_joueur AND em_team_id = :id_team");
+	$req = $db->prepare("SELECT em_statut_joueur_id FROM equipe_membres WHERE em_membre_id = :id_joueur AND em_team_id = :id_team");
 	$req->bindValue(":id_joueur", $id_joueur, PDO::PARAM_INT);
 	$req->bindValue(":id_team", $id_equipe, PDO::PARAM_INT);
 	$req->execute();
@@ -41,12 +41,12 @@ function format_heure_minute($heure){
 
 function recupEquipeJoueur($id_joueur, $id_tournoi){
 	$db = connexionBdd();
-	$req_equipe = $db->prepare("SELECT * FROM equipes INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id");
+	$req_equipe = $db->prepare("SELECT * FROM equipes WHERE team_event_id = :id");
 	$req_equipe->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
 	$req_equipe->execute();
 	while ($equipe = $req_equipe->fetch()){
 		$req = $db->prepare("SELECT * FROM equipe_membres WHERE em_team_id = :id_team");
-		$req->bindValue(":id_team", $equipe["team_id"], PDO::PARAM_INT);
+		$req->bindValue(":id_team", $equipe["id"], PDO::PARAM_INT);
 		$req->execute();
 		while ($membres = $req->fetch()) {
 			if ($membres["em_membre_id"] == $id_joueur)
@@ -57,7 +57,7 @@ function recupEquipeJoueur($id_joueur, $id_tournoi){
 
 function recupEquipeByID($id_team){
 	$db = connexionBdd();
-	$req_equipe = $db->prepare("SELECT * FROM equipes WHERE team_id = :id_team");
+	$req_equipe = $db->prepare("SELECT * FROM equipes WHERE id = :id_team");
 	$req_equipe->bindValue(":id_team", $id_team, PDO::PARAM_INT);
 	$req_equipe->execute();
 	return $req_equipe->fetch();
@@ -65,7 +65,7 @@ function recupEquipeByID($id_team){
 
 function liste_tournois_orga($id_orga){
 	$db = connexionBdd();
-	$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE event_orga = :orga OR event_orga_2 = :orga ORDER BY event_date');
+	$req_liste_tournois = $db->prepare('SELECT * FROM evenements INNER JOIN lieux ON evenements.event_lieu_id = lieux.id WHERE event_orga_id = :orga OR event_orga2_id = :orga ORDER BY event_date');
 	$req_liste_tournois->bindValue(":orga", $id_orga, PDO::PARAM_INT);
 	$req_liste_tournois->execute();
 	return $req_liste_tournois->fetchAll();
@@ -73,15 +73,15 @@ function liste_tournois_orga($id_orga){
 
 function recupObjetTournoiByID($id){
 	$db = connexionBdd();
-	$req_tournoi = $db->prepare("SELECT * FROM tournois INNER JOIN lieux ON event_lieu = lieu_id WHERE event_id = :id");
+	$req_tournoi = $db->prepare("SELECT * FROM evenements AS t1 INNER JOIN lieux AS t2 ON t1.event_lieu_id = t2.id WHERE t1.id = :id");
 	$req_tournoi->bindValue(":id", $id, PDO::PARAM_INT);
 	$req_tournoi->execute();
-	return $req_tournoi->fetch(PDO::FETCH_OBJ);
+	return $req_tournoi->fetch();
 }
 
 function recupererJoueurs($id_equipe){
 	$db = connexionBdd();
-	$req_joueurs = $db->prepare("SELECT * FROM membres INNER JOIN equipe_membres ON membre_id = em_membre_id INNER JOIN statuts_joueurs ON em_statut_joueur = statut_id WHERE em_team_id = :id_team");
+	$req_joueurs = $db->prepare("SELECT * FROM membres INNER JOIN equipe_membres ON membres.id = em_membre_id INNER JOIN statut_joueur ON em_statut_joueur_id = statut_joueur.id WHERE em_team_id = :id_team");
 	$req_joueurs->bindValue(":id_team", $id_equipe, PDO::PARAM_INT);
 	$req_joueurs->execute();
 	return $req_joueurs->fetchAll();
@@ -89,7 +89,7 @@ function recupererJoueurs($id_equipe){
 
 function compter_membres($id_equipe) {
 	$db = connexionBdd();
-	$req_nb_membres = $db->prepare("SELECT COUNT(em_id) FROM equipe_membres WHERE em_team_id = :id_team");
+	$req_nb_membres = $db->prepare("SELECT COUNT(id) FROM equipe_membres WHERE em_team_id = :id_team");
 	$req_nb_membres->bindValue(":id_team", $id_equipe, PDO::PARAM_INT);
 	$req_nb_membres->execute();
 	return $req_nb_membres->fetchColumn();
@@ -97,7 +97,7 @@ function compter_membres($id_equipe) {
 
 function recupEquipesTournoi($id_tournoi){
 	$db = connexionBdd();
-	$req = $db->prepare("SELECT * FROM equipes INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id_tournoi");
+	$req = $db->prepare("SELECT * FROM equipes WHERE team_event_id = :id_tournoi");
 	$req->bindValue(":id_tournoi", $id_tournoi, PDO::PARAM_INT);
 	$req->execute();
 	return $req->fetchAll();
@@ -140,7 +140,7 @@ function envoyerMail($email_expediteur, $email_recepteur, $objet, $nom_exp, $mes
 
 function recupTournoiEquipe($id_team){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT * FROM tournois INNER JOIN equipes_tournois ON event_id = et_event_id WHERE et_equipe = :id");
+    $req = $db->prepare("SELECT * FROM evenements INNER JOIN equipes ON evenements.id = team_event_id WHERE equipes.id = :id");
     $req->bindValue(":id", $id_team, PDO::PARAM_INT);
     $req->execute();
     return $req->fetch();
@@ -148,14 +148,14 @@ function recupTournoiEquipe($id_team){
 
 function recupStatuts(){
 	$db = connexionBdd();
-	$req = $db->query("SELECT * FROM statuts_joueurs;");
+	$req = $db->query("SELECT * FROM statut_joueur;");
 	$req->execute();
 	return $req->fetchAll();
 }
 
 function recupJoueurByID($id_joueur, $id_team){
 	$db = connexionBdd();
-	$req = $db->prepare("SELECT * FROM membres INNER JOIN equipe_membres ON membre_id = em_membre_id WHERE membre_id = :id_membre AND em_team_id = :id_team;");
+	$req = $db->prepare("SELECT * FROM membres INNER JOIN equipe_membres ON membres.id = em_membre_id WHERE membres.id = :id_membre AND em_team_id = :id_team;");
 	$req->bindValue(':id_membre', $id_joueur, PDO::PARAM_INT);
 	$req->bindValue(':id_team', $id_team, PDO::PARAM_INT);
 	$req->execute();
@@ -164,7 +164,7 @@ function recupJoueurByID($id_joueur, $id_team){
 
 function compte_equipes($id_tournoi) {
 	$db = connexionBdd();
-	$req = $db->prepare("SELECT COUNT(et_id) FROM equipes_tournois WHERE et_event_id = :id_tournoi");
+	$req = $db->prepare("SELECT COUNT(id) FROM equipes WHERE team_event_id = :id_tournoi");
 	$req->bindValue(":id_tournoi", $id_tournoi, PDO::PARAM_INT);
 	$req->execute();
 	return $req->fetchColumn();
@@ -172,7 +172,7 @@ function compte_equipes($id_tournoi) {
 
 function compte_joueurs_tournoi($id_tournoi){
 	$db = connexionBdd();
-	$req = $db->prepare("SELECT COUNT(em_id) FROM equipe_membres INNER JOIN equipes ON em_team_id = team_id INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id_tournoi;");
+	$req = $db->prepare("SELECT COUNT(equipe_membres.id) FROM equipe_membres INNER JOIN equipes ON em_team_id = equipes.id WHERE equipes.team_event_id = :id_tournoi;");
 	$req->bindValue(":id_tournoi", $id_tournoi, PDO::PARAM_INT);
 	$req->execute();
 	return $req->fetchColumn();
@@ -181,7 +181,7 @@ function compte_joueurs_tournoi($id_tournoi){
 // Renvoie les invitations à jouer
 function recupInvitationsEquipes($membre_id){
 	$db = connexionBdd();
-	$req = $db->prepare("SELECT * FROM tournois INNER JOIN equipes_tournois ON event_id = et_event_id INNER JOIN equipes ON et_equipe = team_id INNER JOIN equipe_membres on team_id = em_team_id WHERE em_statut_joueur = 2 AND em_membre_id = :id_membre");
+	$req = $db->prepare("SELECT * FROM evenements INNER JOIN equipes ON et_equipe = equipes.id INNER JOIN equipe_membres on equipes.id = em_team_id WHERE em_statut_joueur = 2 AND em_membre_id = :id_membre");
 	$req->bindValue(":id_membre", $membre_id, PDO::PARAM_INT);
 	$req->execute();
 	return $req->fetchAll();
@@ -206,8 +206,8 @@ function liste_tournois($dpt){
 	$req_dpt->bindValue(":code", $dpt, PDO::PARAM_STR);
 	$req_dpt->execute();
 	$res_dpt = $req_dpt->fetch();
-	$dpt_id = $res_dpt['dpt_id'];
-	$req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE lieu_dpt_id = :departement_id AND event_date >= DATE(NOW()) ORDER BY event_date;');
+	$dpt_id = $res_dpt['id'];
+	$req_liste_tournois = $db->prepare('SELECT * FROM evenements as t1 INNER JOIN lieux ON t1.event_lieu_id = lieux.id WHERE lieu_dpt_id = :departement_id AND event_date >= DATE(NOW()) ORDER BY event_date;');
 	$req_liste_tournois->execute(array(
 		':departement_id' => $dpt_id
 		));
@@ -216,13 +216,13 @@ function liste_tournois($dpt){
 }
 function liste_tournois_membres($id_membre){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT * FROM tournois INNER JOIN equipes_tournois ON event_id = et_event_id INNER JOIN equipes ON et_equipe = team_id INNER JOIN equipe_membres ON team_id = em_team_id WHERE em_membre_id = :id");
+    $req = $db->prepare("SELECT * FROM evenements INNER JOIN equipes ON evenements.id = equipes.team_event_id INNER JOIN equipe_membres ON equipes.id = equipe_membres.em_team_id WHERE equipe_membres.em_membre_id = :id");
     $req->bindValue(':id', $id_membre, PDO::PARAM_INT);
     $req->execute();
     $liste_tournois = [];
     while ($tournois = $req->fetch()){
-        $req_liste_tournois = $db->prepare('SELECT * FROM tournois INNER JOIN lieux ON tournois.event_lieu = lieux.lieu_id WHERE event_id = :id');
-        $req_liste_tournois->bindValue(":id", $tournois['event_id'], PDO::PARAM_INT);
+        $req_liste_tournois = $db->prepare('SELECT * FROM evenements INNER JOIN lieux ON evenements.event_lieu_id = lieux.id WHERE evenements.id = :id');
+        $req_liste_tournois->bindValue(":id", $tournois[0], PDO::PARAM_INT);
         $req_liste_tournois->execute();
         $liste_tournois[] = $req_liste_tournois->fetch();
     }
@@ -231,7 +231,7 @@ function liste_tournois_membres($id_membre){
 
 function liste_tournois_complexe($lieu_id){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT * FROM tournois WHERE event_lieu = :event_lieu AND event_date >= DATE(NOW()) ORDER BY event_date DESC");
+    $req = $db->prepare("SELECT * FROM evenements WHERE event_lieu_id = :event_lieu AND event_date >= DATE(NOW()) ORDER BY event_date DESC");
     $req->bindValue(':event_lieu', $lieu_id, PDO::PARAM_INT);
     $req->execute();
     $liste_tournois = $req->fetchAll();
@@ -240,7 +240,7 @@ function liste_tournois_complexe($lieu_id){
 
 function recupCompteOrga($id_orga){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT * FROM compte WHERE compte_membre_id = :id");
+    $req = $db->prepare("SELECT * FROM comptes WHERE compte_membre_id = :id");
     $req->bindValue(":id", $id_orga, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
@@ -255,7 +255,7 @@ function liste_lieux($dpt_id){
 }
 function recupLieuById ($lieu_id){    
 	$db = connexionBdd();
-    $req = $db->prepare("SELECT * FROM lieux WHERE lieu_id = :lieu_id");
+    $req = $db->prepare("SELECT * FROM lieux WHERE id = :lieu_id");
     $req->bindValue(":lieu_id", $lieu_id, PDO::PARAM_INT);
     $req->execute();
     return $req->fetch();
@@ -263,7 +263,7 @@ function recupLieuById ($lieu_id){
 
 function recupNbJoueurPayeEquipe($id_equipe, $paye = 1){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT COUNT(em_id) FROM equipe_membres WHERE em_team_id = :id_equipe AND em_membre_paye = :paye;");
+    $req = $db->prepare("SELECT COUNT(id) FROM equipe_membres WHERE em_team_id = :id_equipe AND em_membre_paye = :paye;");
     $req->bindValue(":id_equipe", $id_equipe, PDO::PARAM_INT);
     $req->bindValue(":paye", $paye, PDO::PARAM_INT);
     $req->execute();
@@ -272,7 +272,7 @@ function recupNbJoueurPayeEquipe($id_equipe, $paye = 1){
 
 function recupImByMangoID($id_mango){
     $db = connexionBdd();
-    $req_joueur = $db->prepare('Select * FROM membres INNER JOIN infos_mango ON membre_id = im_membre_id WHERE im_mango_id = :id_user');
+    $req_joueur = $db->prepare('Select * FROM membres INNER JOIN infos_mango ON membres.id = im_membre_id WHERE im_mango_id = :id_user');
     $req_joueur->bindValue(":id_user", $id_mango, PDO::PARAM_INT);
     $req_joueur->execute();
     return $req_joueur->fetch();
@@ -288,7 +288,7 @@ function recupImByMembreID($id_membre){
 
 function recupMessagesMur($id_tournoi){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT * FROM messages_mur INNER JOIN membres ON mur_membre_id = membre_id WHERE mur_tournoi_id = :id ORDER BY mur_date DESC");
+    $req = $db->prepare("SELECT * FROM messages_mur INNER JOIN membres ON mur_membre_id = membres.id WHERE mur_evenement_id = :id ORDER BY mur_date DESC");
     $req->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
@@ -368,7 +368,7 @@ function liste_messages($id_membre_1, $id_membre_2){
 
 function recupComplexes(){
     $db = connexionBdd();
-    $req = $db->query("SELECT * FROM lieux INNER JOIN departements ON lieu_dpt_id = dpt_id;");
+    $req = $db->query("SELECT * FROM lieux INNER JOIN departements ON lieu_dpt_id =id;");
     $req->execute();
     return $req->fetchAll();
 }
@@ -390,7 +390,7 @@ function membre_existe($colonne, $val){
 
 function recupMembreByID($id_membre){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT * FROM membres WHERE membre_id = :id");
+    $req = $db->prepare("SELECT * FROM membres WHERE id = :id");
     $req->bindValue(":id", $id_membre, PDO::PARAM_INT);
     $req->execute();
     return $req->fetch();
@@ -398,7 +398,7 @@ function recupMembreByID($id_membre){
 
 function compte_msg_envoyes($id_membre){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT COUNT(pv_id) FROM messages_prives WHERE pv_expediteur_id = :id");
+    $req = $db->prepare("SELECT COUNT(id) FROM messages_prives WHERE pv_expediteur_id = :id");
     $req->bindValue(":id", $id_membre, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchColumn();
@@ -406,7 +406,7 @@ function compte_msg_envoyes($id_membre){
 
 function compte_msg_recus($id_membre){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT COUNT(pv_id) FROM messages_prives WHERE pv_destinataire_id = :id");
+    $req = $db->prepare("SELECT COUNT(id) FROM messages_prives WHERE pv_destinataire_id = :id");
     $req->bindValue(":id", $id_membre, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchColumn();
@@ -414,7 +414,7 @@ function compte_msg_recus($id_membre){
 
 function compte_msg_total($id_membre){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT COUNT(pv_id) FROM messages_prives WHERE pv_destinataire_id = :id OR pv_expediteur_id = :id");
+    $req = $db->prepare("SELECT COUNT(id) FROM messages_prives WHERE pv_destinataire_id = :id OR pv_expediteur_id = :id");
     $req->bindValue(":id", $id_membre, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchColumn();
@@ -427,7 +427,7 @@ function activer_item($url_page){
 
 function compte_event_dpt($dpt_code){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT COUNT(event_id) FROM tournois INNER JOIN lieux ON event_lieu = lieu_id INNER JOIN departements ON lieu_dpt_id = dpt_id WHERE dpt_code = :code AND event_date >= DATE(NOW())");
+    $req = $db->prepare("SELECT COUNT(evenements.id) FROM evenements INNER JOIN lieux ON evenements.event_lieu_id = lieux.id INNER JOIN departements ON lieu_dpt_id = departements.id WHERE dpt_code = :code AND event_date >= DATE(NOW())");
     $req->bindValue(":code", $dpt_code, PDO::PARAM_STR);
     $req->execute();
     return $req->fetchColumn();
@@ -435,7 +435,7 @@ function compte_event_dpt($dpt_code){
 
 function recupCapitaine($id_team){
     $db = connexionBdd();
-    $req_select_capitaine = $db->prepare("SELECT * FROM membres INNER JOIN equipe_membres ON membre_id = em_membre_id WHERE em_team_id = :id_team AND em_statut_joueur = 1");
+    $req_select_capitaine = $db->prepare("SELECT * FROM membres INNER JOIN equipe_membres ON membres.id = em_membre_id WHERE em_team_id = :id_team AND em_statut_joueur_id = 1");
     $req_select_capitaine->bindValue(":id_team", $id_team, PDO::PARAM_INT);
     $req_select_capitaine->execute();
     $capitaine = $req_select_capitaine->fetch();
@@ -458,7 +458,7 @@ function alert($msg, $succes = 0){
 
 function compteMessagesNonVus($membre){
     $db = connexionBdd();
-    $req = $db->prepare("SELECT COUNT(pv_id) FROM messages_prives WHERE pv_vu = 0 AND pv_destinataire_id = :membre");
+    $req = $db->prepare("SELECT COUNT(id) FROM messages_prives WHERE pv_vu = 0 AND pv_destinataire_id = :membre");
     $req->bindValue(":membre", $membre, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchColumn();
@@ -466,7 +466,7 @@ function compteMessagesNonVus($membre){
 
 function liste_event_terrain($terrain_id) {
     $db = connexionBdd();
-    $req = $db->prepare('SELECT * FROM creneaux INNER JOIN tournois ON creneaux.creneau_event_id = tournois.event_id WHERE creneaux.creneau_terrain_id = :terrain_id');
+    $req = $db->prepare('SELECT * FROM creneaux INNER JOIN evenements ON creneaux.creneau_event_id = evenements.id WHERE creneaux.creneau_terrain_id = :terrain_id');
     $req->execute(array(    
         'terrain_id' => $terrain_id
         ));

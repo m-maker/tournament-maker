@@ -11,7 +11,7 @@ include '../conf.php';
 if (isset($_GET["tournoi"])){
     $id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
     $leTournoi = recupObjetTournoiByID($id_tournoi);
-    if (empty($leTournoi) || $leTournoi == null || $leTournoi->event_orga != $_SESSION["id"] && $leTournoi->event_orga_2 != $_SESSION["id"])
+    if (empty($leTournoi) || $leTournoi == null || $leTournoi["event_orga_id"] != $_SESSION["id"] && $leTournoi["event_orga2_id"] != $_SESSION["id"])
         header("Location: index.php");
 ?>
 
@@ -41,7 +41,7 @@ if (isset($_GET["tournoi"])){
 
     <!-- CONTENU DE LA PAGE -->
     <div id="corps">
-        <h1 id="titre_corps"><?php echo $leTournoi->event_titre; ?> > Gerer le mur</h1>
+        <h1 id="titre_corps"><?php echo $leTournoi["event_titre"]; ?> > Gerer le mur</h1>
         <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
@@ -49,28 +49,28 @@ if (isset($_GET["tournoi"])){
         <!-- CONTENU DE LA PAGE -->
         <div class="container-fluid" style="padding: 1% 1% 2.5%;">
 
-            <?php $heure_debut = format_heure_minute($leTournoi->event_heure_debut);
-            $heure_fin = format_heure_minute($leTournoi->event_heure_fin);
+            <?php $heure_debut = format_heure_minute($leTournoi["event_heure_debut"]);
+            $heure_fin = format_heure_minute($leTournoi["event_heure_fin"]);
             $glyph = "glyphicon-eye-open";$prive="Public";$color='vert';
-            if ($leTournoi->event_prive == 1){$color='rouge';$glyph = "glyphicon-eye-close";$prive="Privé";}
+            if ($leTournoi["event_prive"] == 1){$color='rouge';$glyph = "glyphicon-eye-close";$prive="Privé";}
             $pay = "<span class='rouge'>Refusé</span>";
-            if ($leTournoi->event_paiement == 1){$pay="<span class='vert'>Accepté</span>";}
-            $desc = $leTournoi->event_descriptif;
-            if ($leTournoi->event_descriptif == NULL || empty($leTournoi->event_descriptif))
+            if ($leTournoi["event_paiement"] == 1){$pay="<span class='vert'>Accepté</span>";}
+            $desc = $leTournoi["event_descriptif"];
+            if ($leTournoi["event_descriptif"] == NULL || empty($leTournoi["event_descriptif"]))
                 $desc = 'Pas de description.';
             $team = "par équipe";
-            if ($leTournoi->event_tarification_equipe == 0){$team="par joueur";}
-            $date_tournoi = new DateTime($leTournoi->event_date);
+            if ($leTournoi["event_tarification_equipe"] == 0){$team="par joueur";}
+            $date_tournoi = new DateTime($leTournoi["event_date"]);
             $date_tournoi = date_lettres($date_tournoi->format("w-d-m-Y"));
 
             echo "<div class='titre-liste-tournoi'>
-                    <span class=\"left\"><a href=\"index.php\"> < </a></span>
-                    " . $leTournoi->event_titre . "<br>
-                    <p style='font-size: 15px;'>
-                        <span class=\"glyphicon glyphicon-calendar\"></span> Le <span class=\"bold\">" . $date_tournoi . "</span> de
-                        <span class=\"bold\">" . $heure_debut . "</span> à <span class=\"bold\">" .$heure_fin . "</span>
-                    </p>
-                </div>";
+            <span class=\"left\"><a href=\"index.php\"> < </a></span>
+            " . $leTournoi["event_titre"] . "<br>
+            <p style='font-size: 15px;'>
+                <span class=\"glyphicon glyphicon-calendar\"></span> Le <span class=\"bold\">" . $date_tournoi . "</span> de
+                <span class=\"bold\">" . $heure_debut . "</span> à <span class=\"bold\">" .$heure_fin . "</span>
+            </p>
+        </div>";
 
             ?>
 
@@ -78,9 +78,9 @@ if (isset($_GET["tournoi"])){
                 <div class="row">
 
                     <div class="col-lg-4" style="text-align: left;">
-                        <p><span class="glyphicon glyphicon-home"></span> Nom du complexe : <span class="bold"><?php echo $leTournoi->lieu_nom;?></span></p>
+                        <p><span class="glyphicon glyphicon-home"></span> Nom du complexe : <span class="bold"><?php echo $leTournoi["lieu_nom"];?></span></p>
                         <p><span class="glyphicon glyphicon-euro"></span> Paiement en ligne : <span class="bold"> <?php echo $pay; ?></span></p>
-                        <p><span class="glyphicon glyphicon-user"></span><span class="bold"> <?php echo compte_equipes($leTournoi->event_id) . ' / ' . $leTournoi->event_nb_equipes; ?></span> équipes inscrites</p>
+                        <p><span class="glyphicon glyphicon-user"></span><span class="bold"> <?php echo compte_equipes($leTournoi[0]) . ' / ' . $leTournoi["event_nb_equipes"]; ?></span> équipes inscrites</p>
                     </div>
                     <div class="col-lg-5 espace-top" style="text-align: left;">
                         <span class="glyphicon glyphicon-info-sign"></span>
@@ -92,7 +92,7 @@ if (isset($_GET["tournoi"])){
                         } ?>
                     </div>
                     <div class="col-lg-3 prix-team">
-                        <h1 style="margin-top: 1.5%;"><span class="bold"><?php echo $leTournoi->event_tarif + $param->comission; ?> €</span></h1> <?php ECHO $team; ?><br />
+                        <h1 style="margin-top: 1.5%;"><span class="bold"><?php echo $leTournoi["event_tarif"];?> €</span></h1> <?php ECHO $team; ?><br />
                         <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p>
                     </div>
 
@@ -104,14 +104,14 @@ if (isset($_GET["tournoi"])){
             <div id="mur" style="margin: auto;" class="center">
                 <div class="cadre_contenu_fdt">
                     <div id="cont_liste-msg-tournoi">
-                        <?php $messages = recupMessagesMur($leTournoi->event_id);
+                        <?php $messages = recupMessagesMur($leTournoi[0]);
                         foreach ($messages as $unMessage) {
                             ?>
                             <div class="msg-cont">
                                 <?php
                                 echo $unMessage["mur_contenu"];
-                                if ($unMessage["membre_id"] == $_SESSION["id"]) {
-                                    echo '<span class="delete-msg"><a href="delete_msg.php?type=0&id=' . $unMessage["mur_id"] . '&tournoi=' . $leTournoi->event_id . '">X</a></span>';
+                                if ($unMessage["mur_membre_id"] == $_SESSION["id"]) {
+                                    echo '<span class="delete-msg"><a href="delete_msg.php?type=0&id=' . $unMessage["id"] . '&tournoi=' . $leTournoi[0] . '">X</a></span>';
                                 }
                                 ?>
                                 <div class="sign-msg">
@@ -122,7 +122,7 @@ if (isset($_GET["tournoi"])){
                         }
                         ?>
                     </div>
-                    <form method="post" id="form-mur" action="../post_msg.php?id=<?php echo $leTournoi->event_id; ?>">
+                    <form method="post" id="form-mur" action="../post_msg.php?id=<?php echo $leTournoi[0]; ?>">
                         <textarea class="form-control" placeholder="Votre message..." id="message" name="message" rows="3" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;"></textarea>
                         <button class="btn btn-success btn-grand" style="border-top-left-radius: 0; border-top-right-radius: 0;" name="submit"><span class="glyphicon glyphicon-comment"></span> Poster mon message</button>
                     </form>

@@ -21,7 +21,7 @@ if (isset($_POST["submit"]) && isset($_GET["id"])){
     $message = htmlspecialchars(trim($_POST["message"]));
 
     if (!empty($message)){
-        $req = $db->prepare("INSERT INTO messages_mur (mur_membre_id, mur_date, mur_contenu, mur_tournoi_id) VALUES (:id_membre, NOW(), :msg, :id_tournoi);");
+        $req = $db->prepare("INSERT INTO messages_mur (mur_membre_id, mur_date, mur_contenu, mur_evenement_id) VALUES (:id_membre, NOW(), :msg, :id_tournoi);");
         $req->bindValue(":id_membre", $_SESSION["id"], PDO::PARAM_INT);
         $req->bindValue(":msg", $message, PDO::PARAM_STR);
         $req->bindValue(":id_tournoi", $id_tournoi, PDO::PARAM_INT);

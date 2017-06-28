@@ -8,7 +8,7 @@
 
 function connexionBdd(){
     $hote = "localhost";
-    $db = "tournoi_soccer";
+    $db = "rtt_api";
     $user = "root";
     $pass = "";
     try {

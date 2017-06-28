@@ -1,1 +1,1 @@
-<?php exit(); ?>O:29:"MangoPay\Libraries\OAuthToken":5:{s:11:"create_time";i:1498559315;s:12:"access_token";s:32:"02bf85cb3284451c9b2412c412c00bc3";s:10:"token_type";s:6:"bearer";s:10:"expires_in";i:1199;s:17:"autentication_key";s:32:"a6565114b5eb13af887ac63b770fe00f";}
+<?php exit(); ?>O:29:"MangoPay\Libraries\OAuthToken":5:{s:11:"create_time";i:1498658256;s:12:"access_token";s:32:"73b8b3a309884155974c9e221534aa21";s:10:"token_type";s:6:"bearer";s:10:"expires_in";i:1199;s:17:"autentication_key";s:32:"a6565114b5eb13af887ac63b770fe00f";}

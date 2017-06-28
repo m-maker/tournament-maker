@@ -19,7 +19,7 @@ class Notifications
 
     public function __construct($texte = null, $membre = null, $date = null, $lien = null) {
         $this->db = connexionBdd();
-        $req_id = $this->db->query("SELECT MAX(notif_id) FROM notifications");
+        $req_id = $this->db->query("SELECT MAX(id) FROM notifications");
         $req_id->execute();
         $this->id = $req_id->fetchColumn() + 1;
         $this->texte = $texte;
@@ -46,7 +46,7 @@ class Notifications
 
     public static function getCompteNewNotif($membre){
         $db = connexionBdd();
-        $req = $db->prepare("SELECT COUNT(notif_id) FROM notifications WHERE notif_membre_id = :id AND notif_vu = 0");
+        $req = $db->prepare("SELECT COUNT(id) FROM notifications WHERE notif_membre_id = :id AND notif_vu = 0");
         $req->bindValue(":id", $membre, PDO::PARAM_INT);
         $req->execute();
         return $req->fetchColumn();

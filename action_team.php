@@ -13,9 +13,9 @@ if (isset($_GET["mod"]) && isset($_GET["id"])){
 	$id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
 	$leTournoi = recupObjetTournoiByID($id_tournoi);
     $capitaine = recupCapitaine($id_team);
-    $orga = $leTournoi->event_orga;
+    $orga = $leTournoi["event_orga_id"];
     $not_orga_2 = false;
-    if (isset($leTournoi->event_orga_2)){
+    if (isset($leTournoi["event_orga2_id"])){
         $not_orga_2 = true;
     }
 
@@ -47,7 +47,7 @@ if (isset($_GET["mod"]) && isset($_GET["id"])){
 	            echo $pass_team.'<br />';
 	            echo $team['team_pass'];
 	            if ($team["team_pass"] == $pass_team){
-                    $req = $db->prepare("INSERT INTO equipe_membres (em_membre_id, em_team_id, em_statut_joueur, em_membre_paye) VALUES (:id_joueur, :id_team, 3, 0)");
+                    $req = $db->prepare("INSERT INTO equipe_membres (em_membre_id, em_team_id, em_statut_joueur_id, em_membre_paye) VALUES (:id_joueur, :id_team, 3, 0)");
                     $req->bindValue(":id_joueur", $_SESSION["id"], PDO::PARAM_INT);
                     $req->bindValue(":id_team", $id_team, PDO::PARAM_INT);
                     $req->execute();

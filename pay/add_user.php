@@ -45,16 +45,27 @@ if (isset($_POST)){
 			$Wallet->Currency = "EUR";
 			$walletAdded = $mangoPayApi->Wallets->Create($Wallet);
 
-            $_SESSION['utilisateur_mango'] = serialize($userAdded);
-			$_SESSION["wallet_mango"] = serialize($walletAdded);
+            if (isset($_POST["from"])){
+                echo json_encode(array("Id" => $userAdded->Id, "WalletId" => $walletAdded->Id));
 
-			$req = $db->prepare("INSERT INTO infos_mango (im_mango_id, im_membre_id, im_wallet_id) VALUES (:id_user, :id_membre, :id_wallet);");
-			$req->bindValue(":id_user", $userAdded->Id, PDO::PARAM_INT);
-			$req->bindValue(":id_membre", $_SESSION['id'], PDO::PARAM_INT);
-			$req->bindValue(':id_wallet', $walletAdded->Id, PDO::PARAM_INT);
-			$req->execute();
+                $req = $db->prepare("INSERT INTO infos_mango (im_mango_id, im_membre_id, im_wallet_id) VALUES (:id_user, :id_membre, :id_wallet);");
+                $req->bindValue(":id_user", $userAdded->Id, PDO::PARAM_INT);
+                $req->bindValue(":id_membre", htmlspecialchars(trim($_POST["idMembre"])), PDO::PARAM_INT);
+                $req->bindValue(':id_wallet', $walletAdded->Id, PDO::PARAM_INT);
+                $req->execute();
+            }else {
 
-			header("Location: cartes.php");
+                $_SESSION['utilisateur_mango'] = serialize($userAdded);
+                $_SESSION["wallet_mango"] = serialize($walletAdded);
+
+                $req = $db->prepare("INSERT INTO infos_mango (im_mango_id, im_membre_id, im_wallet_id) VALUES (:id_user, :id_membre, :id_wallet);");
+                $req->bindValue(":id_user", $userAdded->Id, PDO::PARAM_INT);
+                $req->bindValue(":id_membre", $_SESSION['id'], PDO::PARAM_INT);
+                $req->bindValue(':id_wallet', $walletAdded->Id, PDO::PARAM_INT);
+                $req->execute();
+
+                header("Location: cartes.php");
+            }
 
 		}else{
 		    alert("Vous devez être majeur pour payer en ligne");

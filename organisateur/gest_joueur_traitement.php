@@ -11,7 +11,7 @@ if (isset($_GET["tournoi"]) && isset($_GET["team"])){
 	$id_team = htmlspecialchars(trim($_GET["team"]));
 	$equipe = recupEquipeByID($id_team);
     $leTournoi = recupObjetTournoiByID($id_tournoi);
-    if ($leTournoi->event_orga_2 != $_SESSION["id"] && $leTournoi->event_orga != $_SESSION["id"])
+    if ($leTournoi["event_orga2_id"] != $_SESSION["id"] && $leTournoi["event_orga"] != $_SESSION["id"])
 		header("Location: ../index.php");
 }else{
 	header("Location: ./index.php");
@@ -30,7 +30,7 @@ if ($upd){
 		$statut = htmlspecialchars(trim($_POST['statut']));
 		$paye = htmlspecialchars(trim($_POST['paye']));
 
-		$req = $db->prepare("UPDATE equipe_membres SET em_statut_joueur = :statut, em_membre_paye = :paye WHERE em_membre_id = :id_membre AND em_team_id = :id_team;");
+		$req = $db->prepare("UPDATE equipe_membres SET em_statut_joueur_id = :statut, em_membre_paye = :paye WHERE em_membre_id = :id_membre AND em_team_id = :id_team;");
 		$req->bindValue(":statut", $statut, PDO::PARAM_INT);
 		$req->bindValue(":paye", $paye, PDO::PARAM_INT);
 		$req->bindValue(":id_membre", $id_joueur, PDO::PARAM_INT);
@@ -61,7 +61,7 @@ if ($upd){
 			if (!empty($joueur)){
 
 				// On ajoute le joueur à la team
-				$req = $db->prepare('INSERT INTO equipe_membres (em_membre_id, em_team_id, em_statut_joueur, em_membre_paye) VALUES (:id_membre, :id_team, 2, :paye);');
+				$req = $db->prepare('INSERT INTO equipe_membres (em_membre_id, em_team_id, em_statut_joueur-id, em_membre_paye) VALUES (:id_membre, :id_team, 2, :paye);');
 				$req->bindValue(":id_membre", $joueur["membre_id"], PDO::PARAM_INT);
 				$req->bindValue(":id_team", $id_team, PDO::PARAM_INT);
 				$req->bindValue(":paye", $paye, PDO::PARAM_INT);
@@ -85,7 +85,7 @@ if ($upd){
 			}else{
 
 				// Recupere le dernier id pour créer l'id du nouveau membre
-				$req_id_membre = $db->query("SELECT MAX(membre_id) FROM membres;");
+				$req_id_membre = $db->query("SELECT MAX(id) FROM membres;");
 				$req_id_membre->execute();
 				$id_new_membre = $req_id_membre->fetchColumn() + 1;
 
@@ -96,7 +96,7 @@ if ($upd){
                 $code = chaineRandom(20);
 
 				// Ajout du nouveau membre
-				$req_ajout_membre = $db->prepare("INSERT INTO membres (membre_id, membre_pseudo, membre_pass, membre_tel, membre_mail, membre_orga, membre_date_inscription, membre_derniere_connexion, membre_ip_inscription, membre_ip_derniere_connexion, membre_code_validation, membre_validation, membre_dpt_code) VALUES (:id_membre, :pseudo, :pass, 'no', :mail, 0, NOW(), NOW(), :ip, :ip, :code, 0, NULL);");
+				$req_ajout_membre = $db->prepare("INSERT INTO membres (id, membre_pseudo, membre_pass, membre_tel, membre_mail, membre_orga, membre_date_inscription, membre_derniere_connexion, membre_ip_inscription, membre_ip_derniere_connexion, membre_code_validation, membre_validation, membre_dpt_code) VALUES (:id_membre, :pseudo, :pass, 'no', :mail, 0, NOW(), NOW(), :ip, :ip, :code, 0, NULL);");
 				$req_ajout_membre->bindValue(":id_membre", $id_new_membre, PDO::PARAM_INT);
 				$req_ajout_membre->bindValue(":pseudo", $pseudo, PDO::PARAM_STR);
 				$req_ajout_membre->bindValue(":pass", $password, PDO::PARAM_STR);
@@ -106,7 +106,7 @@ if ($upd){
 				$req_ajout_membre->execute();
 
 				// On ajoute le joueur à la team
-				$req = $db->prepare('INSERT INTO equipe_membres (em_membre_id, em_team_id, em_statut_joueur, em_membre_paye) VALUES (:id_membre, :id_team, 2, :paye);');
+				$req = $db->prepare('INSERT INTO equipe_membres (em_membre_id, em_team_id, em_statut_joueur_id, em_membre_paye) VALUES (:id_membre, :id_team, 2, :paye);');
 				$req->bindValue(":id_membre", $id_new_membre, PDO::PARAM_INT);
 				$req->bindValue(":id_team", $id_team, PDO::PARAM_INT);
 				$req->bindValue(":paye", $paye, PDO::PARAM_INT);
