@@ -59,52 +59,58 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 						<!--<h2 class="center"><span class="glyphicon glyphicon-list"></span> Mes tournois</h2>-->
 
 						<?php if (!empty($liste_tournois)){
-								foreach ($liste_tournois as $unTournoi) { ?>
+								foreach ($liste_tournois as $unTournoi) { 
+									?>
                                     <div class="row">
-                                    <div class="col-md-10 " style="padding: 0;margin:0; ">
-                                        <div class="tournoi-cont" style="padding: 0; margin:0 1% 1%; <?php if($unTournoi["event_tournoi"] == 0){ echo 'background: #B8860B;';} ?>">
-										<div class="row infos-tournoi" id="<?php echo $unTournoi["event_id"]; ?>">
-											<div class="col-md-6 bold" style="text-decoration: underline;"><?php echo $unTournoi["event_titre"] ?></div>
-											<div class="col-md-2"><span class="glyphicon glyphicon-calendar"></span> <?php echo $unTournoi["event_date"]; ?></div>
-											<div class="col-md-2"><span class="glyphicon glyphicon-flag"></span> <?php echo compte_equipes($unTournoi['event_id']); ?> Equipes</div>
-											<div class="col-md-2"><span class="glyphicon glyphicon-user"></span>  <?php echo compte_joueurs_tournoi($unTournoi['event_id']); ?> Inscrits</div>
-										</div>
-										<div class="row mod-tournoi" id="m-<?php echo $unTournoi["event_id"]; ?>">
+	                                    <div class="col-md-10 " style="padding: 0;margin:0; ">
+	                                        <div class="tournoi-cont" style="padding: 0; margin:0 1% 1%; <?php if($unTournoi["event_tournoi"] == 0){ echo 'background: #B8860B;';} ?>">
+												<div class="row infos-tournoi" id="<?php echo $unTournoi["event_id"]; ?>">
+													<div class="col-md-6 bold" style="text-decoration: underline;"><?php echo $unTournoi["event_titre"] ?></div>
+													<div class="col-md-2"><span class="glyphicon glyphicon-calendar"></span> <?php echo $unTournoi["event_date"]; ?></div>
+													<div class="col-md-2"><span class="glyphicon glyphicon-flag"></span> <?php echo compte_equipes($unTournoi['event_id']); ?> Equipes</div>
+													<div class="col-md-2"><span class="glyphicon glyphicon-user"></span>  <?php echo compte_joueurs_tournoi($unTournoi['event_id']); ?> Inscrits</div>
+												</div>
+												<div class="row mod-tournoi" id="m-<?php echo $unTournoi["event_id"]; ?>">
 
-                                            <div class="col-md-3">
-                                                <a href="mur.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
-                                                    <button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-zoom-in"></span> Voir le mur</button>
-                                                </a>
-                                            </div>
-											<div class="col-md-3">
-												<a href="modifier_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>">
-													<button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-edit"></span> Modifier</button>
-												</a>
-											</div>
-											<div class="col-md-3">
-												<a href="gestion_equipes.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
-													<button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-cog"></span> Gerer les equipes</button>
-												</a>
-											</div>
-                                            <div class="col-md-3">
-                                                <a href="paiements.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
-                                                    <button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-eur"></span> Encaissements</button>
-                                                </a>
-                                            </div>
+		                                            <div class="col-md-3">
+		                                                <a href="mur.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
+		                                                    <button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-zoom-in"></span> Voir le mur</button>
+		                                                </a>
+		                                            </div>
+													<div class="col-md-3">
+														<a href="modifier_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>">
+															<button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-edit"></span> Modifier</button>
+														</a>
+													</div>
+													<div class="col-md-3">
+														<a href="gestion_equipes.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
+															<button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-cog"></span> Gerer les equipes</button>
+														</a>
+													</div>
+		                                            <div class="col-md-3">
+		                                                <a href="paiements.php?tournoi=<?php echo $unTournoi['event_id']; ?>">
+		                                                    <button class="btn btn-default btn-grand"><span class="glyphicon glyphicon-eur"></span> Encaissements</button>
+		                                                </a>
+		                                            </div>
 
-										</div>
-									</div>
+												</div>
+											</div>
+	                                    </div>
+	                                    <div class="col-md-2" >
+	                                        <a href="suppr_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>" style="margin: auto;">
+	                                            <button class="btn btn-default btn-grand" style=" background: slategrey;"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
+	                                        </a>
+	                                    </div>
                                     </div>
-                                    <div class="col-md-2" >
-                                        <a href="suppr_tournoi.php?id=<?php echo $unTournoi['event_id']; ?>" style="margin: auto;">
-                                            <button class="btn btn-default btn-grand" style=" background: slategrey;"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
-                                        </a>
-                                    </div>
-                                    </div>
-						<?php } 
-							}else{ ?>
-								<h4 class="padding center">Vous n'avez crée aucun tournoi !</h4> 
-							<?php } ?>
+                                    <?php 
+                                } 
+							}
+							else{
+								?>
+									<h4 class="padding center">Vous n'avez crée aucun tournoi !</h4> 
+								<?php 
+							} 
+							?>
 
 					</div>
 

@@ -17,9 +17,11 @@ if (isset($_GET["id"])){
 	header("Location: ../index.php");
 }
 
-$req = $db->prepare("DELETE FROM messages_mur WHERE mur_tournoi_id = :id_tournoi; DELETE FROM equipes_tournois WHERE et_event_id = :id_tournoi; DELETE FROM tournois WHERE event_id = :id_tournoi");
+$req = $db->prepare("DELETE FROM messages_mur WHERE mur_tournoi_id = :id_tournoi; DELETE FROM equipes_tournois WHERE et_event_id = :id_tournoi; DELETE FROM tournois WHERE event_id = :id_tournoi; DELETE FROM creneaux WHERE creneau_event_id = :event_id");
 $req->bindValue(":id_tournoi", $id_tournoi, PDO::PARAM_INT);
+$req->bindValue(":event_id", $id_tournoi, PDO::PARAM_INT);
 $req->execute();
+
 
 header("Location: index.php");
 

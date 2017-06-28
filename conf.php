@@ -474,6 +474,46 @@ function liste_event_terrain($terrain_id) {
     return $res;
 }
 
+// ---------------------------------------------------------------------
+
+function recupEquipesIncompletes($id_tournoi, $nb_joueur_min){
+    $db = connexionBdd();
+    $req_equipes = $db->prepare("SELECT * FROM equipes INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id");
+    $req_equipes->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
+    $req_equipes->execute();
+    $equipes_incompletes = array();
+    while ($equipes = $req_equipes->fetch()) {
+        $compte_membres = compter_membres($equipes["team_id"]);
+        if ($compte_membres < $nb_joueur_min){
+            $equipes_incompletes[] = $equipes;
+        }
+    }
+    return $equipes_incompletes;
+}
+
+function recupEquipesCompletes($id_tournoi, $nb_joueur_min){
+    $db = connexionBdd();
+    $req_equipes = $db->prepare("SELECT * FROM equipes INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id");
+    $req_equipes->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
+    $req_equipes->execute();
+    $equipes_completes = array();
+    while ($equipes = $req_equipes->fetch()) {
+        $compte_membres = compter_membres($equipes["team_id"]);
+        if ($compte_membres >= $nb_joueur_min)
+            $equipes_completes[] = $equipes;
+    }
+    return $equipes_completes;
+}
+
+function recupMessagesEquipe($id_equipe)
+{
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT * FROM mur_equipes INNER JOIN membres ON me_membre_id = membre_id WHERE me_equipe_id = :id_equipe ORDER BY me_date DESC;");
+    $req->bindValue(":id_equipe", $id_equipe, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+}
+
 include 'Notifications.php';
 //$Notifs = new Notifications();
 
