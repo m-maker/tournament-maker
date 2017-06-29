@@ -91,7 +91,7 @@ else{
                             <div class="col-lg-4" style="text-align: left;">
                                 <p><span class="glyphicon glyphicon-home"></span> Nom du complexe : <span class="bold"><?php echo $event["lieu_nom"];?></span></p>
                                 <p><span class="glyphicon glyphicon-euro"></span> Paiement en ligne : <span class="bold"> <?php echo $pay; ?></span></p>
-                                <p><span class="glyphicon glyphicon-user"></span><span class="bold"> <?php echo compte_equipes($event['event_id']) . ' / ' . $event['event_nb_equipes']; ?></span> équipes inscrites</p>
+                                <p><span class="glyphicon glyphicon-user"></span><span class="bold"> <?php echo compte_equipes($event[0]) . ' / ' . $event['event_nb_equipes']; ?></span> équipes inscrites</p>
                             </div>
                             <div class="col-lg-5 espace-top" style="text-align: left;">
                                 <span class="glyphicon glyphicon-info-sign"></span>
@@ -103,13 +103,13 @@ else{
                                 } ?>
                             </div>
                             <div class="col-lg-3 prix-team">
-                                <h1 style="margin-top: 1.5%;"><span class="bold"><?php echo $event['event_tarif'] + $param->comission; ?> €</span></h1> <?php ECHO $team; ?><br />
+                                <h1 style="margin-top: 1.5%;"><span class="bold"><?php echo $event['event_tarif']; ?> €</span></h1> <?php ECHO $team; ?><br />
                                 <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12" style="text-align: right; padding: 2% 10% 1%;">
-                                <a href="feuille_de_tournois.php?tournoi=<?php echo $event["event_id"]; ?>"><button class="btn btn-success btn-grand">Voir</button></a>
+                                <a href="feuille_de_tournois.php?tournoi=<?php echo $event[0]; ?>"><button class="btn btn-success btn-grand">Voir</button></a>
                             </div>
                         </div>
                                     </div>

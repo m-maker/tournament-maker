@@ -74,7 +74,7 @@ if (isset($_GET["tournoi"]) && !empty($dpt) && !empty($cp) && !empty($ville) && 
     $req_dpt_id->bindValue('dpt_code', $dpt_code, PDO::PARAM_STR);
     $req_dpt_id->execute();
     $res_dpt_id = $req_dpt_id->fetch();
-    $dpt_id = $res_dpt_id['dpt_id'];
+    $dpt_id = $res_dpt_id['id'];
 
     /*
      *   ***** GESTION DU LIEU *****
@@ -86,14 +86,14 @@ if (isset($_GET["tournoi"]) && !empty($dpt) && !empty($cp) && !empty($ville) && 
     $lieu = $req_search_lieu->fetch();
     // Si il existe, on prend son id pour le tournoi, sinon on en crée un nouveau
     if ($req_search_lieu->rowCount() > 0) {
-        $res_lieu_id = $lieu['lieu_id'];
+        $res_lieu_id = $lieu['id'];
     } else {
         // Récuperation du dernier id de lieu
-        $req_lieu_id = $db->query('SELECT MAX(lieu_id) FROM lieux;');
+        $req_lieu_id = $db->query('SELECT MAX(id) FROM lieux;');
         $req_lieu_id->execute();
         $res_lieu_id = $req_lieu_id->fetchColumn() + 1;
         // Ajout du lieu
-        $req_lieu = $db->prepare('INSERT INTO lieux(lieu_id, lieu_cp, lieu_ville, lieu_adresse_l1, lieu_dpt_id, lieu_nom)
+        $req_lieu = $db->prepare('INSERT INTO lieux(id, lieu_cp, lieu_ville, lieu_adresse_l1, lieu_dpt_id, lieu_nom)
 			VALUES (:lieu_id, :lieu_cp, :lieu_ville, :lieu_adresse_l1, :lieu_dpt_id, :lieu_nom)');
         $req_lieu->bindValue(":lieu_id", $res_lieu_id, PDO::PARAM_INT);
         $req_lieu->bindValue(":lieu_cp", $cp, PDO::PARAM_STR);
@@ -107,14 +107,14 @@ if (isset($_GET["tournoi"]) && !empty($dpt) && !empty($cp) && !empty($ville) && 
     /*
      *   ***** GESTION DU PAIEMENT EN LIGNE *****|
      */
-    $mango = array("im_id" => null);
+    $mango = array("id" => null);
     if (!empty($rib_iban) && !empty($compte_nom) && !empty($compte_prenom) && !empty($compte_adresse_l1) && !empty($compte_ville) || $select_compte != "new") {
 
         if ($select_compte != "new") {
             $rib_id = $select_compte;
         } else {
             // Récupération du dernier id de rib
-            $req_rib_id = $db->query('SELECT MAX(compte_id) FROM compte;');
+            $req_rib_id = $db->query('SELECT MAX(id) FROM compte;');
             $req_rib_id->execute();
             $rib_id = $req_rib_id->fetchColumn() + 1;
             if (empty($rib_bic) || $rib_bic == "")
@@ -123,7 +123,7 @@ if (isset($_GET["tournoi"]) && !empty($dpt) && !empty($cp) && !empty($ville) && 
                 $compte_adresse_l2 = null;
             if (strlen($compte_cp) == 5) {
                 // Ajout du rib
-                $req_rib = $db->prepare('INSERT INTO compte (compte_id, compte_rib_bic, compte_rib_iban, compte_membre_id, compte_nom, compte_prenom, compte_adresse_l1, compte_adresse_l2, compte_cp, compte_ville) 
+                $req_rib = $db->prepare('INSERT INTO comptes (id, compte_rib_bic, compte_rib_iban, compte_membre_id, compte_nom, compte_prenom, compte_adresse_l1, compte_adresse_l2, compte_cp, compte_ville) 
 				VALUES (:compte_id, :compte_rib_bic, :compte_rib_iban, :compte_membre_id, :compte_nom, :compte_prenom, :compte_adresse, :compte_adresse_2, :compte_cp, :compte_ville)');
                 $req_rib->bindValue(':compte_id', $rib_id, PDO::PARAM_INT);
                 $req_rib->bindValue(':compte_rib_bic', $rib_bic, PDO::PARAM_STR);
@@ -149,7 +149,7 @@ if (isset($_GET["tournoi"]) && !empty($dpt) && !empty($cp) && !empty($ville) && 
         $mango = $req_mango->fetch();
         $id_mango = $mango['im_mango_id'];
 
-        $req_compte = $db->prepare("SELECT * FROM compte WHERE compte_id = :id");
+        $req_compte = $db->prepare("SELECT * FROM compte WHERE id = :id");
         $req_compte->bindValue(":id", $rib_id, PDO::PARAM_INT);
         $req_compte->execute();
         $compte_user = $req_compte->fetch();
@@ -247,26 +247,26 @@ if (isset($_GET["tournoi"]) && !empty($dpt) && !empty($cp) && !empty($ville) && 
     if ($asso == 0)
         $asso = null;
 
-    $req_organiser_tournoi = $db->prepare('UPDATE tournois
+    $req_organiser_tournoi = $db->prepare('UPDATE evenements
 		SET event_titre = :event_titre, 
 		event_nb_equipes = :event_nb_equipes, 
 		event_joueurs_max = :event_joueurs_max, 
 		event_joueurs_min = :event_joueurs_min, 
 		event_tarif = :event_tarif, 
-		event_lieu = :event_lieu, 
+		event_lieu_id = :event_lieu, 
 		event_date = :event_date, 
 		event_heure_debut = :event_heure_debut, 
 		event_heure_fin = :event_heure_fin, 
 		event_prive = :event_prive, 
 		event_pass = :event_pass, 
 		event_paiement = :event_paiement, 
-		event_rib_id = :event_rib_id, 
-		event_mango = :event_mango, 
+		event_compte_id = :event_rib_id, 
+		event_mango_id = :event_mango, 
 		event_tarification_equipe = :event_tarification_equipe, 
-		event_orga = :event_orga,
-		event_orga_2 = :event_orga_2, 
+		event_orga_id = :event_orga,
+		event_orga2_id = :event_orga_2, 
 		event_descriptif = :event_descriptif
-		WHERE event_id = :event_id');
+		WHERE id = :event_id');
     //echo $restriction;
     $req_organiser_tournoi->bindValue(":event_titre", $titre, PDO::PARAM_STR);
     $req_organiser_tournoi->bindValue(":event_nb_equipes", $nb_equipes, PDO::PARAM_INT);
@@ -318,7 +318,7 @@ if (isset($_GET["tournoi"]) && !empty($dpt) && !empty($cp) && !empty($ville) && 
     die;
 }
 
-header('Location: index.php');
+//header('Location: index.php');
 exit();
 
 ?>

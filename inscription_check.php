@@ -23,13 +23,13 @@ if (isset($_POST["pseudo"])){
 				    if (!membre_existe(0, $mail)) {
 
                         $pass = md5($pass);
-                        $req_id = $db->query("SELECT MAX(membre_id) FROM membres;");
+                        $req_id = $db->query("SELECT MAX(id) FROM membres;");
                         $req_id->execute();
                         $id = $req_id->fetchColumn() + 1;
 
                         $code = chaineRandom(20);
 
-                        $req = $db->prepare("INSERT INTO membres (membre_id, membre_pseudo, membre_pass, membre_tel, membre_mail, membre_orga, membre_date_inscription, membre_derniere_connexion, membre_ip_inscription, membre_ip_derniere_connexion, membre_code_validation, membre_validation, membre_dpt_code) VALUES (:id, :pseudo, :pass, :tel, :mail, 0, NOW(), NOW(), :ip, :ip, :code, 0, null)");
+                        $req = $db->prepare("INSERT INTO membres (id, membre_pseudo, membre_pass, membre_tel, membre_mail, membre_orga, membre_date_inscription, membre_derniere_connexion, membre_ip_inscription, membre_ip_derniere_connexion, membre_code_validation, membre_validation, membre_dpt_code) VALUES (:id, :pseudo, :pass, :tel, :mail, 0, NOW(), NOW(), :ip, :ip, :code, 0, null)");
                         $req->bindParam(":id", $id, PDO::PARAM_INT);
                         $req->bindParam(":pseudo", $pseudo, PDO::PARAM_STR);
                         $req->bindParam(":pass", $pass, PDO::PARAM_STR);

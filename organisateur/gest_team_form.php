@@ -9,7 +9,7 @@ if (!isset($_SESSION["id"]))
 if (isset($_GET["tournoi"])){
 	$id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
 	$leTournoi = recupObjetTournoiByID($id_tournoi);
-    if ($leTournoi->event_orga_2 != $_SESSION["id"] && $leTournoi->event_orga != $_SESSION["id"])
+    if ($leTournoi['event_orga2_id'] != $_SESSION["id"] && $leTournoi['event_orga_id'] != $_SESSION["id"])
         header("Location: ../index.php");
 }else{
 	header("Location: ../index.php");
@@ -47,7 +47,7 @@ if (isset($_GET["id"])){
 
     <!-- CONTENU DE LA PAGE -->
     <div id="corps">
-        <h1 id="titre_corps"><?php echo $leTournoi->event_titre; ?> - Créer une équipe</h1>
+        <h1 id="titre_corps"><?php echo $leTournoi['event_titre']; ?> - Créer une équipe</h1>
         <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->

@@ -4,7 +4,7 @@
 	$dpt = htmlspecialchars(trim($_POST['dpt']));
 	$liste_tournois = liste_tournois($dpt);
 
-	$req_ajout_dpt = $db->prepare("UPDATE membres SET membre_dpt_code = :dpt WHERE membre_id = :id_membre");
+	$req_ajout_dpt = $db->prepare("UPDATE membres SET membre_dpt_code = :dpt WHERE id = :id_membre");
 	$req_ajout_dpt->bindValue(":dpt", $dpt, PDO::PARAM_STR);
 	$req_ajout_dpt->bindValue(":id_membre", $_SESSION["id"], PDO::PARAM_INT);
 	$req_ajout_dpt->execute();
@@ -12,7 +12,7 @@
 	global $res_dpt_from_liste_tournois;
 
 	if(isset($_SESSION['id'])){
-		$user = $db->prepare('SELECT * FROM membres WHERE membre_id = :membre_id');
+		$user = $db->prepare('SELECT * FROM membres WHERE membres.id = :membre_id');
 		$user->execute(array(
 			'membre_id' => $_SESSION['id']
 		));
@@ -24,23 +24,23 @@
 		));
 	$res_dpt = $req_dpt->fetch();
 
-    $req_membre_dpt_code = $db->prepare('UPDATE membres SET membre_dpt_code = :dpt_code WHERE membre_id = :membre_id');
+    $req_membre_dpt_code = $db->prepare('UPDATE membres SET membre_dpt_code = :dpt_code WHERE id = :membre_id');
     $req_membre_dpt_code->execute(array(
         'dpt_code' => $dpt,
         'membre_id' => $_SESSION['id']
         ));
 
-	$liste_complexes = liste_lieux($res_dpt['dpt_id']);
+	$liste_complexes = liste_lieux($res_dpt['id']);
     $tab_complexes_events = [];
 	foreach ($liste_complexes as $key => $value) {
 		//var_dump($key);
 		//var_dump($value);
-		$req_nb_events = $db->prepare('SELECT COUNT(event_id) FROM tournois WHERE event_lieu = :event_lieu AND event_date >= DATE(NOW())');
+		$req_nb_events = $db->prepare('SELECT COUNT(evenements.id) FROM evenements WHERE event_lieu_id = :event_lieu AND event_date >= DATE(NOW())');
 		$req_nb_events->execute(array(
-			'event_lieu' => $value['lieu_id']
+			'event_lieu' => $value['id']
 			));
 		$res_nb_events = $req_nb_events->fetchColumn();
-		$tab_complexes_events[] = array( $value['lieu_id'], $res_nb_events);
+		$tab_complexes_events[] = array( $value['id'], $res_nb_events);
 		//var_dump($tab_complexes_events);
 		$req_nb_events->closeCursor();
 	}
@@ -121,18 +121,18 @@
                 }
                 $date_tournoi = new DateTime($event['event_date']);
                 $date_tournoi = date_lettres($date_tournoi->format("w-d-m-Y"));
-
-                $req_orga = $db->prepare('SELECT * FROM membres INNER JOIN tournois ON membres.membre_id = tournois.event_orga WHERE event_id = :event_id');
+                $req_orga = $db->prepare('SELECT * FROM membres INNER JOIN evenements ON membres.id = evenements.event_orga_id WHERE evenements.id = :event_id');
                 $req_orga->execute(array(
-                    'event_id' => $event['event_id']
+                    'event_id' => $event[0]
                     ));
+                //var_dump($req_orga);
                 $orga = $req_orga->fetch();
                 ?>
 
                 
                 <div class="row">
                     <div class="recap_event center <?php if (isset($event['event_tournoi']) && $event['event_tournoi'] == 0){ echo 'match'; } else { echo 'tournoi';}?> container-fluid">
-                        <a href="feuille_de_tournois.php?tournoi=<?php echo $event["event_id"]; ?>">
+                        <a href="feuille_de_tournois.php?tournoi=<?php echo $event[0]; ?>">
                             <div class="col-sm-3">
                                 <p class="">
                                 Le <span ><?php echo $date_tournoi; ?></span>
@@ -141,7 +141,7 @@
                                 </p>
                             </div>
                             <div class="recap_event_titre col-sm-3" >
-                                <p class="<?php /*echo $color; */?>">
+                                <p class="<?php var_dump($orga);?>">
                                     <span class="glyphicon <?php echo $glyph; ?>"></span>
                                     <span>
                                         <?php 
@@ -164,7 +164,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <span class="glyphicon glyphicon-user"></span><span class="">
-                                    <?php echo compte_equipes($event['event_id']) . ' / ' . $event['event_nb_equipes']; ?>
+                                    <?php echo compte_equipes($event[0]) . ' / ' . $event['event_nb_equipes']; ?>
                                 </span> 
                                 <span>
                                     <?php 
@@ -222,7 +222,7 @@
                                 ?>
                                 <div class="">
                                     <div class="recap_event center <?php if (isset($event['event_tournoi']) && $event['event_tournoi'] == 0){ echo 'match'; } else { echo 'tournoi';}?> container-fluid">
-                                        <a href="feuille_de_tournois.php?tournoi=<?php echo $event["event_id"]; ?>">
+                                        <a href="feuille_de_tournois.php?tournoi=<?php echo $event[0]; ?>">
                                             <div class="col-sm-3">
                                                 <p class="bold">
                                                 Le <span ><?php echo $date_tournoi; ?></span>
@@ -254,7 +254,7 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <span class="glyphicon glyphicon-user"></span><span class="bold">
-                                                    <?php echo compte_equipes($event['event_id']) . ' / ' . $event['event_nb_equipes']; ?>
+                                                    <?php echo compte_equipes($event[0]) . ' / ' . $event['event_nb_equipes']; ?>
                                                 </span> 
                                                 <span>
                                                     <?php 

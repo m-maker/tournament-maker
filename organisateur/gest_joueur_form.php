@@ -11,7 +11,7 @@ if (isset($_GET["tournoi"]) && isset($_GET["team"])){
 	$id_team = htmlspecialchars(trim($_GET["team"]));
 	$equipe = recupEquipeByID($id_team);
 	$leTournoi = recupObjetTournoiByID($id_tournoi);
-	if ($leTournoi->event_orga_2 != $_SESSION["id"] && $leTournoi->event_orga != $_SESSION["id"])
+	if ($leTournoi["event_orga2_id"] != $_SESSION["id"] && $leTournoi["event_orga_id"] != $_SESSION["id"])
 		header("Location: index.php");
 }else{
 	header("Location: index.php");
@@ -49,7 +49,7 @@ if (isset($_GET["id"])){
 
     <!-- CONTENU DE LA PAGE -->
     <div id="corps">
-        <h1 id="titre_corps"><?php echo $leTournoi->event_titre; ?> > <?php if (!$upd) { echo 'Ajouter'; }else{echo 'Modifier';} ?> un joueur</h1>
+        <h1 id="titre_corps"><?php echo $leTournoi["event_titre"]; ?> > <?php if (!$upd) { echo 'Ajouter'; }else{echo 'Modifier';} ?> un joueur</h1>
         <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
@@ -81,7 +81,7 @@ if (isset($_GET["id"])){
 					<button type="submit" name="submit" class="btn btn-success btn-grand" style="margin-top: 4%;"><span class="glyphicon glyphicon-ok-sign"></span> Ajouter le joueur</button>
 				</form>
 			<?php }else{ ?>
-				<form method="post" action="gest_joueur_traitement.php?tournoi=<?php echo $id_tournoi; ?>&team=<?php echo $id_team; ?>&id=<?php echo $joueur['membre_id']; ?>">
+				<form method="post" action="gest_joueur_traitement.php?tournoi=<?php echo $id_tournoi; ?>&team=<?php echo $id_team; ?>&id=<?php echo $joueur[0]; ?>">
 					<legend>
 						<span class="left">
 							<a href="gestion_equipes.php?tournoi=<?php echo $id_tournoi; ?>"> 
@@ -92,7 +92,7 @@ if (isset($_GET["id"])){
 					</legend>
 					<select name="statut" class="form-control" placeholder="Statut du joueur">
 						<?php foreach (recupStatuts() as $unStatut) { ?>
-						<option value="<?php echo $unStatut['statut_id']; ?>" <?php if ($joueur['em_statut_joueur'] == $unStatut['statut_id']){echo 'selected';} ?> ><?php echo $unStatut['statut_nom']; ?></option>
+						<option value="<?php echo $unStatut['id']; ?>" <?php if ($joueur['em_statut_joueur_id'] == $unStatut['id']){echo 'selected';} ?> ><?php echo $unStatut['statut_nom']; ?></option>
 						<?php } ?>
 					</select>
 					Paiement de la place : 
