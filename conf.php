@@ -558,6 +558,7 @@ function recupMessagesEquipe($id_equipe)
         //  1 = indisponible / 2 = réservé / 9 = morts
         foreach ($liste_terrains as $terrain => $val) {
             $creneau_rempli = 0;
+
         // On recherche la clé de la ligne dans laquelle le creneau_datetime vaut la date
             foreach ($val['creneaux'] as $creneau => $value) {
 

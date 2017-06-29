@@ -55,7 +55,7 @@ $(document).ready(function(){
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 				<div class="has-feedback">
-					<form action="planning_ajax.php" method="post">
+					<form action="planning.php" method="post">
 					<div class="div_input2">
 					    <select id="jour" name="jour">
 					      <?php 
@@ -67,17 +67,17 @@ $(document).ready(function(){
 					        
 					        $now -> add( new DateInterval('P'.$i.'D'));
 					                ?> 
-					                  <option value=<?php echo $now->format('Y-m-j').' ';?>>
+					                  <option onclick="envoi_form()" value=<?php echo $now->format('Y-m-d').' '; if (isset($_POST['jour']) AND $_POST['jour'] == $now->format('Y-m-d')){ echo "selected"; }?>>
 					                  <?php 
-					                    echo $joursem[$now->format('w')].' '.$now->format('d').' '.$mois[$now->format('n')-1];
+					                    echo $joursem[$now->format('w')].' '.$now->format('d').' '.$mois[$now->format('m')-1];
 					                  ?> 
 					                  </option>
 					                <?php
 					              }
 					      ?>
 					    </select>
-					    <input type="submit" name="">
 					</div>
+					<input id="submit_form" type="submit" name="form" style="display: none;">
 					</form>
 				</div>
     <div id="post_planning">
@@ -103,13 +103,12 @@ $(document).ready(function(){
 		$parametres_fonction['lieu_id'] = $_SESSION['gerant_lieu_id'];
 		$heure_min = 10;
 		$heure_max = 23.0;
-		if (isset($_POST['horaire'])){
-			$date_min = DateTime::createFromFormat('Y-m-j H:i:s', $_POST['jour']);
+		if (isset($_POST['jour'])){
+			$date_min = DateTime::createFromFormat('Y-m-j', $_POST['jour']);
 		}
 		else{
 			$date_min = new DateTime;
 		}
-			
 		$date_max = clone($date_min);
 		$date_max->add( new DateInterval('P0D'));
 
@@ -175,10 +174,10 @@ $(document).ready(function(){
 											else{
 												$minutes = "30";
 											}
-											$datetime_string = $jour->format('Y-n-j').' '.intval($heure).':'.$minutes.':00';
-											$date_case = DateTime::createFromFormat('Y-n-j H:i:s', $datetime_string);
+											$datetime_string = $jour->format('Y-m-d').' '.intval($heure).':'.$minutes.':00';
+											$date_case = DateTime::createFromFormat('Y-m-d H:i:s', $datetime_string);
 											//$nom_fonction($parametres_fonction);$datetime_string = '2017-06-23 17:00:00';
-											$date_case_string = $date_case->format('Y-m-j H:i:s');
+											$date_case_string = $date_case->format('Y-m-d H:i:s');
 											case_complexe($date_case_string, $res_terrains);
 											unset($date_case);
 											$jour->add( new DateInterval('P1D'));
@@ -470,6 +469,7 @@ $(document).ready(function(){
 		<?php include('footer.php') ?>
 <script type="text/javascript">
 
+/*
 $(document).ready(function(){
   $("#jour option").click(function(){
     $.ajax({type:"POST", data: $("#jour").serialize(), url:"planning_ajax.php",
@@ -482,6 +482,14 @@ $(document).ready(function(){
     });
   });
 });
+*/
+
+function envoi_form(){
+	$("#submit_form").click();
+};
+
+
+
 
 $(".clic-radio").click(function () {
     var id = $(this).attr('id');
