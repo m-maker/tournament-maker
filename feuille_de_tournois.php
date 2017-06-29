@@ -3,42 +3,7 @@
 if (!isset($_SESSION["id"]))
 	header("Location: index.php");
 
-function recupEquipesIncompletes($id_tournoi, $nb_joueur_min){
-	$db = connexionBdd();
-	$req_equipes = $db->prepare("SELECT * FROM equipes WHERE team_event_id = :id");
-	$req_equipes->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
-	$req_equipes->execute();
-	$equipes_incompletes = array();
-	while ($equipes = $req_equipes->fetch()) {
-		$compte_membres = compter_membres($equipes["id"]);
-		if ($compte_membres < $nb_joueur_min)
-			$equipes_incompletes[] = $equipes;
-	}
-	return $equipes_incompletes;
-}
 
-function recupEquipesCompletes($id_tournoi, $nb_joueur_min){
-	$db = connexionBdd();
-	$req_equipes = $db->prepare("SELECT * FROM equipes WHERE team_event_id = :id");
-	$req_equipes->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
-	$req_equipes->execute();
-	$equipes_completes = array();
-	while ($equipes = $req_equipes->fetch()) {
-		$compte_membres = compter_membres($equipes["id"]);
-		if ($compte_membres >= $nb_joueur_min)
-			$equipes_completes[] = $equipes;
-	}
-	return $equipes_completes;
-}
-
-function recupMessagesEquipe($id_equipe)
-{
-    $db = connexionBdd();
-    $req = $db->prepare("SELECT * FROM mur_equipes INNER JOIN membres ON me_membre_id = membres.id WHERE me_equipe_id = :id_equipe ORDER BY me_date DESC;");
-    $req->bindValue(":id_equipe", $id_equipe, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetchAll();
-}
 
 $id_tournoi = htmlspecialchars(trim($_GET["tournoi"]));
 $leTournoi = recupObjetTournoiByID($id_tournoi);

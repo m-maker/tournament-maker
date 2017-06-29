@@ -30,7 +30,6 @@ td{
 .creneau_match{
 	background-color: rgb(104,159,56);
 	color: white;
-
 }
 table *{
 	margin: 0px;
@@ -67,4 +66,34 @@ table *{
 	width: 90%;
 	text-align: left;
 	margin-top: 5px;
+}
+.modal_match_tournoi_info, .modal_match_tournoi_participants{
+	text-align: left;
+	padding: 3px;
+	color: black;
+}
+*.modal_match_tournoi_info *, .modal_match_tournoi_participants *{
+	text-align: left;
+}
+.cont_liste-msg-tournoi{
+	max-height: 400px;
+	overflow-y: scroll;
+	font-size: 12px;
+}
+.cont_liste-msg-tournoi *{
+	font-size: 12px;
+}
+.modal{
+	font-size: 14px;
+}
+.mod-tournoi *{
+	margin: 0px;
+	padding: 1px;
+}
+.mod-tournoi a{
+	padding: 5px;
+}
+.btn-default{
+	width: 100%;
+	margin: 0px;
 }

@@ -1,6 +1,27 @@
 <?php
-	include('../conf.php');
-	$db = connexionBdd();
+include ('../conf.php');
+include('head.php');
+
+if ($_SESSION["membre_orga"] != 1){
+	header("Location: ../index.php");
+}
+if (!isset($_SESSION["id"])){
+	header("Location: ../connexion.php");
+}
+
+$liste_comptes = recupCompteOrga($_SESSION["id"]);
+$liste_tournois = liste_tournois_orga($_SESSION["id"]);
+
+?>
+
+
+    <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+</script>
+<?php
     $_SESSION['gerant_lieu_id'] = 1;
     $format = 'Y-m-d';
 	// $parametres_fonction = $_POST['nom_fonction'];
@@ -8,14 +29,15 @@
 	$parametres_fonction;
 	// $parametres_fonction = $_POST['parametres_fonction'];
 	if (!isset($_POST['gerant_lieu_id']) AND !isset($_SESSION['gerant_lieu_id'])){
-		//header('locaton:index.php');
-		$_SESSION['gerant_lieu_id'] = 1;
+		header('locaton:index.php');
 	}
 	elseif (isset($_POST['gerant_lieu_id'])){
 		$_SESSION['gerant_lieu_id'] = $_POST['gerant_lieu_id'];
 	}
+	elseif (!isset($_SESSION['gerant_lieu_id'])){
+		location('index.php');
+	}
 		
-	
 	if ($nom_fonction = "planning_complexe"){
 
 		$parametres_fonction['lieu_id'] = $_SESSION['gerant_lieu_id'];
@@ -27,10 +49,10 @@
 		else{
 			$date_min = new DateTime;
 		}
-			
 		$date_max = clone($date_min);
 		$date_max->add( new DateInterval('P0D'));
 
+		// on récupère un tableau avec la liste des terrains.
 		$req_terrains = $db->prepare('SELECT * FROM terrains WHERE terrain_lieu_id = :lieu_id');
 		$req_terrains->execute(array(
 			'lieu_id' => $parametres_fonction['lieu_id']
@@ -38,13 +60,23 @@
 		$res_terrains = $req_terrains->fetchAll();
 		$nb_terrain = count($res_terrains);
 
-		foreach ($res_terrains as $key => $val){
+		// Pour chaque terrain, on y associes ses créneaux.
+		foreach ($res_terrains as $key => $val) {
+
+			// Récupération des créneaux pour un terrain.
 			$req_liste_creneaux = $db->prepare('SELECT * FROM creneaux WHERE creneau_terrain_id = :terrain_id');
 			$req_liste_creneaux->execute(array(
 				'terrain_id' => $val['id']
 				));
 			$res_liste_creneaux = $req_liste_creneaux->fetchAll();
+
+			// Ajout du tableau des créneaux dans le tableau des terrains
 			$res_terrains[$key]['creneaux'] = $res_liste_creneaux;
+			//on récupère la liste des events et on l'ajoute au tableau des terrains
+			$liste_event_terrain = liste_event_terrain($val['id']);
+			$res_terrains[$key]['liste_event'] = $liste_event_terrain;
+
+			// On génère un champ créneaux_morts contenant toutes les demi-heure à ne pas afficher à l'écran car elles sont regroupées dans un event. ex: 19h00-21h00 -> 1 crénau (19h00-19h30) + 3 créneaux morts
 			foreach ($res_liste_creneaux as $key_creneau => $value_creneau) {
 				if ($value_creneau['creneau_statut_id'] == 2){
 					$date_debut = DateTime::createFromFormat('Y-m-j H:i:s', $value_creneau['creneau_datetime']);
@@ -61,13 +93,11 @@
 				$res_terrains[$key]['creneaux_morts'] = $liste_creneaux_morts;
 				unset($liste_creneaux_morts);
 			}
-		}
-		foreach ($res_terrains as $kk) {
+
 		}
 	}
 	?>
- <div class="tableau"> 
-		
+		    <div class="tableau"> 
 				<table>
 					<?php 
 						entete_complexe($date_min, $date_max,  $parametres_fonction['lieu_id'], $res_terrains);
@@ -84,12 +114,11 @@
 											else{
 												$minutes = "30";
 											}
-											$datetime_string = $jour->format('Y-m-j').' '.intval($heure).':'.$minutes.':00';
-											$date_case = DateTime::createFromFormat('Y-m-j H:i:s', $datetime_string);
+											$datetime_string = $jour->format('Y-n-j').' '.intval($heure).':'.$minutes.':00';
+											$date_case = DateTime::createFromFormat('Y-n-j H:i:s', $datetime_string);
 											//$nom_fonction($parametres_fonction);$datetime_string = '2017-06-23 17:00:00';
 											$date_case_string = $date_case->format('Y-m-j H:i:s');
 											case_complexe($date_case_string, $res_terrains);
-
 											unset($date_case);
 											$jour->add( new DateInterval('P1D'));
 										}
@@ -100,11 +129,29 @@
 						} 
 					?>
 				</table>
-			</div><div class="modal fade" id="modal_form_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			</div>
+		</div>
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="modal fade" id="modal_form_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<form action="planning_organiser_event_traitement.php" method="post">
+	<input type="hidden" id="input_event_date" name="event_date" value="">
+	<input type="hidden" id="input_heure_debut" name="heure_debut" value="">
+	<input type="hidden" id="input_terrain_id" name="terrain_id" value="">
 	<div class="modal-dialog" role="document">
     	<div class="modal-content">
       		<div class="modal-header">
         		<h2 class="modal-title" id="myModalLabel"></h2>
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         	</div>
         	<div class="modal-body">
 
@@ -148,7 +195,7 @@
 											}
 
 											?>
-												<option value="$modal_heure_fin"> <?php echo $modal_heure_fin; ?> </option>
+												<option value="<?php echo $modal_heure_fin; ?>"> <?php echo $modal_heure_fin; ?> </option>
 											<?php
 										}
 									?>
@@ -262,6 +309,56 @@
 					<input class="pay-clic" id="paiement_refus" type="radio" name="paiement" value="0">
 					<label for="paiement_refus">Non</label>
 				</div>
+				<div id="section-rib_match" class="espace-top" >
+                    <div class="espace-bot">
+                        Selectionnez un compte :
+                        <select style="padding: 1px; height: 20px;" name="select-compte" id="select-compte-match" class="form-control">
+                          	<?php 
+                          		foreach ($liste_comptes as $unCompte){ 
+                           			?>
+                       				<option value="<?php echo $unCompte["compte_id"]; ?>"><?php echo $unCompte['compte_nom'] . ' ' . $unCompte["compte_prenom"] . ' - ' . $unCompte['compte_rib_iban']; ?></option>
+                                    <?php 
+                                }
+                            ?>
+                        	<option value="new" id="opt-new-match">Nouveau compte..</option>
+                        </select>
+                    </div>
+                                        <div id="new-compte-match" style="display: none;">
+                                            <label for="input_event_rib ">Création d'un nouveau compte</label>
+                                            <div class="ligne">
+                                                <input type="text" class="form-control" style="padding: 1px; height: 20px;" id="input_compte_nom_match" name="compte_nom" placeholder="Nom du titulaire du compte">
+                                                <input type="text" class="form-control" style="padding: 1px; height: 20px;" id="input_compte_prenom_match" name="compte_prenom" placeholder="Prénom du titulaire du compte">
+                                            </div>
+                                            <div class="ligne">
+                                                <select class="form-control align-select" style="padding: 1px; height: 20px;" name="jour">
+                                                    <optgroup label="Jour de naissance"></optgroup>
+                                                    <?php for ($i = 1; $i < 31; $i++) { ?>
+                                                        <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                                <select class="form-control align-select" name="mois" placeholder="Mois">
+                                                    <optgroup label="Mois de naissance"></optgroup>
+                                                    <?php foreach ($tab_dates as $key => $value) { ?>
+                                                        <option value="<?php echo $key; ?>"><?php echo $value ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                                <select class="form-control align-select" name="annee" placeholder="Année">
+                                                    <optgroup label="Année de naissance"></optgroup>
+                                                    <?php for ($i = date("Y") - 19; $i > date("Y") - 100; $i--) { ?>
+                                                        <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                            <input type="text" class="form-control" id=input_compte_adresse_l1_match" name="compte_adresse" placeholder="Adresse du titulaire du compte">
+                                            <input type="text" class="form-control" id="input_compte_adresse_l2_match" name="compte_adresse_2" placeholder="Complément d'adresse (Optionnel)">
+                                            <div class="ligne">
+                                                <input type="text" class="form-control" id="input_compte_code_postal_match" name="compte_cp" placeholder="Code Postal du titulaire du compte">
+                                                <input type="text" class="form-control" id="input_compte_ville_match" name="compte_ville" placeholder="Ville du tutulaire du compte">
+                                            </div>
+                                            <input type="text" class="form-control" id="input_event_rib_match" name="compte_rib_bic" placeholder="Code BIC : DAAEFRPP (Optionnel)">
+                                            <input type="text" class="form-control" id="input_event_rib_iban_match" name="compte_rib_iban" placeholder="Code IBAN : FR763XXXXXXXXXXX4567890185">
+                                        </div>
+                                    </div>
 				<hr/>
 				
 				<div class="form-group center">
@@ -285,129 +382,46 @@
 						    	</div>
 
 
+	<input type="submit" name="">
+
 			</div>
 		</div>
+
 	</div>
+
+	</form>
 </div>
+
+
 <?php
-	function entete_complexe($jourmin, $jourmax, $lieu_id, $tab_terrains){
-		$db = connexionBdd();
-		$req_format_terrains = $db->prepare('SELECT * FROM terrain_format');
-		$req_format_terrains->execute();
-		$format_terrains = $req_format_terrains->fetchAll();
+	function planning_popover(){
 		?>
-			<tr class="entete_complexe_jour">
-				<?php	
-					$jour = clone ($jourmin);
-					while ($jour <= $jourmax){
-						?>
-							<th  colspan="2">
-								<div > <?php echo $jour->format("d/m"); ?> </div>
-							</th>
-						<?php
-						$jour->add( new DateInterval('P1D'));
-					}
-					unset($jour);
-				?>
-			</tr>
-			<tr>
-				<?php	
-					$jour = clone ($jourmin);
-					while ($jour <= $jourmax){
-						foreach ($tab_terrains as $terrain) {
-							?>
-								<td class="">
-									<?php echo $terrain['terrain_nom'];
-									?>
-									
-								</td>
-							<?php
-						}
-						$jour->add( new DateInterval('P1D'));
-					}
-					unset($jour);
-				?>
-			</tr>
+			<div>
+				<span> De XX:HH à <input type="time" name="heure_fin"></span>
+			</div>
 		<?php
-	}
-
-
-													
-
-
-	function case_complexe ($date_heure, $liste_terrains){
-		//	1 = indisponible / 2 = réservé / 9 = morts
-		foreach ($liste_terrains as $terrain => $val) {
-			$creneau_rempli = 0;
-		// On recherche la clé de la ligne dans laquelle le creneau_datetime vaut la date
-			foreach ($val['creneaux'] as $creneau => $value) {
-			 	if ($value['creneau_datetime'] == $date_heure){
-			 		if ($value['creneau_statut_id'] == 1) {
-						?>
-							<td style="margin: 0px; padding: 0px; ">
-								<button  style="margin: 0px; padding: 0px; " class="boutton" data-toggle="popover" data-trigger="focus"  title="Participants" container='body' data-html="true" data-content="
-						 			<?php //planning_popover(); ?>">				 		
-									créneau fermé
-								</button>
-							</td>
-						<?php
-					$creneau_rempli = 1;		 			
-			 		}
-			 		elseif ($value['creneau_statut_id'] == 2) {
-			 			$date_debut = DateTime::createFromFormat('Y-m-j H:i:s', $date_heure);
-			 			$date_fin = DateTime::createFromFormat('Y-m-j H:i:s', $value['creneau_datetime_fin']);
-						$demi_heure = DateTime::createFromFormat('i', 30);
-						$nb_demi_heure = 0;
-						while ($date_debut < $date_fin){
-							$nb_demi_heure = $nb_demi_heure + 1;
-							$date_debut->add(new DateInterval('PT30M'));
-						}
-						?>
-							<td rowspan="<?php echo $nb_demi_heure; ?>">
-								<button  class="boutton" data-toggle="popover" data-trigger="focus"  title="Participants" container='body' data-html="true" data-content="
-								 		<?php //planning_popover(); ?>">
-								créneau réservé <?php echo $nb_demi_heure; ?>
-								</button>
-							</td>
-						<?php
-					$creneau_rempli = 1;
-					}
-				}
-			}
-			if($creneau_rempli == 0){
-				$creneau_mort = 0;
-				if (isset($val['creneaux_morts'])){	
-					foreach ($val['creneaux_morts'] as $key_morts => $value_morts) {
-						if ($key_morts == $date_heure){
-						$creneau_mort = 1;
-						}	
-					}
-				}
-				if ($creneau_mort == 1){
-				}
-				else{
-					?>
-						<td class="creneau_indispo" style="margin: 0px; padding: 0px; ">
-							<button type="button" style="margin: 0px; padding: 0px; " class="boutton" data-toggle="modal" data-target="#modal_form_1">				 		 
-								<?php 
-									$ex = explode(" ", $date_heure); 
-									$ex2 = explode(":", $ex[1]);
-									echo $ex2[0].':'.$ex2[1];
-									?>
-							</button>
-						</td>
-					<?php
-				}
-			}
-		}
+		
 	}
 ?>	
 
 
-      <script>
+        <!-- FOOTER -->
+		<?php include('footer.php') ?>
+<script type="text/javascript">
+
 $(document).ready(function(){
-    $('[data-toggle="popover"]').popover();
+  $("#jour option").click(function(){
+    $.ajax({type:"POST", data: $("#jour").serialize(), url:"planning_ajax.php",
+      success: function(data){
+        $("#post_planning").html(data);
+      },
+      error: function(){
+        $("#post_planning").html('Une erreur est survenue.');
+      }
+    });
+  });
 });
+
 $(".clic-radio").click(function () {
     var id = $(this).attr('id');
     var input_pass = $("#input_event_pass");
@@ -419,10 +433,17 @@ $(".clic-radio").click(function () {
     }
 });
 var heure_debut;
+
 $(".boutton").click(function() {
-	heure_debut = $(this).text();
-	$('#modal_heure_debut').html(heure_debut);
+	heure_debut = $(".creneau_heure_debut", this).attr("value");
+	$("#modal_heure_debut").html(heure_debut);
+	$('#input_heure_debut').val(heure_debut);
+	date = $('#jour').val();
+	$('#input_event_date').val(date);
+	terrain_id = $(".creneau_terrain_id", this).attr("value");
+	$('#input_terrain_id').val(terrain_id);
 });
+
 $("#type_event option").click(function(){
 	if ($(this).val() == "rencontre"){
 		$("#modal_effectif_match").hide();
@@ -433,4 +454,24 @@ $("#type_event option").click(function(){
 		$("#modal_effectif_rencontre").hide();
 	}
 });
+
+$("#cb input").click(function(){
+	if ($(this).val() == "1"){
+		$("#section-rib_match").show();
+	}
+	else{
+		$("#section-rib_match").hide();
+	}
+});
+
+$("#select-compte-match option").click(function(){
+	if ($(this).val() == "new"){
+		$("#new-compte-match").show();
+	}
+	else{
+		$("#new-compte-match").hide();
+	}
+});
+
 </script>
+

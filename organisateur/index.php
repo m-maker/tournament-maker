@@ -59,7 +59,8 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
 						<!--<h2 class="center"><span class="glyphicon glyphicon-list"></span> Mes tournois</h2>-->
 
 						<?php if (!empty($liste_tournois)){
-								foreach ($liste_tournois as $unTournoi) { ?>
+								foreach ($liste_tournois as $unTournoi) { 
+									?>
                                     <div class="row">
                                     <div class="col-md-10 " style="padding: 0;margin:0; ">
                                         <div class="tournoi-cont" style="padding: 0; margin:0 1% 1%; <?php if($unTournoi["event_tournoi"] == 0){ echo 'background: #B8860B;';} ?>">
@@ -101,10 +102,15 @@ $liste_tournois = liste_tournois_orga($_SESSION["id"]);
                                         </a>
                                     </div>
                                     </div>
-						<?php } 
-							}else{ ?>
-								<h4 class="padding center">Vous n'avez crée aucun tournoi !</h4> 
-							<?php } ?>
+                                    <?php 
+                                } 
+							}
+							else{
+								?>
+									<h4 class="padding center">Vous n'avez crée aucun tournoi !</h4> 
+								<?php 
+							} 
+							?>
 
 					</div>
 

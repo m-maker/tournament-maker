@@ -55,7 +55,7 @@ $(document).ready(function(){
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 				<div class="has-feedback">
-					<form action="" method="post">
+					<form action="planning.php" method="post">
 					<div class="div_input2">
 					    <select id="jour" name="jour">
 					      <?php 
@@ -67,9 +67,9 @@ $(document).ready(function(){
 					        
 					        $now -> add( new DateInterval('P'.$i.'D'));
 					                ?> 
-					                  <option value=<?php echo $now->format('Y-m-j').' ';?>>
+					                  <option onclick="envoi_form()" value=<?php echo $now->format('Y-m-d').' '; if (isset($_POST['jour']) AND $_POST['jour'] == $now->format('Y-m-d')){ echo "selected"; }?>>
 					                  <?php 
-					                    echo $joursem[$now->format('w')].' '.$now->format('d').' '.$mois[$now->format('n')-1];
+					                    echo $joursem[$now->format('w')].' '.$now->format('d').' '.$mois[$now->format('m')-1];
 					                  ?> 
 					                  </option>
 					                <?php
@@ -77,6 +77,7 @@ $(document).ready(function(){
 					      ?>
 					    </select>
 					</div>
+					<input id="submit_form" type="submit" name="form" style="display: none;">
 					</form>
 				</div>
     <div id="post_planning">
@@ -102,13 +103,12 @@ $(document).ready(function(){
 		$parametres_fonction['lieu_id'] = $_SESSION['gerant_lieu_id'];
 		$heure_min = 10;
 		$heure_max = 23.0;
-		if (isset($_POST['horaire'])){
-			$date_min = DateTime::createFromFormat('Y-m-j H:i:s', $_POST['jour']);
+		if (isset($_POST['jour'])){
+			$date_min = DateTime::createFromFormat('Y-m-j', $_POST['jour']);
 		}
 		else{
 			$date_min = new DateTime;
 		}
-			
 		$date_max = clone($date_min);
 		$date_max->add( new DateInterval('P0D'));
 
@@ -174,10 +174,10 @@ $(document).ready(function(){
 											else{
 												$minutes = "30";
 											}
-											$datetime_string = $jour->format('Y-n-j').' '.intval($heure).':'.$minutes.':00';
-											$date_case = DateTime::createFromFormat('Y-n-j H:i:s', $datetime_string);
+											$datetime_string = $jour->format('Y-m-d').' '.intval($heure).':'.$minutes.':00';
+											$date_case = DateTime::createFromFormat('Y-m-d H:i:s', $datetime_string);
 											//$nom_fonction($parametres_fonction);$datetime_string = '2017-06-23 17:00:00';
-											$date_case_string = $date_case->format('Y-m-j H:i:s');
+											$date_case_string = $date_case->format('Y-m-d H:i:s');
 											case_complexe($date_case_string, $res_terrains);
 											unset($date_case);
 											$jour->add( new DateInterval('P1D'));
@@ -197,174 +197,7 @@ $(document).ready(function(){
 
 
 
-<?php
-	function entete_complexe($jourmin, $jourmax, $lieu_id, $tab_terrains){
-		$db = connexionBdd();
-		$req_format_terrains = $db->prepare('SELECT * FROM terrain_format');
-		$req_format_terrains->execute();
-		$format_terrains = $req_format_terrains->fetchAll();
-		?>
-			<tr class="entete_complexe_jour">
-				<?php	
-					$jour = clone ($jourmin);
-					while ($jour <= $jourmax){
-						?>
-							<th  colspan="2">
-								<div > <?php echo $jour->format("d/m"); ?> </div>
-							</th>
-						<?php
-						$jour->add( new DateInterval('P1D'));
-					}
-					unset($jour);
-				?>
-			</tr>
-			<tr>
-				<?php	
-					$jour = clone ($jourmin);
-					while ($jour <= $jourmax){
-						foreach ($tab_terrains as $terrain) {
-							?>
-								<td class="">
-									<?php echo $terrain['terrain_nom'];
-									?>
-									
-								</td>
-							<?php
-						}
-						$jour->add( new DateInterval('P1D'));
-					}
-					unset($jour);
-				?>
-			</tr>
-		<?php
-	}							
 
-	function case_complexe ($date_heure, $liste_terrains){
-		//	1 = indisponible / 2 = réservé / 9 = morts
-		foreach ($liste_terrains as $terrain => $val) {
-			$creneau_rempli = 0;
-		// On recherche la clé de la ligne dans laquelle le creneau_datetime vaut la date
-			foreach ($val['creneaux'] as $creneau => $value) {
-
-				// s'il s'agit du créneau
-			 	if ($value['creneau_datetime'] == $date_heure){
-
-
-			 		if ($value['creneau_statut_id'] == 1) {
-						?>
-							<td style="margin: 0px; padding: 0px; ">
-								<button  style="margin: 0px; padding: 0px; " class="boutton" data-toggle="popover" data-trigger="focus"  title="Participants" container='body' data-html="true" data-content="coucou
-						 			<?php //planning_popover(); ?>">				 		
-									créneau fermé
-								</button>
-							</td>
-						<?php
-					$creneau_rempli = 1;		 			
-			 		}
-
-			 		elseif ($value['creneau_statut_id'] == 2) {
-			 			$date_debut = DateTime::createFromFormat('Y-m-j H:i:s', $date_heure);
-			 			$date_fin = DateTime::createFromFormat('Y-m-j H:i:s', $value['creneau_datetime_fin']);
-						$demi_heure = DateTime::createFromFormat('i', 30);
-						$nb_demi_heure = 0;
-						while ($date_debut < $date_fin){
-							$nb_demi_heure = $nb_demi_heure + 1;
-							$date_debut->add(new DateInterval('PT30M'));
-						}
-						$hauteur = 23*$nb_demi_heure;
-						$event;
-						foreach ($val['liste_event'] as $event_key => $event_value) {
-							if ($event_value['creneau_event_id'] == $value['creneau_event_id']){
-								$event = $event_value;
-							}
-						}
-
-						?>
-
-							<td rowspan="<?php echo $nb_demi_heure; ?>" style="height: <?php echo $hauteur; ?>;">
-								<button  class="boutton creneau_match" data-toggle="modal" data-target="#modal_match_<?php echo $value['creneau_event_id']; ?>">
-								créneau réservé <?php echo $nb_demi_heure; ?>
-								</button>
-									<div class="modal fade" id="modal_match_<?php echo $value['creneau_event_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-										<div class="modal-dialog" role="document">
-									    	<div class="modal-content">
-									      		<div class="modal-header">
-									        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									        	</div>
-									        	<div class="modal-body">
-									        		<div id="modal_match_tournoi" style="">
-									      				<div id="modal_match_tournoi_info">
-										        			<p id="modal_match_date">
-										        				<?php echo $event['event_date']; ?>
-										        			</p>
-										        			<p id="modal_match_heure">
-										        				<span id="modal_match_heure_debut"> 
-										        					<?php echo $value['creneau_datetime']; ?>
-										        				</span>
-										        				<span> - </span>
-										        				<span id="modal_match_heure_fin">
-										        					<?php echo $value['creneau_datetime_fin']; ?>
-										        				</span>
-										        			</p>
-										        			<p>
-										        				<span> Prix : </span>
-										        				<span id="modal_match_prix"> <?php echo $event['event_tarif']; ?></span>
-										        				<span> € </span>
-										        			</p>
-										        			<p>
-										        				<span>descriptif : </span>
-										        				<span id="modal_match_descriptif"> <?php echo $event['event_descriptif']; ?>
-										        					
-										        				</span>
-										        			</p>
-										        		</div>
-										        		<div id="modal_match_tournoi_participants">
-										        			<p>
-										        				
-										        			</p>
-										        		</div>
-									        		</div>
-									        	</div>
-									        </div>
-									    </div>
-									</div>
-							</td>
-						<?php
-					$creneau_rempli = 1;
-					}
-				}
-			}
-			if($creneau_rempli == 0){
-				$creneau_mort = 0;
-				if (isset($val['creneaux_morts'])){	
-					foreach ($val['creneaux_morts'] as $key_morts => $value_morts) {
-						if ($key_morts == $date_heure){
-						$creneau_mort = 1;
-						}	
-					}
-				}
-				if ($creneau_mort == 1){
-				}
-				else{
-					?>
-						<td class="creneau_indispo " style="margin: 0px; padding: 0px; ">
-							<button type="button" style="margin: 0px; padding: 0px; " class="boutton" data-toggle="modal" data-target="#modal_form_1">				 		 
-								<?php 
-									$ex = explode(" ", $date_heure); 
-									$ex2 = explode(":", $ex[1]);
-									echo $ex2[0].':'.$ex2[1];
-								?>
-								<input type="hidden" class="creneau_terrain_id" value="<?php echo $val['id']; ?>">
-								<input type="hidden" class="creneau_heure_debut" value="<?php echo $ex2[0].':'.$ex2[1]; ?>">
-							</button>
-							
-						</td>
-					<?php
-				}
-			}
-		}
-	}
-?>
 
 
 
@@ -636,6 +469,7 @@ $(document).ready(function(){
 		<?php include('footer.php') ?>
 <script type="text/javascript">
 
+/*
 $(document).ready(function(){
   $("#jour option").click(function(){
     $.ajax({type:"POST", data: $("#jour").serialize(), url:"planning_ajax.php",
@@ -648,6 +482,14 @@ $(document).ready(function(){
     });
   });
 });
+*/
+
+function envoi_form(){
+	$("#submit_form").click();
+};
+
+
+
 
 $(".clic-radio").click(function () {
     var id = $(this).attr('id');
@@ -701,6 +543,8 @@ $("#select-compte-match option").click(function(){
 });
 
 </script>
+
+
 	</body>
 
 </html> 
