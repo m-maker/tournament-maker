@@ -67,19 +67,19 @@ if (isset($_GET["mod"]) && isset($_GET["id"])){
 	            ';
             }
         } else {
-            $req = $db->prepare("INSERT INTO equipe_membres (em_membre_id, em_team_id, em_statut_joueur, em_membre_paye) VALUES (:id_joueur, :id_team, 3, 0)");
+            $req = $db->prepare("INSERT INTO equipe_membres (em_membre_id, em_team_id, em_statut_joueur_id, em_membre_paye) VALUES (:id_joueur, :id_team, 3, 0)");
             $req->bindValue(":id_joueur", $_SESSION["id"], PDO::PARAM_INT);
             $req->bindValue(":id_team", $id_team, PDO::PARAM_INT);
             $req->execute();
 
             if (!empty($capitaine)) {
-                $notif_capitaine = new Notifications('<b>' . $_SESSION["pseudo"] . '</b> a rejoins votre équipe <b>' . recupEquipeByID($id_team)['team_nom'] . '</b> pour le tournoi "<b>' . $leTournoi->event_titre . '</b>".', $capitaine['membre_id'], date('d-m-Y H:i:s'), 'feuille_de_tournois.php?tournoi=' . $id_tournoi);
+                $notif_capitaine = new Notifications('<b>' . $_SESSION["pseudo"] . '</b> a rejoins votre équipe <b>' . recupEquipeByID($id_team)['team_nom'] . '</b> pour le tournoi "<b>' . $leTournoi['event_titre'] . '</b>".', $capitaine['membre_id'], date('d-m-Y H:i:s'), 'feuille_de_tournois.php?tournoi=' . $id_tournoi);
                 $notif_capitaine->addNotif();
             }
-            $notif_orga = new Notifications('<b>' . $_SESSION["pseudo"] . '</b> a rejoins l\'équipe <b>' . recupEquipeByID($id_team)['team_nom'] . '</b> du tournoi "<b>' . $leTournoi->event_titre . '</b>" que vous administrez.', $leTournoi->event_orga, date('d-m-Y H:i:s'), 'feuille_de_tournois.php?tournoi=' . $id_tournoi);
+            $notif_orga = new Notifications('<b>' . $_SESSION["pseudo"] . '</b> a rejoins l\'équipe <b>' . recupEquipeByID($id_team)['team_nom'] . '</b> du tournoi "<b>' . $leTournoi['event_titre'] . '</b>" que vous administrez.', $leTournoi['event_orga_id'], date('d-m-Y H:i:s'), 'feuille_de_tournois.php?tournoi=' . $id_tournoi);
             $notif_orga->addNotif();
             if ($not_orga_2) {
-                $notif_orga_2 = new Notifications('<b>' . $_SESSION["pseudo"] . '</b> a rejoins l\'équipe <b>' . recupEquipeByID($id_team)['team_nom'] . '</b> du tournoi "<b>' . $leTournoi->event_titre . '</b>" que vous administrez.', $leTournoi->event_orga_2, date('d-m-Y H:i:s'), 'feuille_de_tournois.php?tournoi=' . $id_tournoi);
+                $notif_orga_2 = new Notifications('<b>' . $_SESSION["pseudo"] . '</b> a rejoins l\'équipe <b>' . recupEquipeByID($id_team)['team_nom'] . '</b> du tournoi "<b>' . $leTournoi['event_titre'] . '</b>" que vous administrez.', $leTournoi['event_orga2_id'], date('d-m-Y H:i:s'), 'feuille_de_tournois.php?tournoi=' . $id_tournoi);
                 $notif_orga_2->addNotif();
             }
 

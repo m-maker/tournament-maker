@@ -53,7 +53,7 @@ class Notifications
     }
 
     public function addNotif(){
-        $req = $this->db->prepare("INSERT INTO notifications (notif_id, notif_texte, notif_membre_id, notif_date, notif_lien, notif_vu) VALUES (:id, :texte, :membre, NOW(), :lien, 0);");
+        $req = $this->db->prepare("INSERT INTO notifications (id, notif_texte, notif_membre_id, notif_date, notif_lien, notif_vu) VALUES (:id, :texte, :membre, NOW(), :lien, 0);");
         $req->bindValue(":id", $this->id, PDO::PARAM_INT);
         $req->bindValue(":texte", $this->texte, PDO::PARAM_STR);
         $req->bindValue(":membre", $this->membre, PDO::PARAM_INT);

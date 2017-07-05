@@ -38,7 +38,7 @@ if ($_SESSION["membre_orga"] == 1)
     </head>
 
     <body>
-
+           
     <!-- HEADER -->
     <?php include('header.php'); ?>
 
@@ -606,7 +606,8 @@ if ($_SESSION["membre_orga"] == 1)
 </div>
 
     <?php include 'footer.php';
-    echo '<script>
+    ?>
+    <script>
 	    	$(".equipe-cont button, .suppr-team").click(function(){
 	    		var id = $(this).attr("id");
 	    		var mod = $(this).attr("mod");
@@ -614,14 +615,7 @@ if ($_SESSION["membre_orga"] == 1)
 	    		 
 	    		if (mod != "suppr" || mod == "suppr" && confirm("Etes vous sur de vouloir supprimer votre équipe du tournoi ? Cette action sera définitive !" ))
 	    			document.location.replace("action_team.php?mod=" + mod + "&id=" + id + "&tournoi=" + '.$id_tournoi.');
-	    	});</script>';
-    ?>
-
-	    <script type="text/javascript">
-
-	    	/*$(document).ready(function() { 
-	    		$("#equipes").show();
-	    	}); */
+	    	});
 
             $(".show").click(function() {
                 $(".show").removeClass("acti");

@@ -517,7 +517,7 @@ function recupEquipesCompletes($id_tournoi, $nb_joueur_min){
 function recupMessagesEquipe($id_equipe)
 {
     $db = connexionBdd();
-    $req = $db->prepare("SELECT * FROM mur_equipes INNER JOIN membres ON me_membre_id = membre_id WHERE me_equipe_id = :id_equipe ORDER BY me_date DESC;");
+    $req = $db->prepare("SELECT * FROM mur_equipes INNER JOIN membres ON me_membre_id = membres.id WHERE me_equipe_id = :id_equipe ORDER BY me_date DESC;");
     $req->bindValue(":id_equipe", $id_equipe, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
