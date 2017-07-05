@@ -1,0 +1,111 @@
+.btn_complexe{
+	width: 100%;
+	margin: 0px;
+	padding: 1px;
+	display: flex;
+	justify-content: space-between;
+}
+.btn_complexe p{
+	margin: 0px;
+	padding: 1px;
+}
+body *{
+	color: white;
+	text-align: center;
+}
+.div_input{
+	color: white;
+	text-align: center;
+	justify-content: center;
+	vertical-align: center;
+	padding: 5px;
+}
+.div_input:hover{
+}
+.div_input_div{
+	margin: auto;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	vertical-align: center;
+}
+.div_input2{
+	color: white;
+}
+textarea {
+	color: black;
+}
+#input_area{
+	color: black;
+}
+#myModal{
+	color: black;
+}
+#myModal *{
+	color: black;
+}
+#nom_complexe{
+	width: 70%;
+	margin: auto;
+	background-color: rgba(230,230,230,0.5);
+	border-radius: 5px;
+}
+#nom_complexe:hover{
+	background-color: rgba(230,230,230,0.2);
+	cursor: pointer;
+}
+.btn_dpt:hover{
+	cursor: pointer;
+	background-color: rgba(230,230,230,0.85);
+}
+.btn_dpt{
+	border-radius: 2px;
+	width: 100%;
+}
+hr{
+	clear: both;
+	width: 80%;
+	margin-bottom: 1px;
+	margin-top: 1px;
+}
+.scrollable-menu{
+    height: auto;
+    max-height: 250px;
+    overflow-x: scroll;
+}
+
+.scrollable-menu label{
+	width: 100%;
+	margin: 0px;
+	padding: 1px;
+}
+.scrollable-menu2{
+    height: auto;
+    max-height: 200px;
+    overflow-x: scroll;
+}
+.menu_liste *{
+	color: black;
+	text-align: left;
+}
+.menu-liste li a{
+	margin-left: 1px;
+}
+.recap_event{
+	margin: 8px;
+	padding: 0px;
+	background-color: rgba(66,133,244,0.85);
+	border-radius: 5px;
+}
+.recap_event p{
+	margin: 0px;
+	padding: 1px;
+}
+.recap_event a{
+	margin: 0px;
+	padding: 0px;
+}
+.container-fluid{
+	margin: 0px;
+	padding: 0px;
+}

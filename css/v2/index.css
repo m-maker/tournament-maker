@@ -1,0 +1,64 @@
+
+
+/** Corps **/
+
+
+.logo{
+	text-align: center;
+	margin-bottom: 5rem;
+}
+* {
+	text-align: center;
+}
+p{
+	color: white;
+}
+strong{
+	font-weight: bold;
+}
+
+.champ{
+margin: 0.5rem;
+border-radius: 1.2rem;
+border-style: none;
+height: 2rem; 
+width: 15rem;
+}
+.bouton1{
+border-radius: 1.2rem;
+border-style: none;
+height: 2rem; 
+width: 15rem;
+background-color: rgb(57,184,77);
+color: white;
+}
+.bouton2{
+border-radius: 1.2rem;
+border-style: none;
+height: 2rem; 
+width: 15rem;
+background-color: rgb(57,184,77);
+color: white;
+}
+@media screen and (max-width: 1280px) {
+body {
+  	background-image: url(../../img/fond.jpg);
+  	background-repeat: no-repeat;
+  	background-size: contain;
+  }
+ }
+ h1{
+ 	color: white;
+ }
+.connexion{
+	margin-bottom: 175px;
+}
+.connexion a{
+	color: white;
+}
+.inscription{
+	margin-bottom: 100px;
+}
+hr{
+	border-color: white;
+}

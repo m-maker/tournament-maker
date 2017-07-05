@@ -1,11 +1,11 @@
-
+@media screen and (min-width: 1280px) {
 body{
 	margin: 0rem;
 	padding: 0rem;
 	height: 100%;
-	background:url('../img/fond_index.jpg');
-	background:url('../img/accueil1.jpg');
+	background:url('../img/fond.jpg');
 	background-size: cover;
+	background-repeat: no-repeat;
 }
 body *{
 
@@ -57,17 +57,7 @@ body *{
 }
 #corps{
 	flex: 1;
-	background-color: rgba(235,235,235,0.3);
-	background-color: rgb(142,200,237);
 	color: white;
-	background-color: rgba(235,235,235,0.9);
-	background-color: rgb(142,200,237);
-	background-color: rgb(104,159,56);
-	background-color: white;
-	/*background-image: url(../img/accueil1.jpg);*/
-	background-size: cover;
-	background-repeat: no-repeat;
-	color: black;
 }
 .corps_onglet{
 	margin: 5px;
@@ -76,7 +66,9 @@ body *{
 	border: solid 1px rgb(27,50,73);
 	border-top: none;
 }
-
+.menu_liste {
+	color: black;
+}
 
 .recap-event{
 	margin: auto;
@@ -107,7 +99,6 @@ body *{
 	font-weight: bold;
 }
 .corps{
-	background-color: white;
 	border: solid 1px rgb(200,200,200);
 	padding: 0px;
 	border-radius: 5px;
@@ -204,9 +195,6 @@ body *{
 #input_barre_recherche{
 	color: rgb(66,133,244);
 }
-.center {
-	text-align: center;
-}
 .btn-grand {
 	width: 100%;
 	margin: 0;
@@ -222,27 +210,6 @@ body *{
 .form-grand {
 	width: 70%;
 	margin: auto;
-}
-.espace-top {
-	margin-top: 2%;
-}
-.espace-bot {
-	margin-bottom: 2%;
-}
-.espace-left {
-	margin-left: 2%;
-}
-.left {
-	float: left;
-}
-.right {
-	float: right;
-}
-.ligne{
-	display: flex;
-}
-.espacer{
-	justify-content: space-around;
 }
 .placeholder{
 	color: black;
@@ -357,16 +324,32 @@ a:hover {
 	color: black;
 	opacity: 0.8;
 }
-
-@media screen and (max-width: 1280px) {
-	#volet {
-		width: 50%;
-		font-size: 9px;
-	}
-	#volet div {
-		min-height: 30px;
-	}
+a { color: black; }
+a:hover { color: dimgray; }
 }
+/* --------------------------------------------------------------   			MOBILE 				---------------------------------------------------------- */
+
+
+
+@media screen and (max-width: 1280px) { 
+body{
+	margin: 0rem;
+	padding: 0rem;
+	height: 100%;
+	background:url('../img/fond.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+body *{
+
+	font-family: 'Hammersmith One', sans-serif;
+}
+}
+
+/* --------------------------------------------------------------   			CSS TOUT ÉCRAN		---------------------------------------------------------- */
 .gauche{
 	display: flex;
 	flex-direction: column;
@@ -375,8 +358,34 @@ a:hover {
 	align-items: left;
 }
 
-a { color: black; }
-a:hover { color: dimgray; }
+.center {
+	text-align: center;
+}
 
-body *{
+.espace-top {
+	margin-top: 2%;
+}
+.espace-bot {
+	margin-bottom: 2%;
+}
+.espace-left {
+	margin-left: 2%;
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.ligne{
+	display: flex;
+}
+.espacer{
+	justify-content: space-around;
+}
+.text-left{
+	text-align: left;
+}
+.text-right{
+	text-align: right;
 }

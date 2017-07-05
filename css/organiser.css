@@ -1,0 +1,12 @@
+.calendrier{
+	width: 80%;
+	margin: auto;
+	display: flex;
+	justify-content: space-between;
+}
+.calendrier div{
+	flex: 1;
+	border-radius: 5px;
+	padding: 5px;
+	border: solid 1px grey;
+}

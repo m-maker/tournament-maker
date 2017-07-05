@@ -253,6 +253,15 @@ function liste_lieux($dpt_id){
     $req->execute();
     return $req->fetchAll();
 }
+
+function liste_lieux_dpt_code($dpt_code){    
+    $db = connexionBdd();
+    $req = $db->prepare("SELECT * FROM lieux  INNER JOIN departements ON lieux.lieu_dpt_id = departements.id WHERE dpt_code = :dpt_code");
+    $req->bindValue(":dpt_code", $dpt_code, PDO::PARAM_STR);
+    $req->execute();
+    return $req->fetchAll();
+}
+
 function recupLieuById ($lieu_id){    
 	$db = connexionBdd();
     $req = $db->prepare("SELECT * FROM lieux WHERE id = :lieu_id");
@@ -478,12 +487,12 @@ function liste_event_terrain($terrain_id) {
 
 function recupEquipesIncompletes($id_tournoi, $nb_joueur_min){
     $db = connexionBdd();
-    $req_equipes = $db->prepare("SELECT * FROM equipes INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id");
+    $req_equipes = $db->prepare("SELECT * FROM equipes WHERE team_event_id = :id");
     $req_equipes->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
     $req_equipes->execute();
     $equipes_incompletes = array();
     while ($equipes = $req_equipes->fetch()) {
-        $compte_membres = compter_membres($equipes["team_id"]);
+        $compte_membres = compter_membres($equipes[0]);
         if ($compte_membres < $nb_joueur_min){
             $equipes_incompletes[] = $equipes;
         }
@@ -493,12 +502,12 @@ function recupEquipesIncompletes($id_tournoi, $nb_joueur_min){
 
 function recupEquipesCompletes($id_tournoi, $nb_joueur_min){
     $db = connexionBdd();
-    $req_equipes = $db->prepare("SELECT * FROM equipes INNER JOIN equipes_tournois ON team_id = et_equipe WHERE et_event_id = :id");
+    $req_equipes = $db->prepare("SELECT * FROM equipes WHERE team_event_id = :id");
     $req_equipes->bindValue(":id", $id_tournoi, PDO::PARAM_INT);
     $req_equipes->execute();
     $equipes_completes = array();
     while ($equipes = $req_equipes->fetch()) {
-        $compte_membres = compter_membres($equipes["team_id"]);
+        $compte_membres = compter_membres($equipes[0]);
         if ($compte_membres >= $nb_joueur_min)
             $equipes_completes[] = $equipes;
     }
@@ -845,6 +854,16 @@ function recupMessagesEquipe($id_equipe)
             }
         }
     }
+
+function liste_creneaux_libres($lieu_id){
+    $db = connexionBdd();
+    $req = $db->prepare('SELECT * FROM creneaux INNER JOIN terrains ON creneaux.creneau_terrain_id = terrains.id INNER JOIN lieux ON terrains.terrain_lieu_id = lieux.id WHERE lieux.id = :lieu_id ORDER BY creneaux.creneau_datetime ');
+    $req->execute(array(
+        'lieu_id' => $lieu_id
+        ));
+    $res = $req->fetchAll();
+    return $res;
+}
 include 'Notifications.php';
 //$Notifs = new Notifications();
 

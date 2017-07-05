@@ -28,7 +28,11 @@ if ($_SESSION["membre_orga"] == 1)
 		<link rel="stylesheet" type="text/css" href="css/liste_tournois.css">
 		<link rel="stylesheet" type="text/css" href="css/feuille_tournoi.css">
 		<link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/index_mobile.css">
 		<title><?php echo $leTournoi["event_titre"]; ?></title>
+            <script src="jquery-1.12.4.js"></script>
+            <script src="jquery-ui.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
         <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
 
     </head>
@@ -38,19 +42,17 @@ if ($_SESSION["membre_orga"] == 1)
     <!-- HEADER -->
     <?php include('header.php'); ?>
 
+            <h1 id="titre_corps">Informations du tournoi</h1>
     <!-- CONTENU DE LA PAGE -->
     <div id="page">
 
         <!-- VOLET -->
-        <?php include('volet.php'); ?>
-
         <!-- CONTENU DE LA PAGE -->
         <div id="corps">
-            <h1 id="titre_corps">Informations du tournoi</h1>
             <!-- CADRE DU CONTENU -->
 
         <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
-    	<div class="corps container espace-top espace-bot">
+    	<div class="corps container-fluid">
             <?php 
                 if ($mdp){ 
                     ?>
@@ -68,49 +70,50 @@ if ($_SESSION["membre_orga"] == 1)
                 else{
                     ?>
                         <br/>
-                        <div id="header_feuille_de_tournoi">
-                        <?php
-                            $heure_debut = format_heure_minute($leTournoi["event_heure_debut"]);
-                            $heure_fin = format_heure_minute($leTournoi["event_heure_fin"]);
-                            $glyph = "glyphicon-eye-open";$prive="Public";$color='vert';
-                            if ($leTournoi["event_prive"] == 1){
-                                $color='rouge';$glyph = "glyphicon-eye-close";$prive="Privé";
-                            }
-                            $pay = "<span class='rouge'>Refusé</span>";
-                            if ($leTournoi["event_paiement"] == 1){
-                                $pay="<span class='vert'>Accepté</span>";
-                            }
-                            $desc = $leTournoi["event_descriptif"];
-                            if ($leTournoi["event_descriptif"] == NULL || empty($leTournoi["event_descriptif"])){
-                                $desc = 'Pas de description.';
-                            }
-                            $team = "par équipe";
-                            if ($leTournoi["event_tarification_equipe"] == 0){
-                                $team="par joueur";
-                            }
-                        $date_tournoi = new DateTime($leTournoi["event_date"]);
-                        $date_tournoi = date_lettres($date_tournoi->format("w-d-m-Y"));
-
-                        ?>
-                        <div class='titre-liste-tournoi'>
-                            <?php echo $leTournoi["event_titre"]; ?>
-                            <br>    
-                            <p class="header_feuille_de_tournoi_date">
-                                <span class="glyphicon glyphicon-calendar"></span> Le <span class="bold"> <?php echo $date_tournoi; ?></span> de 
-                                <span class="bold"> <?php echo $heure_debut ?> </span> à <span class="bold">  <?php echo $heure_fin; ?></span>
-                            </p>
+                        <div id="header_feuille_de_tournoi" class="">
+                            <?php
+                                $heure_debut = format_heure_minute($leTournoi["event_heure_debut"]);
+                                $heure_fin = format_heure_minute($leTournoi["event_heure_fin"]);
+                                $glyph = "glyphicon-eye-open";$prive="Public";$color='vert';
+                                if ($leTournoi["event_prive"] == 1){
+                                    $color='rouge';$glyph = "glyphicon-eye-close";$prive="Privé";
+                                }
+                                $pay = "<span class='rouge'>Refusé</span>";
+                                if ($leTournoi["event_paiement"] == 1){
+                                    $pay="<span class='vert'>Accepté</span>";
+                                }
+                                $desc = $leTournoi["event_descriptif"];
+                                if ($leTournoi["event_descriptif"] == NULL || empty($leTournoi["event_descriptif"])){
+                                    $desc = 'Pas de description.';
+                                }
+                                $team = "par équipe";
+                                if ($leTournoi["event_tarification_equipe"] == 0){
+                                    $team="par joueur";
+                                }
+                                $date_tournoi = new DateTime($leTournoi["event_date"]);
+                                $date_tournoi = date_lettres($date_tournoi->format("w-d-m-Y"));
+                            ?>
+                            <div class='col-xs-12'>
+                                <?php echo $leTournoi["event_titre"]; ?>
+                            </div>
+                            <div class="col-xs-6">
+                                <p> <span class="glyphicon glyphicon-home"></span> <span class="bold"><?php echo $leTournoi["lieu_nom"]; ?> </span> </p>
+                                <!-- <p><span class="glyphicon glyphicon-euro"></span> Paiement en ligne : <span class="bold"> <?php echo $pay; ?></span></p> -->
+                                <p class="">
+                                    <span class="glyphicon glyphicon-calendar"></span> Le <span class="bold"> <?php echo $date_tournoi; ?></span> de 
+                                    <span class="bold"> <?php echo $heure_debut ?> </span> à <span class="bold">  <?php echo $heure_fin; ?></span>
+                                </p>
+                            </div>
+                            <div class="col-xs-6">
+                                <p><span class="bold"><?php echo $leTournoi["event_tarif"]; ?> € <?php ECHO $team; ?></span></p>
+                                <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p>
+                            </div>
                         </div>
-
                         <hr class="separateur_header_fdm" />
                         <div class="conteneur-tournoi " style="border-radius:0;width: 100%;margin:0;padding: 1%;">
                             <div class="container-fluid">
     				        <div class="row">
-                                    <div class="col-sm-6" style="text-align: center;" >
-                                        <p><span class="glyphicon glyphicon-home"></span> <span class="bold"><?php echo $leTournoi["lieu_nom"];?></span></p>
-                                        <!-- <p><span class="glyphicon glyphicon-euro"></span> Paiement en ligne : <span class="bold"> <?php echo $pay; ?></span></p> -->
-                                    </div>
                                     <div class="col-sm-6" style="text-align: center;">
-                                        <p><span class="bold"><?php echo $leTournoi["event_tarif"]; ?> € <?php ECHO $team; ?></span></p>
                                     </div>
                             </div>
                             <div class="row">
@@ -121,11 +124,10 @@ if ($_SESSION["membre_orga"] == 1)
                                         ?>
                                     </div>
                                     <div class="col-lg-3 prix-team">
-                                        <!-- <p class="<?php echo $color; ?>"><span class="glyphicon <?php echo $glyph; ?>"></span> Tournoi <?php echo $prive; ?></p> -->
+                                        <!--  -->
                                     </div>
     				        </div>
                             </div>
-                        </div>
                         </div>
                         <hr class="separateur_header_fdm" />
 

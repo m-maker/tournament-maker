@@ -1,6 +1,6 @@
 $(document).ready(function(){
   $("#liste_departements input").click(function(){
-    $.ajax({type:"POST", data: $(this).serialize(), url:"index_ajax2.php",
+    $.ajax({type:"POST", data: $(this).serialize(), url:"organiser_match_ajax.php",
       success: function(data){
         $("#post").html(data);
       },

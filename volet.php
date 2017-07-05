@@ -42,6 +42,11 @@
                         <span class="glyphicon glyphicon-plus-sign"></span> Invitations
                     </a>
                 </div>
+                <div id="organiser">
+                    <a href="organiser_match.php" <?php activer_item('organiser_match.php'); ?>>
+                        <span class="glyphicon glyphicon-plus-sign"></span> Oragniser un match
+                    </a>
+                </div>
             <?php
         }
         else{ 

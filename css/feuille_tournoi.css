@@ -349,3 +349,16 @@ hr {
 }
 .menu-orga{
 }
+
+/* --------------------------------- 				MOBILE 					---------------------------------------- */
+
+@media screen and (max-width: 1280px) {
+	.corps{
+		width: 100%;
+		margin: 0px;
+	}
+	#header_feuille_de_tournoi div{
+		margin: 0px;
+		padding: 1px;
+	}
+}

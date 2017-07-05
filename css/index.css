@@ -19,6 +19,12 @@
     max-height: 200px;
     overflow-x: hidden;
 }
+.fb a{
+	width: 50%;
+}
+.fb{
+	width: 80%;
+}
 li{
 	height: 2rem;
 }
@@ -275,4 +281,11 @@ vertical-align: center;
 .tournoi * {
 	background-color: rgb(66,133,244);
 	color: white;
+}
+
+#btn_fb{
+	width: 80%;
+}
+#btn_fb img{
+	width:25px;
 }

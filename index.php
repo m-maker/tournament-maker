@@ -1,215 +1,137 @@
 <?php
+  // Test de redirection 
 include('conf.php');
-include "connect_api_fb.php";
+  if (isset($_SESSION['id']) AND !empty($_SESSION['id'])){
+    if (isset($_SESSION['orga']) AND $_SESSION['orga'] == 1){
+      header('location:organisateur/home.php');
+    }
+    else{
+      header('location:home.php');
+    }
+  }
+  else{
 
-$ip = $_SERVER['REMOTE_ADDR'];
-$fichier_log = 'log/visites.txt';
-$fichier_compte = 'log/visites_compte.txt';
-$pointeur = fopen($fichier_log, 'a+');
-$pointeur_compte = fopen($fichier_compte, 'w+');
-
-$visites = file($fichier_log);
-$ecrire = true;
-foreach ($visites as $uneVisite){
-    if ($ip."\r\n" == $uneVisite){
-        $ecrire = false;
-      }
-}
-
-if ($ecrire) {
-    fwrite($pointeur, $ip . "\r\n");
-    $compte_visites = count(file($fichier_log));
-    fwrite($pointeur_compte, $compte_visites);
-}
-
-if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
-    header('location:organisateur/index.php');
-    exit();
-}
-
-?>
-<html>
-
-<head>
+    // si pas de redirection =>
+    ?>
+      <!DOCTYPE html>
+        <html>
+        	<head>
     <?php include('head.php'); ?>
+            <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+        		<link rel="stylesheet" type="text/css" href="css/v2/style.css">
+        		<link rel="stylesheet" type="text/css" href="css/v2/index.css">
+            <link href="https://fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet">
+        		<title>RTT</title>
+        	</head>
 
-    <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************                      -->
-    <link rel="stylesheet" type="text/css" href="css/page_accueil.css">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <title>Tournois de foot en salle</title>
-    <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
+        	<body>
 
-</head>
+          <!-- ****************************************         Debut du bandeau        ****************************************  -->
 
-<body>
+        	<div class="logo">
+            <img src="logo.png" alt="RTT">
+        	</div>
+          <p>
+            Sans aucun doute <strong>une révolution</strong> dans l'<strong>organisation</strong> des matchs <strong>foots en salle</strong>
+          </p> 
+          <div class="container-fluid">
+            <div class="connexion col-xs-12 col-sm-6">
+              <h1>Connexion</h1>
+              <form method="post" action="connexion_check.php">
 
-<!-- HEADER -->
-<?php if (isset($_SESSION["id"])){
-    include('header.php');
-    var_dump($_SESSION['membre_orga']);
-} ?>
+                <div>
+                  <?php if(isset($_GET['erreur'])) {
+                      if($_GET['erreur'] =="pseudo") { ?><p><?php echo "Nous n'avons pas encore enregistré "; echo $_GET['pseudo']; echo " chez nous. C'est le moment de s'inscire non?"; ?></p><?php } 
+                      }
+                  ?>
+                  <input class="champ" type="text" name="pseudo" placeholder="Votre pseudo/adresse-mail"/>
+                </div>
+                <div>
+                  <?php if(isset($_GET['erreur'])) {
+                      if($_GET['erreur'] =="mdp") { ?> <p> <?php echo "Oups, nous n'avons pas le même mot de passe pour : "; echo $_GET['pseudo'];?><br/><?php echo " Et parce qu'on est cool, on te laisse reessayer ;-)"; ?></p><?php } 
+                      } 
+                  ?>
+                  <input class="champ" type="password" id="pass-inp" name="pass" placeholder="*******"/>
+                </div>
+                <div>
+                <a href="recup_pass.php">Mot de pass oublié</a>
+                </div>
+                <br/>
+                <div>
+                  <input type="submit" name="submit" class="bouton1" value="Connexion"/>
+                </div>
+              </form>
+              <a href="#inscription">Tu n'as pas encore de compte?</a>
+            </div>
 
-<!-- CONTENU DE LA PAGE -->
-<div id="page">
-
-    <!-- VOLET -->
-    <?php
-    if (isset($_SESSION['id']) && !empty($_SESSION['id'])){
-        include('volet.php');
-    }?>
-
-
-    <!-- CONTENU DE LA PAGE -->
-    <div id="corps">
-        <!-- CADRE DU CONTENU -->
-        <!--                     *********************************              ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
-        <?php
-            if(isset($_SESSION['id']) && !empty($_SESSION['id'])){
-                    $req = $db->prepare("SELECT membre_dpt_code FROM membres WHERE id = :id");
-                    $req->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
-                    $req->execute();
-                    $dpt_user = $req->fetchColumn();
-                    if ($dpt_user != null){
-                        echo '<script>
-                            $.post("index_ajax2.php", {dpt:'.$dpt_user.'}, function(data) {
-                              $("#post").html(data);
-                            });
-                        </script>';
-                    }
-                    ?>
-                    <h1 id="titre_corps">Trouver des matchs</h1>
-                        <div id="post" class="container-fluid center" style="padding: 2%;">
-                            <p style="color: black; font-size: 20px;">Selectionnez un département afin de trouver les tournois / matchs</p>
-                            <button id="btn_dpt" class="btn btn-default center" data-toggle="modal" data-target="#myModal">
-                                <div id="nom_departement" > Département  <b class="caret"></b> </div>
-                            </button>
-                            <hr/>
-                        </div>
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h2 class="modal-title" id="myModalLabel">Département</h2>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="liste_departements" id="liste_departements">
-                                            <form id="form_dpt">
-                                                <ul>
-                                                    <?php
-                                                    foreach (listeDepartements() as $key) {
-                                                        ?>
-                                                        <li>
-                                                            <label> <?php echo '('.$key['dpt_code'].') '.$key['dpt_nom']; ?>
-                                                                <input type="radio" name="dpt" value="<?php echo $key['dpt_code'] ?>" class="badgebox">
-                                                            </label>
-                                                        </li>
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                </ul>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button id="valider" type="button" class="btn btn-default" data-dismiss="modal">Valider</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div id="inscription" class="inscription col-xs-12 col-sm-6">
+            <h1>Inscription</h1>
+            <form id="form_inscription" method="post" action="inscription_check.php">
+              
+              <?php 
+                if(isset($_GET['erreur'])) {
+                  if($_GET['erreur'] =="inscription_pseudo") { 
+                    ?> 
+                      <p> <?php echo "Trop tard,".$_GET['pseudo']." est déjà pris ;-)"; ?></p>
                     <?php
-            }
-            else{
+                  }
+                }
               ?>
-                <nav id="navbar"  class="navbar navbar-default">
-                    <div class="container-fluid">
-                        <div class="navbar">
-                            <ul id="ul_nav" class="nav navbar-nav">
-                                <li><a href="#div1">Accueil</a></li>
-                                <li>
-                                    <a href="#div2">La plateforme</a>
-                                </li>
-                                <li>
-                                    <a href="#equipe">l'équipe</a>
-                                </li>
-                                <li>
-                                    <a href="#com">On parle de nous</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+              <div>
+                <input type="text" class="champ" id="inputPseudo" name="pseudo" placeholder="Votre pseudo">
+              </div>
 
-    <div id="div1">
-        <div id="div1-1" class="col-sm-12 col-md-8">    
-            <!-- <img class="img img-responsive" src="img/image_foot2.jpg"> -->
-            <div id="div1_img">
-
-            <h1 id="titre_image_acceuil" class="col-sm-12 col-md-8">Des tournois et des matchs de foot en salle<br/>Rejoignez-nous, <br/> que vous soyez seul ou en équipe!</h1>
-            </div>
-        </div>
-        <div id="div1-2">
-            <div id="connexion">
-                <form class="form-horizontal" id="form-connexion" method="post" action="connexion_check.php">
-                    <fieldset>
-                        <legend class="center">Se connecter</legend>
-                        <div id="erreur-co">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="pseudo-inp" name="pseudo" placeholder="Votre pseudo/adresse-mail">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" id="pass-inp" name="pass" placeholder="*******">
-                        </div>
-                        <input style="display: none;" id="return" name="return" type="text" value="<?php if (isset($_GET["return"])){ echo $_GET['return']; }?>">
-                        <div class="form-group center">
-                            <button type="submit" name="submit" class="btn btn-success" style="width: 80%;">Se connecter</button>
-                        </div>
-                    </fieldset>
-                    <br />
-                    <br />
+              <?php
+                if(isset($_GET['erreur'])) {
+                  if($_GET['erreur'] == "inscription_mdp") {
+                    ?>
+                      <p> Ton mot de passe ne pas respecte pas les règles... J'espère que ce ne sera pas ton cas sur le terrain!</p>
                     <?php
-                                        $permissions = ['email']; // Optional permissions
-                                        $loginUrl = $helper->getLoginUrl('https://reservetonterrain.fr/fb-callback.php', $permissions);
-                                        echo '<div class="form-group center" style="margin-top: 20px; margin-bottom:20px;">
-                                        <a class="espace-bot espace-top" href="' . htmlspecialchars($loginUrl) . '">
-                                            <button type="button" class="btn btn-primary" style="width: 80%;">
-                                                <img src="img/icones/icone_facebook.ico" width="25" style="margin-top: -5px;" /> Se connecter avec Facebook!
-                                            </button>
-                                        </a>
-                                        </div>'; ?>
+                  }
+                }
+              ?>
+              <div>
+                <input type="password" class="champ" id="inputPass" name="pass" placeholder="*******">
+              </div>
 
-                    <a href="recup_pass.php">Mot de passe oublié ?</a>
-                </form>
-            </div>
-            <div id="inscription">
-                                <form class="form-horizontal" method="post" id="form-inscription" action="inscription_check.php<?php if (isset($_GET['return'])){echo "?return=".$_GET['return'];} ?>">
-                                    <fieldset>
-                                        <legend class="center">Créez un compte</legend>
-                                        <div id="erreur-insc"></div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="inputPseudo" name="pseudo" placeholder="Votre pseudo">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control" id="inputPass" name="pass" placeholder="*******">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="tel" class="form-control" id="inputTel" name="tel" placeholder="Votre numéro de telephone" pattern="^[0-9]{10}$">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="inputEmail" name="mail" placeholder="Votre adresse-mail">
-                                        </div>
-                  
-                                        <div class="form-group center">
-                                            <button type="submit" name="submit" class="btn btn-success" style="width: 80%;">S'inscrire</button>
-                                        </div>
-                                    </fieldset>
-                                </form>
-            </div>
-        </div>
-    </div>
+              <?php
+                if(isset($_GET['erreur'])) {
+                  if($_GET['erreur'] =="inscription_tel") {
+                    ?>
+                      <p>Oups, tu as du faire une petite erreur de saisie pour ton téléphone.</p>
+                    <?php
+                  }
+                }
+              ?>
+              <div>
+                <input type="tel" class="champ" id="inputTel" name="tel" placeholder="Votre numéro de telephone" pattern="^[0-9]{10}$">
+              </div>
 
-    <div id="div2" class="row">
+              <?php
+                if(isset($_GET['erreur'])) {
+                    if($_GET['erreur'] =="inscription_mail") {
+                      ?>
+                        <p>Oups, tu as du faire une petite erreur de saisie dans ton adresse mail.</p>
+                      <?php
+                    }
+                  }
+              ?>
+              <div>
+                <input type="text" class="champ" id="inputEmail" name="mail" placeholder="Votre adresse-mail">
+              </div>
+
+              <br/>
+
+              <input type="submit" class="bouton2" value="Inscris-toi, c'est gratuit">
+            </form>
+            </div>
+            <hr/>
+          </div>
+          <hr/>
+
+<!-- ************************************               Contenu           ********************************** -->
+
+      <div id="div2" class="container-fluid">
         <div id="fct_1" class="col-sm-12 col-md-4 fct">
             <div class="fct_img">
                 <img class="img img-responsive" src="img/fct_img_1.jpg">
@@ -334,31 +256,13 @@ if (isset($_SESSION["id"]) && $_SESSION['membre_orga'] == 1){
             </div>
         </div>
     </div>
-  <?php
-            }
-        ?>            
-        <!--                     *********************************              FIN DE L'ESPACE SPECIFIQUE A LA PAGE             **********************************              -->
-    </div>
-    <script type="text/javascript" src="js/index.js"></script>
-</div>
-<!-- FOOTER -->
-<?php if (isset($_SESSION["id"])){
-    include('footer.php');
+  <!-- FOOTER -->
+  <?php 
+      include('footer.php');
+  ?>
+
+        	</body>
+        </html>	
+      <?php
 }
 ?>
-<script type="text/javascript">
-    
-            $(".show1").click(function() {
-                $(".show1").removeClass("acti1");
-                $(this).addClass("acti1");
-                $(".cont1").hide();
-                var id = $(this).attr("id");
-                if (id == "show-prives")
-                    $("#prives").show();
-                else if (id == "show-publiques")
-                    $("#publiques").show();
-            });
-</script>
-</body>
-
-</html>

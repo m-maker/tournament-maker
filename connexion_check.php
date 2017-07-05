@@ -2,13 +2,13 @@
 
 include "conf.php";
 
-
-if (isset($_POST["pseudo"])){
+if (isset($_POST["pseudo"]) AND isset($_POST["pass"])){
 	if (!empty($_POST["pseudo"]) && !empty($_POST["pass"])){
 
 		$pseudo = htmlspecialchars(trim($_POST["pseudo"]));
 		$pass = md5(htmlspecialchars(trim($_POST["pass"])));
-		$req = $db->prepare("SELECT * FROM membres INNER JOIN avatars ON membre_avatar_id = avatars.id WHERE membre_pseudo = :pseudo AND membre_pass = :pass OR membre_mail = :pseudo AND membre_pass = :pass");
+		var_dump($pass);
+		$req = $db->prepare("SELECT * FROM membres INNER JOIN avatars ON membre_avatar_id = avatars.id WHERE membre_pseudo = :pseudo AND membre_pass = :pass");
 		$req->bindValue(":pseudo", $pseudo, PDO::PARAM_STR);
 		$req->bindValue(":pass", $pass, PDO::PARAM_STR);
 		$req->execute();
@@ -24,24 +24,20 @@ if (isset($_POST["pseudo"])){
 
             $req_upd = $db->prepare("UPDATE membres SET membre_derniere_connexion = NOW(),membre_ip_derniere_connexion = :ip WHERE membres.id = :id");
             $req_upd->bindValue(":ip", $_SERVER["REMOTE_ADDR"], PDO::PARAM_STR);
-            $req_upd->bindValue(":id", $membre["membre_id"], PDO::PARAM_INT);
+            $req_upd->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
             $req_upd->execute();
 
-            alert("Vous êtes à present connecté", 1);
+            header('location:home.php');
 
-            if(!empty($_POST["return"])) {
-                echo '<script>document.location.replace("'.htmlspecialchars(trim($_POST['return'])).'");</script>';
-            }else{
-                echo '<script>document.location.replace("index.php");</script>';
-            }
-
-		}else{
+		}
+		else{
 			// Pseudo / mdp invalide
-			alert('Pseudo / mdp incorrects');
+            header('location:index.php?erreur=erreur');			
 		}
 
-	}else{
-	    alert('Certains champs sont vides');
+	}
+	else{
+	    header('location:index.php?erreur=champs_vides');
     }
 }
 

@@ -1,0 +1,19 @@
+@media screen and (max-width: 1280px) {
+	body *{
+		font-size: 8px;
+	}
+	body {
+		font-size: 8px;
+	}
+	#volet {
+		width: 50%;
+		font-size: 9px;
+	}
+	#volet div {
+		min-height: 30px;
+	}
+	#navbar{
+		width: 100%
+	}
+
+}

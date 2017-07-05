@@ -21,3 +21,46 @@
 .header a:hover, .header a:focus {
 	color: lightgrey;
 }
+
+* {
+	padding: 1px;
+}
+.bandeau{
+	display: flex;
+	justify-content: space-between;
+}
+
+a{
+	color: white;
+}
+.dropdown{
+	border: none;
+}
+.cercle .encercle{
+	padding: 0.5rem;
+	padding-left: 0.55rem;
+	margin: 0.1rem;
+	border-radius: 50%;
+	border-style: solid;
+	border-width: 0.1rem;
+	color: white;
+}
+
+a:hover{
+	color: rgb(200,200,200);
+}
+.menu_liste{
+	color: white;
+	background-color: rgba(5,5,5,0.9);
+	border-style: ridge;
+}
+
+.menu_liste li a{
+	color: white;
+}
+.element_bandeau:nth-child(3){
+	flex: 1;
+	text-align: center;
+}
+
+
